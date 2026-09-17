@@ -18,7 +18,6 @@ body {
   color: #202124;
 }
 
-/* Header */
 .header {
   background: #111827;
   color: white;
@@ -28,7 +27,6 @@ body {
   font-weight: bold;
 }
 
-/* Top buttons */
 .tools {
   display: flex;
   gap: 10px;
@@ -48,7 +46,6 @@ body {
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
-/* Chat */
 #chat {
   max-width: 750px;
   margin: auto;
@@ -78,7 +75,6 @@ body {
   box-shadow: 0 2px 8px rgba(0,0,0,0.10);
 }
 
-/* Bottom input */
 .bottom {
   position: fixed;
   bottom: 0;
@@ -110,16 +106,6 @@ input {
   font-weight: bold;
 }
 
-.copyBtn {
-  display: none;
-  margin-top: 5px;
-  border: none;
-  border-radius: 10px;
-  padding: 8px 12px;
-  background: #374151;
-  color: white;
-}
-
 .status {
   text-align: center;
   color: #555;
@@ -137,11 +123,11 @@ input {
 
 <div class="tools">
 
-  <button class="toolBtn" onclick="notesMode()">
+  <button class="toolBtn" id="notesBtn">
     📚 Make Notes
   </button>
 
-  <button class="toolBtn" onclick="newChat()">
+  <button class="toolBtn" id="newChatBtn">
     🧹 New Chat
   </button>
 
@@ -153,10 +139,10 @@ input {
 
   <div class="message ai">
     Hello! 👋
-    
-Main JR AI hoon.
 
-Kuch bhi pucho ya 📚 Make Notes dabakar kisi topic ke notes banao.
+    Main JR AI hoon.
+
+    Kuch bhi pucho ya 📚 Make Notes dabakar kisi topic ke notes banao.
   </div>
 
 </div>
@@ -167,46 +153,89 @@ Kuch bhi pucho ya 📚 Make Notes dabakar kisi topic ke notes banao.
     id="message"
     type="text"
     placeholder="Ask JR AI anything..."
-    onkeydown="if(event.key==='Enter') sendMessage()"
   >
 
-  <button class="sendBtn" onclick="sendMessage()">
+  <button
+    class="sendBtn"
+    id="sendBtn"
+  >
     SEND
   </button>
 
 </div>
 
-
 <script>
 
 const BACKEND_URL =
-https://script.google.com/macros/s/AKfycbw_JLLyocUc5-w6p32H5OKefve1nCr97iUGKmleTJqB-QuA443PrisNr-pdgTUkbHXn/exec
+"https://script.google.com/macros/s/AKfycbw_JLLyocUc5-w6p32H5OKefve1nCr97iUGKmleTJqB-QuA443PrisNr-pdgTUkbHXn/exec";
 
 let notesModeActive = false;
 
+const input = document.getElementById("message");
+const chat = document.getElementById("chat");
+const status = document.getElementById("status");
 
-// -------------------------
-// Send message
-// -------------------------
+const sendBtn = document.getElementById("sendBtn");
+const notesBtn = document.getElementById("notesBtn");
+const newChatBtn = document.getElementById("newChatBtn");
+
+
+sendBtn.addEventListener("click", sendMessage);
+
+
+notesBtn.addEventListener("click", function() {
+
+  notesModeActive = true;
+
+  input.placeholder =
+    "📚 Enter topic for notes...";
+
+  input.focus();
+
+  status.textContent =
+    "📚 Notes Mode ON";
+
+});
+
+
+newChatBtn.addEventListener("click", function() {
+
+  notesModeActive = false;
+
+  input.placeholder =
+    "Ask JR AI anything...";
+
+  chat.innerHTML = `
+    <div class="message ai">
+      Hello! 👋
+
+      New chat started.
+
+      Main JR AI hoon. Kuch bhi pucho.
+    </div>
+  `;
+
+  status.textContent = "";
+
+});
+
+
+input.addEventListener("keydown", function(e) {
+
+  if (e.key === "Enter") {
+    sendMessage();
+  }
+
+});
+
 
 async function sendMessage() {
 
-  const input =
-    document.getElementById("message");
-
-  const chat =
-    document.getElementById("chat");
-
-  const status =
-    document.getElementById("status");
-
-  let message =
-    input.value.trim();
+  let message = input.value.trim();
 
   if (!message) return;
 
 
-  // Notes mode
   if (notesModeActive) {
 
     message =
@@ -214,10 +243,13 @@ async function sendMessage() {
       message;
 
     notesModeActive = false;
+
+    input.placeholder =
+      "Ask JR AI anything...";
+
   }
 
 
-  // User message
   const userDiv =
     document.createElement("div");
 
@@ -236,7 +268,6 @@ async function sendMessage() {
     "⏳ JR AI is thinking...";
 
 
-  // AI message
   const aiDiv =
     document.createElement("div");
 
@@ -252,79 +283,61 @@ async function sendMessage() {
   try {
 
     const response =
-      await fetch(BACKEND_URL, {
+      await fetch(
+        BACKEND_URL,
+        {
+          method: "POST",
 
-        method: "POST",
+          headers: {
+            "Content-Type":
+              "text/plain;charset=utf-8"
+          },
 
-        headers: {
-          "Content-Type":
-            "text/plain;charset=utf-8"
-        },
-
-        body: JSON.stringify({
-          message: message
-        })
-
-      });
+          body: JSON.stringify({
+            message: message
+          })
+        }
+      );
 
 
     const data =
       await response.json();
 
 
-    // Error
     if (data.error) {
 
-      let errorText;
-
-      if (typeof data.error === "object") {
-
-        errorText =
-          data.error.message ||
-          JSON.stringify(data.error);
-
-      } else {
-
-        errorText =
-          data.error;
-      }
+      let errorText =
+        typeof data.error === "object"
+        ? (
+            data.error.message ||
+            JSON.stringify(data.error)
+          )
+        : data.error;
 
       aiDiv.textContent =
         "❌ " + errorText;
 
-      status.textContent =
-        "";
+      status.textContent = "";
 
       return;
     }
 
 
-    // Check response
-    if (
-      !data.candidates ||
-      !data.candidates[0] ||
-      !data.candidates[0].content ||
-      !data.candidates[0].content.parts
-    ) {
+    if (!data.answer) {
 
       aiDiv.textContent =
         "❌ No answer received from JR AI.";
 
-      status.textContent =
-        "";
+      status.textContent = "";
 
       return;
     }
 
 
     let answer =
-      data.candidates[0]
-      .content
-      .parts[0]
-      .text;
+      data.answer;
 
 
-    // Remove stars
     answer =
       answer.replace(/\*\*/g, "");
 
@@ -345,71 +358,15 @@ async function sendMessage() {
     aiDiv.textContent =
       "❌ Connection failed.";
 
-    status.textContent =
-      "";
+    status.textContent = "";
 
   }
 
 
   chat.scrollTop =
     chat.scrollHeight;
-}
-
-
-// -------------------------
-// Notes mode
-// -------------------------
-
-function notesMode() {
-
-  notesModeActive = true;
-
-  const input =
-    document.getElementById("message");
-
-  input.placeholder =
-    "📚 Enter topic for notes...";
-
-  input.focus();
 
 }
-
-
-// -------------------------
-// New Chat
-// -------------------------
-
-function newChat() {
-
-  document.getElementById("chat").innerHTML =
-
-    `<div class="message ai">
-      Hello! 👋
-      
-      New chat started.
-
-      Main JR AI hoon. Kuch bhi pucho.
-    </div>`;
-
-  document.getElementById("status")
-    .textContent = "";
-
-}
-
-
-// -------------------------
-// Enter key
-// -------------------------
-
-document
-  .getElementById("message")
-  .addEventListener("keydown", function(e) {
-
-    if (e.key === "Enter") {
-      sendMessage();
-    }
-
-  });
 
 </script>
 
