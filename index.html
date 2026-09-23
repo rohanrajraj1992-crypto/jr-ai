@@ -1,377 +1,904 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta name="google-site-verification" content="-dDCOtYPmrHjFP5QhthoF6z-D4Y8S0IGrJxTVXVb3b0" />
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
 
-<title>JR AI - AI Assistant by Rohan Raj</title>
-<meta name="description" content="JR AI is a smart and simple AI assistant created by Rohan Raj. Ask questions, learn topics and get helpful answers.">
-<meta name="keywords" content="JR AI, Rohan Raj, AI Assistant, JR AI Assistant, smart AI assistant">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+  >
 
-<style>
-* {
-  box-sizing: border-box;
-}
+  <title>JR AI</title>
 
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f4f6f8;
-  color: #202124;
-}
+  <style>
 
-.header {
-  background: #111827;
-  color: white;
-  padding: 18px;
-  text-align: center;
-  font-size: 24px;
-  font-weight: bold;
-}
+    * {
+      box-sizing: border-box;
+    }
 
-.tools {
-  display: flex;
-  gap: 10px;
-  padding: 12px;
-  max-width: 750px;
-  margin: auto;
-}
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      min-height: 100%;
+      font-family: Arial, sans-serif;
+      background: #c6c6c6;
+      color: #202124;
+    }
 
-.toolBtn {
-  flex: 1;
-  padding: 12px;
-  border: none;
-  border-radius: 12px;
-  background: white;
-  color: #202124;
-  font-weight: bold;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-}
+    body {
+      padding-bottom: 90px;
+    }
 
-#chat {
-  max-width: 750px;
-  margin: auto;
-  padding: 10px 15px 100px;
-}
 
-.message {
-  max-width: 85%;
-  padding: 13px 16px;
-  margin: 12px 0;
-  border-radius: 17px;
-  line-height: 1.6;
-  font-size: 16px;
-  white-space: pre-wrap;
-}
+    /* ==============================
+       HEADER
+    ============================== */
 
-.user {
-  margin-left: auto;
-  background: #2563eb;
-  color: white;
-}
+    .header {
+      background: #eeeeee;
+      color: #111827;
+      padding: 16px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      border-bottom: 1px solid #d1d1d1;
+    }
 
-.ai {
-  margin-right: auto;
-  background: white;
-  color: #202124;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
-}
 
-.bottom {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: white;
-  padding: 10px;
-  display: flex;
-  gap: 8px;
-  box-shadow: 0 -2px 10px rgba(0,0,0,0.10);
-}
+    /* ==============================
+       TOOLS
+    ============================== */
 
-input {
-  flex: 1;
-  padding: 14px;
-  border: 1px solid #c9cdd2;
-  border-radius: 25px;
-  font-size: 16px;
-  color: #202124;
-  outline: none;
-}
+    .tools {
+      display: flex;
+      gap: 10px;
+      padding: 12px;
+      max-width: 750px;
+      margin: 0 auto;
+    }
 
-.sendBtn {
-  border: none;
-  border-radius: 25px;
-  padding: 0 18px;
-  background: #111827;
-  color: white;
-  font-weight: bold;
-}
+    .toolBtn {
+      flex: 1;
+      padding: 13px 10px;
+      border: 0;
+      border-radius: 14px;
+      background: #dcdcdc;
+      color: #202124;
+      font-weight: bold;
+      font-size: 15px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      cursor: pointer;
+    }
 
-.status {
-  text-align: center;
-  color: #555;
-  font-size: 14px;
-  margin: 8px;
-}
-</style>
+    .toolBtn:active {
+      transform: scale(0.98);
+    }
+
+
+    /* ==============================
+       STATUS
+    ============================== */
+
+    .status {
+      text-align: center;
+      color: #444444;
+      font-size: 14px;
+      min-height: 20px;
+      margin: 4px 10px;
+    }
+
+
+    /* ==============================
+       CHAT
+    ============================== */
+
+    #chat {
+      max-width: 750px;
+      margin: 0 auto;
+      padding: 5px 15px 25px;
+    }
+
+    .message {
+      max-width: 85%;
+      padding: 14px 16px;
+      margin: 12px 0;
+      border-radius: 18px;
+      line-height: 1.6;
+      font-size: 16px;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+
+    /* ==============================
+       WELCOME MESSAGE
+    ============================== */
+
+    .welcome {
+      max-width: 90%;
+      padding: 18px 20px;
+      margin: 15px auto;
+      line-height: 1.55;
+      font-size: 16px;
+    }
+
+    .welcome strong {
+      font-size: 18px;
+    }
+
+
+    /* ==============================
+       USER / AI
+    ============================== */
+
+    .user {
+      margin-left: auto;
+      background: #4a7fe8;
+      color: #ffffff;
+    }
+
+    .ai {
+      margin-right: auto;
+      background: #bdbdbd;
+      color: #202124;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    }
+
+
+    /* ==============================
+       BOTTOM INPUT
+    ============================== */
+
+    .bottom {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 1000;
+
+      display: flex;
+      gap: 8px;
+
+      padding: 10px;
+      padding-bottom: calc(
+        10px + env(safe-area-inset-bottom)
+      );
+
+      background: rgba(198, 198, 198, 0.96);
+
+      box-shadow:
+        0 -2px 10px rgba(0, 0, 0, 0.08);
+    }
+
+    #message {
+      flex: 1;
+      min-width: 0;
+
+      padding: 14px 16px;
+
+      border: 2px solid rgba(255, 255, 255, 0.9);
+      border-radius: 25px;
+
+      font-size: 16px;
+      color: #ffffff;
+
+      outline: none;
+      background: rgba(215, 215, 215, 0.96);
+    }
+
+    #message::placeholder {
+      color: #ffffff;
+      opacity: 1;
+    }
+
+    #message:focus {
+      border-color: #ffffff;
+      background: rgba(207, 207, 207, 0.98);
+    }
+
+
+    /* ==============================
+       SEND BUTTON
+    ============================== */
+
+    #sendBtn {
+      flex: 0 0 auto;
+
+      border: 0;
+      border-radius: 25px;
+
+      padding: 0 20px;
+
+      background: #172033;
+      color: #ffffff;
+
+      font-weight: bold;
+      font-size: 15px;
+
+      cursor: pointer;
+    }
+
+    #sendBtn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+
+    /* ==============================
+       TYPING
+    ============================== */
+
+    .typing {
+      font-size: 14px;
+      color: #555555;
+      padding: 5px 4px;
+    }
+
+
+    /* ==============================
+       MOBILE
+    ============================== */
+
+    @media (max-width: 500px) {
+
+      .header {
+        font-size: 21px;
+        padding: 14px;
+      }
+
+      .tools {
+        padding: 10px;
+      }
+
+      .toolBtn {
+        font-size: 14px;
+        padding: 12px 8px;
+      }
+
+      .message {
+        max-width: 90%;
+        font-size: 16px;
+      }
+
+      .welcome {
+        max-width: 94%;
+        padding: 17px 18px;
+        font-size: 16px;
+        line-height: 1.5;
+      }
+
+      .welcome strong {
+        font-size: 18px;
+      }
+
+      #sendBtn {
+        padding: 0 17px;
+      }
+
+    }
+
+  </style>
 </head>
+
 
 <body>
 
-<div class="header">
-  🤖 JR AI
-</div>
+  <!-- ==============================
+       HEADER
+  ============================== -->
 
-<div class="tools">
-
-  <button class="toolBtn" id="notesBtn">
-    📚 Make Notes
-  </button>
-
-  <button class="toolBtn" id="newChatBtn">
-    🧹 New Chat
-  </button>
-
-</div>
-
-<div id="status" class="status"></div>
-
-<div id="chat">
-
-  <div class="message ai">
-    Hello! 👋
-
-    Main JR AI hoon.
-
-    Kuch bhi pucho ya 📚 Make Notes dabakar kisi topic ke notes banao.
+  <div class="header">
+    🤖 JR AI
   </div>
 
-</div>
 
-<div class="bottom">
+  <!-- ==============================
+       TOOLS
+  ============================== -->
 
-  <input
-    id="message"
-    type="text"
-    placeholder="Ask JR AI anything..."
-  >
+  <div class="tools">
 
-  <button
-    class="sendBtn"
-    id="sendBtn"
-  >
-    SEND
-  </button>
+    <button
+      class="toolBtn"
+      id="notesBtn"
+      type="button"
+    >
+      📚 MAKE NOTES
+    </button>
 
-</div>
+    <button
+      class="toolBtn"
+      id="newChatBtn"
+      type="button"
+    >
+      🧹 NEW CHAT
+    </button>
 
-<script>
-
-const BACKEND_URL =
-"https://script.google.com/macros/s/AKfycbw_JLLyocUc5-w6p32H5OKefve1nCr97iUGKmleTJqB-QuA443PrisNr-pdgTUkbHXn/exec";
-
-let notesModeActive = false;
-
-const input = document.getElementById("message");
-const chat = document.getElementById("chat");
-const status = document.getElementById("status");
-
-const sendBtn = document.getElementById("sendBtn");
-const notesBtn = document.getElementById("notesBtn");
-const newChatBtn = document.getElementById("newChatBtn");
+  </div>
 
 
-sendBtn.addEventListener("click", sendMessage);
+  <!-- ==============================
+       STATUS
+  ============================== -->
+
+  <div
+    class="status"
+    id="status"
+  ></div>
 
 
-notesBtn.addEventListener("click", function() {
+  <!-- ==============================
+       CHAT
+  ============================== -->
 
-  notesModeActive = true;
+  <div id="chat">
 
-  input.placeholder =
-    "📚 Enter topic for notes...";
-
-  input.focus();
-
-  status.textContent =
-    "📚 Notes Mode ON";
-
-});
-
-
-newChatBtn.addEventListener("click", function() {
-
-  notesModeActive = false;
-
-  input.placeholder =
-    "Ask JR AI anything...";
-
-  chat.innerHTML = `
-    <div class="message ai">
-      Hello! 👋
-
-      New chat started.
-
-      Main JR AI hoon. Kuch bhi pucho.
+    <div class="message ai welcome">
+      <strong>HELLO! 👋</strong>
+      <br>
+      MAIN JR AI HOON.
+      <br>
+      KUCH BHI PUCHO YA 📚 MAKE NOTES DABAKAR KISI TOPIC KE NOTES BANAO.
     </div>
-  `;
 
-  status.textContent = "";
-
-});
+  </div>
 
 
-input.addEventListener("keydown", function(e) {
+  <!-- ==============================
+       BOTTOM INPUT
+  ============================== -->
 
-  if (e.key === "Enter") {
-    sendMessage();
-  }
+  <div
+    class="bottom"
+    id="bottomBar"
+  >
 
-});
+    <input
+      id="message"
+      type="text"
+      placeholder="Ask JR AI anything..."
+      autocomplete="off"
+      enterkeyhint="send"
+    >
 
+    <button
+      id="sendBtn"
+      type="button"
+    >
+      SEND
+    </button>
 
-async function sendMessage() {
-
-  let message = input.value.trim();
-
-  if (!message) return;
-
-
-  if (notesModeActive) {
-
-    message =
-      "Make clean student-friendly notes on this topic: " +
-      message;
-
-    notesModeActive = false;
-
-    input.placeholder =
-      "Ask JR AI anything...";
-
-  }
+  </div>
 
 
-  const userDiv =
-    document.createElement("div");
+  <script>
 
-  userDiv.className =
-    "message user";
+    // =====================================
+    // JR AI WEB APP URL
+    // =====================================
 
-  userDiv.textContent =
-    input.value;
-
-  chat.appendChild(userDiv);
+    const API_URL =
+      "https://script.google.com/macros/s/AKfycbw_JLLyocUc5-w6p32H5OKefve1nCr97iUGKmleTJqB-QuA443PrisNr-pdgTUkbHXn/exec";
 
 
-  input.value = "";
+    // =====================================
+    // ELEMENTS
+    // =====================================
 
-  status.textContent =
-    "⏳ JR AI is thinking...";
+    const chat =
+      document.getElementById("chat");
+
+    const messageInput =
+      document.getElementById("message");
+
+    const sendBtn =
+      document.getElementById("sendBtn");
+
+    const notesBtn =
+      document.getElementById("notesBtn");
+
+    const newChatBtn =
+      document.getElementById("newChatBtn");
+
+    const status =
+      document.getElementById("status");
+
+    const bottomBar =
+      document.getElementById("bottomBar");
 
 
-  const aiDiv =
-    document.createElement("div");
+    // =====================================
+    // USER ID
+    // =====================================
 
-  aiDiv.className =
-    "message ai";
+    let userId =
+      localStorage.getItem("jr_ai_user_id");
 
-  aiDiv.textContent =
-    "⏳ Thinking...";
+    if (!userId) {
 
-  chat.appendChild(aiDiv);
+      userId =
+        "user_" +
+        Date.now() +
+        "_" +
+        Math.random()
+          .toString(36)
+          .substring(2, 8);
+
+      localStorage.setItem(
+        "jr_ai_user_id",
+        userId
+      );
+
+    }
 
 
-  try {
+    // =====================================
+    // PREVENT DUPLICATE REQUESTS
+    // =====================================
 
-    const response =
-      await fetch(
-        BACKEND_URL,
-        {
-          method: "POST",
+    let isSending = false;
 
-          headers: {
-            "Content-Type":
-              "text/plain;charset=utf-8"
-          },
 
-          body: JSON.stringify({
-            message: message
-          })
-        }
+    // =====================================
+    // ADD MESSAGE
+    // =====================================
+
+    function addMessage(
+      text,
+      type
+    ) {
+
+      const div =
+        document.createElement("div");
+
+      div.className =
+        "message " + type;
+
+      div.textContent = text;
+
+      chat.appendChild(div);
+
+      scrollToBottom();
+
+      return div;
+    }
+
+
+    // =====================================
+    // SCROLL
+    // =====================================
+
+    function scrollToBottom() {
+
+      setTimeout(function () {
+
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: "smooth"
+        });
+
+      }, 50);
+
+    }
+
+
+    // =====================================
+    // STATUS
+    // =====================================
+
+    function setStatus(text) {
+
+      status.textContent = text || "";
+
+    }
+
+
+    // =====================================
+    // SEND REQUEST
+    // =====================================
+
+    async function sendMessage() {
+
+      if (isSending) {
+        return;
+      }
+
+
+      const message =
+        messageInput.value.trim();
+
+
+      if (!message) {
+        return;
+      }
+
+
+      isSending = true;
+
+      sendBtn.disabled = true;
+
+      messageInput.disabled = true;
+
+
+      addMessage(
+        message,
+        "user"
       );
 
 
-    const data =
-      await response.json();
+      messageInput.value = "";
+
+      setStatus(
+        "JR AI is thinking..."
+      );
 
 
-    if (data.error) {
+      const typing =
+        addMessage(
+          "Thinking...",
+          "ai"
+        );
 
-      let errorText =
-        typeof data.error === "object"
-        ? (
-            data.error.message ||
-            JSON.stringify(data.error)
-          )
-        : data.error;
 
-      aiDiv.textContent =
-        "❌ " + errorText;
+      const requestData = {
 
-      status.textContent = "";
+        message: message,
 
-      return;
+        userId: userId
+
+      };
+
+
+      let success = false;
+
+
+      // =====================================
+      // AUTOMATIC RETRY
+      // =====================================
+
+      for (
+        let attempt = 1;
+        attempt <= 2;
+        attempt++
+      ) {
+
+        try {
+
+          if (attempt === 2) {
+
+            setStatus(
+              "Trying again..."
+            );
+
+          }
+
+
+          const controller =
+            new AbortController();
+
+
+          const timeout =
+            setTimeout(
+              function () {
+
+                controller.abort();
+
+              },
+              30000
+            );
+
+
+          const response =
+            await fetch(
+              API_URL,
+              {
+
+                method: "POST",
+
+                headers: {
+                  "Content-Type":
+                    "text/plain;charset=utf-8"
+                },
+
+                body:
+                  JSON.stringify(
+                    requestData
+                  ),
+
+                signal:
+                  controller.signal
+
+              }
+            );
+
+
+          clearTimeout(timeout);
+
+
+          if (!response.ok) {
+
+            throw new Error(
+              "HTTP " +
+              response.status
+            );
+
+          }
+
+
+          const result =
+            await response.json();
+
+
+          if (result.error) {
+
+            let errorText =
+              result.error;
+
+
+            if (
+              typeof result.error ===
+              "object"
+            ) {
+
+              errorText =
+                result.error.message ||
+                JSON.stringify(
+                  result.error
+                );
+
+            }
+
+
+            throw new Error(
+              errorText
+            );
+
+          }
+
+
+          if (!result.answer) {
+
+            throw new Error(
+              "No answer received."
+            );
+
+          }
+
+
+          typing.remove();
+
+
+          addMessage(
+            result.answer,
+            "ai"
+          );
+
+
+          setStatus("");
+
+          success = true;
+
+          break;
+
+
+        } catch (error) {
+
+          if (attempt === 1) {
+
+            await new Promise(
+              function (resolve) {
+
+                setTimeout(
+                  resolve,
+                  1200
+                );
+
+              }
+            );
+
+          }
+
+        }
+
+      }
+
+
+      // =====================================
+      // FINAL ERROR
+      // =====================================
+
+      if (!success) {
+
+        typing.remove();
+
+
+        addMessage(
+          "❌ CONNECTION FAILED.\n\nPLEASE TRY AGAIN.",
+          "ai"
+        );
+
+
+        setStatus("");
+
+      }
+
+
+      // =====================================
+      // ENABLE AGAIN
+      // =====================================
+
+      isSending = false;
+
+      sendBtn.disabled = false;
+
+      messageInput.disabled = false;
+
+      messageInput.focus();
+
+      scrollToBottom();
+
     }
 
 
-    if (!data.answer) {
+    // =====================================
+    // SEND BUTTON
+    // =====================================
 
-      aiDiv.textContent =
-        "❌ No answer received from JR AI.";
+    sendBtn.addEventListener(
+      "click",
+      sendMessage
+    );
 
-      status.textContent = "";
 
-      return;
+    // =====================================
+    // ENTER TO SEND
+    // =====================================
+
+    messageInput.addEventListener(
+      "keydown",
+      function (event) {
+
+        if (
+          event.key === "Enter" &&
+          !event.shiftKey
+        ) {
+
+          event.preventDefault();
+
+          sendMessage();
+
+        }
+
+      }
+    );
+
+
+    // =====================================
+    // MAKE NOTES
+    // =====================================
+
+    notesBtn.addEventListener(
+      "click",
+      function () {
+
+        if (isSending) {
+          return;
+        }
+
+        messageInput.value =
+          "Make detailed notes on ";
+
+        messageInput.focus();
+
+      }
+    );
+
+
+    // =====================================
+    // NEW CHAT
+    // =====================================
+
+    newChatBtn.addEventListener(
+      "click",
+      function () {
+
+        if (isSending) {
+          return;
+        }
+
+
+        chat.innerHTML = `
+
+          <div class="message ai welcome">
+
+            <strong>HELLO! 👋</strong>
+            <br>
+            MAIN JR AI HOON.
+            <br>
+            KUCH BHI PUCHO YA 📚 MAKE NOTES DABAKAR KISI TOPIC KE NOTES BANAO.
+
+          </div>
+
+        `;
+
+
+        messageInput.value = "";
+
+        setStatus("");
+
+        messageInput.focus();
+
+        scrollToBottom();
+
+      }
+    );
+
+
+    // =====================================
+    // MOBILE KEYBOARD FIX
+    // =====================================
+
+    if (window.visualViewport) {
+
+      function adjustKeyboard() {
+
+        const viewport =
+          window.visualViewport;
+
+
+        const keyboardHeight =
+          Math.max(
+            0,
+            window.innerHeight -
+            viewport.height -
+            viewport.offsetTop
+          );
+
+
+        if (keyboardHeight > 0) {
+
+          bottomBar.style.bottom =
+            keyboardHeight + "px";
+
+        } else {
+
+          bottomBar.style.bottom =
+            "0px";
+
+        }
+
+      }
+
+
+      window.visualViewport.addEventListener(
+        "resize",
+        adjustKeyboard
+      );
+
+
+      window.visualViewport.addEventListener(
+        "scroll",
+        adjustKeyboard
+      );
+
+
+      adjustKeyboard();
+
     }
 
 
-    let answer =
-      data.answer;
+    // =====================================
+    // INITIAL
+    // =====================================
 
+    setStatus("");
 
-    answer =
-      answer.replace(/\*\*/g, "");
-
-    answer =
-      answer.replace(/\*/g, "");
-
-
-    aiDiv.textContent =
-      answer;
-
-
-    status.textContent =
-      "✅ Answer ready";
-
-
-  } catch (error) {
-
-    aiDiv.textContent =
-      "❌ Connection failed.";
-
-    status.textContent = "";
-
-  }
-
-
-  chat.scrollTop =
-    chat.scrollHeight;
-
-}
-
-</script>
+  </script>
 
 </body>
-</html>
+
+  </html>
