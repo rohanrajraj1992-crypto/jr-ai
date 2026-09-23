@@ -1,904 +1,1594 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-  >
-
-  <title>JR AI</title>
-
-  <style>
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html,
-    body {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      min-height: 100%;
-      font-family: Arial, sans-serif;
-      background: #c6c6c6;
-      color: #202124;
-    }
-
-    body {
-      padding-bottom: 90px;
-    }
-
-
-    /* ==============================
-       HEADER
-    ============================== */
-
-    .header {
-      background: #eeeeee;
-      color: #111827;
-      padding: 16px;
-      text-align: center;
-      font-size: 24px;
-      font-weight: bold;
-      border-bottom: 1px solid #d1d1d1;
-    }
-
-
-    /* ==============================
-       TOOLS
-    ============================== */
-
-    .tools {
-      display: flex;
-      gap: 10px;
-      padding: 12px;
-      max-width: 750px;
-      margin: 0 auto;
-    }
-
-    .toolBtn {
-      flex: 1;
-      padding: 13px 10px;
-      border: 0;
-      border-radius: 14px;
-      background: #dcdcdc;
-      color: #202124;
-      font-weight: bold;
-      font-size: 15px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-      cursor: pointer;
-    }
-
-    .toolBtn:active {
-      transform: scale(0.98);
-    }
-
-
-    /* ==============================
-       STATUS
-    ============================== */
-
-    .status {
-      text-align: center;
-      color: #444444;
-      font-size: 14px;
-      min-height: 20px;
-      margin: 4px 10px;
-    }
-
-
-    /* ==============================
-       CHAT
-    ============================== */
-
-    #chat {
-      max-width: 750px;
-      margin: 0 auto;
-      padding: 5px 15px 25px;
-    }
-
-    .message {
-      max-width: 85%;
-      padding: 14px 16px;
-      margin: 12px 0;
-      border-radius: 18px;
-      line-height: 1.6;
-      font-size: 16px;
-      white-space: pre-wrap;
-      overflow-wrap: anywhere;
-      word-break: break-word;
-    }
-
-
-    /* ==============================
-       WELCOME MESSAGE
-    ============================== */
-
-    .welcome {
-      max-width: 90%;
-      padding: 18px 20px;
-      margin: 15px auto;
-      line-height: 1.55;
-      font-size: 16px;
-    }
-
-    .welcome strong {
-      font-size: 18px;
-    }
-
-
-    /* ==============================
-       USER / AI
-    ============================== */
-
-    .user {
-      margin-left: auto;
-      background: #4a7fe8;
-      color: #ffffff;
-    }
-
-    .ai {
-      margin-right: auto;
-      background: #bdbdbd;
-      color: #202124;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-    }
-
-
-    /* ==============================
-       BOTTOM INPUT
-    ============================== */
-
-    .bottom {
-      position: fixed;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      z-index: 1000;
-
-      display: flex;
-      gap: 8px;
-
-      padding: 10px;
-      padding-bottom: calc(
-        10px + env(safe-area-inset-bottom)
-      );
-
-      background: rgba(198, 198, 198, 0.96);
-
-      box-shadow:
-        0 -2px 10px rgba(0, 0, 0, 0.08);
-    }
-
-    #message {
-      flex: 1;
-      min-width: 0;
-
-      padding: 14px 16px;
-
-      border: 2px solid rgba(255, 255, 255, 0.9);
-      border-radius: 25px;
-
-      font-size: 16px;
-      color: #ffffff;
-
-      outline: none;
-      background: rgba(215, 215, 215, 0.96);
-    }
-
-    #message::placeholder {
-      color: #ffffff;
-      opacity: 1;
-    }
-
-    #message:focus {
-      border-color: #ffffff;
-      background: rgba(207, 207, 207, 0.98);
-    }
-
-
-    /* ==============================
-       SEND BUTTON
-    ============================== */
-
-    #sendBtn {
-      flex: 0 0 auto;
-
-      border: 0;
-      border-radius: 25px;
-
-      padding: 0 20px;
-
-      background: #172033;
-      color: #ffffff;
-
-      font-weight: bold;
-      font-size: 15px;
-
-      cursor: pointer;
-    }
-
-    #sendBtn:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
-
-
-    /* ==============================
-       TYPING
-    ============================== */
-
-    .typing {
-      font-size: 14px;
-      color: #555555;
-      padding: 5px 4px;
-    }
-
-
-    /* ==============================
-       MOBILE
-    ============================== */
-
-    @media (max-width: 500px) {
-
-      .header {
-        font-size: 21px;
-        padding: 14px;
-      }
-
-      .tools {
-        padding: 10px;
-      }
-
-      .toolBtn {
-        font-size: 14px;
-        padding: 12px 8px;
-      }
-
-      .message {
-        max-width: 90%;
-        font-size: 16px;
-      }
-
-      .welcome {
-        max-width: 94%;
-        padding: 17px 18px;
-        font-size: 16px;
-        line-height: 1.5;
-      }
-
-      .welcome strong {
-        font-size: 18px;
-      }
-
-      #sendBtn {
-        padding: 0 17px;
-      }
-
-    }
-
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JR AI</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: Arial, sans-serif;
+  background: #c6c6c6;
+}
+
+body.dark {
+  background: #181818;
+}
+
+.app {
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* HEADER */
+.header {
+  height: 58px;
+  min-height: 58px;
+  background: #eeeeee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border-bottom: 1px solid #aaa;
+}
+
+body.dark .header {
+  background: #252525;
+  color: white;
+  border-bottom-color: #444;
+}
+
+.header-title {
+  font-size: 21px;
+  font-weight: bold;
+}
+
+/* MENU BUTTON */
+.menu-btn {
+  position: absolute;
+  left: 12px;
+  top: 9px;
+  width: 42px;
+  height: 40px;
+  border: none;
+  background: transparent;
+  font-size: 27px;
+  cursor: pointer;
+  color: #222;
+}
+
+body.dark .menu-btn {
+  color: white;
+}
+
+/* SIDE MENU */
+.menu {
+  position: fixed;
+  top: 0;
+  left: -285px;
+  width: 285px;
+  height: 100%;
+  background: #eeeeee;
+  z-index: 1000;
+  transition: left 0.25s ease;
+  box-shadow: 3px 0 12px rgba(0,0,0,0.25);
+  padding-top: 20px;
+}
+
+.menu.open {
+  left: 0;
+}
+
+body.dark .menu {
+  background: #252525;
+  color: white;
+}
+
+.menu-title {
+  font-size: 22px;
+  font-weight: bold;
+  padding: 15px 20px;
+  border-bottom: 1px solid #bbb;
+}
+
+body.dark .menu-title {
+  border-bottom-color: #444;
+}
+
+.menu-item {
+  width: 100%;
+  border: none;
+  background: transparent;
+  padding: 17px 20px;
+  text-align: left;
+  font-size: 16px;
+  cursor: pointer;
+  color: #222;
+}
+
+.menu-item:hover {
+  background: #d5d5d5;
+}
+
+body.dark .menu-item {
+  color: white;
+}
+
+body.dark .menu-item:hover {
+  background: #333;
+}
+
+.close-menu {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  border: none;
+  background: transparent;
+  font-size: 25px;
+  cursor: pointer;
+  color: inherit;
+}
+
+/* OVERLAY */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  z-index: 900;
+  display: none;
+}
+
+.overlay.show {
+  display: block;
+}
+
+/* TOOLS */
+.tools {
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  background: #d0d0d0;
+  border-bottom: 1px solid #aaa;
+}
+
+body.dark .tools {
+  background: #202020;
+  border-bottom-color: #444;
+}
+
+.tool-btn {
+  flex: 1;
+  padding: 11px 5px;
+  border: none;
+  border-radius: 7px;
+  background: #eeeeee;
+  font-weight: bold;
+  cursor: pointer;
+  color: #222;
+}
+
+body.dark .tool-btn {
+  background: #333;
+  color: white;
+}
+
+/* CHAT */
+.chat {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+  scroll-behavior: smooth;
+}
+
+.message {
+  max-width: 88%;
+  padding: 11px 13px;
+  margin-bottom: 10px;
+  border-radius: 12px;
+  line-height: 1.45;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-size: 15px;
+}
+
+.message.ai {
+  background: #bdbdbd;
+  color: #111;
+  margin-right: auto;
+}
+
+.message.user {
+  background: #4a7fe8;
+  color: white;
+  margin-left: auto;
+}
+
+body.dark .message.ai {
+  background: #333;
+  color: white;
+}
+
+/* TYPING */
+.typing {
+  display: flex;
+  gap: 5px;
+  padding: 11px 14px;
+  width: fit-content;
+  background: #bdbdbd;
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+
+body.dark .typing {
+  background: #333;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  background: #555;
+  border-radius: 50%;
+  animation: blink 1.2s infinite;
+}
+
+body.dark .dot {
+  background: #ddd;
+}
+
+.dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes blink {
+  0%, 80%, 100% {
+    opacity: 0.25;
+    transform: translateY(0);
+  }
+
+  40% {
+    opacity: 1;
+    transform: translateY(-3px);
+  }
+}
+
+/* INPUT AREA */
+.bottom {
+  display: flex;
+  gap: 7px;
+  padding: 8px;
+  background: #999999;
+}
+
+body.dark .bottom {
+  background: #151515;
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  border-radius: 8px;
+  padding: 12px;
+  background: #777777;
+  color: white;
+  font-size: 15px;
+}
+
+.input::placeholder {
+  color: #dddddd;
+}
+
+.send-btn {
+  width: 75px;
+  border: none;
+  border-radius: 8px;
+  background: #333333;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.send-btn:disabled {
+  opacity: 0.5;
+}
+
+/* HISTORY */
+.history-panel {
+  position: fixed;
+  inset: 0;
+  background: #c6c6c6;
+  z-index: 1100;
+  display: none;
+  flex-direction: column;
+}
+
+.history-panel.show {
+  display: flex;
+}
+
+body.dark .history-panel {
+  background: #181818;
+  color: white;
+}
+
+.history-header {
+  height: 58px;
+  min-height: 58px;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  background: #eeeeee;
+  border-bottom: 1px solid #aaa;
+}
+
+body.dark .history-header {
+  background: #252525;
+  border-bottom-color: #444;
+}
+
+.history-header h2 {
+  flex: 1;
+  margin: 0;
+  font-size: 20px;
+}
+
+.back-btn {
+  border: none;
+  background: transparent;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.history-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+}
+
+.history-card {
+  background: #eeeeee;
+  padding: 13px;
+  border-radius: 9px;
+  margin-bottom: 9px;
+  cursor: pointer;
+}
+
+.history-card:hover {
+  background: #dddddd;
+}
+
+body.dark .history-card {
+  background: #292929;
+}
+
+body.dark .history-card:hover {
+  background: #333;
+}
+
+.history-title {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.history-preview {
+  font-size: 13px;
+  opacity: 0.75;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.no-history {
+  text-align: center;
+  opacity: 0.7;
+  padding: 30px;
+}
+</style>
 </head>
-
 
 <body>
 
-  <!-- ==============================
-       HEADER
-  ============================== -->
+<div class="app">
 
+  <!-- HEADER -->
   <div class="header">
-    🤖 JR AI
+    <button class="menu-btn" id="menuBtn">☰</button>
+    <div class="header-title">🤖 JR AI</div>
   </div>
 
-
-  <!-- ==============================
-       TOOLS
-  ============================== -->
-
+  <!-- TOOLS -->
   <div class="tools">
-
-    <button
-      class="toolBtn"
-      id="notesBtn"
-      type="button"
-    >
-      📚 MAKE NOTES
-    </button>
-
-    <button
-      class="toolBtn"
-      id="newChatBtn"
-      type="button"
-    >
-      🧹 NEW CHAT
-    </button>
-
+    <button class="tool-btn" id="notesBtn">📚 MAKE NOTES</button>
+    <button class="tool-btn" id="newChatBtn">🧹 NEW CHAT</button>
   </div>
 
+  <!-- CHAT -->
+  <div class="chat" id="chat"></div>
 
-  <!-- ==============================
-       STATUS
-  ============================== -->
-
-  <div
-    class="status"
-    id="status"
-  ></div>
-
-
-  <!-- ==============================
-       CHAT
-  ============================== -->
-
-  <div id="chat">
-
-    <div class="message ai welcome">
-      <strong>HELLO! 👋</strong>
-      <br>
-      MAIN JR AI HOON.
-      <br>
-      KUCH BHI PUCHO YA 📚 MAKE NOTES DABAKAR KISI TOPIC KE NOTES BANAO.
-    </div>
-
-  </div>
-
-
-  <!-- ==============================
-       BOTTOM INPUT
-  ============================== -->
-
-  <div
-    class="bottom"
-    id="bottomBar"
-  >
-
+  <!-- INPUT -->
+  <div class="bottom">
     <input
-      id="message"
+      id="messageInput"
+      class="input"
       type="text"
-      placeholder="Ask JR AI anything..."
+      placeholder="Ask anything..."
       autocomplete="off"
-      enterkeyhint="send"
     >
-
-    <button
-      id="sendBtn"
-      type="button"
-    >
-      SEND
-    </button>
-
+    <button id="sendBtn" class="send-btn">SEND</button>
   </div>
 
+</div>
 
-  <script>
+<!-- MENU -->
+<div class="overlay" id="overlay"></div>
 
-    // =====================================
-    // JR AI WEB APP URL
-    // =====================================
+<div class="menu" id="sideMenu">
 
-    const API_URL =
-      "https://script.google.com/macros/s/AKfycbw_JLLyocUc5-w6p32H5OKefve1nCr97iUGKmleTJqB-QuA443PrisNr-pdgTUkbHXn/exec";
+  <button class="close-menu" id="closeMenu">×</button>
+
+  <div class="menu-title">🤖 JR AI</div>
+
+  <button class="menu-item" id="historyBtn">
+    🕘 Chat History
+  </button>
+
+  <button class="menu-item" id="shareBtn">
+    📤 Share Chat
+  </button>
+
+  <button class="menu-item" id="menuNewChatBtn">
+    🧹 New Chat
+  </button>
+
+  <button class="menu-item" id="themeBtn">
+    🌙 Dark / ☀️ Light
+  </button>
+
+  <button class="menu-item" id="clearHistoryBtn">
+    🗑️ Clear History
+  </button>
+
+  <button class="menu-item" id="settingsBtn">
+    ⚙️ Settings
+  </button>
+
+  <button class="menu-item" id="aboutBtn">
+    ℹ️ About JR AI
+  </button>
+
+</div>
+
+<!-- HISTORY PANEL -->
+<div class="history-panel" id="historyPanel">
+
+  <div class="history-header">
+    <button class="back-btn" id="historyBack">←</button>
+    <h2>🕘 Chat History</h2>
+  </div>
+
+  <div class="history-list" id="historyList"></div>
+
+</div>
 
 
-    // =====================================
-    // ELEMENTS
-    // =====================================
+<script>
 
-    const chat =
-      document.getElementById("chat");
+/* =========================================
+   JR AI CONFIG
+========================================= */
 
-    const messageInput =
-      document.getElementById("message");
-
-    const sendBtn =
-      document.getElementById("sendBtn");
-
-    const notesBtn =
-      document.getElementById("notesBtn");
-
-    const newChatBtn =
-      document.getElementById("newChatBtn");
-
-    const status =
-      document.getElementById("status");
-
-    const bottomBar =
-      document.getElementById("bottomBar");
+const API_URL =
+"https://script.google.com/macros/s/AKfycbw_JLLyocUc5-w6p32H5OKefve1nCr97iUGKmleTJqB-QuA443PrisNr-pdgTUkbHXn/exec";
 
 
-    // =====================================
-    // USER ID
-    // =====================================
+/* =========================================
+   ELEMENTS
+========================================= */
 
-    let userId =
-      localStorage.getItem("jr_ai_user_id");
+const chat = document.getElementById("chat");
+const messageInput = document.getElementById("messageInput");
+const sendBtn = document.getElementById("sendBtn");
 
-    if (!userId) {
+const menuBtn = document.getElementById("menuBtn");
+const closeMenu = document.getElementById("closeMenu");
+const sideMenu = document.getElementById("sideMenu");
+const overlay = document.getElementById("overlay");
 
-      userId =
-        "user_" +
-        Date.now() +
-        "_" +
-        Math.random()
-          .toString(36)
-          .substring(2, 8);
+const notesBtn = document.getElementById("notesBtn");
+const newChatBtn = document.getElementById("newChatBtn");
 
-      localStorage.setItem(
-        "jr_ai_user_id",
-        userId
-      );
+const historyBtn = document.getElementById("historyBtn");
+const shareBtn = document.getElementById("shareBtn");
+const menuNewChatBtn = document.getElementById("menuNewChatBtn");
+const themeBtn = document.getElementById("themeBtn");
+const clearHistoryBtn = document.getElementById("clearHistoryBtn");
+const settingsBtn = document.getElementById("settingsBtn");
+const aboutBtn = document.getElementById("aboutBtn");
+
+const historyPanel = document.getElementById("historyPanel");
+const historyList = document.getElementById("historyList");
+const historyBack = document.getElementById("historyBack");
+
+
+/* =========================================
+   VARIABLES
+========================================= */
+
+let isSending = false;
+
+let currentChat = [];
+
+let savedChats = [];
+
+let currentChatId = null;
+
+const HISTORY_KEY = "jr_ai_chat_history";
+
+const USER_KEY = "jr_ai_user_id";
+
+let userId = localStorage.getItem(USER_KEY);
+
+if (!userId) {
+
+  userId =
+    "user_" +
+    Date.now() +
+    "_" +
+    Math.random().toString(36).slice(2);
+
+  localStorage.setItem(USER_KEY, userId);
+}
+
+
+/* =========================================
+   HISTORY
+========================================= */
+
+function loadHistory() {
+
+  try {
+
+    const data =
+      localStorage.getItem(HISTORY_KEY);
+
+    if (data) {
+
+      savedChats = JSON.parse(data);
+
+      if (!Array.isArray(savedChats)) {
+        savedChats = [];
+      }
+
+    } else {
+
+      savedChats = [];
 
     }
 
+  } catch (error) {
 
-    // =====================================
-    // PREVENT DUPLICATE REQUESTS
-    // =====================================
+    savedChats = [];
 
-    let isSending = false;
+  }
+}
 
 
-    // =====================================
-    // ADD MESSAGE
-    // =====================================
+function saveHistory() {
 
-    function addMessage(
-      text,
-      type
-    ) {
+  localStorage.setItem(
+    HISTORY_KEY,
+    JSON.stringify(savedChats)
+  );
 
-      const div =
+}
+
+
+function saveCurrentChat() {
+
+  if (currentChat.length === 0) {
+    return;
+  }
+
+  const firstUserMessage =
+    currentChat.find(function(item) {
+      return item.type === "user";
+    });
+
+  const title =
+    firstUserMessage
+      ? firstUserMessage.text.slice(0, 45)
+      : "JR AI Chat";
+
+  const chatData = {
+
+    id: currentChatId || Date.now().toString(),
+
+    title: title,
+
+    messages: currentChat,
+
+    updatedAt: Date.now()
+
+  };
+
+
+  currentChatId = chatData.id;
+
+
+  const existingIndex =
+    savedChats.findIndex(function(item) {
+
+      return item.id === currentChatId;
+
+    });
+
+
+  if (existingIndex >= 0) {
+
+    savedChats[existingIndex] = chatData;
+
+  } else {
+
+    savedChats.unshift(chatData);
+
+  }
+
+
+  saveHistory();
+
+}
+
+
+function renderHistory() {
+
+  historyList.innerHTML = "";
+
+
+  if (savedChats.length === 0) {
+
+    const empty =
+      document.createElement("div");
+
+    empty.className = "no-history";
+
+    empty.textContent =
+      "No chat history yet.";
+
+    historyList.appendChild(empty);
+
+    return;
+
+  }
+
+
+  savedChats
+    .slice()
+    .sort(function(a, b) {
+
+      return (b.updatedAt || 0) -
+             (a.updatedAt || 0);
+
+    })
+    .forEach(function(item) {
+
+      const card =
         document.createElement("div");
 
-      div.className =
-        "message " + type;
+      card.className =
+        "history-card";
 
-      div.textContent = text;
 
-      chat.appendChild(div);
+      const title =
+        document.createElement("div");
 
-      scrollToBottom();
+      title.className =
+        "history-title";
 
-      return div;
+      title.textContent =
+        item.title || "JR AI Chat";
+
+
+      const preview =
+        document.createElement("div");
+
+      preview.className =
+        "history-preview";
+
+
+      const lastMessage =
+        item.messages &&
+        item.messages.length
+          ? item.messages[item.messages.length - 1]
+          : null;
+
+
+      preview.textContent =
+        lastMessage
+          ? lastMessage.text
+          : "Empty chat";
+
+
+      card.appendChild(title);
+
+      card.appendChild(preview);
+
+
+      card.addEventListener(
+        "click",
+        function() {
+
+          openSavedChat(item.id);
+
+        }
+      );
+
+
+      historyList.appendChild(card);
+
+    });
+
+}
+
+
+function openSavedChat(id) {
+
+  const found =
+    savedChats.find(function(item) {
+
+      return item.id === id;
+
+    });
+
+
+  if (!found) {
+    return;
+  }
+
+
+  currentChatId = found.id;
+
+  currentChat =
+    Array.isArray(found.messages)
+      ? JSON.parse(JSON.stringify(found.messages))
+      : [];
+
+
+  chat.innerHTML = "";
+
+
+  currentChat.forEach(function(item) {
+
+    addMessage(
+      item.text,
+      item.type,
+      false
+    );
+
+  });
+
+
+  closeHistory();
+
+  closeSideMenu();
+
+  scrollToBottom();
+
+}
+
+
+/* =========================================
+   CHAT UI
+========================================= */
+
+function addMessage(
+  text,
+  type,
+  shouldRecord = true
+) {
+
+  const message =
+    document.createElement("div");
+
+  message.className =
+    "message " + type;
+
+
+  message.textContent = text;
+
+
+  chat.appendChild(message);
+
+
+  if (shouldRecord) {
+
+    currentChat.push({
+
+      type: type,
+
+      text: text
+
+    });
+
+  }
+
+
+  scrollToBottom();
+
+}
+
+
+function showWelcome() {
+
+  chat.innerHTML = "";
+
+  currentChat = [];
+
+  currentChatId = null;
+
+
+  addMessage(
+    "HELLO! 👋\nMAIN JR AI HOON.\nKUCH BHI PUCHO YA 📚 MAKE NOTES DABAKAR KISI TOPIC KE NOTES BANAO.",
+    "ai",
+    false
+  );
+
+}
+
+
+function showTyping() {
+
+  const typing =
+    document.createElement("div");
+
+  typing.className = "typing";
+
+  typing.id = "typingIndicator";
+
+
+  for (let i = 0; i < 3; i++) {
+
+    const dot =
+      document.createElement("div");
+
+    dot.className = "dot";
+
+    typing.appendChild(dot);
+
+  }
+
+
+  chat.appendChild(typing);
+
+  scrollToBottom();
+
+}
+
+
+function hideTyping() {
+
+  const typing =
+    document.getElementById(
+      "typingIndicator"
+    );
+
+  if (typing) {
+
+    typing.remove();
+
+  }
+
+}
+
+
+function scrollToBottom() {
+
+  requestAnimationFrame(function() {
+
+    chat.scrollTop =
+      chat.scrollHeight;
+
+  });
+
+}
+
+
+/* =========================================
+   SEND MESSAGE
+========================================= */
+
+async function sendMessage() {
+
+  if (isSending) {
+    return;
+  }
+
+
+  const message =
+    messageInput.value.trim();
+
+
+  if (!message) {
+    return;
+  }
+
+
+  isSending = true;
+
+  sendBtn.disabled = true;
+
+  messageInput.disabled = true;
+
+
+  addMessage(
+    message,
+    "user",
+    true
+  );
+
+
+  messageInput.value = "";
+
+  showTyping();
+
+
+  const controller =
+    new AbortController();
+
+
+  const timeout =
+    setTimeout(function() {
+
+      controller.abort();
+
+    }, 30000);
+
+
+  try {
+
+    const response =
+      await fetch(
+        API_URL,
+        {
+
+          method: "POST",
+
+          headers: {
+            "Content-Type":
+              "text/plain;charset=utf-8"
+          },
+
+          body: JSON.stringify({
+
+            message: message,
+
+            userId: userId
+
+          }),
+
+          signal: controller.signal
+
+        }
+      );
+
+
+    clearTimeout(timeout);
+
+
+    if (!response.ok) {
+
+      throw new Error(
+        "Server error: " +
+        response.status
+      );
+
     }
 
 
-    // =====================================
-    // SCROLL
-    // =====================================
-
-    function scrollToBottom() {
-
-      setTimeout(function () {
-
-        window.scrollTo({
-          top: document.body.scrollHeight,
-          behavior: "smooth"
-        });
-
-      }, 50);
-
-    }
+    const data =
+      await response.json();
 
 
-    // =====================================
-    // STATUS
-    // =====================================
-
-    function setStatus(text) {
-
-      status.textContent = text || "";
-
-    }
+    hideTyping();
 
 
-    // =====================================
-    // SEND REQUEST
-    // =====================================
-
-    async function sendMessage() {
-
-      if (isSending) {
-        return;
-      }
-
-
-      const message =
-        messageInput.value.trim();
-
-
-      if (!message) {
-        return;
-      }
-
-
-      isSending = true;
-
-      sendBtn.disabled = true;
-
-      messageInput.disabled = true;
-
+    if (data.error) {
 
       addMessage(
-        message,
-        "user"
+        "⚠️ " + data.error,
+        "ai",
+        false
       );
 
-
-      messageInput.value = "";
-
-      setStatus(
-        "JR AI is thinking..."
-      );
-
-
-      const typing =
-        addMessage(
-          "Thinking...",
-          "ai"
-        );
-
-
-      const requestData = {
-
-        message: message,
-
-        userId: userId
-
-      };
-
-
-      let success = false;
-
-
-      // =====================================
-      // AUTOMATIC RETRY
-      // =====================================
-
-      for (
-        let attempt = 1;
-        attempt <= 2;
-        attempt++
-      ) {
-
-        try {
-
-          if (attempt === 2) {
-
-            setStatus(
-              "Trying again..."
-            );
-
-          }
-
-
-          const controller =
-            new AbortController();
-
-
-          const timeout =
-            setTimeout(
-              function () {
-
-                controller.abort();
-
-              },
-              30000
-            );
-
-
-          const response =
-            await fetch(
-              API_URL,
-              {
-
-                method: "POST",
-
-                headers: {
-                  "Content-Type":
-                    "text/plain;charset=utf-8"
-                },
-
-                body:
-                  JSON.stringify(
-                    requestData
-                  ),
-
-                signal:
-                  controller.signal
-
-              }
-            );
-
-
-          clearTimeout(timeout);
-
-
-          if (!response.ok) {
-
-            throw new Error(
-              "HTTP " +
-              response.status
-            );
-
-          }
-
-
-          const result =
-            await response.json();
-
-
-          if (result.error) {
-
-            let errorText =
-              result.error;
-
-
-            if (
-              typeof result.error ===
-              "object"
-            ) {
-
-              errorText =
-                result.error.message ||
-                JSON.stringify(
-                  result.error
-                );
-
-            }
-
-
-            throw new Error(
-              errorText
-            );
-
-          }
-
-
-          if (!result.answer) {
-
-            throw new Error(
-              "No answer received."
-            );
-
-          }
-
-
-          typing.remove();
-
-
-          addMessage(
-            result.answer,
-            "ai"
-          );
-
-
-          setStatus("");
-
-          success = true;
-
-          break;
-
-
-        } catch (error) {
-
-          if (attempt === 1) {
-
-            await new Promise(
-              function (resolve) {
-
-                setTimeout(
-                  resolve,
-                  1200
-                );
-
-              }
-            );
-
-          }
-
-        }
-
-      }
-
-
-      // =====================================
-      // FINAL ERROR
-      // =====================================
-
-      if (!success) {
-
-        typing.remove();
-
-
-        addMessage(
-          "❌ CONNECTION FAILED.\n\nPLEASE TRY AGAIN.",
-          "ai"
-        );
-
-
-        setStatus("");
-
-      }
-
-
-      // =====================================
-      // ENABLE AGAIN
-      // =====================================
-
-      isSending = false;
-
-      sendBtn.disabled = false;
-
-      messageInput.disabled = false;
-
-      messageInput.focus();
-
-      scrollToBottom();
+      return;
 
     }
 
 
-    // =====================================
-    // SEND BUTTON
-    // =====================================
-
-    sendBtn.addEventListener(
-      "click",
-      sendMessage
-    );
+    const answer =
+      String(
+        data.answer || ""
+      ).trim();
 
 
-    // =====================================
-    // ENTER TO SEND
-    // =====================================
+    if (!answer) {
 
-    messageInput.addEventListener(
-      "keydown",
-      function (event) {
-
-        if (
-          event.key === "Enter" &&
-          !event.shiftKey
-        ) {
-
-          event.preventDefault();
-
-          sendMessage();
-
-        }
-
-      }
-    );
-
-
-    // =====================================
-    // MAKE NOTES
-    // =====================================
-
-    notesBtn.addEventListener(
-      "click",
-      function () {
-
-        if (isSending) {
-          return;
-        }
-
-        messageInput.value =
-          "Make detailed notes on ";
-
-        messageInput.focus();
-
-      }
-    );
-
-
-    // =====================================
-    // NEW CHAT
-    // =====================================
-
-    newChatBtn.addEventListener(
-      "click",
-      function () {
-
-        if (isSending) {
-          return;
-        }
-
-
-        chat.innerHTML = `
-
-          <div class="message ai welcome">
-
-            <strong>HELLO! 👋</strong>
-            <br>
-            MAIN JR AI HOON.
-            <br>
-            KUCH BHI PUCHO YA 📚 MAKE NOTES DABAKAR KISI TOPIC KE NOTES BANAO.
-
-          </div>
-
-        `;
-
-
-        messageInput.value = "";
-
-        setStatus("");
-
-        messageInput.focus();
-
-        scrollToBottom();
-
-      }
-    );
-
-
-    // =====================================
-    // MOBILE KEYBOARD FIX
-    // =====================================
-
-    if (window.visualViewport) {
-
-      function adjustKeyboard() {
-
-        const viewport =
-          window.visualViewport;
-
-
-        const keyboardHeight =
-          Math.max(
-            0,
-            window.innerHeight -
-            viewport.height -
-            viewport.offsetTop
-          );
-
-
-        if (keyboardHeight > 0) {
-
-          bottomBar.style.bottom =
-            keyboardHeight + "px";
-
-        } else {
-
-          bottomBar.style.bottom =
-            "0px";
-
-        }
-
-      }
-
-
-      window.visualViewport.addEventListener(
-        "resize",
-        adjustKeyboard
+      addMessage(
+        "⚠️ AI ne empty response diya. Please try again.",
+        "ai",
+        false
       );
 
-
-      window.visualViewport.addEventListener(
-        "scroll",
-        adjustKeyboard
-      );
-
-
-      adjustKeyboard();
+      return;
 
     }
 
 
-    // =====================================
-    // INITIAL
-    // =====================================
+    addMessage(
+      answer,
+      "ai",
+      true
+    );
 
-    setStatus("");
 
-  </script>
+    saveCurrentChat();
+
+
+  } catch (error) {
+
+    clearTimeout(timeout);
+
+    hideTyping();
+
+
+    let errorText =
+      "⚠️ Kuch problem aa gayi. Please try again.";
+
+
+    if (
+      error &&
+      error.name === "AbortError"
+    ) {
+
+      errorText =
+        "⚠️ Request timeout ho gaya. Please try again.";
+
+    }
+
+
+    addMessage(
+      errorText,
+      "ai",
+      false
+    );
+
+
+  } finally {
+
+    isSending = false;
+
+    sendBtn.disabled = false;
+
+    messageInput.disabled = false;
+
+    messageInput.focus();
+
+  }
+
+}
+
+
+/* =========================================
+   NEW CHAT
+========================================= */
+
+function startNewChat() {
+
+  if (isSending) {
+    return;
+  }
+
+
+  chat.innerHTML = "";
+
+  currentChat = [];
+
+  currentChatId = null;
+
+
+  showWelcome();
+
+
+  closeSideMenu();
+
+  closeHistory();
+
+  messageInput.value = "";
+
+  messageInput.focus();
+
+}
+
+
+/* =========================================
+   NOTES
+========================================= */
+
+function startNotes() {
+
+  if (isSending) {
+    return;
+  }
+
+
+  messageInput.value =
+    "Create clean student-friendly notes on ";
+
+
+  messageInput.focus();
+
+}
+
+
+/* =========================================
+   MENU
+========================================= */
+
+function openSideMenu() {
+
+  sideMenu.classList.add("open");
+
+  overlay.classList.add("show");
+
+}
+
+
+function closeSideMenu() {
+
+  sideMenu.classList.remove("open");
+
+  overlay.classList.remove("show");
+
+}
+
+
+menuBtn.addEventListener(
+  "click",
+  openSideMenu
+);
+
+
+closeMenu.addEventListener(
+  "click",
+  closeSideMenu
+);
+
+
+overlay.addEventListener(
+  "click",
+  closeSideMenu
+);
+
+
+/* =========================================
+   HISTORY PANEL
+========================================= */
+
+function openHistory() {
+
+  loadHistory();
+
+  renderHistory();
+
+  historyPanel.classList.add("show");
+
+  closeSideMenu();
+
+}
+
+
+function closeHistory() {
+
+  historyPanel.classList.remove("show");
+
+}
+
+
+historyBtn.addEventListener(
+  "click",
+  openHistory
+);
+
+
+historyBack.addEventListener(
+  "click",
+  closeHistory
+);
+
+
+/* =========================================
+   SHARE CHAT
+========================================= */
+
+async function shareChat() {
+
+  closeSideMenu();
+
+
+  if (currentChat.length === 0) {
+
+    alert(
+      "Current chat empty hai."
+    );
+
+    return;
+
+  }
+
+
+  let text =
+    "🤖 JR AI Chat\n\n";
+
+
+  currentChat.forEach(function(item) {
+
+    const name =
+      item.type === "user"
+        ? "You"
+        : "JR AI";
+
+
+    text +=
+      name +
+      ": " +
+      item.text +
+      "\n\n";
+
+  });
+
+
+  try {
+
+    if (
+      navigator.share
+    ) {
+
+      await navigator.share({
+
+        title: "JR AI Chat",
+
+        text: text
+
+      });
+
+      return;
+
+    }
+
+
+    if (
+      navigator.clipboard &&
+      navigator.clipboard.writeText
+    ) {
+
+      await navigator.clipboard.writeText(
+        text
+      );
+
+      alert(
+        "Chat copied! 📋"
+      );
+
+      return;
+
+    }
+
+
+    const textarea =
+      document.createElement("textarea");
+
+    textarea.value = text;
+
+    document.body.appendChild(textarea);
+
+    textarea.select();
+
+    document.execCommand("copy");
+
+    textarea.remove();
+
+    alert(
+      "Chat copied! 📋"
+    );
+
+
+  } catch (error) {
+
+    if (
+      error &&
+      error.name !== "AbortError"
+    ) {
+
+      alert(
+        "Share nahi ho paya."
+      );
+
+    }
+
+  }
+
+}
+
+
+shareBtn.addEventListener(
+  "click",
+  shareChat
+);
+
+
+/* =========================================
+   THEME
+========================================= */
+
+function loadTheme() {
+
+  const theme =
+    localStorage.getItem(
+      "jr_ai_theme"
+    );
+
+
+  if (theme === "dark") {
+
+    document.body.classList.add(
+      "dark"
+    );
+
+  }
+
+}
+
+
+function toggleTheme() {
+
+  document.body.classList.toggle(
+    "dark"
+  );
+
+
+  const isDark =
+    document.body.classList.contains(
+      "dark"
+    );
+
+
+  localStorage.setItem(
+    "jr_ai_theme",
+    isDark
+      ? "dark"
+      : "light"
+  );
+
+}
+
+
+themeBtn.addEventListener(
+  "click",
+  function() {
+
+    toggleTheme();
+
+  }
+);
+
+
+/* =========================================
+   CLEAR HISTORY
+========================================= */
+
+function clearHistory() {
+
+  closeSideMenu();
+
+
+  if (savedChats.length === 0) {
+
+    alert(
+      "History already empty hai."
+    );
+
+    return;
+
+  }
+
+
+  const confirmClear =
+    confirm(
+      "Kya aap saari chat history clear karna chahte ho?"
+    );
+
+
+  if (!confirmClear) {
+    return;
+  }
+
+
+  savedChats = [];
+
+  localStorage.removeItem(
+    HISTORY_KEY
+  );
+
+
+  alert(
+    "Chat history clear ho gayi. 🗑️"
+  );
+
+}
+
+
+clearHistoryBtn.addEventListener(
+  "click",
+  clearHistory
+);
+
+
+/* =========================================
+   SETTINGS
+========================================= */
+  
+  settingsBtn.addEventListener(
+  "click",
+  function() {
+
+    closeSideMenu();
+
+    const isDark =
+      document.body.classList.contains(
+        "dark"
+      );
+
+    alert(
+      "⚙️ JR AI Settings\n\n" +
+      "Theme: " +
+      (isDark ? "Dark" : "Light") +
+      "\n\n" +
+      "Chat history browser me locally save hoti hai."
+    );
+  }
+);
+  
+/* =========================================
+   ABOUT
+========================================= */
+
+aboutBtn.addEventListener(
+  "click",
+  function() {
+
+    closeSideMenu();
+
+    alert(
+      "🤖 JR AI\n\n" +
+      "A simple student-friendly AI assistant.\n\n" +
+      "Ask questions, create notes, coding, debugging aur study help ke liye use karo."
+    );
+
+  }
+);
+
+
+/* =========================================
+   BUTTON EVENTS
+========================================= */
+
+sendBtn.addEventListener(
+  "click",
+  sendMessage
+);
+
+
+newChatBtn.addEventListener(
+  "click",
+  startNewChat
+);
+
+
+menuNewChatBtn.addEventListener(
+  "click",
+  startNewChat
+);
+
+
+notesBtn.addEventListener(
+  "click",
+  startNotes
+);
+
+
+/* =========================================
+   ENTER KEY
+========================================= */
+
+messageInput.addEventListener(
+  "keydown",
+  function(event) {
+
+    if (
+      event.key === "Enter" &&
+      !event.shiftKey
+    ) {
+
+      event.preventDefault();
+
+      sendMessage();
+
+    }
+
+  }
+);
+
+
+/* =========================================
+   MOBILE KEYBOARD FIX
+========================================= */
+
+if (window.visualViewport) {
+
+  function adjustForKeyboard() {
+
+    document.documentElement.style.setProperty(
+      "--viewport-height",
+      window.visualViewport.height + "px"
+    );
+
+    scrollToBottom();
+
+  }
+
+
+  window.visualViewport.addEventListener(
+    "resize",
+    adjustForKeyboard
+  );
+
+
+  window.visualViewport.addEventListener(
+    "scroll",
+    adjustForKeyboard
+  );
+
+}
+
+
+/* =========================================
+   START APP
+========================================= */
+
+loadHistory();
+
+loadTheme();
+
+showWelcome();
+
+messageInput.focus();
+
+</script>
 
 </body>
-
-  </html>
+</html>
+  
