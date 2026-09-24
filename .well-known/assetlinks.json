@@ -1,1 +1,14 @@
-
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "io.github.rohanrajraj1992_crypto.twa",
+      "sha256_cert_fingerprints": [
+        "9C:04:C1:F3:1D:CC:A6:B9:5E:1F:42:5A:58:44:DF:28:98:1F:4E:5B:C1:4F:7E:F0:A0:8A:BA:97:19:8C:12:B4"
+      ]
+    }
+  }
+]
