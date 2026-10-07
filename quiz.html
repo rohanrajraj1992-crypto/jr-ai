@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>JR AI Quiz</title>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      color: #111;
+    }
+
+    body.dark {
+      background: #111;
+      color: white;
+    }
+
+    .header {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      padding: 10px 14px;
+      background: rgba(10, 13, 30, .78);
+      color: white;
+      gap: 12px;
+      border-bottom: 1px solid rgba(255,255,255,.10);
+      box-shadow: 0 10px 35px rgba(0,0,0,.20);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .back-btn {
+      width: 42px;
+      height: 40px;
+      border: none;
+      border-radius: 8px;
+      background: #555;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .title-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      min-width: 0;
+    }
+
+    .title {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: .2px;
+      line-height: 1.05;
+    }
+
+    .quiz-badge {
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 999px;
+      background: rgba(255,255,255,.08);
+      color: rgba(255,255,255,.88);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .6px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.08);
+    }
+
+    .container {
+      padding: 24px 16px 38px;
+      max-width: 700px;
+      margin: auto;
+      padding-bottom: 38px;
+    }
+
+    .topic-input {
+      width: 100%;
+      height: 52px;
+      border: none;
+      outline: none;
+      border-radius: 9px;
+      padding: 0 13px;
+      font-size: 16px;
+      background: white;
+      color: #111;
+      margin-bottom: 12px;
+      border: 1px solid rgba(124,58,237,.18);
+      box-shadow: 0 12px 35px rgba(0,0,0,.16), inset 0 1px 0 rgba(255,255,255,.8);
+    }
+
+    body.dark .topic-input {
+      background: #222;
+      color: white;
+    }
+
+    .start-btn {
+      width: 100%;
+      height: 52px;
+      border: none;
+      border-radius: 9px;
+      background: linear-gradient(135deg,#7c3aed,#2563eb);
+      color: white;
+      font-weight: 800;
+      font-size: 15px;
+      box-shadow: 0 12px 30px rgba(99,102,241,.30);
+      cursor: pointer;
+    }
+
+    .start-btn:disabled {
+      opacity: 0.6;
+    }
+
+    .question-box {
+      margin-top: 18px;
+    }
+
+    .question-card {
+      background: white;
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    }
+
+    body.dark .question-card {
+      background: #202020;
+    }
+
+    .progress {
+      font-size: 14px;
+      opacity: 0.7;
+      margin-bottom: 12px;
+    }
+
+    .question {
+      font-size: 18px;
+      font-weight: bold;
+      line-height: 1.4;
+      margin-bottom: 15px;
+    }
+
+    .option {
+      width: 100%;
+      min-height: 48px;
+      margin-top: 9px;
+      padding: 10px;
+      border: 1px solid #aaa;
+      border-radius: 9px;
+      background: #eee;
+      color: #111;
+      text-align: left;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    body.dark .option {
+      background: #333;
+      color: white;
+      border-color: #666;
+    }
+
+    .option:disabled {
+      cursor: default;
+      opacity: 0.9;
+    }
+
+    .feedback {
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 9px;
+      line-height: 1.5;
+      font-size: 15px;
+    }
+
+    .correct {
+      background: #d9f7df;
+      color: #145c20;
+    }
+
+    .wrong {
+      background: #ffdede;
+      color: #8a1515;
+    }
+
+    .next-btn {
+      width: 100%;
+      height: 46px;
+      margin-top: 12px;
+      border: none;
+      border-radius: 9px;
+      background: #333;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .result-card {
+      margin-top: 18px;
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    }
+
+    body.dark .result-card {
+      background: #202020;
+    }
+
+    .score {
+      font-size: 30px;
+      font-weight: bold;
+      margin: 15px 0;
+    }
+
+    .restart-btn {
+      width: 100%;
+      height: 46px;
+      border: none;
+      border-radius: 9px;
+      background: #333;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+  
+/* Premium UI Upgrade */
+body { background: radial-gradient(circle at 15% 10%, rgba(124,58,237,.20), transparent 32%), radial-gradient(circle at 85% 20%, rgba(59,130,246,.18), transparent 30%), linear-gradient(135deg,#090b16,#11152a 55%,#0b1020); }
+body:before { content:""; position:fixed; inset:-20%; pointer-events:none; background:radial-gradient(circle,rgba(255,255,255,.08) 0 1px,transparent 1.5px); background-size:28px 28px; opacity:.22; animation:drift 22s linear infinite; }
+@keyframes drift { to { transform:translate3d(28px,28px,0); } }
+.container,.quiz-container,.card { backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px); box-shadow:0 20px 70px rgba(0,0,0,.32), inset 0 1px 0 rgba(255,255,255,.08); }
+button { transition:transform .2s ease, box-shadow .2s ease, filter .2s ease; }
+button:hover { transform:translateY(-2px) scale(1.01); filter:brightness(1.08); box-shadow:0 10px 28px rgba(0,0,0,.22); }
+
+    @media (max-width: 480px) {
+      .header { min-height: 72px; padding: 9px 12px; }
+      .title { font-size: 18px; }
+      .quiz-badge { font-size: 9px; padding: 4px 8px; }
+      .container { padding: 20px 13px 32px; }
+      .back-btn { width: 40px; height: 40px; }
+    }
+
+</style>
+
+</head>
+
+<body>
+<div class="header">
+
+    <button
+      id="backBtn"
+      class="back-btn"
+      type="button"
+    >
+      ←
+    </button>
+
+    <div class="title-wrap">
+      <div class="title">🧠 JR AI Quiz</div>
+      <div class="quiz-badge">🎯 AI QUIZ • 10 QUESTIONS</div>
+    </div>
+
+  </div>
+
+
+  <div class="container">
+
+    <input
+      id="topicInput"
+      class="topic-input"
+      type="text"
+      placeholder="Quiz kis topic par chahiye?"
+      autocomplete="off"
+    >
+
+    <button
+      id="startQuizBtn"
+      class="start-btn"
+      type="button"
+    >
+      START QUIZ
+    </button>
+
+
+    <div
+      id="questionBox"
+      class="question-box"
+    ></div>
+
+
+    <div
+      id="resultBox"
+      style="display:none;"
+    ></div>
+
+  </div>
+
+
+  <script>
+
+    /* =========================================
+       GLOBAL THEME
+    ========================================= */
+
+    function applyGlobalTheme() {
+
+      const savedTheme =
+        localStorage.getItem("jr_ai_theme") || "light";
+
+      if (savedTheme === "dark") {
+
+        document.body.classList.add("dark");
+
+      } else {
+
+        document.body.classList.remove("dark");
+
+      }
+
+    }
+
+    applyGlobalTheme();
+
+
+    /* =========================================
+       ELEMENTS
+    ========================================= */
+
+    const backBtn =
+      document.getElementById("backBtn");
+
+    const startQuizBtn =
+      document.getElementById("startQuizBtn");
+
+    const topicInput =
+      document.getElementById("topicInput");
+
+    const questionBox =
+      document.getElementById("questionBox");
+
+    const resultBox =
+      document.getElementById("resultBox");
+
+
+    /* =========================================
+       API
+    ========================================= */
+
+    const API_URL =
+      "https://script.google.com/macros/s/AKfycbwyW1sNFAI9lgYH_7_FWng44IWUUrbIadwPMRM6vrmw84C8w41rWvBkACuIAasVmAHT/exec";
+
+
+    /* =========================================
+       BACK BUTTON
+    ========================================= */
+
+    backBtn.addEventListener(
+      "click",
+      function() {
+
+        window.location.href =
+          "index.html";
+
+      }
+    );
+
+
+    /* =========================================
+       QUIZ VARIABLES
+    ========================================= */
+
+    let questions = [];
+
+    let currentQuestion = 0;
+
+    let score = 0;
+
+
+    /* =========================================
+       START QUIZ
+    ========================================= */
+
+    startQuizBtn.addEventListener(
+      "click",
+      async function() {
+
+        const topic =
+          topicInput.value.trim();
+
+        if (!topic) {
+
+          alert(
+            "Pehle quiz ka topic likho."
+          );
+
+          topicInput.focus();
+
+          return;
+
+        }
+
+
+        startQuizBtn.disabled = true;
+
+        startQuizBtn.textContent =
+          "GENERATING...";
+
+        questionBox.innerHTML =
+          "<div class='question-card'>" +
+          "🤖 Quiz questions ban rahe hain..." +
+          "</div>";
+
+        resultBox.style.display =
+          "none";
+
+
+        try {
+
+          const prompt =
+            "Create a 10-question multiple-choice quiz on this topic: " +
+            topic +
+            ".\n\n" +
+
+            "Use EXACTLY this format for every question:\n\n" +
+
+            "Question 1: question text\n" +
+            "A) option\n" +
+            "B) option\n" +
+            "C) option\n" +
+            "D) option\n" +
+            "Correct Answer: B\n" +
+            "Explanation: short explanation\n\n" +
+
+            "Then Question 2 through Question 10 " +
+            "in exactly the same format.\n\n" +
+
+            "Do not add any extra text before Question 1 " +
+            "or after Question 10.";
+
+
+          const response =
+            await fetch(
+              API_URL,
+              {
+                method: "POST",
+
+                headers: {
+                  "Content-Type":
+                    "text/plain;charset=utf-8"
+                },
+
+                body:
+                  JSON.stringify({
+                    message: prompt
+                  })
+              }
+            );
+
+
+          const data =
+            await response.json();
+
+
+          const reply =
+            data.answer ||
+            "";
+
+
+          if (!reply) {
+
+            throw new Error(
+              "Quiz response nahi mila."
+            );
+
+          }
+
+
+          questions =
+            parseQuiz(reply);
+
+
+          if (questions.length === 0) {
+
+            throw new Error(
+              "Questions parse nahi ho paaye."
+            );
+
+          }
+
+
+          currentQuestion = 0;
+
+          score = 0;
+
+          showQuestion();
+
+
+        } catch (error) {
+
+          console.log(
+            "Quiz error:",
+            error
+          );
+
+          questionBox.innerHTML =
+            "<div class='question-card'>" +
+            "❌ Quiz generate nahi ho paaya." +
+            "<br><br>" +
+            "Please dobara try karo." +
+            "</div>";
+
+        }
+
+
+        startQuizBtn.disabled =
+          false;
+
+        startQuizBtn.textContent =
+          "START QUIZ";
+
+      }
+    );
+
+
+    /* =========================================
+       PARSE QUIZ
+    ========================================= */
+
+    function parseQuiz(text) {
+
+      const result = [];
+
+      const blocks =
+        text.split(
+          /Question\s+\d+\s*:/i
+        );
+
+      for (
+        let i = 1;
+        i < blocks.length;
+        i++
+      ) {
+
+        const block =
+          blocks[i];
+
+
+        const questionMatch =
+          block.match(
+            /^([\s\S]*?)(?=\nA\))/i
+          );
+
+
+        const optionA =
+          block.match(
+            /A\)\s*(.*)/i
+          );
+
+        const optionB =
+          block.match(
+            /B\)\s*(.*)/i
+          );
+
+        const optionC =
+          block.match(
+            /C\)\s*(.*)/i
+          );
+
+        const optionD =
+          block.match(
+            /D\)\s*(.*)/i
+          );
+
+
+        const answerMatch =
+          block.match(
+            /Correct Answer:\s*([ABCD])/i
+          );
+
+
+        const explanationMatch =
+          block.match(
+            /Explanation:\s*([\s\S]*?)(?=\nQuestion|\s*$)/i
+          );
+
+
+        if (
+          questionMatch &&
+          optionA &&
+          optionB &&
+          optionC &&
+          optionD &&
+          answerMatch
+        ) {
+
+          result.push({
+
+            question:
+              questionMatch[1].trim(),
+
+            options: {
+
+              A:
+                optionA[1].trim(),
+
+              B:
+                optionB[1].trim(),
+
+              C:
+                optionC[1].trim(),
+
+              D:
+                optionD[1].trim()
+
+            },
+
+            answer:
+              answerMatch[1]
+                .toUpperCase(),
+
+            explanation:
+              explanationMatch
+                ? explanationMatch[1].trim()
+                : "Explanation available nahi hai."
+
+          });
+
+        }
+
+      }
+
+
+      return result;
+
+    }
+
+
+    /* =========================================
+       SHOW QUESTION
+    ========================================= */
+
+    function showQuestion() {
+
+      if (
+        currentQuestion >=
+        questions.length
+      ) {
+
+        showResult();
+
+        return;
+
+      }
+
+
+      const q =
+        questions[currentQuestion];
+
+
+      questionBox.innerHTML =
+        "";
+
+
+      const card =
+        document.createElement(
+          "div"
+        );
+
+      card.className =
+        "question-card";
+
+
+      const progress =
+        document.createElement(
+          "div"
+        );
+
+      progress.className =
+        "progress";
+
+      progress.textContent =
+        "Question " +
+        (currentQuestion + 1) +
+        " / " +
+        questions.length;
+
+
+      card.appendChild(
+        progress
+      );
+
+
+      const question =
+        document.createElement(
+          "div"
+        );
+
+      question.className =
+        "question";
+
+      question.textContent =
+        q.question;
+
+
+      card.appendChild(
+        question
+      );
+
+
+      const optionKeys =
+        ["A", "B", "C", "D"];
+
+
+      optionKeys.forEach(
+        function(key) {
+
+          const button =
+            document.createElement(
+              "button"
+            );
+
+          button.className =
+            "option";
+
+          button.type =
+            "button";
+
+          button.textContent =
+            key +
+            ") " +
+            q.options[key];
+
+
+          button.addEventListener(
+            "click",
+            function() {
+
+              checkAnswer(
+                key,
+                card
+              );
+
+            }
+          );
+
+
+          card.appendChild(
+            button
+          );
+
+        }
+      );
+
+
+      questionBox.appendChild(
+        card
+      );
+
+    }
+
+
+    /* =========================================
+       CHECK ANSWER
+    ========================================= */
+
+    function checkAnswer(
+      selected,
+      card
+    ) {
+
+      const q =
+        questions[currentQuestion];
+
+
+      const buttons =
+        card.querySelectorAll(
+          ".option"
+        );
+
+
+      buttons.forEach(
+        function(button) {
+
+          button.disabled =
+            true;
+
+        }
+      );
+
+
+      const feedback =
+        document.createElement(
+          "div"
+        );
+
+
+      feedback.className =
+        "feedback";
+
+
+      if (
+        selected ===
+        q.answer
+      ) {
+
+        score++;
+
+        feedback.classList.add(
+          "correct"
+        );
+
+        feedback.innerHTML =
+          "✅ <b>Correct!</b><br><br>" +
+          q.explanation;
+
+      } else {
+
+        feedback.classList.add(
+          "wrong"
+        );
+
+        feedback.innerHTML =
+          "❌ <b>Wrong!</b><br><br>" +
+          "Correct answer: " +
+          q.answer +
+          "<br><br>" +
+          q.explanation;
+
+      }
+
+
+      card.appendChild(
+        feedback
+      );
+
+
+      const nextBtn =
+        document.createElement(
+          "button"
+        );
+
+      nextBtn.className =
+        "next-btn";
+
+      nextBtn.type =
+        "button";
+
+
+      if (
+        currentQuestion ===
+        questions.length - 1
+      ) {
+
+        nextBtn.textContent =
+          "SEE RESULT";
+
+      } else {
+
+        nextBtn.textContent =
+          "NEXT QUESTION";
+
+      }
+
+
+      nextBtn.addEventListener(
+        "click",
+        function() {
+
+          currentQuestion++;
+
+          showQuestion();
+
+        }
+      );
+
+
+      card.appendChild(
+        nextBtn
+      );
+
+    }
+
+
+    /* =========================================
+       RESULT
+    ========================================= */
+
+    function showResult() {
+
+      questionBox.innerHTML =
+        "";
+
+
+      const percentage =
+        Math.round(
+          (score /
+            questions.length) *
+          100
+        );
+
+
+      resultBox.style.display =
+        "block";
+
+
+      resultBox.innerHTML =
+        "<div class='result-card'>" +
+
+        "<h2>🎉 Quiz Complete!</h2>" +
+
+        "<div class='score'>" +
+        score +
+        " / " +
+        questions.length +
+        "</div>" +
+
+        "<p>" +
+        percentage +
+        "% Score" +
+        "</p>" +
+
+        "<button " +
+        "id='restartBtn' " +
+        "class='restart-btn' " +
+        "type='button'>" +
+        "TRY AGAIN" +
+        "</button>" +
+
+        "</div>";
+
+
+      const restartBtn =
+        document.getElementById(
+          "restartBtn"
+        );
+
+
+      restartBtn.addEventListener(
+        "click",
+        function() {
+
+          resultBox.style.display =
+            "none";
+
+          currentQuestion =
+            0;
+
+          score =
+            0;
+
+          startQuizBtn.textContent =
+            "START QUIZ";
+
+          showQuestion();
+
+        }
+      );
+
+    }
+
+
+    /* =========================================
+       ENTER KEY
+    ========================================= */
+
+    topicInput.addEventListener(
+      "keydown",
+      function(event) {
+
+        if (
+          event.key ===
+          "Enter"
+        ) {
+
+          event.preventDefault();
+
+          startQuizBtn.click();
+
+        }
+
+      }
+    );
+
+  </script>
+
+</body>
+
+</html>
