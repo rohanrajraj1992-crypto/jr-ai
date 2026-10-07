@@ -12,11 +12,13 @@
 }
 
 html,
-  
 body {
   margin: 0;
   padding: 0;
+  width: 100%;
   height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
   font-family: Arial, sans-serif;
   background: #c6c6c6;
 }
@@ -26,17 +28,28 @@ body.dark {
 }
 
 .app {
+  position: fixed;
+  inset: 0;
+  width: 100%;
   height: 100dvh;
-  display: flex;
-  flex-direction: column;
   overflow: hidden;
+  background: #c6c6c6;
+}
+
+body.dark .app {
+  background: #181818;
 }
 
 /* HEADER */
 
 .header {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
   height: 58px;
   min-height: 58px;
+  z-index: 20;
   background: #eeeeee;
   display: flex;
   align-items: center;
@@ -156,9 +169,31 @@ body.dark .menu-item:hover {
   display: block;
 }
 
+
+/* MENU SAFETY */
+.menu {
+  left: -285px;
+  visibility: hidden;
+}
+.menu.open {
+  left: 0;
+  visibility: visible;
+}
+.overlay {
+  display: none;
+}
+.overlay.show {
+  display: block;
+}
+
 /* TOOLS */
 
 .tools {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 58px;
+  height: 58px;
   display: flex;
   gap: 8px;
   padding: 8px;
@@ -190,10 +225,25 @@ body.dark .tool-btn {
 /* CHAT */
 
 .chat {
-  flex: 1;
-  overflow-y: auto;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 116px;
+  bottom: 58px;
+  width: 100%;
+  height: auto;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+  overscroll-behavior-y: contain;
   padding: 12px;
+  background: #c6c6c6;
   scroll-behavior: smooth;
+}
+
+body.dark .chat {
+  background: #181818;
 }
 
 .message {
@@ -275,10 +325,19 @@ body.dark .dot {
 /* INPUT */
 
 .bottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 58px;
   display: flex;
+  align-items: center;
   gap: 7px;
+
   padding: 8px;
   background: #999999;
+
+  z-index: 1000;
 }
 
 body.dark .bottom {
@@ -302,7 +361,9 @@ body.dark .bottom {
 }
 
 .send-btn {
-  width: 75px;
+  width: 90px;
+  height: 42px;
+  flex: 0 0 90px;
   border: none;
   border-radius: 8px;
   background: #333333;
@@ -408,6 +469,115 @@ body.dark .history-card:hover {
   opacity: 0.7;
   padding: 30px;
 }
+
+/* WHATSAPP STYLE ATTACHMENT */
+
+.attachment-tools {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 6px 8px;
+  background: transparent;
+}
+
+.attach-btn {
+  width: 42px;
+  height: 42px;
+  border: none;
+  border-radius: 50%;
+  background: #eeeeee;
+  color: #222;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+
+  
+/* 3 DOTS MENU BUTTON */
+
+.more-btn {
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+
+  position: absolute;
+  right: 10px;
+  top: 8px;
+  
+
+  border: none;
+  border-radius: 8px;
+
+  background: transparent;
+  color: #222;
+
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.more-btn:active {
+  transform: scale(0.94);
+  }
+
+  /* 3 DOTS MENU */
+
+.more-menu {
+  position: absolute;
+  top: 55px;
+  right: 8px;
+
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+
+  min-width: 180px;
+  padding: 8px;
+
+  background: #eeeeee;
+  border-radius: 12px;
+
+  box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+
+  z-index: 3000;
+}
+
+.more-menu.show {
+  display: flex;
+}
+
+.more-menu button {
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  background: transparent;
+  color: #222;
+  text-align: left;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.more-menu button:active {
+  background: #dddddd;
+}
+
+body.dark .more-btn {
+  color: white;
+}
+
+body.dark .more-menu {
+  background: #222;
+}
+
+body.dark .more-menu button {
+  color: white;
+}
+  
 </style>
 </head>
 
@@ -430,7 +600,41 @@ body.dark .history-card:hover {
     <div class="header-title">
       🤖 JR AI
     </div>
+    
+<button
+  class="more-btn"
+  id="moreBtn"
+  type="button"
+>
+  ⋮
+</button>
 
+    <div
+  class="more-menu"
+  id="moreMenu"
+>
+<button type="button" id="bookStoreBtn" onclick="window.location.href='bookstore.html'">
+  📚 Book Store
+</button>
+      
+  <button
+    type="button"
+    id="studyModeBtn"
+    onclick="window.location.href='studymode.html'"
+  >
+    📝 Study Mode
+  </button>
+
+  <button
+    type="button"
+    id="quickPromptsBtn"
+    onclick="window.location.href='quiz.html'"
+  >
+    🧠 Quiz Mode
+  </button>
+
+    </div>
+    
   </div>
 
 
@@ -448,10 +652,18 @@ body.dark .history-card:hover {
 
     <button
       class="tool-btn"
-      id="newChatBtn"
+      id="snapSolveBtn"
       type="button"
     >
-      🧹 NEW CHAT
+      📸 SnapSolve
+    </button>
+
+    <button
+      class="tool-btn"
+      id="newChatTopBtn"
+      type="button"
+    >
+      ☰ New Chat
     </button>
 
   </div>
@@ -464,31 +676,27 @@ body.dark .history-card:hover {
     id="chat"
   ></div>
 
+<!-- INPUT -->
 
-  <!-- INPUT -->
+<div class="bottom">
 
-  <div class="bottom">
+  <input
+    id="messageInput"
+    class="input"
+    type="text"
+    placeholder="Ask anything..."
+    autocomplete="off"
+  >
 
-    <input
-      id="messageInput"
-      class="input"
-      type="text"
-      placeholder="Ask anything..."
-      autocomplete="off"
-    >
-
-    <button
-      id="sendBtn"
-      class="send-btn"
-      type="button"
-    >
-      SEND
-    </button>
-
-  </div>
+  <button
+    id="sendBtn"
+    class="send-btn"
+    type="button"
+  >
+    SEND
+  </button>
 
 </div>
-
 
 <!-- OVERLAY -->
 
@@ -541,6 +749,7 @@ body.dark .history-card:hover {
     class="menu-item"
     id="menuNewChatBtn"
     type="button"
+    onclick="window.location.href='newchat.html'"
   >
     🧹 New Chat
   </button>
@@ -581,6 +790,15 @@ body.dark .history-card:hover {
     ℹ️ About JR AI
   </button>
 
+
+  <button
+    class="menu-item"
+    id="logoutBtn"
+    type="button"
+  >
+    🚪 Logout
+  </button>
+
 </div>
 
 
@@ -612,6 +830,8 @@ body.dark .history-card:hover {
     class="history-list"
     id="historyList"
   ></div>
+
+</div>
 
 </div>
 
@@ -654,8 +874,14 @@ const overlay =
 const notesBtn =
   document.getElementById("notesBtn");
 
-const newChatBtn =
-  document.getElementById("newChatBtn");
+const snapSolveBtn =
+  document.getElementById("snapSolveBtn");
+
+const newChatTopBtn =
+  document.getElementById("newChatTopBtn");
+
+const quickPromptsBtn =
+  document.getElementById("quickPromptsBtn");
 
 const historyBtn =
   document.getElementById("historyBtn");
@@ -686,6 +912,27 @@ const historyList =
 
 const historyBack =
   document.getElementById("historyBack");
+  
+const moreBtn =
+  document.getElementById("moreBtn");
+
+const moreMenu =
+  document.getElementById("moreMenu");
+
+if (moreBtn && moreMenu) {
+
+  moreBtn.addEventListener(
+    "click",
+    function() {
+
+      moreMenu.classList.toggle("show");
+
+    }
+  );
+
+  }
+  
+
 
 
 /* =========================================
@@ -773,9 +1020,8 @@ function loadHistory() {
     savedChats = [];
 
   }
-
-}
-
+  
+  }
 
 /* =========================================
    SAVE HISTORY
@@ -1107,7 +1353,7 @@ function openSavedChat(id) {
 
   scrollToBottom();
 
-  messageInput.focus();
+  messageInput.focus({ preventScroll: true });
 
 }
 
@@ -1127,20 +1373,13 @@ function addMessage(
       "div"
     );
 
-
   message.className =
     "message " +
     type;
 
-
-  message.textContent =
-    text;
-
-
   chat.appendChild(
     message
   );
-
 
   if (
     shouldRecord
@@ -1158,11 +1397,51 @@ function addMessage(
 
   }
 
+  // AI ka normal answer dheere-dheere show hoga
+  if (
+    type === "ai" &&
+    shouldRecord
+  ) {
 
-  scrollToBottom();
+    let i = 0;
 
-}
+    function typeNext() {
 
+      if (
+        i < text.length
+      ) {
+
+        message.textContent +=
+          text.slice(
+            i,
+            i + 3
+          );
+
+        i += 3;
+
+        scrollToBottom();
+
+        setTimeout(
+          typeNext,
+          15
+        );
+
+      }
+
+    }
+
+    typeNext();
+
+  } else {
+
+    message.textContent =
+      text;
+
+    scrollToBottom();
+
+  }
+
+      }
 
 /* =========================================
    WELCOME
@@ -1179,15 +1458,16 @@ function showWelcome() {
 
   addMessage(
 
-    "HELLO! 👋\n" +
-    "MAIN JR AI HOON.\n\n" +
-    "KUCH BHI PUCHO YA 📚 MAKE NOTES DABAKAR KISI TOPIC KE NOTES BANAO.",
+  "🤖 WELCOME TO JR AI! 👋\n" +
+  "💬 MUJHSE KUCH BHI PUCHHO!\n" +
+  "🧠 SAWAL PUCHHO • IDEAS LO • JAANKARI • PAO\n" +
+  "📚 KISI BHI TOPIC KE NOTES BANAO! ✨",
 
-    "ai",
+  "ai",
 
-    false
+  false
 
-  );
+);
 
 }
 
@@ -1268,14 +1548,14 @@ function hideTyping() {
 
 function scrollToBottom() {
 
-  requestAnimationFrame(
-    function() {
+  if (!chat) return;
 
-      chat.scrollTop =
-        chat.scrollHeight;
-
-    }
-  );
+  requestAnimationFrame(function() {
+    chat.scrollTo({
+      top: chat.scrollHeight,
+      behavior: "smooth"
+    });
+  });
 
 }
 
@@ -1449,7 +1729,7 @@ async function sendMessage() {
 
     messageInput.disabled = false;
 
-    messageInput.focus();
+    messageInput.focus({ preventScroll: true });
 
     scrollToBottom();
 
@@ -1463,55 +1743,27 @@ async function sendMessage() {
 ========================================= */
 
 function startNewChat() {
-
-  if (isSending) {
-
-    return;
-
+  if (isSending) return;
+  window.location.href = "newchat.html";
   }
 
+/* =========================================
+   SNAP SOLVE
+========================================= */
 
-  chat.innerHTML = "";
-
-  currentChat = [];
-
-  currentChatId = null;
-
-  messageInput.value = "";
-
-
-  showWelcome();
-
-
-  closeSideMenu();
-
-  closeHistory();
-
-
-  messageInput.focus();
-
-}
-
+function startSnapSolve() {
+  if (isSending) return;
+  window.location.href = "snapsolve.html";
+  }
+  
 
 /* =========================================
    NOTES
 ========================================= */
 
 function startNotes() {
-
-  if (isSending) {
-
-    return;
-
-  }
-
-
-  messageInput.value =
-    "Create clean student-friendly notes on ";
-
-
-  messageInput.focus();
-
+  if (isSending) return;
+  window.location.href = "notes.html";
 }
 
 
@@ -1551,7 +1803,19 @@ function closeSideMenu() {
 
 menuBtn.addEventListener(
   "click",
-  openSideMenu
+  function() {
+
+    if (sideMenu.classList.contains("open")) {
+
+      closeSideMenu();
+
+    } else {
+
+      openSideMenu();
+
+    }
+
+  }
 );
 
 
@@ -1861,9 +2125,20 @@ notesBtn.addEventListener(
 );
 
 
+/* SNAP SOLVE */
+
+snapSolveBtn.addEventListener(
+  "click",
+  function() {
+
+    startSnapSolve();
+
+  }
+);
+
 /* NEW CHAT */
 
-newChatBtn.addEventListener(
+newChatTopBtn.addEventListener(
   "click",
   function() {
 
@@ -1872,7 +2147,52 @@ newChatBtn.addEventListener(
   }
 );
 
+/* QUIZ */
 
+quickPromptsBtn.addEventListener(
+  "click",
+  function() {
+
+    window.location.href = "quiz.html";
+
+  }
+);
+
+
+/* STUDY MODE */
+const studyModeBtn =
+  document.getElementById("studyModeBtn");
+
+if (studyModeBtn) {
+  studyModeBtn.addEventListener(
+    "click",
+    function() {
+      window.location.href = "studymode.html";
+    }
+  );
+}
+
+
+/* BOOK STORE */
+
+const bookStoreBtn =
+  document.getElementById("bookStoreBtn");
+
+if (bookStoreBtn) {
+
+  bookStoreBtn.addEventListener(
+    "click",
+    function() {
+
+      window.location.href =
+        "bookstore.html";
+
+    }
+  );
+
+  }
+  
+  
 /* MENU NEW CHAT */
 
 menuNewChatBtn.addEventListener(
@@ -1962,7 +2282,7 @@ function loadTheme() {
   const theme =
     localStorage.getItem(
       "jr_ai_theme"
-    );
+    ) || "light";
 
 
   if (
@@ -1981,7 +2301,7 @@ function loadTheme() {
 
   }
 
-}
+  }
 
 
 /* =========================================
@@ -2034,7 +2354,9 @@ clearHistoryBtn.addEventListener(
    SETTINGS
 ========================================= */
 
-settingsBtn.addEventListener(
+if (settingsBtn) {
+  settingsBtn.addEventListener(
+    
   "click",
   function() {
 
@@ -2050,16 +2372,16 @@ settingsBtn.addEventListener(
 
 
     alert(
-      "⚙️ JR AI SETTINGS\n\n" +
-      "Theme: " +
-      theme +
-      "\n\n" +
-      "Dark / Light change karne ke liye menu me Theme button use karo."
-    );
+  "⚙️ JR AI SETTINGS\n\n" +
+  "➕ New Chat ke liye OK dabao."
+);
+
+window.location.href = "newchat.html";
 
   }
 );
-
+  
+}
 
 /* =========================================
    ABOUT JR AI
@@ -2083,31 +2405,7 @@ aboutBtn.addEventListener(
 );
 
 
-/* =========================================
-   MOBILE KEYBOARD
-========================================= */
 
-if (
-  window.visualViewport
-) {
-
-  window.visualViewport.addEventListener(
-    "resize",
-    function() {
-
-      setTimeout(
-        function() {
-
-          scrollToBottom();
-
-        },
-        100
-      );
-
-    }
-  );
-
-}
 
 
 /* =========================================
@@ -2120,11 +2418,61 @@ loadTheme();
 
 showWelcome();
 
-messageInput.focus();
+/* Keyboard khulne par welcome greeting ko upar scroll na hone do */
+if (window.visualViewport) {
+  window.visualViewport.addEventListener("resize", function() {
+    if (currentChat.length === 0) {
+      chat.scrollTop = 0;
+    }
+  });
+}
 
+/* Page load par keyboard automatically mat kholo */
 
 </script>
   
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+  import {
+    getAuth,
+    onAuthStateChanged,
+    signOut
+  } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCPMj0rPve60XPUanyUCXYAUVcUSiuwIpE",
+    authDomain: "jr-ai-bb664.firebaseapp.com",
+    projectId: "jr-ai-bb664",
+    storageBucket: "jr-ai-bb664.firebasestorage.app",
+    messagingSenderId: "769516066165",
+    appId: "1:769516066165:web:eabf9c49c713d1b9b0af3c"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  onAuthStateChanged(auth, function(user) {
+    if (!user) {
+      window.location.href = "login.html";
+    }
+  });
+
+  const logoutBtn = document.getElementById("logoutBtn");
+
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", async function() {
+      try {
+        await signOut(auth);
+        window.location.href = "login.html";
+      } catch (error) {
+        alert("Logout error: " + error.message);
+        console.error("Logout error:", error);
+      }
+    });
+  }
+</script>
+
 <script>
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", function() {
