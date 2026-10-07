@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#080d18">
+<title>JR - AI | Login</title>
+
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;width:100%;min-height:100%;font-family:Georgia,"Times New Roman",serif}
+body{
+  min-height:100dvh;color:#f3f4f7;
+  background:
+    radial-gradient(circle at 18% 10%,#2b3c59 0,#151f32 30%,#080d17 72%);
+  display:flex;justify-content:center;align-items:center;padding:12px 14px;
+}
+.page{width:100%;max-width:520px;text-align:center}
+.brand{margin-bottom:20px}
+.welcome{font-size:13px;letter-spacing:6px;font-weight:bold;color:#b9c1d0;margin-bottom:8px}
+.logo{font-size:39px;letter-spacing:5px;font-weight:900;line-height:1;color:#f4f5f8;text-shadow:0 3px 18px rgba(255,255,255,.08)}
+.tagline{font-size:15px;letter-spacing:2.5px;font-weight:bold;color:#aeb6c6;margin-top:10px}
+.card{
+  width:100%;padding:24px 25px 22px;border:1px solid rgba(120,137,166,.28);
+  border-radius:30px;background:rgba(13,20,34,.72);
+  box-shadow:0 14px 38px rgba(0,0,0,.34),inset 0 1px 0 rgba(255,255,255,.035);
+  backdrop-filter:blur(14px);
+}
+.tabs{
+  display:flex;background:rgba(5,9,18,.62);border-radius:16px;padding:5px;
+  margin-bottom:23px;box-shadow:0 7px 18px rgba(0,0,0,.2)
+}
+.tab{
+  flex:1;border:0;background:transparent;color:#747d91;padding:11px 6px;
+  border-radius:13px;font:700 17px Georgia,"Times New Roman",serif;
+  font-variant:small-caps;cursor:pointer
+}
+.tab.active{
+  color:#fff;background:linear-gradient(135deg,#27354c,#202c42);
+  box-shadow:0 5px 15px rgba(0,0,0,.35)
+}
+.form{text-align:left}
+label{
+  display:block;color:#c0c6d2;font-size:14px;font-weight:bold;
+  font-variant:small-caps;letter-spacing:.8px;margin:0 0 7px 2px
+}
+.group{margin-bottom:15px}
+input{
+  width:100%;height:58px;padding:0 17px;border:1px solid #29364d;
+  border-radius:17px;background:rgba(7,13,24,.72);color:#fff;
+  outline:0;font:700 15px Georgia,"Times New Roman",serif;
+  letter-spacing:.25px;box-shadow:inset 0 2px 10px rgba(0,0,0,.15)
+}
+input:focus{border-color:#64748e;box-shadow:0 0 0 3px rgba(130,150,185,.08)}
+input::placeholder{color:#687287}
+.password-wrap{position:relative}
+.password-wrap input{padding-right:58px}
+.eye{
+  position:absolute;right:6px;top:50%;transform:translateY(-50%);
+  width:42px;height:42px;border:0;background:transparent;color:#aab2c1;
+  font-size:19px;cursor:pointer
+}
+.forgot{
+  display:block;margin:-2px 2px 13px auto;border:0;background:none;
+  color:#8da1c4;font:700 12px Georgia,serif;cursor:pointer
+}
+.main-btn{
+  width:100%;height:59px;border:0;border-radius:18px;
+  background:linear-gradient(135deg,#f4f6fb,#b3bdcd);color:#080d17;
+  font:900 17px Georgia,"Times New Roman",serif;font-variant:small-caps;
+  letter-spacing:1px;cursor:pointer;box-shadow:0 7px 20px rgba(0,0,0,.25)
+}
+.main-btn:active{transform:scale(.99)}
+.main-btn:disabled{opacity:.65;cursor:not-allowed}
+.message{
+  display:none;margin:13px 5px 0;text-align:center;
+  font-size:13px;font-weight:bold;line-height:1.4;font-variant:small-caps
+}
+.message.show{display:block}
+.message.success{color:#8fe0af}
+.message.error{color:#ee9696}
+.security{
+  margin:18px 18px 0;color:#59647a;font-size:11px;
+  font-weight:bold;line-height:1.45;font-variant:small-caps;letter-spacing:.45px
+}
+.footer{margin-top:18px;color:#4f596e;font-size:11px;font-weight:bold;font-variant:small-caps}
+.hidden{display:none!important}
+
+@media(max-width:600px){
+  body{padding:18px 14px;align-items:flex-start}
+  .page{padding-top:55px}
+  .brand{margin-bottom:20px}
+  .welcome{font-size:14px;letter-spacing:6px}
+  .logo{font-size:48px}
+  .tagline{font-size:18px}
+  .card{padding:43px 36px 38px;border-radius:40px}
+  .tab{font-size:19px}
+  input{height:87px;font-size:17px}
+}
+@media(max-width:420px){
+  .page{padding-top:38px}
+  .card{padding:35px 28px 32px;border-radius:34px}
+  .tabs{margin-bottom:34px}
+  .tab{font-size:17px;padding:15px 5px}
+  input{height:78px;border-radius:22px;padding:0 22px}
+  .main-btn{height:80px;border-radius:23px}
+}
+
+<style>
+/* ===== JR-AI PREMIUM MICRO ANIMATIONS ===== */
+body::before{
+  content:"";
+  position:fixed;
+  width:260px;
+  height:260px;
+  left:-120px;
+  top:-100px;
+  border-radius:50%;
+  background:rgba(92,125,176,.16);
+  filter:blur(55px);
+  pointer-events:none;
+  animation:orbOne 8s ease-in-out infinite alternate;
+}
+body::after{
+  content:"";
+  position:fixed;
+  width:220px;
+  height:220px;
+  right:-110px;
+  bottom:-90px;
+  border-radius:50%;
+  background:rgba(71,103,151,.14);
+  filter:blur(55px);
+  pointer-events:none;
+  animation:orbTwo 10s ease-in-out infinite alternate;
+}
+.brand{
+  animation:brandIn .8s ease-out both;
+}
+.card{
+  position:relative;
+  overflow:hidden;
+  animation:cardIn .8s .08s ease-out both;
+}
+.card::before{
+  content:"";
+  position:absolute;
+  top:-1px;
+  left:-35%;
+  width:35%;
+  height:1px;
+  background:linear-gradient(90deg,transparent,rgba(224,233,248,.85),transparent);
+  box-shadow:0 0 18px rgba(184,205,235,.35);
+  animation:shine 5.5s ease-in-out infinite;
+}
+.card::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  pointer-events:none;
+  box-shadow:inset 0 0 35px rgba(96,124,165,.035);
+}
+.logo{
+  animation:logoGlow 3.2s ease-in-out infinite;
+}
+.tab.active{
+  animation:tabPulse 3.5s ease-in-out infinite;
+}
+input{
+  transition:border-color .25s ease,box-shadow .25s ease,transform .2s ease;
+}
+input:focus{
+  transform:translateY(-1px);
+  box-shadow:0 0 0 3px rgba(143,165,200,.08),inset 0 2px 10px rgba(0,0,0,.15),0 0 18px rgba(93,123,163,.08);
+}
+.main-btn{
+  position:relative;
+  overflow:hidden;
+  transition:transform .18s ease,box-shadow .25s ease,filter .25s ease;
+}
+.main-btn::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:-80%;
+  width:55%;
+  height:100%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.5),transparent);
+  transform:skewX(-20deg);
+  animation:buttonShine 4.8s ease-in-out infinite;
+}
+.main-btn:hover{
+  filter:brightness(1.04);
+  box-shadow:0 8px 24px rgba(0,0,0,.28),0 0 22px rgba(179,197,224,.08);
+}
+.eye,.forgot,.tab{
+  transition:opacity .2s ease,transform .2s ease,color .2s ease;
+}
+.eye:hover,.forgot:hover{
+  opacity:.8;
+}
+.tab:hover{
+  color:#d8deea;
+}
+.footer{
+  animation:fadeUp 1s .35s ease-out both;
+}
+@keyframes orbOne{
+  from{transform:translate(0,0) scale(1)}
+  to{transform:translate(70px,45px) scale(1.16)}
+}
+@keyframes orbTwo{
+  from{transform:translate(0,0) scale(1)}
+  to{transform:translate(-60px,-40px) scale(1.12)}
+}
+@keyframes brandIn{
+  from{opacity:0;transform:translateY(-10px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes cardIn{
+  from{opacity:0;transform:translateY(14px) scale(.985)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(7px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes logoGlow{
+  0%,100%{text-shadow:0 3px 18px rgba(255,255,255,.05)}
+  50%{text-shadow:0 3px 24px rgba(190,210,240,.14)}
+}
+@keyframes tabPulse{
+  0%,100%{box-shadow:0 5px 15px rgba(0,0,0,.35)}
+  50%{box-shadow:0 5px 19px rgba(70,94,128,.20)}
+}
+@keyframes shine{
+  0%,35%{left:-35%;opacity:0}
+  48%{opacity:1}
+  62%,100%{left:105%;opacity:0}
+}
+@keyframes buttonShine{
+  0%,55%{left:-80%;opacity:0}
+  65%{opacity:1}
+  78%,100%{left:125%;opacity:0}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    scroll-behavior:auto!important;
+  }
+}
+
+/* ===== JR-AI SOFT 3D PREMIUM LAYER ===== */
+body{perspective:1200px;overflow:hidden}
+body::before{content:"";position:fixed;width:220px;height:220px;left:-95px;top:-75px;border-radius:50%;background:radial-gradient(circle,rgba(110,149,205,.22),rgba(75,108,158,.08) 42%,transparent 72%);filter:blur(18px);pointer-events:none;animation:softOrb1 16s ease-in-out infinite alternate}
+body::after{content:"";position:fixed;width:190px;height:190px;right:-75px;bottom:-65px;border-radius:50%;background:radial-gradient(circle,rgba(90,130,190,.18),rgba(62,91,137,.07) 42%,transparent 72%);filter:blur(18px);pointer-events:none;animation:softOrb2 19s ease-in-out infinite alternate}
+.page::before,.page::after{content:"";position:fixed;border-radius:50%;pointer-events:none;z-index:-1}
+.page::before{width:90px;height:90px;right:12%;top:18%;background:radial-gradient(circle,rgba(165,193,230,.12),transparent 70%);filter:blur(10px);animation:softOrb3 14s ease-in-out infinite alternate}
+.page::after{width:72px;height:72px;left:12%;bottom:18%;background:radial-gradient(circle,rgba(120,157,207,.10),transparent 70%);filter:blur(9px);animation:softOrb4 17s ease-in-out infinite alternate}
+.logo{position:relative;display:inline-block;transform:perspective(600px) rotateX(4deg);text-shadow:1px 1px 0 #c2cad5,2px 2px 0 #929cab,3px 3px 0 #657082,0 8px 20px rgba(0,0,0,.34);animation:logo3dGlow 5s ease-in-out infinite}
+.card{transform:translateZ(0);box-shadow:0 18px 38px rgba(0,0,0,.34),0 5px 12px rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.045),inset 0 -10px 25px rgba(0,0,0,.07)}
+.main-btn{transform:translateZ(5px);box-shadow:0 7px 14px rgba(0,0,0,.27),inset 0 2px 0 rgba(255,255,255,.16),inset 0 -2px 0 rgba(0,0,0,.10)}
+@keyframes softOrb1{from{transform:translate3d(0,0,0)}to{transform:translate3d(32px,22px,0)}}
+@keyframes softOrb2{from{transform:translate3d(0,0,0)}to{transform:translate3d(-27px,-20px,0)}}
+@keyframes softOrb3{from{transform:translate3d(0,0,0)}to{transform:translate3d(-18px,16px,0)}}
+@keyframes softOrb4{from{transform:translate3d(0,0,0)}to{transform:translate3d(20px,-14px,0)}}
+@keyframes logo3dGlow{0%,100%{transform:perspective(600px) rotateX(4deg) translateZ(0);filter:drop-shadow(0 5px 8px rgba(0,0,0,.20))}50%{transform:perspective(600px) rotateX(4deg) translateZ(2px);filter:drop-shadow(0 7px 12px rgba(125,157,199,.16))}}
+@media(prefers-reduced-motion:reduce){body::before,body::after,.page::before,.page::after,.logo{animation:none!important}}
+</style>
+</style>
+</head>
+
+<body>
+<div class="page">
+
+  <div class="brand">
+    <div class="welcome">WELCOME TO</div>
+    <div class="logo">JR - AI</div>
+    <div class="tagline">LEARN • ASK • CREATE</div>
+  </div>
+
+  <div class="card">
+
+    <div class="tabs">
+      <button class="tab active" id="loginTab" type="button">Log In</button>
+      <button class="tab" id="signupTab" type="button">Create Account</button>
+    </div>
+
+    <!-- LOGIN -->
+    <form id="loginForm" class="form">
+      <div class="group">
+        <label for="loginEmail">Email Address</label>
+        <input id="loginEmail" type="email" placeholder="Enter your email"
+               autocomplete="email" required>
+      </div>
+
+      <div class="group">
+        <label for="loginPassword">Password</label>
+        <div class="password-wrap">
+          <input id="loginPassword" type="password" placeholder="Enter your password"
+                 autocomplete="current-password" required>
+          <button class="eye" id="loginEye" type="button">👁</button>
+        </div>
+      </div>
+
+      <button class="forgot" id="forgotBtn" type="button">Forgot Password?</button>
+
+      <button class="main-btn" id="loginBtn" type="submit">LOG IN</button>
+
+      <div class="message" id="loginMessage"></div>
+    </form>
+
+    <!-- CREATE ACCOUNT -->
+    <form id="signupForm" class="form hidden">
+      <div class="group">
+        <label for="signupName">Full Name</label>
+        <input id="signupName" type="text" placeholder="Enter your name"
+               autocomplete="name" required>
+      </div>
+
+      <div class="group">
+        <label for="signupEmail">Email Address</label>
+        <input id="signupEmail" type="email" placeholder="Enter your email"
+               autocomplete="email" required>
+      </div>
+
+      <div class="group">
+        <label for="signupPassword">Password</label>
+        <div class="password-wrap">
+          <input id="signupPassword" type="password" placeholder="Create a password"
+                 autocomplete="new-password" minlength="6" required>
+          <button class="eye" id="signupEye" type="button">👁</button>
+        </div>
+      </div>
+
+      <div class="group">
+        <label for="signupConfirm">Confirm Password</label>
+        <div class="password-wrap">
+          <input id="signupConfirm" type="password" placeholder="Confirm your password"
+                 autocomplete="new-password" minlength="6" required>
+          <button class="eye" id="confirmEye" type="button">👁</button>
+        </div>
+      </div>
+
+      <button class="main-btn" id="signupBtn" type="submit">CREATE ACCOUNT</button>
+      <div class="message" id="signupMessage"></div>
+    </form>
+
+    <div class="security">
+      Your account is securely managed by Firebase Authentication.
+    </div>
+  </div>
+
+  <div class="footer">© JR - AI • YOUR LEARNING COMPANION</div>
+</div>
+
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+import {
+  getAuth,onAuthStateChanged,signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,sendPasswordResetEmail,
+  updateProfile
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
+const firebaseConfig={
+  apiKey:"AIzaSyCPMj0rPve60XPUanyUCXYAUVcUSiuwIpE",
+  authDomain:"jr-ai-bb664.firebaseapp.com",
+  projectId:"jr-ai-bb664",
+  storageBucket:"jr-ai-bb664.firebasestorage.app",
+  messagingSenderId:"769516066165",
+  appId:"1:769516066165:web:eabf9c49c713d1b9b0af3c"
+};
+
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+
+const loginTab=document.getElementById("loginTab");
+const signupTab=document.getElementById("signupTab");
+const loginForm=document.getElementById("loginForm");
+const signupForm=document.getElementById("signupForm");
+const loginBtn=document.getElementById("loginBtn");
+const signupBtn=document.getElementById("signupBtn");
+const loginMessage=document.getElementById("loginMessage");
+const signupMessage=document.getElementById("signupMessage");
+
+function msg(el,text,type){
+  el.textContent=text;
+  el.className="message show "+type;
+}
+function clearMsg(){
+  loginMessage.className="message";
+  signupMessage.className="message";
+}
+
+function switchTab(which){
+  clearMsg();
+  const login=which==="login";
+  loginTab.classList.toggle("active",login);
+  signupTab.classList.toggle("active",!login);
+  loginForm.classList.toggle("hidden",!login);
+  signupForm.classList.toggle("hidden",login);
+}
+
+loginTab.onclick=()=>switchTab("login");
+signupTab.onclick=()=>switchTab("signup");
+
+function togglePassword(input,button){
+  button.onclick=()=>{
+    const visible=input.type==="text";
+    input.type=visible?"password":"text";
+    button.textContent=visible?"👁":"🙈";
+  };
+}
+togglePassword(
+  document.getElementById("loginPassword"),
+  document.getElementById("loginEye")
+);
+togglePassword(
+  document.getElementById("signupPassword"),
+  document.getElementById("signupEye")
+);
+togglePassword(
+  document.getElementById("signupConfirm"),
+  document.getElementById("confirmEye")
+);
+
+function firebaseError(error){
+  switch(error.code){
+    case "auth/invalid-credential":
+    case "auth/wrong-password":
+    case "auth/user-not-found":
+      return "Email or password is incorrect.";
+    case "auth/email-already-in-use":
+      return "This email is already registered. Please log in.";
+    case "auth/invalid-email":
+      return "Please enter a valid email address.";
+    case "auth/weak-password":
+      return "Password should be at least 6 characters.";
+    case "auth/user-disabled":
+      return "This account has been disabled.";
+    case "auth/too-many-requests":
+      return "Too many attempts. Please try again later.";
+    case "auth/network-request-failed":
+      return "Network problem. Check your internet connection.";
+    default:
+      return error.message || "Something went wrong. Please try again.";
+  }
+}
+
+loginForm.addEventListener("submit",async e=>{
+  e.preventDefault();
+  clearMsg();
+
+  const email=document.getElementById("loginEmail").value.trim();
+  const password=document.getElementById("loginPassword").value;
+
+  loginBtn.disabled=true;
+  loginBtn.textContent="LOGGING IN...";
+
+  try{
+    await signInWithEmailAndPassword(auth,email,password);
+    msg(loginMessage,"Login successful. Opening JR AI...","success");
+  }catch(error){
+    msg(loginMessage,firebaseError(error),"error");
+    loginBtn.disabled=false;
+    loginBtn.textContent="LOG IN";
+  }
+});
+
+signupForm.addEventListener("submit",async e=>{
+  e.preventDefault();
+  clearMsg();
+
+  const name=document.getElementById("signupName").value.trim();
+  const email=document.getElementById("signupEmail").value.trim();
+  const password=document.getElementById("signupPassword").value;
+  const confirm=document.getElementById("signupConfirm").value;
+
+  if(password!==confirm){
+    msg(signupMessage,"Passwords do not match.","error");
+    return;
+  }
+
+  signupBtn.disabled=true;
+  signupBtn.textContent="CREATING...";
+
+  try{
+    const result=await createUserWithEmailAndPassword(auth,email,password);
+    await updateProfile(result.user,{displayName:name});
+    msg(signupMessage,"Account created successfully. Opening JR AI...","success");
+  }catch(error){
+    msg(signupMessage,firebaseError(error),"error");
+    signupBtn.disabled=false;
+    signupBtn.textContent="CREATE ACCOUNT";
+  }
+});
+
+document.getElementById("forgotBtn").onclick=async()=>{
+  clearMsg();
+  const email=document.getElementById("loginEmail").value.trim();
+
+  if(!email){
+    msg(loginMessage,"Enter your email address first.","error");
+    return;
+  }
+
+  try{
+    await sendPasswordResetEmail(auth,email);
+    msg(loginMessage,"Password reset email sent. Check your inbox.","success");
+  }catch(error){
+    msg(loginMessage,firebaseError(error),"error");
+  }
+};
+
+/* If already logged in, go directly to the app. */
+onAuthStateChanged(auth,user=>{
+  if(user){
+    window.location.replace("index.html");
+  }
+});
+</script>
+</body>
+</html>
