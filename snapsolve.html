@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>SnapSolve - JR AI</title>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      color: #222;
+      transition: 0.2s;
+    }
+
+    body.dark {
+      background: #111;
+      color: white;
+    }
+
+    .header {
+      height: 58px;
+      background: #333;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 14px;
+      font-weight: bold;
+    }
+
+    .back-btn {
+      border: none;
+      background: transparent;
+      color: white;
+      font-size: 25px;
+      cursor: pointer;
+    }
+
+    .title {
+      font-size: 18px;
+    }
+
+    .page {
+      padding: 16px;
+      padding-bottom: 30px;
+    }
+
+    .welcome {
+      text-align: center;
+      margin: 18px 0;
+    }
+
+    .welcome h2 {
+      margin: 5px 0;
+    }
+
+    .welcome p {
+      margin: 8px 0;
+      color: #666;
+    }
+
+    body.dark .welcome p {
+      color: #bbb;
+    }
+
+    .image-box {
+      width: 100%;
+      min-height: 230px;
+      border: 2px dashed #777;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: #ddd;
+      margin-bottom: 14px;
+      position: relative;
+    }
+
+    body.dark .image-box {
+      background: #222;
+    }
+
+    .image-placeholder {
+      text-align: center;
+      color: #666;
+      padding: 25px;
+    }
+
+    body.dark .image-placeholder {
+      color: #bbb;
+    }
+
+    #previewImage {
+      display: none;
+      width: 100%;
+      max-height: 420px;
+      object-fit: contain;
+    }
+
+    .remove-btn {
+      display: none;
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      border: none;
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      background: #222;
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    .actions {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .action-btn {
+      flex: 1;
+      min-height: 48px;
+      border: none;
+      border-radius: 10px;
+      background: #444;
+      color: white;
+      font-weight: bold;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .action-btn:active {
+      transform: scale(0.98);
+    }
+
+    .question {
+      width: 100%;
+      min-height: 100px;
+      resize: vertical;
+      border: 1px solid #aaa;
+      border-radius: 10px;
+      padding: 12px;
+      font-size: 15px;
+      outline: none;
+      background: white;
+      color: #222;
+      margin-bottom: 12px;
+    }
+
+    body.dark .question {
+      background: #222;
+      color: white;
+      border-color: #555;
+    }
+
+    .solve-btn {
+      width: 100%;
+      height: 50px;
+      border: none;
+      border-radius: 10px;
+      background: #222;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    body.dark .solve-btn {
+      background: #eee;
+      color: #111;
+    }
+
+    .info {
+      margin-top: 16px;
+      padding: 12px;
+      border-radius: 10px;
+      background: #ddd;
+      font-size: 13px;
+      color: #444;
+    }
+
+    body.dark .info {
+      background: #222;
+      color: #ccc;
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+
+    .loading-box {
+      display: none;
+      align-items: center;
+      gap: 12px;
+      margin-top: 14px;
+      padding: 14px;
+      border-radius: 12px;
+      background: #ddd;
+    }
+
+    body.dark .loading-box {
+      background: #222;
+    }
+
+    .spinner {
+      width: 24px;
+      height: 24px;
+      border: 3px solid #aaa;
+      border-top-color: currentColor;
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+      flex: 0 0 auto;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    #loadingText {
+      margin-top: 3px;
+      font-size: 12px;
+      opacity: .75;
+    }
+
+    .result-card {
+      display: none;
+      margin-top: 14px;
+      padding: 14px;
+      border-radius: 12px;
+      background: white;
+      border: 1px solid #ccc;
+    }
+
+    body.dark .result-card {
+      background: #191919;
+      border-color: #444;
+    }
+
+    .result-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .result-text {
+      white-space: pre-wrap;
+      line-height: 1.55;
+      font-size: 15px;
+      overflow-wrap: anywhere;
+    }
+
+    .solve-btn:disabled,
+    .action-btn:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <div class="header">
+
+    <button
+      class="back-btn"
+      id="backBtn"
+      type="button"
+    >
+      ←
+    </button>
+
+    <div class="title">
+      📸 SnapSolve
+    </div>
+
+    <div></div>
+
+  </div>
+
+
+  <div class="page">
+
+    <div class="welcome">
+
+      <h2>
+        📸 SnapSolve
+      </h2>
+
+      <p>
+        Photo lo, question pucho aur solve karo 🤖
+      </p>
+
+    </div>
+
+
+    <div class="image-box">
+
+      <div
+        class="image-placeholder"
+        id="imagePlaceholder"
+      >
+
+        📷<br><br>
+
+        Camera ya Gallery se<br>
+        question ki photo select karo
+
+      </div>
+
+
+      <img
+        id="previewImage"
+        alt="Selected image"
+      >
+
+
+      <button
+        class="remove-btn"
+        id="removeBtn"
+        type="button"
+      >
+        ✕
+      </button>
+
+    </div>
+
+
+    <div class="actions">
+
+      <button
+        class="action-btn"
+        id="cameraBtn"
+        type="button"
+      >
+        📷 Camera
+      </button>
+
+      <button
+        class="action-btn"
+        id="galleryBtn"
+        type="button"
+      >
+        🖼️ Gallery
+      </button>
+
+    </div>
+
+
+    <input
+      type="file"
+      id="cameraInput"
+      accept="image/*"
+      capture="environment"
+    >
+
+    <input
+      type="file"
+      id="galleryInput"
+      accept="image/*"
+    >
+
+
+    <textarea
+      id="questionInput"
+      class="question"
+      placeholder="Question likho... 🤔&#10;&#10;Example: Is maths question ko solve karo."
+    ></textarea>
+
+
+    <button
+      id="solveBtn"
+      class="solve-btn"
+      type="button"
+    >
+      🤖 SOLVE QUESTION
+    </button>
+
+
+    <div class="info">
+      💡 Tip: Clear photo use karo. AI image ko read karke step-by-step answer dega.
+    </div>
+
+    <div id="loadingBox" class="loading-box" aria-live="polite">
+      <div class="spinner"></div>
+      <div>
+        <strong>AI is solving...</strong>
+        <div id="loadingText">Image ko read kiya ja raha hai.</div>
+      </div>
+    </div>
+
+    <div id="resultCard" class="result-card">
+      <div class="result-head">
+        <strong>🤖 AI Answer</strong>
+        <button id="copyBtn" class="small-btn" type="button">📋 Copy</button>
+      </div>
+      <div id="resultText" class="result-text"></div>
+    </div>
+
+  </div>
+
+
+  <script>
+
+    /* =========================================
+       GLOBAL THEME
+    ========================================= */
+
+    function applyGlobalTheme() {
+
+      const savedTheme =
+        localStorage.getItem(
+          "jr_ai_theme"
+        ) || "light";
+
+      if (
+        savedTheme === "dark"
+      ) {
+
+        document.body.classList.add(
+          "dark"
+        );
+
+      } else {
+
+        document.body.classList.remove(
+          "dark"
+        );
+
+      }
+
+    }
+
+    applyGlobalTheme();
+
+
+    /* =========================================
+       ELEMENTS
+    ========================================= */
+
+    const backBtn =
+      document.getElementById(
+        "backBtn"
+      );
+
+    const cameraBtn =
+      document.getElementById(
+        "cameraBtn"
+      );
+
+    const galleryBtn =
+      document.getElementById(
+        "galleryBtn"
+      );
+
+    const cameraInput =
+      document.getElementById(
+        "cameraInput"
+      );
+
+    const galleryInput =
+      document.getElementById(
+        "galleryInput"
+      );
+
+    const previewImage =
+      document.getElementById(
+        "previewImage"
+      );
+
+    const imagePlaceholder =
+      document.getElementById(
+        "imagePlaceholder"
+      );
+
+    const removeBtn =
+      document.getElementById(
+        "removeBtn"
+      );
+
+    const questionInput =
+      document.getElementById(
+        "questionInput"
+      );
+
+    const solveBtn =
+      document.getElementById(
+        "solveBtn"
+      );
+
+
+    /* =========================================
+       BACK
+    ========================================= */
+
+    backBtn.addEventListener(
+      "click",
+      function() {
+
+        window.location.href =
+          "index.html";
+
+      }
+    );
+
+
+    /* =========================================
+       CAMERA
+    ========================================= */
+
+    cameraBtn.addEventListener(
+      "click",
+      function() {
+
+        cameraInput.click();
+
+      }
+    );
+
+
+    /* =========================================
+       GALLERY
+    ========================================= */
+
+    galleryBtn.addEventListener(
+      "click",
+      function() {
+
+        galleryInput.click();
+
+      }
+    );
+
+
+    /* =========================================
+       IMAGE PREVIEW
+    ========================================= */
+
+    function showImage(
+      file
+    ) {
+
+      if (!file) {
+        return;
+      }
+
+      if (!file.type.startsWith("image/")) {
+        alert("Please sirf image file select karo.");
+        return;
+      }
+
+      if (file.size > 10 * 1024 * 1024) {
+        alert("Image 10 MB se chhoti honi chahiye.");
+        return;
+      }
+
+      resultCard.style.display = "none";
+      const reader =
+        new FileReader();
+
+      reader.onload =
+        function(event) {
+
+          previewImage.src =
+            event.target.result;
+
+          previewImage.style.display =
+            "block";
+
+          imagePlaceholder.style.display =
+            "none";
+
+          removeBtn.style.display =
+            "block";
+
+        };
+
+      reader.readAsDataURL(
+        file
+      );
+
+    }
+
+
+    cameraInput.addEventListener(
+      "change",
+      function() {
+
+        showImage(
+          this.files[0]
+        );
+
+      }
+    );
+
+
+    galleryInput.addEventListener(
+      "change",
+      function() {
+
+        showImage(
+          this.files[0]
+        );
+
+      }
+    );
+
+
+    /* =========================================
+       REMOVE IMAGE
+    ========================================= */
+
+    removeBtn.addEventListener(
+      "click",
+      function() {
+
+        previewImage.src = "";
+
+        previewImage.style.display =
+          "none";
+
+        imagePlaceholder.style.display =
+          "block";
+
+        removeBtn.style.display =
+          "none";
+
+        cameraInput.value = "";
+
+        galleryInput.value = "";
+
+      }
+    );
+
+
+    /* =========================================
+       AI SOLVER - GEMINI
+    ========================================= */
+
+    function setLoading(show, message) {
+      loadingBox.style.display = show ? "flex" : "none";
+      if (message) loadingText.textContent = message;
+      solveBtn.disabled = show;
+      cameraBtn.disabled = show;
+      galleryBtn.disabled = show;
+    }
+
+    function fileToBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+
+        reader.onload = () => {
+          const result = String(reader.result || "");
+          const comma = result.indexOf(",");
+          if (comma === -1) {
+            reject(new Error("Image read nahi ho saki."));
+            return;
+          }
+          resolve({
+            base64: result.slice(comma + 1),
+            mimeType: file.type || "image/jpeg"
+          });
+        };
+
+        reader.onerror = () => reject(new Error("Image read nahi ho saki."));
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function getSelectedFile() {
+      return cameraInput.files[0] || galleryInput.files[0] || null;
+    }
+
+    function extractGeminiText(data) {
+      const parts = data?.candidates?.[0]?.content?.parts || [];
+      return parts
+        .map(part => part?.text || "")
+        .join("")
+        .trim();
+    }
+
+    async function solveWithBackend(file, question) {
+      const image = await fileToBase64(file);
+
+      const response = await fetch("/api/solve", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          question,
+          image: image.base64,
+          mimeType: image.mimeType
+        })
+      });
+
+      let data = {};
+      try { data = await response.json(); } catch (_) {}
+
+      if (!response.ok) {
+        throw new Error(data?.error || "Server request failed.");
+      }
+
+      if (!data.answer) throw new Error("AI ne answer return nahi kiya.");
+      return data.answer;
+    }
+
+
+    solveBtn.addEventListener("click", async function () {
+      const hasImage =
+        previewImage.src &&
+        previewImage.style.display !== "none";
+
+      const question = questionInput.value.trim();
+      const file = getSelectedFile();
+
+      resultCard.style.display = "none";
+      resultText.textContent = "";
+
+      if (!hasImage || !file) {
+        alert("📸 Pehle question ki photo select karo.");
+        return;
+      }
+
+      if (!question) {
+        alert("❓ Photo ke baare mein question likho.");
+        questionInput.focus();
+        return;
+      }
+
+      setLoading(true, "Image ko AI read kar raha hai...");
+
+      try {
+        const answer = await solveWithBackend(file, question);
+
+        resultText.textContent = answer;
+        resultCard.style.display = "block";
+
+        setLoading(true, "Answer ready...");
+        setTimeout(() => setLoading(false), 250);
+      } catch (error) {
+        console.error(error);
+        setLoading(false);
+
+        alert(
+          "❌ AI solve nahi kar paaya.\n\n" +
+          (error?.message || "Unknown error") +
+          "\n\nAPI key, internet connection aur image check karo."
+        );
+      }
+    });
+
+
+  </script>
+
+</body>
+</html>
