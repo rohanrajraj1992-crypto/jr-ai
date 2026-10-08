@@ -1,0 +1,1500 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>JR AI Class 10 Science</title>
+
+<style>
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f4f7fb;
+  color:#172033;
+  transition:.3s;
+}
+
+header{
+  position:sticky;
+  top:0;
+  z-index:10;
+  background:#fff;
+  padding:14px 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  box-shadow:0 2px 12px rgba(0,0,0,.08);
+}
+
+.header-title{
+  font-size:20px;
+  font-weight:800;
+}
+
+.theme-btn,
+.back-btn{
+  border:0;
+  background:#eef2f7;
+  padding:9px 12px;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+.container{
+  max-width:900px;
+  margin:auto;
+  padding:18px;
+}
+
+.cover{
+  background:linear-gradient(135deg,#7c2d12,#ea580c);
+  color:white;
+  border-radius:22px;
+  padding:28px 20px;
+  text-align:center;
+  box-shadow:0 10px 30px rgba(0,0,0,.15);
+  margin-bottom:20px;
+}
+
+.cover-icon{
+  font-size:60px;
+}
+
+.cover h1{
+  margin:10px 0 6px;
+  font-size:28px;
+}
+
+.cover p{
+  margin:0;
+  opacity:.9;
+}
+
+.syllabus{
+  background:#fff;
+  padding:18px;
+  border-radius:18px;
+  margin-bottom:20px;
+  box-shadow:0 4px 15px rgba(0,0,0,.06);
+}
+
+.syllabus h2{
+  margin-top:0;
+}
+
+.search-box{
+  margin-bottom:18px;
+}
+
+.search-box input{
+  width:100%;
+  padding:14px;
+  border:1px solid #d7dee8;
+  border-radius:13px;
+  font-size:15px;
+  outline:none;
+}
+
+.chapter-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+}
+
+.chapter-card{
+  background:#fff;
+  border-radius:17px;
+  padding:18px;
+  cursor:pointer;
+  border:1px solid #e1e7ef;
+  box-shadow:0 4px 14px rgba(0,0,0,.05);
+  transition:.2s;
+}
+
+.chapter-card:hover{
+  transform:translateY(-2px);
+}
+
+.chapter-number{
+  font-size:13px;
+  color:#ea580c;
+  font-weight:bold;
+  margin-bottom:7px;
+}
+
+.chapter-title{
+  font-size:17px;
+  font-weight:700;
+}
+
+.reader{
+  display:none;
+  background:#fff;
+  border-radius:20px;
+  padding:20px;
+  box-shadow:0 5px 20px rgba(0,0,0,.07);
+}
+
+.reader.active{
+  display:block;
+}
+
+.reader-title{
+  font-size:24px;
+  margin-top:0;
+  color:#c2410c;
+}
+
+.progress{
+  height:7px;
+  background:#e5e7eb;
+  border-radius:10px;
+  margin:15px 0 20px;
+  overflow:hidden;
+}
+
+.progress-fill{
+  height:100%;
+  width:0;
+  background:#ea580c;
+  transition:.3s;
+}
+
+.definition{
+  background:#fff7ed;
+  border-left:5px solid #ea580c;
+  padding:15px;
+  border-radius:10px;
+  margin:15px 0;
+  line-height:1.7;
+}
+
+.formula{
+  background:#fff7ed;
+  border-left:5px solid #c2410c;
+  padding:14px;
+  border-radius:10px;
+  margin:14px 0;
+  font-weight:600;
+  overflow-x:auto;
+}
+
+.reader p,
+.reader li{
+  line-height:1.8;
+}
+
+.reader h3{
+  margin-top:25px;
+  color:#c2410c;
+}
+
+.reader-actions{
+  display:flex;
+  gap:10px;
+  margin-top:25px;
+}
+
+.reader-actions button{
+  flex:1;
+  border:0;
+  padding:13px;
+  border-radius:12px;
+  background:#c2410c;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.empty{
+  display:none;
+  text-align:center;
+  padding:25px;
+  color:#64748b;
+}
+
+body.dark{
+  background:#101827;
+  color:#e5e7eb;
+}
+
+body.dark header,
+body.dark .syllabus,
+body.dark .chapter-card,
+body.dark .reader{
+  background:#172033;
+  color:#e5e7eb;
+}
+
+body.dark .theme-btn,
+body.dark .back-btn{
+  background:#253047;
+  color:white;
+}
+
+body.dark .chapter-card{
+  border-color:#2d3a50;
+}
+
+body.dark .search-box input{
+  background:#172033;
+  color:white;
+  border-color:#334155;
+}
+
+body.dark .definition,
+body.dark .formula{
+  background:#292017;
+}
+
+@media(max-width:600px){
+
+  .chapter-grid{
+    grid-template-columns:1fr;
+  }
+
+  .cover h1{
+    font-size:24px;
+  }
+
+  .reader-title{
+    font-size:21px;
+  }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<button class="back-btn"
+onclick="goBack()">←</button>
+
+<div class="header-title">
+🔬 JR AI Class 10 Science
+</div>
+
+<button class="theme-btn"
+onclick="toggleTheme()">🌙</button>
+
+</header>
+
+
+<div class="container">
+
+
+<section class="cover">
+
+<div class="cover-icon">🔬</div>
+
+<h1>JR AI Class 10 Science</h1>
+
+<p>
+Original chapter-wise Science study book
+</p>
+
+</section>
+
+
+<section class="syllabus">
+
+<h2>📚 Class 10 Science</h2>
+
+<p>
+Complete study material covering Physics, Chemistry,
+Biology and Environment-related concepts.
+</p>
+
+<ul>
+
+<li>Chemical Reactions and Equations</li>
+
+<li>Acids, Bases and Salts</li>
+
+<li>Metals and Non-metals</li>
+
+<li>Carbon Compounds</li>
+
+<li>Life Processes</li>
+
+<li>Control and Coordination</li>
+
+<li>How Do Organisms Reproduce?</li>
+
+<li>Heredity and Evolution</li>
+
+<li>Light</li>
+
+<li>Human Eye and Colourful World</li>
+
+<li>Electricity</li>
+
+<li>Magnetic Effects of Electric Current</li>
+
+<li>Our Environment</li>
+
+</ul>
+
+</section>
+
+
+<div class="search-box">
+
+<input
+id="searchInput"
+type="text"
+placeholder="🔎 Search Science chapter..."
+oninput="searchChapters()"
+>
+
+</div>
+
+
+<div id="chapterGrid"
+class="chapter-grid">
+</div>
+
+
+<div id="emptyMessage"
+class="empty">
+No chapter found.
+</div>
+
+
+<section id="reader"
+class="reader">
+
+<h2 id="readerTitle"
+class="reader-title">
+</h2>
+
+<div class="progress">
+
+<div id="progressFill"
+class="progress-fill">
+</div>
+
+</div>
+
+<div id="readerContent">
+</div>
+
+
+<div class="reader-actions">
+
+<button onclick="previousChapter()">
+← Previous
+</button>
+
+<button onclick="showChapters()">
+📚 Chapters
+</button>
+
+<button onclick="nextChapter()">
+Next →
+</button>
+
+</div>
+
+</section>
+
+
+</div>
+
+
+<script>
+
+
+const chapters = [
+
+
+{
+title:"Chemical Reactions and Equations",
+content:`
+
+<div class="definition">
+A chemical reaction is a process in which one or more substances
+undergo chemical changes to form new substances with different
+properties.
+</div>
+
+<h3>1. Chemical Equation</h3>
+
+<p>
+A chemical equation represents a chemical reaction using chemical
+symbols and formulae.
+</p>
+
+<h3>2. Balanced Chemical Equation</h3>
+
+<p>
+A chemical equation is balanced when the number of atoms of each
+element is equal on both sides of the equation.
+</p>
+
+<h3>3. Combination Reaction</h3>
+
+<p>
+A combination reaction is a reaction in which two or more substances
+combine to form a single product.
+</p>
+
+<div class="formula">
+A + B → AB
+</div>
+
+<h3>4. Decomposition Reaction</h3>
+
+<p>
+A decomposition reaction is a reaction in which a single compound
+breaks down into two or more simpler substances.
+</p>
+
+<div class="formula">
+AB → A + B
+</div>
+
+<h3>5. Displacement Reaction</h3>
+
+<p>
+A displacement reaction occurs when a more reactive element displaces
+a less reactive element from its compound.
+</p>
+
+<h3>6. Double Displacement Reaction</h3>
+
+<p>
+In a double displacement reaction, two compounds exchange ions to
+form two new compounds.
+</p>
+
+<h3>7. Oxidation and Reduction</h3>
+
+<p>
+Oxidation and reduction are complementary processes involving changes
+in oxygen, hydrogen or electron transfer.
+</p>
+
+<h3>8. Corrosion</h3>
+
+<p>
+Corrosion is the gradual deterioration of a metal due to chemical
+reactions with substances in the environment.
+</p>
+
+<h3>9. Rancidity</h3>
+
+<p>
+Rancidity is the oxidation of fats and oils that causes undesirable
+taste and smell in food.
+</p>
+
+`
+},
+
+
+{
+title:"Acids, Bases and Salts",
+content:`
+
+<div class="definition">
+Acids and bases are important classes of chemical substances that
+show characteristic properties in aqueous solutions.
+</div>
+
+<h3>1. Acids</h3>
+
+<p>
+Acids produce hydrogen ions in aqueous solution and generally have
+a sour taste. They turn blue litmus red.
+</p>
+
+<h3>2. Bases</h3>
+
+<p>
+Bases produce hydroxide ions in aqueous solution and generally turn
+red litmus blue.
+</p>
+
+<h3>3. Indicators</h3>
+
+<p>
+Indicators are substances that show different colours in acidic and
+basic media.
+</p>
+
+<h3>4. pH Scale</h3>
+
+<p>
+The pH scale is used to express the acidic or basic nature of a
+solution.
+</p>
+
+<div class="formula">
+pH = −log[H⁺]
+</div>
+
+<h3>5. Neutralisation</h3>
+
+<p>
+Neutralisation is a reaction between an acid and a base that produces
+salt and water.
+</p>
+
+<h3>6. Salts</h3>
+
+<p>
+Salts are ionic compounds commonly formed through reactions involving
+acids and bases.
+</p>
+
+<h3>7. Uses of Salts</h3>
+
+<p>
+Common salts have important uses in cooking, medicine, agriculture,
+cleaning and industry.
+</p>
+
+`
+},
+
+
+{
+title:"Metals and Non-metals",
+content:`
+
+<div class="definition">
+Metals and non-metals are two major categories of elements with
+different physical and chemical properties.
+</div>
+
+<h3>1. Physical Properties of Metals</h3>
+
+<p>
+Metals are generally lustrous, malleable, ductile and good conductors
+of heat and electricity.
+</p>
+
+<h3>2. Physical Properties of Non-metals</h3>
+
+<p>
+Non-metals generally have different physical properties and are
+usually poor conductors of heat and electricity, with important
+exceptions.
+</p>
+
+<h3>3. Reactivity</h3>
+
+<p>
+Different metals have different tendencies to lose electrons and form
+positive ions.
+</p>
+
+<h3>4. Ionic Compounds</h3>
+
+<p>
+Ionic compounds are formed through electrostatic attraction between
+positively and negatively charged ions.
+</p>
+
+<h3>5. Reactivity Series</h3>
+
+<p>
+The reactivity series arranges metals according to their relative
+reactivity.
+</p>
+
+<h3>6. Extraction of Metals</h3>
+
+<p>
+Metals are extracted from their ores through processes such as
+concentration, reduction and refining.
+</p>
+
+<h3>7. Corrosion Prevention</h3>
+
+<p>
+Corrosion can be reduced by methods such as painting, oiling,
+galvanisation and alloying.
+</p>
+
+`
+},
+
+
+{
+title:"Carbon and Its Compounds",
+content:`
+
+<div class="definition">
+Carbon is a versatile element that forms a very large number of
+compounds because of its ability to form stable covalent bonds.
+</div>
+
+<h3>1. Covalent Bond</h3>
+
+<p>
+A covalent bond is formed when atoms share electrons.
+</p>
+
+<h3>2. Tetravalency</h3>
+
+<p>
+Carbon has four valence electrons and commonly forms four covalent
+bonds.
+</p>
+
+<h3>3. Catenation</h3>
+
+<p>
+Catenation is the ability of carbon atoms to form bonds with other
+carbon atoms, producing chains and rings.
+</p>
+
+<h3>4. Hydrocarbons</h3>
+
+<p>
+Hydrocarbons are compounds containing only carbon and hydrogen.
+</p>
+
+<h3>5. Saturated Compounds</h3>
+
+<p>
+Saturated hydrocarbons contain only single carbon-carbon bonds.
+</p>
+
+<h3>6. Unsaturated Compounds</h3>
+
+<p>
+Unsaturated hydrocarbons contain one or more double or triple bonds.
+</p>
+
+<h3>7. Functional Groups</h3>
+
+<p>
+A functional group is an atom or group of atoms responsible for the
+characteristic chemical properties of an organic compound.
+</p>
+
+<h3>8. Homologous Series</h3>
+
+<p>
+A homologous series is a family of organic compounds having the same
+functional group and similar chemical properties, with successive
+members differing by a CH₂ unit.
+</p>
+
+`
+},
+
+
+{
+title:"Life Processes",
+content:`
+
+<div class="definition">
+Life processes are essential activities performed by living organisms
+to maintain life and proper functioning.
+</div>
+
+<h3>1. Nutrition</h3>
+
+<p>
+Nutrition is the process by which organisms obtain and utilize
+nutrients for energy, growth and maintenance.
+</p>
+
+<h3>2. Photosynthesis</h3>
+
+<p>
+Photosynthesis is the process by which green plants use light energy
+to synthesize food from carbon dioxide and water.
+</p>
+
+<div class="formula">
+Carbon dioxide + Water → Glucose + Oxygen
+</div>
+
+<h3>3. Respiration</h3>
+
+<p>
+Respiration is the process through which cells release usable energy
+from food molecules.
+</p>
+
+<h3>4. Transportation</h3>
+
+<p>
+Transportation involves movement of substances such as nutrients,
+gases and wastes within an organism.
+</p>
+
+<h3>5. Circulation</h3>
+
+<p>
+In humans, blood circulates through the heart and blood vessels to
+transport oxygen, nutrients, hormones and waste products.
+</p>
+
+<h3>6. Excretion</h3>
+
+<p>
+Excretion is the removal of metabolic waste products from the body.
+</p>
+
+`
+},
+
+
+{
+title:"Control and Coordination",
+content:`
+
+<div class="definition">
+Control and coordination allow organisms to respond appropriately to
+changes in their internal and external environment.
+</div>
+
+<h3>1. Nervous System</h3>
+
+<p>
+The nervous system receives information, processes it and coordinates
+responses through electrical signals.
+</p>
+
+<h3>2. Neuron</h3>
+
+<p>
+A neuron is the structural and functional unit of the nervous system.
+</p>
+
+<h3>3. Reflex Action</h3>
+
+<p>
+A reflex action is a rapid and automatic response to a stimulus.
+</p>
+
+<h3>4. Hormones</h3>
+
+<p>
+Hormones are chemical messengers secreted by endocrine glands and
+transported to target tissues.
+</p>
+
+<h3>5. Plant Hormones</h3>
+
+<p>
+Plant hormones regulate processes such as growth, development,
+tropisms and responses to environmental conditions.
+</p>
+
+<h3>6. Tropism</h3>
+
+<p>
+Tropism is a directional growth response of a plant part to an
+external stimulus.
+</p>
+
+`
+},
+
+
+{
+title:"How Do Organisms Reproduce?",
+content:`
+
+<div class="definition">
+Reproduction is the biological process through which organisms produce
+new individuals of their own kind.
+</div>
+
+<h3>1. Asexual Reproduction</h3>
+
+<p>
+Asexual reproduction involves a single parent and generally does not
+involve fusion of gametes.
+</p>
+
+<h3>2. Binary Fission</h3>
+
+<p>
+Binary fission is a process in which one parent cell divides to form
+two daughter cells.
+</p>
+
+<h3>3. Budding</h3>
+
+<p>
+Budding is a form of asexual reproduction in which a new individual
+develops as an outgrowth from the parent.
+</p>
+
+<h3>4. Sexual Reproduction</h3>
+
+<p>
+Sexual reproduction involves formation and fusion of male and female
+gametes.
+</p>
+
+<h3>5. Human Reproduction</h3>
+
+<p>
+Human reproduction involves specialized reproductive organs,
+formation of gametes, fertilisation and development of the embryo.
+</p>
+
+<h3>6. Fertilisation</h3>
+
+<p>
+Fertilisation is the fusion of male and female gametes to form a
+zygote.
+</p>
+
+`
+},
+
+
+{
+title:"Heredity and Evolution",
+content:`
+
+<div class="definition">
+Heredity is the transmission of characteristics from parents to
+offspring, while evolution describes changes in populations over
+generations.
+</div>
+
+<h3>1. Gene</h3>
+
+<p>
+A gene is a unit of heredity that carries information influencing
+particular characteristics.
+</p>
+
+<h3>2. Alleles</h3>
+
+<p>
+Alleles are alternative forms of a gene.
+</p>
+
+<h3>3. Dominant Trait</h3>
+
+<p>
+A dominant allele can determine the phenotype in a heterozygous
+condition.
+</p>
+
+<h3>4. Recessive Trait</h3>
+
+<p>
+A recessive trait is expressed when the corresponding recessive
+alleles are present in the required genetic condition.
+</p>
+
+<h3>5. Variation</h3>
+
+<p>
+Variation refers to differences in characteristics among individuals
+of a population.
+</p>
+
+<h3>6. Natural Selection</h3>
+
+<p>
+Natural selection can cause advantageous heritable variations to
+become more common in populations over generations.
+</p>
+
+`
+},
+
+
+{
+title:"Light – Reflection and Refraction",
+content:`
+
+<div class="definition">
+Light is a form of electromagnetic radiation that can travel through
+vacuum and interact with matter through processes such as reflection
+and refraction.
+</div>
+
+<h3>1. Reflection</h3>
+
+<p>
+Reflection is the bouncing back of light when it strikes a surface.
+</p>
+
+<h3>2. Laws of Reflection</h3>
+
+<p>
+The angle of incidence is equal to the angle of reflection, and the
+incident ray, reflected ray and normal lie in the same plane.
+</p>
+
+<h3>3. Spherical Mirrors</h3>
+
+<p>
+Spherical mirrors have reflecting surfaces that form part of a
+sphere. They may be concave or convex.
+</p>
+
+<h3>4. Mirror Formula</h3>
+
+<div class="formula">
+1/f = 1/v + 1/u
+</div>
+
+<h3>5. Magnification</h3>
+
+<div class="formula">
+m = hᵢ/hₒ = −v/u
+</div>
+
+<h3>6. Refraction</h3>
+
+<p>
+Refraction is the change in direction of light when it passes from
+one transparent medium to another.
+</p>
+
+<h3>7. Refractive Index</h3>
+
+<div class="formula">
+n = c/v
+</div>
+
+`
+},
+
+
+{
+title:"The Human Eye and the Colourful World",
+content:`
+
+<div class="definition">
+The human eye is a complex optical organ that receives light and
+forms images on the retina.
+</div>
+
+<h3>1. Cornea</h3>
+
+<p>
+The cornea is the transparent front part of the eye and contributes
+significantly to the focusing of incoming light.
+</p>
+
+<h3>2. Iris and Pupil</h3>
+
+<p>
+The iris controls the size of the pupil and therefore regulates the
+amount of light entering the eye.
+</p>
+
+<h3>3. Retina</h3>
+
+<p>
+The retina contains light-sensitive cells and receives the image
+formed by the eye's optical system.
+</p>
+
+<h3>4. Accommodation</h3>
+
+<p>
+Accommodation is the ability of the eye lens to change its focal
+length to focus objects at different distances.
+</p>
+
+<h3>5. Myopia</h3>
+
+<p>
+Myopia is a refractive defect in which distant objects are not
+focused clearly on the retina.
+</p>
+
+<h3>6. Hypermetropia</h3>
+
+<p>
+Hypermetropia is a refractive defect in which nearby objects are not
+focused clearly on the retina.
+</p>
+
+<h3>7. Dispersion</h3>
+
+<p>
+Dispersion is the separation of white light into its constituent
+colours when it passes through a suitable medium such as a prism.
+</p>
+
+<h3>8. Atmospheric Refraction</h3>
+
+<p>
+Atmospheric refraction occurs because light travels through layers
+of air having different optical properties.
+</p>
+
+`
+},
+
+
+{
+title:"Electricity",
+content:`
+
+<div class="definition">
+Electricity involves the movement and interaction of electric charges.
+Electric circuits provide paths through which electric current can flow.
+</div>
+
+<h3>1. Electric Current</h3>
+
+<p>
+Electric current is the rate of flow of electric charge through a
+conductor.
+</p>
+
+<div class="formula">
+I = Q/t
+</div>
+
+<h3>2. Potential Difference</h3>
+
+<p>
+Potential difference is the work done per unit charge in moving a
+charge between two points.
+</p>
+
+<div class="formula">
+V = W/Q
+</div>
+
+<h3>3. Resistance</h3>
+
+<p>
+Resistance is the opposition offered by a conductor to the flow of
+electric current.
+</p>
+
+<div class="formula">
+V = IR
+</div>
+
+<h3>4. Series Combination</h3>
+
+<p>
+In a series combination, resistors are connected one after another
+and the same current flows through each resistor.
+</p>
+
+<div class="formula">
+R = R₁ + R₂ + R₃
+</div>
+
+<h3>5. Parallel Combination</h3>
+
+<p>
+In a parallel combination, the potential difference across each
+branch is the same.
+</p>
+
+<div class="formula">
+1/R = 1/R₁ + 1/R₂ + 1/R₃
+</div>
+
+<h3>6. Electric Power</h3>
+
+<div class="formula">
+P = VI
+</div>
+
+<h3>7. Electrical Energy</h3>
+
+<div class="formula">
+E = Pt
+</div>
+
+`
+},
+
+
+{
+title:"Magnetic Effects of Electric Current",
+content:`
+
+<div class="definition">
+An electric current produces a magnetic field around the conductor
+through which it flows.
+</div>
+
+<h3>1. Magnetic Field</h3>
+
+<p>
+A magnetic field is the region around a magnet or current-carrying
+conductor where magnetic effects can be detected.
+</p>
+
+<h3>2. Magnetic Field Lines</h3>
+
+<p>
+Magnetic field lines are imaginary lines used to represent the
+direction and relative strength of a magnetic field.
+</p>
+
+<h3>3. Right-Hand Thumb Rule</h3>
+
+<p>
+The right-hand thumb rule gives the direction of the magnetic field
+around a straight current-carrying conductor.
+</p>
+
+<h3>4. Electromagnet</h3>
+
+<p>
+An electromagnet is a temporary magnet produced by passing current
+through a coil, usually wound around a magnetic material.
+</p>
+
+<h3>5. Electric Motor</h3>
+
+<p>
+An electric motor converts electrical energy into mechanical energy
+using the magnetic effect of electric current.
+</p>
+
+<h3>6. Electromagnetic Induction</h3>
+
+<p>
+Electromagnetic induction is the production of an induced current or
+emf due to a change in magnetic flux through a circuit.
+</p>
+
+<h3>7. Electric Generator</h3>
+
+<p>
+An electric generator converts mechanical energy into electrical
+energy through electromagnetic induction.
+</p>
+
+`
+},
+
+
+{
+title:"Our Environment",
+content:`
+
+<div class="definition">
+The environment includes living organisms and the physical conditions
+surrounding them.
+</div>
+
+<h3>1. Ecosystem</h3>
+
+<p>
+An ecosystem consists of living organisms interacting with one
+another and with non-living components of their surroundings.
+</p>
+
+<h3>2. Food Chain</h3>
+
+<p>
+A food chain represents the transfer of food and energy from one
+organism to another.
+</p>
+
+<h3>3. Food Web</h3>
+
+<p>
+A food web consists of several interconnected food chains within an
+ecosystem. It shows multiple feeding relationships among organisms.
+</p>
+
+<h3>4. Trophic Levels</h3>
+
+<p>
+Trophic levels represent the different feeding positions occupied by
+organisms in a food chain. Producers form the first trophic level,
+followed by primary, secondary and higher-level consumers.
+</p>
+
+<h3>5. Biodegradable Waste</h3>
+
+<p>
+Biodegradable substances can be broken down naturally by biological
+agents such as microorganisms.
+</p>
+
+<h3>6. Non-biodegradable Waste</h3>
+
+<p>
+Non-biodegradable substances are not readily broken down by natural
+biological processes and may persist in the environment for long
+periods.
+</p>
+
+<h3>7. Ozone Layer</h3>
+
+<p>
+The ozone layer in the stratosphere absorbs a significant portion of
+harmful ultraviolet radiation from the Sun.
+</p>
+
+`
+}
+
+];
+
+
+let currentChapter = 0;
+
+
+function renderChapters(list = chapters){
+
+  const grid =
+    document.getElementById("chapterGrid");
+
+  grid.innerHTML = "";
+
+  document.getElementById("emptyMessage").style.display =
+    list.length ? "none" : "block";
+
+  list.forEach((chapter)=>{
+
+    const realIndex =
+      chapters.indexOf(chapter);
+
+    const card =
+      document.createElement("div");
+
+    card.className =
+      "chapter-card";
+
+    card.innerHTML = `
+      <div class="chapter-number">
+        Chapter ${realIndex + 1}
+      </div>
+
+      <div class="chapter-title">
+        ${chapter.title}
+      </div>
+    `;
+
+    card.onclick = function(){
+
+      openChapter(realIndex);
+
+    };
+
+    grid.appendChild(card);
+
+  });
+
+}
+
+
+function openChapter(index){
+
+  currentChapter = index;
+
+  const chapter =
+    chapters[index];
+
+  document.getElementById(
+    "chapterGrid"
+  ).style.display = "none";
+
+  document.querySelector(
+    ".search-box"
+  ).style.display = "none";
+
+  document.querySelector(
+    ".syllabus"
+  ).style.display = "none";
+
+  const reader =
+    document.getElementById("reader");
+
+  reader.classList.add("active");
+
+  document.getElementById(
+    "readerTitle"
+  ).textContent =
+    "Chapter " +
+    (index + 1) +
+    ": " +
+    chapter.title;
+
+  document.getElementById(
+    "readerContent"
+  ).innerHTML =
+    chapter.content;
+
+  updateProgress();
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+function showChapters(){
+
+  document.getElementById(
+    "chapterGrid"
+  ).style.display = "grid";
+
+  document.querySelector(
+    ".search-box"
+  ).style.display = "block";
+
+  document.querySelector(
+    ".syllabus"
+  ).style.display = "block";
+
+  document.getElementById(
+    "reader"
+  ).classList.remove("active");
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+function nextChapter(){
+
+  if(
+    currentChapter <
+    chapters.length - 1
+  ){
+
+    openChapter(
+      currentChapter + 1
+    );
+
+  }
+
+}
+
+
+function previousChapter(){
+
+  if(currentChapter > 0){
+
+    openChapter(
+      currentChapter - 1
+    );
+
+  }
+
+}
+
+
+function searchChapters(){
+
+  const query =
+    document.getElementById(
+      "searchInput"
+    )
+    .value
+    .toLowerCase()
+    .trim();
+
+  const filtered =
+    chapters.filter(chapter =>
+      chapter.title
+      .toLowerCase()
+      .includes(query)
+    );
+
+  renderChapters(filtered);
+
+}
+
+
+function updateProgress(){
+
+  const progress =
+    ((currentChapter + 1) /
+    chapters.length) * 100;
+
+  document.getElementById(
+    "progressFill"
+  ).style.width =
+    progress + "%";
+
+}
+
+
+function toggleTheme(){
+
+  document.body.classList.toggle(
+    "dark"
+  );
+
+  localStorage.setItem(
+    "jr_ai_theme",
+    document.body.classList.contains("dark")
+      ? "dark"
+      : "light"
+  );
+
+}
+
+
+function loadTheme(){
+
+  const theme =
+    localStorage.getItem(
+      "jr_ai_theme"
+    );
+
+  if(theme === "dark"){
+
+    document.body.classList.add(
+      "dark"
+    );
+
+  }
+
+}
+
+
+function goBack(){
+
+  window.location.href =
+    "bookstore.html";
+
+}
+
+
+renderChapters();
+
+loadTheme();
+
+</script>
+
+
+</body>
+
+</html>
