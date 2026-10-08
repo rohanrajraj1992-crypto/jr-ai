@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>JR AI Class 12 Maths</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial, sans-serif;
+  background:#f4f7fb;
+  color:#172033;
+}
+
+body.dark{
+  background:#10141c;
+  color:#f1f5f9;
+}
+
+header{
+  position:sticky;
+  top:0;
+  z-index:100;
+  height:62px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:0 14px;
+  background:#ffffff;
+  border-bottom:1px solid #dfe5ee;
+}
+
+.dark header{
+  background:#171c26;
+  border-color:#293241;
+}
+
+.back-btn,
+.theme-btn{
+  border:0;
+  background:#eef2f7;
+  border-radius:12px;
+  width:42px;
+  height:42px;
+  font-size:20px;
+  cursor:pointer;
+}
+
+.dark .back-btn,
+.dark .theme-btn{
+  background:#252d3a;
+  color:white;
+}
+
+.header-title{
+  flex:1;
+  font-size:18px;
+  font-weight:700;
+}
+
+.hero{
+  margin:18px 14px;
+  padding:24px 18px;
+  border-radius:22px;
+  background:linear-gradient(135deg,#182848,#4b6cb7);
+  color:white;
+  text-align:center;
+  box-shadow:0 10px 30px rgba(0,0,0,.15);
+}
+
+.hero-cover{
+  font-size:58px;
+  margin-bottom:10px;
+}
+
+.hero h1{
+  font-size:25px;
+  margin-bottom:8px;
+}
+
+.hero p{
+  font-size:14px;
+  line-height:1.6;
+  opacity:.92;
+}
+
+.syllabus{
+  margin:16px 14px;
+  padding:18px;
+  background:white;
+  border-radius:18px;
+  border:1px solid #e1e7ef;
+}
+
+.dark .syllabus{
+  background:#171c26;
+  border-color:#293241;
+}
+
+.syllabus h2{
+  font-size:20px;
+  margin-bottom:12px;
+}
+
+.syllabus p{
+  font-size  :14px;
+  line-height:1.7;
+}
+
+.search-box{
+  margin:16px 14px;
+}
+
+.search-box input{
+  width:100%;
+  padding:15px 16px;
+  border-radius:14px;
+  border:1px solid #d7dee8;
+  outline:none;
+  font-size:15px;
+  background:white;
+  color:#172033;
+}
+
+.dark .search-box input{
+  background:#171c26;
+  color:white;
+  border-color:#303a4b;
+}
+
+.chapter-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+  padding:0 14px 18px;
+}
+
+.chapter-card{
+  background:white;
+  border:1px solid #e0e6ef;
+  border-radius:17px;
+  padding:15px;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.chapter-card:hover{
+  transform:translateY(-2px);
+}
+
+.dark .chapter-card{
+  background:#171c26;
+  border-color:#293241;
+}
+
+.chapter-number{
+  font-size:12px;
+  color:#64748b;
+  margin-bottom:7px;
+}
+
+.dark .chapter-number{
+  color:#94a3b8;
+}
+
+.chapter-title{
+  font-size:15px;
+  font-weight:700;
+  line-height:1.4;
+}
+
+.reader{
+  display:none;
+  margin:10px 14px 90px;
+  background:white;
+  border-radius:20px;
+  padding:20px;
+  border:1px solid #e0e6ef;
+}
+
+.dark .reader{
+  background:#171c26;
+  border-color:#293241;
+}
+
+.reader.active{
+  display:block;
+}
+
+.reader h2{
+  font-size:24px;
+  margin-bottom:18px;
+}
+
+.reader h3{
+  font-size:19px;
+  margin:24px 0 10px;
+}
+
+.reader p,
+.reader li{
+  font-size:15px;
+  line-height:1.8;
+}
+
+.reader ul,
+.reader ol{
+  padding-left:22px;
+  margin-top:8px;
+}
+
+.definition{
+  background:#eef5ff;
+  border-left:4px solid #3974d8;
+  padding:14px;
+  border-radius:10px;
+  margin:12px 0;
+  line-height:1.7;
+}
+
+.dark .definition{
+  background:#202b3d;
+}
+
+.formula{
+  margin:15px 0;
+  padding:15px;
+  border-radius:12px;
+  background:#fff5d9;
+  text-align:center;
+  font-size:17px;
+  font-weight:700;
+}
+
+.dark .formula{
+  background:#3a321d;
+}
+
+.example{
+  margin:15px 0;
+  padding:15px;
+  border-radius:12px;
+  background:#edf9f1;
+  border-left:4px solid #28a45b;
+}
+
+.dark .example{
+  background:#1d3325;
+}
+
+.note{
+  margin:15px 0;
+  padding:14px;
+  border-radius:12px;
+  background:#f3efff;
+}
+
+.dark .note{
+  background:#29243a;
+}
+
+.reader-controls{
+  display:flex;
+  gap:8px;
+  margin-top:25px;
+}
+
+.reader-controls button{
+  flex:1;
+  border:0;
+  padding:13px 8px;
+  border-radius:12px;
+  background:#e9eef5;
+  cursor:pointer;
+  font-weight:600;
+}
+
+.dark .reader-controls button{
+  background:#293241;
+  color:white;
+}
+
+.progress-wrap{
+  margin-top:20px;
+}
+
+.progress-bar{
+  height:7px;
+  background:#e2e8f0;
+  border-radius:20px;
+  overflow:hidden;
+}
+
+.progress-fill{
+  height:100%;
+  width:0%;
+  background:#3974d8;
+}
+
+.empty{
+  display:none;
+  text-align:center;
+  padding:30px;
+  color:#64748b;
+}
+
+.bottom-space{
+  height:30px;
+}
+
+@media(max-width:420px){
+  .chapter-grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .reader{
+    padding:17px;
+  }
+
+  .reader h2{
+    font-size:21px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <button class="back-btn" onclick="goBack()">←</button>
+
+  <div class="header-title">
+    📐 JR AI Class 12 Maths
+  </div>
+
+  <button class="theme-btn" onclick="toggleTheme()">🌙</button>
+</header>
+
+<section class="hero">
+
+  <div class="hero-cover">
+    📐
+  </div>
+
+  <h1>JR AI Class 12 Mathematics</h1>
+
+  <p>
+    Original chapter-wise Mathematics study material
+    with concepts, formulas, examples and revision points.
+  </p>
+
+</section>
+
+<section class="syllabus">
+
+  <h2>📚 Class 12 Maths</h2>
+
+  <p>
+    This book covers the major Class 12 Mathematics topics
+    in a chapter-wise format. Each chapter contains definitions,
+    important concepts, formulas, examples and revision points.
+  </p>
+
+</section>
+
+<div class="search-box">
+
+  <input
+    type="text"
+    id="searchInput"
+    placeholder="🔍 Search chapter..."
+    oninput="searchChapters()"
+  >
+
+</div>
+
+<section class="chapter-grid" id="chapterGrid"></section>
+
+<div class="empty" id="emptyMessage">
+  No chapter found.
+</div>
+
+<section class="reader" id="reader">
+
+  <h2 id="readerTitle"></h2>
+
+  <div id="readerContent"></div>
+
+  <div class="progress-wrap">
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+  </div>
+
+  <div class="reader-controls">
+
+    <button onclick="previousChapter()">
+      ← Previous
+    </button>
+
+    <button onclick="showChapters()">
+      📚 Chapters
+    </button>
+
+    <button onclick="nextChapter()">
+      Next →
+    </button>
+
+  </div>
+
+</section>
+
+<div class="bottom-space"></div>
+
+<script>
+
+const chapters = [
+
+{
+title:"Relations and Functions",
+content:`
+
+<div class="definition">
+A relation between two sets associates elements of one set with elements
+of another set. A function is a special type of relation in which every
+element of the domain has exactly one image in the codomain.
+</div>
+
+<h3>1. Important Terms</h3>
+
+<ul>
+<li>Domain: set of all input values.</li>
+<li>Codomain: set containing possible output values.</li>
+<li>Range: set of actual output values.</li>
+<li>Image: output corresponding to an input.</li>
+<li>Pre-image: input corresponding to an output.</li>
+</ul>
+
+<h3>2. Types of Functions</h3>
+
+<ul>
+<li>One-one function</li>
+<li>Many-one function</li>
+<li>Into function</li>
+<li>Onto function</li>
+<li>Identity function</li>
+<li>Constant function</li>
+</ul>
+
+<div class="formula">
+(f ∘ g)(x) = f(g(x))
+</div>
+
+<h3>3. Composition of Functions</h3>
+
+<p>
+If f and g are two functions, their composition is obtained by applying
+g first and then f.
+</p>
+
+<div class="example">
+If f(x)=2x+1 and g(x)=x², then
+(f∘g)(x)=2x²+1.
+</div>
+
+<h3>4. Inverse Function</h3>
+
+<p>
+A function has an inverse when it is bijective. The inverse function
+reverses the mapping between the domain and range.
+</p>
+
+<div class="note">
+Revision point: Always check whether a function is one-one and onto
+before discussing its inverse.
+</div>
+
+`
+},
+
+{
+title:"Inverse Trigonometric Functions",
+content:`
+
+<div class="definition">
+Inverse trigonometric functions give the angle corresponding to a
+given trigonometric value, subject to their principal-value ranges.
+</div>
+
+<h3>1. Principal Values</h3>
+
+<ul>
+<li>sin⁻¹x has principal values from −π/2 to π/2.</li>
+<li>cos⁻¹x has principal values from 0 to π.</li>
+<li>tan⁻¹x has principal values from −π/2 to π/2.</li>
+</ul>
+
+<h3>2. Important Identities</h3>
+
+<div class="formula">
+sin⁻¹x + cos⁻¹x = π/2
+</div>
+
+<div class="formula">
+tan⁻¹x + cot⁻¹x = π/2
+</div>
+
+<div class="formula">
+tan⁻¹x + tan⁻¹y =
+tan⁻¹((x+y)/(1−xy))
+</div>
+
+<h3>3. Important Idea</h3>
+
+<p>
+Inverse trigonometric expressions must always be interpreted using
+their principal-value ranges. Direct cancellation is not valid
+without considering these restrictions.
+</p>
+
+`
+},
+
+{
+title:"Matrices",
+content:`
+
+<div class="definition">
+A matrix is a rectangular arrangement of numbers or expressions
+written in rows and columns.
+</div>
+
+<h3>1. Order of a Matrix</h3>
+
+<p>
+If a matrix has m rows and n columns, its order is m × n.
+</p>
+
+<h3>2. Types of Matrices</h3>
+
+<ul>
+<li>Row matrix</li>
+<li>Column matrix</li>
+<li>Square matrix</li>
+<li>Zero matrix</li>
+<li>Diagonal matrix</li>
+<li>Scalar matrix</li>
+<li>Identity matrix</li>
+<li>Symmetric matrix</li>
+<li>Skew-symmetric matrix</li>
+</ul>
+
+<h3>3. Matrix Operations</h3>
+
+<p>
+Matrices can be added or subtracted when they have the same order.
+Matrix multiplication is possible when the number of columns of the
+first matrix equals the number of rows of the second matrix.
+</p>
+
+<div class="formula">
+(AB)ᵀ = BᵀAᵀ
+</div>
+
+<h3>4. Identity Matrix</h3>
+
+<p>
+The identity matrix acts as the multiplicative identity for square
+matrices.
+</p>
+
+<div class="formula">
+AI = IA = A
+</div>
+
+`
+},
+
+{
+title:"Determinants",
+content:`
+
+<div class="definition">
+A determinant is a scalar value associated with a square matrix.
+It is useful in solving equations and studying invertibility.
+</div>
+
+<h3>1. Determinant of a 2 × 2 Matrix</h3>
+
+<div class="formula">
+|a  b|<br>
+|c  d| = ad − bc
+</div>
+
+<h3>2. Properties</h3>
+
+<ul>
+<li>Interchanging two rows changes the sign of the determinant.</li>
+<li>If two rows are identical, the determinant is zero.</li>
+<li>If a row is multiplied by k, the determinant is multiplied by k.</li>
+<li>A determinant with a zero row is zero.</li>
+</ul>
+
+<h3>3. Area of Triangle</h3>
+
+<p>
+The determinant method can be used to calculate the area of a triangle
+from the coordinates of its vertices.
+</p>
+
+<div class="note">
+A zero determinant often indicates linear dependence or collinearity,
+depending on the problem.
+</div>
+
+`
+},
+
+{
+title:"Continuity and Differentiability",
+content:`
+
+<div class="definition">
+A function is continuous at a point when its limiting value and actual
+function value agree at that point.
+</div>
+
+<h3>1. Continuity</h3>
+
+<div class="formula">
+lim(x→a) f(x) = f(a)
+</div>
+
+<p>
+For a function to be continuous at x=a, the left-hand limit,
+right-hand limit and function value must be equal.
+</p>
+
+<h3>2. Differentiability</h3>
+
+<p>
+Differentiability describes the existence of a derivative at a point.
+A differentiable function is continuous, although a continuous function
+need not always be differentiable.
+</p>
+
+<h3>3. Basic Derivatives</h3>
+
+<div class="formula">
+d(xⁿ)/dx = nxⁿ⁻¹
+</div>
+
+<div class="formula">
+d(sin x)/dx = cos x
+</div>
+
+<div class="formula">
+d(cos x)/dx = −sin x
+</div>
+
+<div class="formula">
+d(eˣ)/dx = eˣ
+</div>
+
+`
+},
+
+{
+title:"Applications of Derivatives",
+content:`
+
+<div class="definition">
+Applications of derivatives help us study rates of change,
+increasing and decreasing functions, maxima and minima, and
+tangents and normals.
+</div>
+
+<h3>1. Increasing Function</h3>
+
+<p>
+If f′(x) > 0 on an interval, the function is increasing on that interval.
+</p>
+
+<h3>2. Decreasing Function</h3>
+
+<p>
+If f′(x) < 0 on an interval, the function is decreasing on that interval.
+</p>
+
+<h3>3. Critical Points</h3>
+
+<p>
+Critical points occur where the derivative is zero or does not exist,
+provided the point belongs to the domain.
+</p>
+
+<div class="formula">
+f′(x)=0
+</div>
+
+<h3>4. Maxima and Minima</h3>
+
+<p>
+The second derivative test can help determine the nature of a stationary
+point.
+</p>
+
+<div class="formula">
+f′(a)=0, f″(a)>0 → local minimum
+</div>
+
+<div class="formula">
+f′(a)=0, f″(a)<0 → local maximum
+</div>
+
+`
+},
+
+{
+title:"Integrals",
+content:`
+
+<div class="definition">
+Integration is the reverse process of differentiation and is also used
+to calculate accumulated quantities such as area.
+</div>
+
+<h3>1. Basic Formula</h3>
+
+<div class="formula">
+∫xⁿ dx = xⁿ⁺¹/(n+1) + C
+</div>
+
+<h3>2. Standard Integrals</h3>
+
+<div class="formula">
+∫cos x dx = sin x + C
+</div>
+
+<div class="formula">
+∫sin x dx = −cos x + C
+</div>
+
+<div class="formula">
+∫1/x dx = log|x| + C
+</div>
+
+<div class="formula">
+∫eˣ dx = eˣ + C
+</div>
+
+<h3>3. Integration by Parts</h3>
+
+<div class="formula">
+∫u dv = uv − ∫v du
+</div>
+
+<h3>4. Definite Integral</h3>
+
+<p>
+A definite integral has fixed limits and produces a numerical value
+when the function is integrable over the interval.
+</p>
+
+<div class="formula">
+∫ₐᵇ f(x)dx
+</div>
+
+`
+},
+
+{
+title:"Applications of Integrals",
+content:`
+
+<div class="definition">
+Definite integrals can be used to calculate areas bounded by curves,
+lines and coordinate axes.
+</div>
+
+<h3>1. Area Under a Curve</h3>
+
+<p>
+When f(x) is non-negative on [a,b], the area under the curve is
+represented by the definite integral.
+</p>
+
+<div class="formula">
+Area = ∫ₐᵇ f(x)dx
+</div>
+
+<h3>2. Area Between Curves</h3>
+
+<p>
+For two curves, the area is found by integrating the difference between
+the upper and lower functions over the required interval.
+</p>
+
+<div class="formula">
+Area = ∫ₐᵇ [upper function − lower function] dx
+</div>
+
+`
+},
+
+{
+title:"Differential Equations",
+content:`
+
+<div class="definition">
+A differential equation is an equation involving an unknown function
+and one or more of its derivatives.
+</div>
+
+<h3>1. Order</h3>
+
+<p>
+The order of a differential equation is the order of the highest
+derivative present in it.
+</p>
+
+<h3>2. Degree</h3>
+
+<p>
+The degree is the power of the highest-order derivative after the
+equation has been made polynomial in derivatives.
+</p>
+
+<h3>3. Variable Separable Form</h3>
+
+<p>
+In a separable differential equation, variables can be rearranged
+so that functions of one variable appear on one side and functions
+of the other variable appear on the other.
+</p>
+
+<div class="formula">
+dy/dx = f(x)g(y)
+</div>
+
+<div class="note">
+After integration, remember to include the arbitrary constant.
+</div>
+
+`
+},
+
+{
+title:"Vector Algebra",
+content:`
+
+<div class="definition">
+A vector is a quantity having both magnitude and direction.
+</div>
+
+<h3>1. Types</h3>
+
+<ul>
+<li>Zero vector</li>
+<li>Unit vector</li>
+<li>Equal vectors</li>
+<li>Parallel vectors</li>
+<li>Collinear vectors</li>
+</ul>
+
+<h3>2. Magnitude</h3>
+
+<div class="formula">
+|a| = √(a₁² + a₂² + a₃²)
+</div>
+
+<h3>3. Dot Product</h3>
+
+<div class="formula">
+a · b = |a||b|cos θ
+</div>
+
+<p>
+The dot product produces a scalar.
+</p>
+
+<h3>4. Cross Product</h3>
+
+<div class="formula">
+|a × b| = |a||b|sin θ
+</div>
+
+<p>
+The cross product produces a vector perpendicular to the two original
+vectors.
+</p>
+
+`
+},
+
+{
+title:"Three Dimensional Geometry",
+content:`
+
+<div class="definition">
+Three-dimensional geometry studies points, lines and planes in
+three-dimensional space.
+</div>
+
+<h3>1. Direction Cosines</h3>
+
+<p>
+If a line makes angles α, β and γ with the positive coordinate axes,
+its direction cosines are cosα, cosβ and cosγ.
+</p>
+
+<div class="formula">
+cos²α + cos²β + cos²γ = 1
+</div>
+
+<h3>2. Equation of a Line</h3>
+
+<div class="formula">
+(x−x₁)/a = (y−y₁)/b = (z−z₁)/c
+</div>
+
+<h3>3. Plane</h3>
+
+<div class="formula">
+ax + by + cz + d = 0
+</div>
+
+<h3>4. Distance</h3>
+
+<p>
+Three-dimensional coordinate geometry provides formulas for distances
+between points, lines and planes.
+</p>
+
+`
+},
+
+{
+title:"Linear Programming",
+content:`
+
+<div class="definition">
+Linear programming is a mathematical method for optimizing a linear
+objective function subject to a set of linear constraints.
+</div>
+
+<h3>1. Objective Function</h3>
+
+<p>
+The objective function is the expression that must be maximized or
+minimized.
+</p>
+
+<h3>2. Constraints</h3>
+
+<p>
+Constraints are linear inequalities that restrict the possible values
+of the variables.
+</p>
+
+<h3>3. Feasible Region</h3>
+
+<p>
+The feasible region contains all points satisfying all the constraints.
+</p>
+
+<h3>4. Corner Point Method</h3>
+
+<p>
+For standard graphical linear programming problems, the optimum value
+is examined at the corner points of the feasible region.
+</p>
+
+`
+},
+
+{
+title:"Probability",
+content:`
+
+<div class="definition">
+Probability measures the likelihood of an event occurring.
+Its value lies between 0 and 1.
+</div>
+
+<h3>1. Conditional Probability</h3>
+
+<div class="formula">
+P(A|B) = P(A∩B)/P(B)
+</div>
+
+<h3>2. Multiplication Rule</h3>
+
+<div class="formula">
+P(A∩B) = P(A)P(B|A)
+</div>
+
+<h3>3. Independent Events</h3>
+
+<p>
+Two events are independent when the occurrence of one does not change
+the probability of the other.
+</p>
+
+<div class="formula">
+P(A∩B)=P(A)P(B)
+</div>
+
+<h3>4. Bayes' Theorem</h3>
+
+<div class="formula">
+P(Aᵢ|B)=
+[P(Aᵢ)P(B|Aᵢ)] /
+ΣP(Aⱼ)P(B|Aⱼ)
+</div>
+
+`
+},
+
+{
+title:"Probability Distributions",
+content:`
+
+<div class="definition">
+A probability distribution describes how probabilities are assigned
+to the possible values of a random variable.
+</div>
+
+<h3>1. Random Variable</h3>
+
+<p>
+A random variable assigns numerical values to outcomes of a random
+experiment.
+</p>
+
+<h3>2. Mean</h3>
+
+<div class="formula">
+E(X)=Σxᵢpᵢ
+</div>
+
+<h3>3. Variance</h3>
+
+<div class="formula">
+Var(X)=E(X²)−[E(X)]²
+</div>
+
+<h3>4. Binomial Distribution</h3>
+
+<p>
+The binomial distribution models the number of successes in a fixed
+number of independent trials when each trial has two possible outcomes.
+</p>
+
+<div class="formula">
+P(X=r)=ⁿCᵣ pʳ(1−p)ⁿ⁻ʳ
+</div>
+
+`
+}
+
+];
+
+
+let currentChapter = 0;
+
+
+function renderChapters(list = chapters){
+
+  const grid = document.getElementById("chapterGrid");
+
+  grid.innerHTML = "";
+
+  document.getElementById("emptyMessage").style.display =
+    list.length ? "none" : "block";
+
+  list.forEach((chapter,index)=>{
+
+    const card = document.createElement("div");
+
+    card.className = "chapter-card";
+
+    card.innerHTML = `
+      <div class="chapter-number">
+        Chapter ${chapters.indexOf(chapter)+1}
+      </div>
+
+      <div class="chapter-title">
+        ${chapter.title}
+      </div>
+    `;
+
+    card.onclick = function(){
+      openChapter(chapters.indexOf(chapter));
+    };
+
+    grid.appendChild(card);
+
+  });
+
+}
+
+
+function openChapter(index){
+
+  currentChapter = index;
+
+  const chapter = chapters[index];
+
+  document.getElementById("chapterGrid").style.display = "none";
+  document.querySelector(".search-box").style.display = "none";
+  document.querySelector(".syllabus").style.display = "none";
+
+  const reader = document.getElementById("reader");
+
+  reader.classList.add("active");
+
+  document.getElementById("readerTitle").textContent =
+    "Chapter " + (index + 1) + ": " + chapter.title;
+
+  document.getElementById("readerContent").innerHTML =
+    chapter.content;
+
+  updateProgress();
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+function showChapters(){
+
+  document.getElementById("chapterGrid").style.display = "grid";
+  document.querySelector(".search-box").style.display = "block";
+  document.querySelector(".syllabus").style.display = "block";
+
+  document.getElementById("reader").classList.remove("active");
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+function nextChapter(){
+
+  if(currentChapter < chapters.length - 1){
+
+    openChapter(currentChapter + 1);
+
+  }
+
+}
+
+
+function previousChapter(){
+
+  if(currentChapter > 0){
+
+    openChapter(currentChapter - 1);
+
+  }
+
+}
+
+
+function searchChapters(){
+
+  const query =
+    document.getElementById("searchInput")
+    .value
+    .toLowerCase()
+    .trim();
+
+  const filtered = chapters.filter(chapter =>
+    chapter.title.toLowerCase().includes(query)
+  );
+
+  renderChapters(filtered);
+
+}
+
+
+function updateProgress(){
+
+  const progress =
+    ((currentChapter + 1) / chapters.length) * 100;
+
+  document.getElementById("progressFill").style.width =
+    progress + "%";
+
+}
+
+
+function toggleTheme(){
+
+  document.body.classList.toggle("dark");
+
+  localStorage.setItem(
+    "jr_ai_theme",
+    document.body.classList.contains("dark")
+      ? "dark"
+      : "light"
+  );
+
+}
+
+
+function loadTheme(){
+
+  const theme =
+    localStorage.getItem("jr_ai_theme");
+
+  if(theme === "dark"){
+    document.body.classList.add("dark");
+  }
+
+}
+
+
+function goBack(){
+
+  window.location.href = "bookstore.html";
+
+}
+
+
+renderChapters();
+loadTheme();
+
+</script>
+
+</body>
+</html>
