@@ -1,0 +1,1423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>JR AI Bihar Police Preparation</title>
+
+<style>
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial, sans-serif;
+  background:#f4f7fb;
+  color:#172033;
+  transition:0.3s;
+}
+
+body.dark{
+  background:#10151f;
+  color:#f2f4f8;
+}
+
+.header{
+  position:sticky;
+  top:0;
+  z-index:20;
+  background:linear-gradient(135deg,#7f1d1d,#dc2626);
+  color:white;
+  padding:14px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  box-shadow:0 3px 12px rgba(0,0,0,0.18);
+}
+
+.header-left{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.back-btn,
+.theme-btn{
+  border:none;
+  background:rgba(255,255,255,0.18);
+  color:white;
+  width:40px;
+  height:40px;
+  border-radius:12px;
+  font-size:20px;
+  cursor:pointer;
+}
+
+.header-title{
+  font-size:18px;
+  font-weight:bold;
+}
+
+.cover{
+  margin:18px;
+  min-height:210px;
+  border-radius:22px;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(127,29,29,0.96),
+      rgba(220,38,38,0.88)
+    );
+  color:white;
+  padding:28px 22px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  box-shadow:0 8px 25px rgba(0,0,0,0.18);
+}
+
+.cover-icon{
+  font-size:58px;
+  margin-bottom:12px;
+}
+
+.cover h1{
+  font-size:25px;
+  margin-bottom:8px;
+}
+
+.cover p{
+  font-size:14px;
+  opacity:0.92;
+}
+
+.container{
+  padding:0 16px 40px;
+  max-width:900px;
+  margin:auto;
+}
+
+.syllabus{
+  background:white;
+  border-radius:18px;
+  padding:18px;
+  margin-bottom:18px;
+  box-shadow:0 3px 15px rgba(0,0,0,0.07);
+}
+
+body.dark .syllabus{
+  background:#18202d;
+}
+
+.syllabus h2{
+  font-size:20px;
+  margin-bottom:12px;
+}
+
+.syllabus p{
+  line-height:1.6;
+  font-size:14px;
+}
+
+.search-box{
+  margin-bottom:18px;
+}
+
+.search-box input{
+  width:100%;
+  padding:14px 16px;
+  border:2px solid #e2e8f0;
+  border-radius:14px;
+  outline:none;
+  font-size:15px;
+  background:white;
+  color:#172033;
+}
+
+body.dark .search-box input{
+  background:#18202d;
+  color:white;
+  border-color:#334155;
+}
+
+.chapter-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+}
+
+.chapter-card{
+  background:white;
+  padding:16px;
+  border-radius:17px;
+  cursor:pointer;
+  box-shadow:0 3px 14px rgba(0,0,0,0.07);
+  transition:0.2s;
+  border-left:5px solid #dc2626;
+}
+
+.chapter-card:active{
+  transform:scale(0.97);
+}
+
+body.dark .chapter-card{
+  background:#18202d;
+}
+
+.chapter-number{
+  color:#dc2626;
+  font-size:12px;
+  font-weight:bold;
+  margin-bottom:7px;
+}
+
+.chapter-title{
+  font-size:15px;
+  font-weight:bold;
+  line-height:1.4;
+}
+
+.empty-message{
+  display:none;
+  text-align:center;
+  padding:30px;
+  color:#64748b;
+}
+
+.reader{
+  display:none;
+  background:white;
+  border-radius:20px;
+  overflow:hidden;
+  box-shadow:0 4px 20px rgba(0,0,0,0.09);
+}
+
+.reader.active{
+  display:block;
+}
+
+body.dark .reader{
+  background:#18202d;
+}
+
+.reader-header{
+  background:linear-gradient(135deg,#991b1b,#dc2626);
+  color:white;
+  padding:20px;
+}
+
+.reader-header h2{
+  font-size:20px;
+  line-height:1.4;
+}
+
+.progress-bar{
+  height:5px;
+  background:rgba(255,255,255,0.25);
+  margin-top:14px;
+  border-radius:10px;
+  overflow:hidden;
+}
+
+.progress-fill{
+  height:100%;
+  width:0;
+  background:white;
+  transition:0.3s;
+}
+
+.reader-content{
+  padding:20px;
+  line-height:1.75;
+  font-size:15px;
+}
+
+.reader-content h3{
+  margin-top:22px;
+  margin-bottom:8px;
+  color:#dc2626;
+  font-size:18px;
+}
+
+.reader-content h4{
+  margin-top:16px;
+  margin-bottom:6px;
+}
+
+body.dark .reader-content h3{
+  color:#f87171;
+}
+
+.definition{
+  background:#fef2f2;
+  border-left:5px solid #dc2626;
+  padding:14px;
+  border-radius:10px;
+  margin:12px 0;
+}
+
+body.dark .definition{
+  background:#2a1820;
+}
+
+.formula{
+  background:#fff1f2;
+  padding:14px;
+  border-radius:10px;
+  margin:12px 0;
+  font-weight:bold;
+  overflow-x:auto;
+}
+
+body.dark .formula{
+  background:#2b1a20;
+}
+
+.reader-content ul{
+  padding-left:22px;
+  margin:8px 0;
+}
+
+.reader-content li{
+  margin-bottom:7px;
+}
+
+.note{
+  background:#f8fafc;
+  border-radius:10px;
+  padding:13px;
+  margin:12px 0;
+}
+
+body.dark .note{
+  background:#202938;
+}
+
+.navigation{
+  display:flex;
+  gap:10px;
+  padding:16px;
+  border-top:1px solid #e2e8f0;
+}
+
+body.dark .navigation{
+  border-color:#334155;
+}
+
+.navigation button{
+  flex:1;
+  padding:13px;
+  border:none;
+  border-radius:12px;
+  background:#dc2626;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.navigation button:nth-child(2){
+  background:#475569;
+}
+
+@media(max-width:500px){
+
+  .chapter-grid{
+    grid-template-columns:1fr;
+  }
+
+  .cover{
+    margin:14px;
+  }
+
+  .reader-content{
+    padding:17px;
+  }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header class="header">
+
+  <div class="header-left">
+
+    <button
+      class="back-btn"
+      onclick="goBack()"
+    >
+      ←
+    </button>
+
+    <div class="header-title">
+      🚔 Bihar Police Preparation
+    </div>
+
+  </div>
+
+  <button
+    class="theme-btn"
+    onclick="toggleTheme()"
+  >
+    🌙
+  </button>
+
+</header>
+
+
+<div class="cover">
+
+  <div class="cover-icon">
+    🚔
+  </div>
+
+  <h1>
+    JR AI Bihar Police
+  </h1>
+
+  <p>
+    Complete original preparation book for Bihar Police exams
+  </p>
+
+</div>
+
+
+<div class="container">
+
+
+<div class="syllabus">
+
+  <h2>📚 Preparation Guide</h2>
+
+  <p>
+    This JR AI study book covers important subjects commonly required
+    for Bihar Police preparation, including General Knowledge,
+    General Studies, Bihar GK, Indian History, Geography, Polity,
+    Science, Mathematics, Reasoning and Current Affairs.
+  </p>
+
+</div>
+
+
+<div class="search-box">
+
+  <input
+    id="searchInput"
+    type="text"
+    placeholder="🔎 Search topics..."
+    oninput="searchChapters()"
+  >
+
+</div>
+
+
+<div
+  id="chapterGrid"
+  class="chapter-grid"
+></div>
+
+
+<div
+  id="emptyMessage"
+  class="empty-message"
+>
+  No topic found.
+</div>
+
+
+<div
+  id="reader"
+  class="reader"
+>
+
+  <div class="reader-header">
+
+    <h2 id="readerTitle"></h2>
+
+    <div class="progress-bar">
+
+      <div
+        id="progressFill"
+        class="progress-fill"
+      ></div>
+
+    </div>
+
+  </div>
+
+
+  <div
+    id="readerContent"
+    class="reader-content"
+  ></div>
+
+
+  <div class="navigation">
+
+    <button onclick="previousChapter()">
+      ← Previous
+    </button>
+
+    <button onclick="showChapters()">
+      📚 Topics
+    </button>
+
+    <button onclick="nextChapter()">
+      Next →
+    </button>
+
+  </div>
+
+</div>
+
+</div>
+
+
+<script>
+
+const chapters = [
+
+{
+title:"Bihar General Knowledge",
+content:`
+
+<div class="definition">
+Bihar General Knowledge covers important information about the
+history, geography, administration, culture, economy and development
+of the state of Bihar.
+</div>
+
+<h3>1. Location</h3>
+
+<p>
+Bihar is a state in eastern India. It is bordered by Nepal to the
+north and by Uttar Pradesh, Jharkhand and West Bengal on its other
+sides.
+</p>
+
+<h3>2. Capital</h3>
+
+<p>
+Patna is the capital and an important administrative, educational and
+economic centre of Bihar.
+</p>
+
+<h3>3. Major Rivers</h3>
+
+<p>
+Important rivers associated with Bihar include the Ganga, Gandak,
+Kosi, Son, Punpun and Bagmati.
+</p>
+
+<h3>4. Historical Importance</h3>
+
+<p>
+Bihar has played an important role in ancient Indian history.
+Magadha, Nalanda, Pataliputra and Vaishali are important historical
+centres associated with the region.
+</p>
+
+<h3>5. Important Areas for Examination</h3>
+
+<ul>
+<li>Districts and administrative divisions</li>
+<li>Major rivers and geographical features</li>
+<li>Historical places</li>
+<li>Famous personalities</li>
+<li>Fairs, festivals and culture</li>
+<li>State government schemes</li>
+</ul>
+
+`
+},
+
+{
+title:"Indian History",
+content:`
+
+<div class="definition">
+Indian History is the study of the political, social, economic and
+cultural development of the Indian subcontinent through different
+historical periods.
+</div>
+
+<h3>1. Ancient India</h3>
+
+<p>
+Important ancient civilizations and kingdoms include the Indus Valley
+Civilization, Vedic culture, Mahajanapadas, Mauryan Empire and Gupta
+period.
+</p>
+
+<h3>2. Buddhism and Jainism</h3>
+
+<p>
+Bihar has a major connection with Buddhism and Jainism. Important
+centres include Bodh Gaya, Rajgir, Nalanda and Vaishali.
+</p>
+
+<h3>3. Medieval India</h3>
+
+<p>
+The medieval period includes major developments under the Delhi
+Sultanate, Mughal Empire and regional kingdoms.
+</p>
+
+<h3>4. Modern India</h3>
+
+<p>
+Important topics include the Revolt of 1857, formation of the Indian
+National Congress, freedom movements, Gandhian movements and the
+Indian independence movement.
+</p>
+
+<h3>5. Bihar and Freedom Movement</h3>
+
+<p>
+Bihar played an important role in India's freedom struggle. Champaran
+is especially significant in the history of the Indian national
+movement.
+</p>
+
+`
+},
+
+{
+title:"Indian Polity",
+content:`
+
+<div class="definition">
+Indian Polity deals with the Constitution, government institutions,
+rights, duties and functioning of the political system of India.
+</div>
+
+<h3>1. Constitution</h3>
+
+<p>
+The Constitution of India is the supreme legal framework governing
+the country and defining the powers and responsibilities of public
+institutions.
+</p>
+
+<h3>2. Fundamental Rights</h3>
+
+<p>
+Fundamental Rights protect important individual freedoms and provide
+constitutional safeguards to citizens.
+</p>
+
+<h3>3. Fundamental Duties</h3>
+
+<p>
+Fundamental Duties describe important responsibilities expected from
+citizens under the Constitution.
+</p>
+
+<h3>4. Parliament</h3>
+
+<p>
+The Parliament of India consists of the President and two Houses:
+the Lok Sabha and the Rajya Sabha.
+</p>
+
+<h3>5. State Government</h3>
+
+<p>
+At the state level, the Governor is the constitutional head while the
+Council of Ministers headed by the Chief Minister exercises executive
+authority subject to constitutional provisions.
+</p>
+
+<h3>6. Local Government</h3>
+
+<p>
+Local self-government includes institutions such as Panchayati Raj
+bodies in rural areas and municipalities in urban areas.
+</p>
+
+`
+},
+
+{
+title:"Indian Geography",
+content:`
+
+<div class="definition">
+Geography studies the physical features, climate, resources,
+population and human activities of the Earth.
+</div>
+
+<h3>1. Physical Features</h3>
+
+<p>
+India contains mountains, plains, plateaus, deserts, coastal regions
+and islands.
+</p>
+
+<h3>2. Himalayan Region</h3>
+
+<p>
+The Himalayas form a major mountain system in northern India and
+influence climate, rivers and human settlement.
+</p>
+
+<h3>3. Indian Rivers</h3>
+
+<p>
+Major river systems include the Ganga, Brahmaputra and Indus systems.
+Peninsular rivers include the Godavari, Krishna, Narmada and Tapi.
+</p>
+
+<h3>4. Climate</h3>
+
+<p>
+India has a monsoon-dominated climate. Seasonal variations in
+temperature and rainfall strongly influence agriculture and water
+resources.
+</p>
+
+<h3>5. Bihar Geography</h3>
+
+<p>
+Bihar is largely a fertile alluvial plain. The Ganga divides the state
+into major northern and southern geographical regions.
+</p>
+
+`
+},
+
+{
+title:"Indian Economy",
+content:`
+
+<div class="definition">
+An economy is the system through which goods and services are
+produced, distributed and consumed.
+</div>
+
+<h3>1. Agriculture</h3>
+
+<p>
+Agriculture remains an important part of India's economy and provides
+livelihoods to a large population.
+</p>
+
+<h3>2. Industry</h3>
+
+<p>
+Industries convert raw materials into useful products and contribute
+to employment, production and economic development.
+</p>
+
+<h3>3. Banking</h3>
+
+<p>
+Banks perform functions such as accepting deposits, providing loans
+and facilitating payments.
+</p>
+
+<h3>4. Inflation</h3>
+
+<p>
+Inflation refers to a sustained increase in the general level of
+prices of goods and services.
+</p>
+
+<h3>5. Unemployment</h3>
+
+<p>
+Unemployment occurs when people who are willing and able to work are
+unable to find suitable employment.
+</p>
+
+`
+},
+
+{
+title:"General Science",
+content:`
+
+<div class="definition">
+General Science for competitive examinations covers fundamental
+concepts from Physics, Chemistry, Biology and environmental science.
+</div>
+
+<h3>1. Physics</h3>
+
+<p>
+Important areas include motion, force, work, energy, electricity,
+magnetism, heat, light and sound.
+</p>
+
+<h3>2. Chemistry</h3>
+
+<p>
+Important concepts include atoms, molecules, chemical reactions,
+acids, bases, salts, metals and non-metals.
+</p>
+
+<h3>3. Biology</h3>
+
+<p>
+Important areas include cells, tissues, human body systems,
+nutrition, diseases, reproduction and heredity.
+</p>
+
+<h3>4. Environment</h3>
+
+<p>
+Environmental science includes ecosystems, biodiversity, pollution,
+natural resources and conservation.
+</p>
+
+`
+},
+
+{
+title:"Mathematics",
+content:`
+
+<div class="definition">
+Competitive examination mathematics focuses on numerical calculation,
+arithmetic reasoning and practical problem solving.
+</div>
+
+<h3>1. Number System</h3>
+
+<p>
+The number system includes natural numbers, whole numbers, integers,
+fractions, decimals and rational numbers.
+</p>
+
+<h3>2. Percentage</h3>
+
+<p>
+Percentage expresses a quantity as a fraction of 100 and is widely
+used in profit, loss, marks and comparison problems.
+</p>
+
+<div class="formula">
+Percentage = (Part / Whole) × 100
+</div>
+
+<h3>3. Profit and Loss</h3>
+
+<p>
+Profit occurs when the selling price exceeds the cost price, while
+loss occurs when the selling price is lower than the cost price.
+</p>
+
+<h3>4. Simple Interest</h3>
+
+<div class="formula">
+SI = (P × R × T) / 100
+</div>
+
+<h3>5. Average</h3>
+
+<div class="formula">
+Average = Sum of observations / Number of observations
+</div>
+
+<h3>6. Time and Work</h3>
+
+<p>
+Time and work problems relate the amount of work completed to the
+efficiency and working time of individuals or groups.
+</p>
+
+`
+},
+
+{
+title:"Reasoning",
+content:`
+
+<div class="definition">
+Reasoning tests the ability to identify patterns, relationships,
+logical connections and conclusions from given information.
+</div>
+
+<h3>1. Number Series</h3>
+
+<p>
+A number series contains numbers following a particular mathematical
+or logical pattern.
+</p>
+
+<h3>2. Analogy</h3>
+
+<p>
+Analogy questions test relationships between pairs of words, numbers
+or objects.
+</p>
+
+<h3>3. Coding-Decoding</h3>
+
+<p>
+Coding-decoding questions require identifying a rule used to transform
+letters, numbers or words into another form.
+</p>
+
+<h3>4. Blood Relations</h3>
+
+<p>
+Blood relation problems require identifying family relationships from
+given statements.
+</p>
+
+<h3>5. Direction Sense</h3>
+
+<p>
+Direction questions test spatial relationships involving north,
+south, east and west.
+</p>
+
+`
+},
+
+{
+title:"Bihar History and Culture",
+content:`
+
+<div class="definition">
+Bihar has a rich cultural and historical heritage connected with
+ancient kingdoms, religions, literature, art and traditional festivals.
+</div>
+
+<h3>1. Ancient Centres</h3>
+
+<p>
+Pataliputra, Nalanda, Rajgir, Vaishali and Bodh Gaya are important
+historical and cultural locations.
+</p>
+
+<h3>2. Nalanda</h3>
+
+<p>
+Nalanda became a renowned centre of learning in ancient India and
+attracted students and scholars from different regions.
+</p>
+
+<h3>3. Festivals</h3>
+
+<p>
+Chhath is one of the major festivals associated with Bihar. Other
+important festivals and cultural traditions are also observed across
+the state.
+</p>
+
+<h3>4. Folk Culture</h3>
+
+<p>
+Bihar has diverse folk traditions involving music, dance, painting,
+crafts and regional languages.
+</p>
+
+`
+},
+
+{
+title:"Bihar Geography",
+content:`
+
+<div class="definition">
+Bihar Geography focuses on the state's physical features, rivers,
+soil, climate, agriculture, population and natural resources.
+</div>
+
+<h3>1. Ganga Plain</h3>
+
+<p>
+A large part of Bihar consists of fertile alluvial plains associated
+with the Ganga river system.
+</p>
+
+<h3>2. Rivers</h3>
+
+<p>
+The Ganga and its tributaries play an important role in agriculture,
+transport, settlement and flood patterns.
+</p>
+
+<h3>3. Agriculture</h3>
+
+<p>
+Rice, wheat, maize and pulses are among the important agricultural
+crops cultivated in Bihar.
+</p>
+
+<h3>4. Floods</h3>
+
+<p>
+Some areas of northern Bihar are vulnerable to seasonal flooding due
+to river systems, rainfall and drainage conditions.
+</p>
+
+`
+},
+
+{
+title:"Indian Constitution and Governance",
+content:`
+
+<div class="definition">
+Governance refers to the processes and institutions through which
+public decisions are made and implemented.
+</div>
+
+<h3>1. Democratic Government</h3>
+
+<p>
+India follows a democratic system in which citizens participate in
+government through elections and constitutional institutions.
+</p>
+
+<h3>2. Election Commission</h3>
+
+<p>
+The Election Commission of India is a constitutional authority
+responsible for conducting elections within its constitutional and
+legal framework.
+</p>
+
+<h3>3. Judiciary</h3>
+
+<p>
+The judiciary interprets laws and the Constitution and adjudicates
+disputes through the court system.
+</p>
+
+<h3>4. Public Administration</h3>
+
+<p>
+Public administration involves implementing government policies,
+providing public services and managing administrative functions.
+</p>
+
+`
+},
+
+{
+title:"Current Affairs",
+content:`
+
+<div class="definition">
+Current Affairs covers recent important developments in India and
+around the world that may be relevant to competitive examinations.
+</div>
+
+<h3>1. National Events</h3>
+
+<p>
+Important national developments may include government programmes,
+major appointments, awards, scientific developments and important
+public events.
+</p>
+
+<h3>2. International Events</h3>
+
+<p>
+International affairs include major global organizations, agreements,
+summits, conflicts, scientific developments and international
+cooperation.
+</p>
+
+<h3>3. Sports</h3>
+
+<p>
+Important tournaments, championships, records, awards and major
+sporting events are common areas of current-affairs preparation.
+</p>
+
+<h3>4. Awards and Honours</h3>
+
+<p>
+Important national and international awards should be studied along
+with the recipient, field and year.
+</p>
+
+<div class="note">
+For the latest current affairs, always revise information from a
+recent and reliable source before the examination.
+</div>
+
+`
+},
+
+{
+title:"Bihar Current Affairs",
+content:`
+
+<div class="definition">
+Bihar Current Affairs covers recent developments, government
+initiatives, appointments, awards, infrastructure, sports and other
+important events related to Bihar.
+</div>
+
+<h3>1. Government Schemes</h3>
+
+<p>
+Important state government schemes should be studied with their
+objectives, target groups and implementing departments.
+</p>
+
+<h3>2. Infrastructure</h3>
+
+<p>
+Major roads, bridges, rail projects, airports, irrigation projects
+and other infrastructure developments can be relevant examination
+topics.
+</p>
+
+<h3>3. Appointments</h3>
+
+<p>
+Important constitutional, administrative and institutional
+appointments should be revised with the person's post and relevant
+date.
+</p>
+
+<h3>4. Awards and Events</h3>
+
+<p>
+State-level awards, cultural events, sports achievements and major
+public events may also appear in competitive examinations.
+</p>
+
+`
+},
+
+{
+title:"Police and Law Basics",
+content:`
+
+<div class="definition">
+Police and law basics introduce important concepts related to public
+order, criminal justice, policing and citizens' legal responsibilities.
+</div>
+
+<h3>1. Role of Police</h3>
+
+<p>
+Police agencies help maintain public order, prevent and investigate
+crime, protect people and property, and enforce applicable laws.
+</p>
+
+<h3>2. FIR</h3>
+
+<p>
+A First Information Report is a formal record made by police
+regarding information relating to a cognizable offence, subject to
+the applicable criminal procedure law.
+</p>
+
+<h3>3. Evidence</h3>
+
+<p>
+Evidence is information or material presented for establishing or
+disproving facts in a legal proceeding.
+</p>
+
+<h3>4. Public Safety</h3>
+
+<p>
+Police personnel may perform duties involving traffic management,
+emergency response, crime prevention and public assistance.
+</p>
+
+`
+},
+
+{
+title:"Physical Preparation",
+content:`
+
+<div class="definition">
+Physical preparation develops the fitness qualities needed for
+physical tests and demanding police duties.
+</div>
+
+<h3>1. Endurance</h3>
+
+<p>
+Endurance is the ability to sustain physical activity for an extended
+period.
+</p>
+
+<h3>2. Strength</h3>
+
+<p>
+Strength is the ability of muscles to exert force against resistance.
+</p>
+
+<h3>3. Speed</h3>
+
+<p>
+Speed refers to the ability to perform a movement or cover a distance
+quickly.
+</p>
+
+<h3>4. Flexibility</h3>
+
+<p>
+Flexibility is the ability of joints and muscles to move through an
+appropriate range of motion.
+</p>
+
+<div class="note">
+Physical-test requirements can vary by recruitment notification.
+Always follow the official recruitment notice for exact standards.
+</div>
+
+`
+}
+
+];
+
+
+let currentChapter = 0;
+
+
+function renderChapters(list = chapters){
+
+  const grid =
+    document.getElementById("chapterGrid");
+
+  grid.innerHTML = "";
+
+  document.getElementById("emptyMessage").style.display =
+    list.length ? "none" : "block";
+
+  list.forEach((chapter)=>{
+
+    const realIndex =
+      chapters.indexOf(chapter);
+
+    const card =
+      document.createElement("div");
+
+    card.className =
+      "chapter-card";
+
+    card.innerHTML = `
+      <div class="chapter-number">
+        Topic ${realIndex + 1}
+      </div>
+
+      <div class="chapter-title">
+        ${chapter.title}
+      </div>
+    `;
+
+    card.onclick = function(){
+
+      openChapter(realIndex);
+
+    };
+
+    grid.appendChild(card);
+
+  });
+
+}
+
+
+function openChapter(index){
+
+  currentChapter = index;
+
+  const chapter =
+    chapters[index];
+
+  document.getElementById(
+    "chapterGrid"
+  ).style.display = "none";
+
+  document.querySelector(
+    ".search-box"
+  ).style.display = "none";
+
+  document.querySelector(
+    ".syllabus"
+  ).style.display = "none";
+
+  const reader =
+    document.getElementById("reader");
+
+  reader.classList.add("active");
+
+  document.getElementById(
+    "readerTitle"
+  ).textContent =
+    "Topic " +
+    (index + 1) +
+    ": " +
+    chapter.title;
+
+  document.getElementById(
+    "readerContent"
+  ).innerHTML =
+    chapter.content;
+
+  updateProgress();
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+function showChapters(){
+
+  document.getElementById(
+    "chapterGrid"
+  ).style.display = "grid";
+
+  document.querySelector(
+    ".search-box"
+  ).style.display = "block";
+
+  document.querySelector(
+    ".syllabus"
+  ).style.display = "block";
+
+  document.getElementById(
+    "reader"
+  ).classList.remove("active");
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+function nextChapter(){
+
+  if(
+    currentChapter <
+    chapters.length - 1
+  ){
+
+    openChapter(
+      currentChapter + 1
+    );
+
+  }
+
+}
+
+
+function previousChapter(){
+
+  if(currentChapter > 0){
+
+    openChapter(
+      currentChapter - 1
+    );
+
+  }
+
+}
+
+
+function searchChapters(){
+
+  const query =
+    document.getElementById(
+      "searchInput"
+    )
+    .value
+    .toLowerCase()
+    .trim();
+
+  const filtered =
+    chapters.filter(chapter =>
+      chapter.title
+      .toLowerCase()
+      .includes(query)
+    );
+
+  renderChapters(filtered);
+
+}
+
+
+function updateProgress(){
+
+  const progress =
+    ((currentChapter + 1) /
+    chapters.length) * 100;
+
+  document.getElementById(
+    "progressFill"
+  ).style.width =
+    progress + "%";
+
+}
+
+
+function toggleTheme(){
+
+  document.body.classList.toggle(
+    "dark"
+  );
+
+  localStorage.setItem(
+    "jr_ai_theme",
+    document.body.classList.contains("dark")
+      ? "dark"
+      : "light"
+  );
+
+}
+
+
+function loadTheme(){
+
+  const theme =
+    localStorage.getItem(
+      "jr_ai_theme"
+    );
+
+  if(theme === "dark"){
+
+    document.body.classList.add(
+      "dark"
+    );
+
+  }
+
+}
+
+
+function goBack(){
+
+  window.location.href =
+    "bookstore.html";
+
+}
+
+
+renderChapters();
+
+loadTheme();
+
+</script>
+
+</body>
+</html>
