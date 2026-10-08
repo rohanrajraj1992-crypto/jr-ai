@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>JR AI Study Mode</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{font-family:Arial,sans-serif;background:#f4f6ff;color:#171b2d;min-height:100vh;overflow-x:hidden;transition:background .35s ease,color .35s ease}
+body::before,body::after{content:"";position:fixed;z-index:-2;border-radius:50%;pointer-events:none;filter:blur(2px)}
+body::before{width:330px;height:330px;top:-120px;left:-100px;background:rgba(99,102,241,.16);animation:orbOne 10s ease-in-out infinite alternate}
+body::after{width:300px;height:300px;right:-100px;bottom:-80px;background:rgba(124,58,237,.14);animation:orbTwo 12s ease-in-out infinite alternate}
+@keyframes orbOne{from{transform:translate(0,0) scale(1)}to{transform:translate(55px,65px) scale(1.15)}}
+@keyframes orbTwo{from{transform:translate(0,0) scale(1)}to{transform:translate(-45px,-55px) scale(1.12)}}
+body.dark{background:radial-gradient(circle at 15% 10%,rgba(79,70,229,.12),transparent 30%),radial-gradient(circle at 90% 90%,rgba(124,58,237,.12),transparent 30%),#090d16;color:#f4f6fb}
+.header{height:66px;position:sticky;top:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:0 15px;background:rgba(255,255,255,.78);border-bottom:1px solid rgba(220,225,238,.8);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:0 5px 25px rgba(31,41,75,.07);transition:.3s}
+body.dark .header{background:rgba(15,20,32,.78);border-color:rgba(70,80,105,.5)}
+.header-left{display:flex;align-items:center;gap:10px}
+.back-btn,.theme-btn{width:41px;height:41px;border:none;border-radius:13px;background:rgba(238,241,249,.85);color:#20263a;font-size:19px;cursor:pointer;transition:transform .2s ease,background .2s ease}
+.back-btn:active,.theme-btn:active{transform:scale(.91)}
+body.dark .back-btn,body.dark .theme-btn{background:#202737;color:#fff}
+.header-title{font-size:19px;font-weight:800;letter-spacing:-.3px}
+.container{width:100%;max-width:900px;margin:0 auto;padding:25px 16px 55px}
+.hero{text-align:center;padding:12px 5px 27px}
+.hero-icon{width:78px;height:78px;margin:0 auto 15px;display:flex;align-items:center;justify-content:center;border-radius:25px;background:linear-gradient(135deg,#4338ca,#7c3aed,#8b5cf6);color:white;font-size:40px;box-shadow:0 16px 38px rgba(79,70,229,.28);animation:floatIcon 3.5s ease-in-out infinite}
+@keyframes floatIcon{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+.hero h1{font-size:29px;font-weight:900;letter-spacing:-.8px;margin-bottom:9px}
+.hero p{max-width:570px;margin:auto;color:#737c91;font-size:14px;line-height:1.6}
+body.dark .hero p{color:#aeb7ca}
+.mode-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+.mode-card{position:relative;overflow:hidden;border:1px solid rgba(218,224,237,.9);background:rgba(255,255,255,.72);border-radius:20px;padding:18px 9px;text-align:center;cursor:pointer;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 8px 25px rgba(31,41,75,.055);transition:transform .22s ease,border .22s ease,box-shadow .22s ease,background .22s ease}
+.mode-card::before{content:"";position:absolute;width:100px;height:100px;top:-65px;right:-50px;border-radius:50%;background:rgba(99,102,241,.08)}
+.mode-card:hover{transform:translateY(-3px);box-shadow:0 13px 30px rgba(31,41,75,.09)}
+.mode-card:active{transform:scale(.97)}
+.mode-card.active{border-color:#6366f1;background:linear-gradient(145deg,rgba(238,240,255,.95),rgba(247,242,255,.95));box-shadow:0 10px 30px rgba(79,70,229,.16),inset 0 0 0 1px rgba(99,102,241,.08)}
+body.dark .mode-card{background:rgba(23,29,43,.72);border-color:#30394d}
+body.dark .mode-card.active{background:linear-gradient(145deg,rgba(35,40,73,.95),rgba(42,34,70,.95));border-color:#818cf8;box-shadow:0 12px 30px rgba(79,70,229,.22)}
+.mode-icon{font-size:29px;margin-bottom:8px;transition:transform .25s ease}
+.mode-card.active .mode-icon{transform:scale(1.12)}
+.mode-name{font-size:14px;font-weight:900}
+.mode-description{margin-top:5px;font-size:10px;color:#7b8498;line-height:1.3}
+body.dark .mode-description{color:#aab2c3}
+.study-box{position:relative;overflow:hidden;background:rgba(255,255,255,.76);border:1px solid rgba(218,224,237,.9);border-radius:23px;padding:20px;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:0 14px 40px rgba(31,41,75,.075)}
+.study-box::before{content:"";position:absolute;width:170px;height:170px;right:-100px;top:-100px;border-radius:50%;background:rgba(124,58,237,.07);pointer-events:none}
+body.dark .study-box{background:rgba(23,29,43,.78);border-color:#30394d;box-shadow:0 15px 40px rgba(0,0,0,.22)}
+.box-title{position:relative;font-size:18px;font-weight:900;margin-bottom:15px}
+.topic-label{display:block;font-size:13px;font-weight:800;margin-bottom:8px}
+.topic-input{width:100%;min-height:115px;resize:vertical;border:1px solid #dce1ec;border-radius:16px;outline:none;padding:14px;background:rgba(249,250,253,.9);color:#182033;font-size:14px;font-family:Arial,sans-serif;line-height:1.55;transition:border .2s ease,box-shadow .2s ease,background .2s ease}
+.topic-input::placeholder{color:#9aa2b3}
+.topic-input:focus{border-color:#6366f1;box-shadow:0 0 0 4px rgba(99,102,241,.10)}
+body.dark .topic-input{background:#111722;border-color:#30394d;color:#fff}
+body.dark .topic-input:focus{border-color:#818cf8;box-shadow:0 0 0 4px rgba(129,140,248,.10)}
+.quick-title{margin-top:16px;margin-bottom:9px;font-size:12px;font-weight:800;color:#737c91}
+.quick-topics{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.quick-topics::-webkit-scrollbar{display:none}
+.quick-topic{flex:0 0 auto;border:1px solid #dfe4ee;background:rgba(255,255,255,.85);color:#505a70;border-radius:20px;padding:8px 13px;font-size:11px;font-weight:700;cursor:pointer;transition:.2s}
+.quick-topic:hover{border-color:#8b5cf6;transform:translateY(-2px)}
+.quick-topic:active{transform:scale(.95)}
+body.dark .quick-topic{background:#202735;border-color:#343d50;color:#cbd2df}
+.start-btn{position:relative;overflow:hidden;width:100%;margin-top:18px;height:53px;border:none;border-radius:15px;background:linear-gradient(135deg,#4f46e5,#6d28d9,#7c3aed);color:white;font-size:15px;font-weight:900;cursor:pointer;box-shadow:0 10px 24px rgba(79,70,229,.25);transition:transform .2s ease,box-shadow .2s ease,opacity .2s ease}
+.start-btn::before{content:"";position:absolute;top:0;left:-100%;width:70%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.25),transparent);transform:skewX(-20deg);animation:buttonShine 4s infinite}
+@keyframes buttonShine{0%{left:-100%}30%,100%{left:130%}}
+.start-btn:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(79,70,229,.30)}
+.start-btn:active{transform:scale(.98)}
+.start-btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.tip{margin-top:16px;padding:13px 14px;border-radius:15px;background:linear-gradient(135deg,rgba(240,242,255,.95),rgba(247,242,255,.95));color:#4b4f7a;font-size:12px;line-height:1.55;border:1px solid rgba(99,102,241,.08)}
+body.dark .tip{background:#202542;color:#c5c9e8}
+.loading{display:none;margin-top:20px;text-align:center;padding:24px;border-radius:20px;background:rgba(255,255,255,.65);border:1px solid rgba(218,224,237,.8);backdrop-filter:blur(16px)}
+.loading.active{display:block;animation:fadeUp .35s ease}
+body.dark .loading{background:rgba(23,29,43,.75);border-color:#30394d}
+.loader{width:52px;height:52px;margin:0 auto 13px;position:relative}
+.loader::before,.loader::after{content:"";position:absolute;inset:0;border-radius:50%;border:4px solid transparent}
+.loader::before{border-top-color:#6366f1;border-right-color:#7c3aed;animation:spin 1s linear infinite}
+.loader::after{inset:8px;border-bottom-color:#8b5cf6;animation:spinReverse .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes spinReverse{to{transform:rotate(-360deg)}}
+.loading p{font-size:13px;font-weight:700;color:#7a8395}
+.result{display:none;margin-top:20px;background:rgba(255,255,255,.80);border:1px solid rgba(218,224,237,.9);border-radius:23px;padding:20px;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:0 14px 40px rgba(31,41,75,.075)}
+.result.active{display:block;animation:resultAppear .45s ease}
+@keyframes resultAppear{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+body.dark .result{background:rgba(23,29,43,.82);border-color:#30394d}
+.result-header{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:17px;padding-bottom:14px;border-bottom:1px solid #e8ebf2}
+body.dark .result-header{border-color:#30394d}
+.result-title{font-size:18px;font-weight:900}
+.copy-btn{border:none;background:#eef1f7;color:#394257;border-radius:11px;padding:8px 12px;cursor:pointer;font-size:12px;font-weight:800;transition:.2s}
+.copy-btn:active{transform:scale(.94)}
+body.dark .copy-btn{background:#252d3d;color:#fff}
+.ai-content{font-size:14px;line-height:1.75;color:#333b4d;overflow-wrap:anywhere}
+body.dark .ai-content{color:#d7dce6}
+.ai-heading{display:block;font-size:17px;font-weight:900;margin:20px 0 8px;color:#3730a3}
+.ai-heading:first-child{margin-top:0}
+body.dark .ai-heading{color:#a5b4fc}
+.ai-subheading{display:block;font-size:15px;font-weight:900;margin:16px 0 6px}
+.ai-bullet{display:block;position:relative;padding-left:20px;margin:6px 0}
+.ai-bullet::before{content:"•";position:absolute;left:4px;font-size:17px;font-weight:900;color:#6366f1}
+.ai-number{display:block;padding-left:23px;margin:6px 0;position:relative}
+.ai-number strong{position:absolute;left:0}
+.ai-bold{font-weight:900}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* =========================
+   REVISION HISTORY
+========================= */
+
+.revision-history{
+  display:none;
+  margin-top:18px;
+}
+
+.revision-history.active{
+  display:block;
+  animation:fadeUp .35s ease;
+}
+
+.revision-history-title{
+  font-size:16px;
+  font-weight:900;
+  margin-bottom:10px;
+}
+
+.revision-empty{
+  padding:18px;
+  text-align:center;
+  border:1px dashed #cfd5e3;
+  border-radius:16px;
+  color:#7b8498;
+  font-size:13px;
+  line-height:1.5;
+  background:rgba(255,255,255,.5);
+}
+
+body.dark .revision-empty{
+  border-color:#3a455b;
+  color:#aab2c3;
+  background:rgba(17,23,34,.5);
+}
+
+.revision-item{
+  width:100%;
+  border:1px solid #dfe4ee;
+  background:rgba(255,255,255,.82);
+  border-radius:17px;
+  margin-bottom:9px;
+  overflow:hidden;
+  text-align:left;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.revision-item:active{
+  transform:scale(.985);
+}
+
+.revision-item:hover{
+  border-color:#818cf8;
+  transform:translateY(-1px);
+}
+
+body.dark .revision-item{
+  background:#171d2b;
+  border-color:#30394d;
+}
+
+.revision-topic{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:14px;
+  font-size:14px;
+  font-weight:900;
+}
+
+.revision-topic span:last-child{
+  font-size:15px;
+  transition:transform .25s ease;
+}
+
+.revision-item.open .revision-topic span:last-child{
+  transform:rotate(180deg);
+}
+
+.revision-content{
+  display:none;
+  padding:0 14px 14px;
+  border-top:1px solid #e8ebf2;
+  font-size:13px;
+  line-height:1.65;
+}
+
+body.dark .revision-content{
+  border-color:#30394d;
+}
+
+.revision-item.open .revision-content{
+  display:block;
+  animation:fadeUp .25s ease;
+}
+
+.revision-bullet{
+  position:relative;
+  padding-left:17px;
+  margin-top:7px;
+}
+
+.revision-bullet::before{
+  content:"•";
+  position:absolute;
+  left:2px;
+  color:#6366f1;
+  font-weight:900;
+}
+
+.revision-note{
+  margin-top:9px;
+  font-size:11px;
+  color:#8a93a5;
+}
+
+@media(max-width:600px){
+.header{height:60px;padding:0 12px}.header-title{font-size:17px}.back-btn,.theme-btn{width:39px;height:39px}
+.container{padding:18px 12px 40px}.hero{padding-top:5px}.hero-icon{width:70px;height:70px;border-radius:22px;font-size:35px}.hero h1{font-size:24px}.hero p{font-size:13px}
+.mode-grid{gap:7px}.mode-card{padding:14px 5px;border-radius:17px}.mode-icon{font-size:25px}.mode-name{font-size:12px}.mode-description{display:none}
+.study-box{padding:15px;border-radius:20px}.box-title{font-size:17px}.topic-input{min-height:105px}.result{padding:16px;border-radius:20px}.ai-content{font-size:13.5px;line-height:1.7}
+}
+@media(max-width:360px){.header-title{font-size:15px}.mode-card{padding:12px 3px}.mode-name{font-size:11px}.hero h1{font-size:22px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+
+/* Practice question + answer styling */
+.practice-question {
+  margin: 22px 0 12px;
+  padding: 17px 17px 18px;
+  border: 1px solid rgba(99,102,241,.22);
+  border-left: 5px solid #6366f1;
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(99,102,241,.12), rgba(99,102,241,.045));
+  box-shadow: 0 8px 22px rgba(50,55,100,.07);
+}
+
+.practice-question-number {
+  display: block;
+  margin-bottom: 9px;
+  font-size: 16px;
+  font-weight: 900;
+  color: #4f46e5;
+  letter-spacing: .2px;
+}
+
+.practice-question-text {
+  display: block;
+  font-size: 16px;
+  font-weight: 850;
+  line-height: 1.65;
+  color: #20243a;
+}
+
+.practice-answer-box {
+  margin: 10px 0 18px;
+  padding: 14px 16px;
+  border-radius: 15px;
+  background: rgba(255,255,255,.72);
+  border: 1px solid rgba(120,130,155,.18);
+}
+
+.practice-answer-label,
+.practice-explanation-label {
+  display: block;
+  margin-bottom: 7px;
+  font-size: 14px;
+  font-weight: 900;
+  color: #4f46e5;
+}
+
+.practice-answer-bullet {
+  position: relative;
+  margin: 8px 0;
+  padding-left: 24px;
+  font-size: 14px;
+  line-height: 1.72;
+  font-weight: 600;
+  color: #303447;
+}
+
+.practice-answer-bullet::before {
+  content: "➢";
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-weight: 900;
+  color: #4f46e5;
+}
+
+.practice-explanation {
+  margin: 8px 0 22px;
+  padding: 13px 15px;
+  border-radius: 14px;
+  background: rgba(127,127,127,.075);
+  line-height: 1.7;
+  font-size: 13.5px;
+}
+
+body.dark .practice-question {
+  background: linear-gradient(135deg, rgba(99,102,241,.20), rgba(99,102,241,.08));
+  border-color: rgba(129,140,248,.28);
+}
+
+body.dark .practice-question-text {
+  color: #eef0ff;
+}
+
+body.dark .practice-answer-box {
+  background: rgba(23,29,43,.78);
+  border-color: #30394d;
+}
+
+body.dark .practice-answer-bullet {
+  color: #e8eaf3;
+}
+
+body.dark .practice-explanation {
+  background: rgba(255,255,255,.055);
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-left">
+    <button class="back-btn" id="backBtn" type="button" aria-label="Go back">←</button>
+    <div class="header-title">📖 JR AI Study Mode</div>
+  </div>
+  <button class="theme-btn" id="themeBtn" type="button" aria-label="Toggle theme">🌙</button>
+</header>
+
+<main class="container">
+
+<section class="hero">
+  <div class="hero-icon">📖</div>
+  <h1>Study Smarter with JR AI</h1>
+  <p>Choose a study mode, enter your topic, and let JR AI help you learn faster.</p>
+</section>
+
+<section class="mode-grid">
+
+<div class="mode-card active" data-mode="learn" role="button" tabindex="0">
+  <div class="mode-icon">🧠</div>
+  <div class="mode-name">Learn</div>
+  <div class="mode-description">Understand a topic clearly</div>
+</div>
+
+<div class="mode-card" data-mode="practice" role="button" tabindex="0">
+  <div class="mode-icon">✍️</div>
+  <div class="mode-name">Practice</div>
+  <div class="mode-description">Practice with questions</div>
+</div>
+
+<div class="mode-card" data-mode="revision" role="button" tabindex="0">
+  <div class="mode-icon">🔄</div>
+  <div class="mode-name">Revision</div>
+  <div class="mode-description">Revise important points</div>
+</div>
+
+</section>
+
+<section class="study-box">
+
+<div class="box-title">What do you want to study?</div>
+
+<label class="topic-label" for="topicInput">Enter your topic</label>
+
+<textarea id="topicInput" class="topic-input" placeholder="Example: Current Electricity, Photosynthesis, Indian Constitution..." autocomplete="off" spellcheck="true"></textarea>
+
+<div class="quick-title">Quick Topics</div>
+
+<div class="quick-topics">
+
+<button class="quick-topic" type="button" data-topic="Current Electricity">⚡ Current Electricity</button>
+<button class="quick-topic" type="button" data-topic="Photosynthesis">🌱 Photosynthesis</button>
+<button class="quick-topic" type="button" data-topic="Indian Constitution">🇮🇳 Constitution</button>
+<button class="quick-topic" type="button" data-topic="Human Digestive System">🧬 Digestive System</button>
+<button class="quick-topic" type="button" data-topic="Algebra">➗ Algebra</button>
+
+</div>
+
+<button class="start-btn" id="startBtn" type="button">🧠 Start Learning</button>
+
+<div class="tip">💡 Tip: Topic jitna specific hoga, explanation utni focused milegi.</div>
+
+</section>
+
+<!-- REVISION HISTORY -->
+<section class="revision-history" id="revisionHistory">
+  <div class="revision-history-title">🔄 Your Revision Topics</div>
+  <div id="revisionList"></div>
+</section>
+
+<div class="loading" id="loading">
+  <div class="loader"></div>
+  <p>JR AI is preparing your study material...</p>
+</div>
+
+<section class="result" id="result">
+
+<div class="result-header">
+  <div class="result-title">📚 Study Material</div>
+  <button class="copy-btn" id="copyBtn" type="button">📋 Copy</button>
+</div>
+
+<div class="ai-content" id="aiContent"></div>
+
+</section>
+
+</main>
+
+<script>
+
+const API_URL =
+"https://script.google.com/macros/s/AKfycbwyW1sNFAI9lgYH_7_FWng44IWUUrbIadwPMRM6vrmw84C8w41rWvBkACuIAasVmAHT/exec";
+
+const topicInput = document.getElementById("topicInput");
+const startBtn = document.getElementById("startBtn");
+const loading = document.getElementById("loading");
+const result = document.getElementById("result");
+const aiContent = document.getElementById("aiContent");
+const copyBtn = document.getElementById("copyBtn");
+const themeBtn = document.getElementById("themeBtn");
+const backBtn = document.getElementById("backBtn");
+const modeCards = document.querySelectorAll(".mode-card");
+const quickTopics = document.querySelectorAll(".quick-topic");
+const revisionHistory = document.getElementById("revisionHistory");
+const revisionList = document.getElementById("revisionList");
+
+let selectedMode = "learn";
+let isSending = false;
+
+const REVISION_STORAGE_KEY = "jr_ai_revision_history";
+
+function selectMode(card){
+
+  modeCards.forEach(function(item){
+    item.classList.remove("active");
+  });
+
+  card.classList.add("active");
+
+  selectedMode = card.dataset.mode;
+
+  updateButtonText();
+
+  if(selectedMode === "revision"){
+    showRevisionHistory();
+  }else{
+    hideRevisionHistory();
+  }
+}
+
+modeCards.forEach(function(card){
+  card.addEventListener("click",function(){
+    selectMode(card);
+  });
+
+  card.addEventListener("keydown",function(event){
+    if(event.key === "Enter" || event.key === " "){
+      event.preventDefault();
+      selectMode(card);
+    }
+  });
+});
+
+function updateButtonText(){
+  if(selectedMode === "learn"){
+    startBtn.textContent = "🧠 Start Learning";
+  }else if(selectedMode === "practice"){
+    startBtn.textContent = "✍️ Start Practice";
+  }else if(selectedMode === "revision"){
+    startBtn.textContent = "🔄 Open My Revisions";
+  }
+}
+
+quickTopics.forEach(function(button){
+  button.addEventListener("click",function(){
+    topicInput.value = button.dataset.topic;
+    topicInput.focus();
+  });
+});
+
+
+function getRevisionHistory(){
+
+  try{
+    const saved =
+      localStorage.getItem(REVISION_STORAGE_KEY);
+
+    const data = saved
+      ? JSON.parse(saved)
+      : [];
+
+    return Array.isArray(data) ? data : [];
+
+  }catch(error){
+
+    console.error(
+      "Revision history read error:",
+      error
+    );
+
+    return [];
+  }
+}
+
+
+function saveRevisionTopic(topic, answer){
+
+  let history = getRevisionHistory();
+
+  /*
+    Same topic ko duplicate nahi karenge.
+    Naya result aane par purana result update hoga.
+  */
+  const normalized =
+    topic.trim().toLowerCase();
+
+  history =
+    history.filter(function(item){
+      return (
+        item.topic.trim().toLowerCase() !==
+        normalized
+      );
+    });
+
+  history.unshift({
+    topic:topic.trim(),
+    answer:answer,
+    time:Date.now()
+  });
+
+  /*
+    History ko unnecessarily huge hone se
+    bachane ke liye latest 30 topics rakhenge.
+  */
+  history = history.slice(0,30);
+
+  try{
+
+    localStorage.setItem(
+      REVISION_STORAGE_KEY,
+      JSON.stringify(history)
+    );
+
+  }catch(error){
+
+    console.error(
+      "Revision history save error:",
+      error
+    );
+
+  }
+}
+
+
+function makeShortRevision(answer){
+
+  if(!answer){
+    return ["Revision material available nahi hai."];
+  }
+
+  let text =
+    answer
+      .replace(/\r/g,"")
+      .replace(/```[\s\S]*?```/g,"")
+      .trim();
+
+  let lines =
+    text.split("\n");
+
+  let bullets = [];
+
+  lines.forEach(function(line){
+
+    let value =
+      line
+        .replace(/^#{1,6}\s*/,"")
+        .replace(/^\*\*|\*\*$/g,"")
+        .replace(/^[-*•]\s*/,"")
+        .replace(/^\d+[.)]\s*/,"")
+        .trim();
+
+    if(!value){
+      return;
+    }
+
+    /*
+      Heading ko akela bullet nahi banayenge.
+      Bahut long paragraph ko compact karenge.
+    */
+    if(value.length > 190){
+      value =
+        value.substring(0,187) + "...";
+    }
+
+    bullets.push(value);
+
+  });
+
+  /*
+    Duplicate lines hatao.
+  */
+  bullets =
+    bullets.filter(function(item,index){
+      return bullets.indexOf(item) === index;
+    });
+
+  /*
+    Short revision ke liye max 8 important points.
+  */
+  return bullets.slice(0,8);
+}
+
+
+function showRevisionHistory(){
+
+  revisionHistory.classList.add("active");
+
+  const history =
+    getRevisionHistory();
+
+  if(!history.length){
+
+    revisionList.innerHTML =
+      '<div class="revision-empty">' +
+      '📚 Abhi koi searched topic saved nahi hai.<br>' +
+      'Pehle Learn ya Practice me koi topic study karo, ' +
+      'phir woh yahan automatically aa jayega.' +
+      '</div>';
+
+    return;
+  }
+
+  revisionList.innerHTML = "";
+
+  history.forEach(function(item){
+
+    const card =
+      document.createElement("div");
+
+    card.className =
+      "revision-item";
+
+    const title =
+      document.createElement("div");
+
+    title.className =
+      "revision-topic";
+
+    title.innerHTML =
+      "<span>📘 " +
+      escapeHTML(item.topic) +
+      "</span>" +
+      "<span>⌄</span>";
+
+    const content =
+      document.createElement("div");
+
+    content.className =
+      "revision-content";
+
+    const bullets =
+      makeShortRevision(item.answer);
+
+    bullets.forEach(function(point){
+
+      const bullet =
+        document.createElement("div");
+
+      bullet.className =
+        "revision-bullet";
+
+      bullet.textContent =
+        point;
+
+      content.appendChild(bullet);
+
+    });
+
+    const note =
+      document.createElement("div");
+
+    note.className =
+      "revision-note";
+
+    note.textContent =
+      "Tap topic to open/close revision.";
+
+    content.appendChild(note);
+
+    card.appendChild(title);
+    card.appendChild(content);
+
+    card.addEventListener(
+      "click",
+      function(){
+
+        card.classList.toggle("open");
+
+      }
+    );
+
+    revisionList.appendChild(card);
+
+  });
+}
+
+
+function hideRevisionHistory(){
+
+  revisionHistory.classList.remove("active");
+
+}
+
+
+function createPrompt(topic){
+
+  if(selectedMode === "learn"){
+    return `
+Teach me the topic "${topic}" in a clear,
+student-friendly and detailed way.
+
+Explain the concept step by step.
+
+Use clear headings and bullet points.
+
+Include:
+- Definitions
+- Important points
+- Key terms
+- Examples
+- Common mistakes
+- Short revision summary
+
+Keep the explanation focused on the topic
+and avoid unnecessary filler.
+`;
+  }
+
+  if(selectedMode === "practice"){
+    return `
+Create a practice session for the topic "${topic}".
+
+Give me useful exam-style questions
+from easy to moderate difficulty.
+
+Use clear headings.
+
+For each question, include the answer
+and a clear explanation after it.
+
+Focus only on the requested topic.
+`;
+  }
+
+  if(selectedMode === "revision"){
+    return `
+Create quick revision material for the topic "${topic}".
+
+Use clear headings and bullet points.
+
+Include:
+- Most important definitions
+- Formulas or facts where relevant
+- Key concepts
+- Common mistakes
+- Concise last-minute revision summary
+
+Keep it compact but useful for exam revision.
+`;
+  }
+
+  return topic;
+}
+
+function escapeHTML(text){
+  return text
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+
+function formatAIText(text){
+
+  const safe = escapeHTML(text);
+  const lines = safe.split("\n");
+  let html = "";
+
+  lines.forEach(function(line){
+
+    const trimmed = line.trim();
+
+    if(!trimmed){
+      html += "<div style='height:8px'></div>";
+      return;
+    }
+
+    if(/^#{1,3}\s+/.test(trimmed)){
+      const heading = trimmed.replace(/^#{1,3}\s+/,"");
+      html += '<div class="ai-heading">' + heading + '</div>';
+      return;
+    }
+
+    if(/^\*\*.*\*\*$/.test(trimmed) && trimmed.length < 100){
+      const heading = trimmed.replace(/^\*\*/,"").replace(/\*\*$/,"");
+      html += '<div class="ai-subheading">' + heading + '</div>';
+      return;
+    }
+
+    if(/^[-*•]\s+/.test(trimmed)){
+      const bullet = trimmed.replace(/^[-*•]\s+/,"");
+      html += '<div class="ai-bullet">' + formatInline(bullet) + '</div>';
+      return;
+    }
+
+    const numberMatch = trimmed.match(/^(\d+)[.)]\s+(.*)$/);
+
+    if(numberMatch){
+      html += '<div class="ai-number"><strong>' +
+        numberMatch[1] + '.</strong>' +
+        formatInline(numberMatch[2]) +
+        '</div>';
+      return;
+    }
+
+    html += '<div>' + formatInline(trimmed) + '</div>';
+  });
+
+  return html;
+}
+
+function formatInline(text){
+  return text
+    .replace(/\*\*(.*?)\*\*/g,'<span class="ai-bold">$1</span>')
+    .replace(/__(.*?)__/g,'<span class="ai-bold">$1</span>');
+}
+
+startBtn.addEventListener("click",startStudy);
+
+
+function escapeHtml(str) {
+  return String(str).replace(/[&<>"']/g, function(ch) {
+    return ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#039;"
+    })[ch];
+  });
+}
+
+
+// Practice question highlight
+function formatPracticeAnswer(text) {
+  if (!text) return "";
+
+  const rawLines = String(text).replace(/\r/g, "").split("\n");
+  let html = "";
+  let i = 0;
+  let foundQuestion = false;
+
+  function clean(value) {
+    return value
+      .replace(/^#{1,6}\s*/, "")
+      .replace(/^\*\*(.*?)\*\*$/, "$1")
+      .replace(/^\s*[-*•➢]\s*/, "")
+      .trim();
+  }
+
+  function isQuestionHeading(value) {
+    return /^question\s*\d*\s*:?\s*$/i.test(clean(value)) ||
+           /^q\s*\d+\s*:?\s*$/i.test(clean(value));
+  }
+
+  function isAnswerHeading(value) {
+    return /^answer\s*:/i.test(clean(value)) ||
+           /^ans\s*:/i.test(clean(value));
+  }
+
+  function isExplanationHeading(value) {
+    return /^explanation\s*:/i.test(clean(value)) ||
+           /^explain\s*:/i.test(clean(value));
+  }
+
+  function isNextQuestion(value) {
+    return isQuestionHeading(value);
+  }
+
+  while (i < rawLines.length) {
+    let line = rawLines[i].trim();
+
+    if (!line) {
+      i++;
+      continue;
+    }
+
+    // Practice question: collect the COMPLETE question text until Answer/Explanation/next Question.
+    if (isQuestionHeading(line)) {
+      foundQuestion = true;
+
+      const numberMatch = clean(line).match(/(?:question|q)\s*(\d+)/i);
+      const numberText = numberMatch ? "Question " + numberMatch[1] : "Question";
+
+      i++;
+
+      const questionParts = [];
+      while (i < rawLines.length) {
+        const qLine = rawLines[i].trim();
+
+        if (isAnswerHeading(qLine) || isExplanationHeading(qLine) || isNextQuestion(qLine)) {
+          break;
+        }
+
+        if (qLine) {
+          questionParts.push(clean(qLine));
+        }
+        i++;
+      }
+
+      const questionText = questionParts.join(" ").replace(/\s+/g, " ").trim();
+
+      html +=
+        '<div class="practice-question">' +
+          '<span class="practice-question-number">' + escapeHtml(numberText) + '</span>' +
+          '<span class="practice-question-text">' + escapeHtml(questionText) + '</span>' +
+        '</div>';
+
+      continue;
+    }
+
+    // Answer: keep it in its own box and start the actual answer with ➢.
+    if (isAnswerHeading(line)) {
+      const firstAnswer = clean(line).replace(/^(answer|ans)\s*:\s*/i, "").trim();
+      const answerParts = [];
+
+      if (firstAnswer) answerParts.push(firstAnswer);
+
+      i++;
+
+      while (i < rawLines.length) {
+        const aLine = rawLines[i].trim();
+
+        if (isExplanationHeading(aLine) || isNextQuestion(aLine)) {
+          break;
+        }
+
+        if (aLine) {
+          answerParts.push(clean(aLine));
+        }
+        i++;
+      }
+
+      // Normally the AI gives one complete answer paragraph.
+      // If it explicitly gives multiple bullet/number points, preserve them as separate ➢ bullets.
+      const bullets = [];
+      let current = "";
+
+      answerParts.forEach(function(part) {
+        if (/^(?:[-*•➢]|\d+[.)])\s*/.test(part)) {
+          if (current) bullets.push(current);
+          current = part.replace(/^(?:[-*•➢]|\d+[.)])\s*/, "").trim();
+        } else {
+          current = current ? current + " " + part : part;
+        }
+      });
+
+      if (current) bullets.push(current);
+
+      html += '<div class="practice-answer-box">' +
+                '<span class="practice-answer-label">Answer</span>';
+
+      bullets.forEach(function(point) {
+        html += '<div class="practice-answer-bullet">' +
+                  escapeHtml(point) +
+                '</div>';
+      });
+
+      html += '</div>';
+      continue;
+    }
+
+    // Explanation: keep it separate from the answer.
+    if (isExplanationHeading(line)) {
+      const firstExplanation = clean(line).replace(/^(explanation|explain)\s*:\s*/i, "").trim();
+      const explanationParts = [];
+
+      if (firstExplanation) explanationParts.push(firstExplanation);
+
+      i++;
+
+      while (i < rawLines.length) {
+        const eLine = rawLines[i].trim();
+
+        if (isNextQuestion(eLine)) {
+          break;
+        }
+
+        if (eLine) {
+          explanationParts.push(clean(eLine));
+        }
+        i++;
+      }
+
+      html +=
+        '<div class="practice-explanation">' +
+          '<span class="practice-explanation-label">Explanation</span>' +
+          escapeHtml(explanationParts.join(" ").replace(/\s+/g, " ").trim()) +
+        '</div>';
+
+      continue;
+    }
+
+    // Session title / difficulty / other headings before the first question.
+    const cleaned = clean(line);
+
+    if (/^#{1,3}\s+/.test(line)) {
+      html += '<div class="ai-heading">' + escapeHtml(cleaned) + '</div>';
+    } else if (/^(easy|medium|hard)\s+difficulty$/i.test(cleaned)) {
+      html += '<div class="ai-subheading">' + escapeHtml(cleaned) + '</div>';
+    } else if (!foundQuestion) {
+      html += '<div class="ai-heading">' + escapeHtml(cleaned) + '</div>';
+    } else {
+      html += '<div>' + escapeHtml(cleaned) + '</div>';
+    }
+
+    i++;
+  }
+
+  // Fallback if the API response doesn't use the expected Question/Answer structure.
+  if (!foundQuestion) {
+    return formatAIText(text);
+  }
+
+  return html;
+}
+
+async function startStudy(){
+
+  if(isSending){
+    return;
+  }
+
+  const topic = topicInput.value.trim();
+
+  /*
+    Revision mode me API call nahi hogi.
+    Saved topics hi revision cards hain.
+  */
+  if(selectedMode === "revision"){
+    showRevisionHistory();
+    return;
+  }
+
+  if(!topic){
+    alert("Pehle koi topic enter karo.");
+    topicInput.focus();
+    return;
+  }
+
+  isSending = true;
+
+  if(selectedMode !== "revision"){
+    hideRevisionHistory();
+  }
+
+  startBtn.disabled = true;
+  loading.classList.add("active");
+  result.classList.remove("active");
+  aiContent.innerHTML = "";
+
+  const prompt = createPrompt(topic);
+
+  try{
+
+    const response = await fetch(API_URL,{
+      method:"POST",
+      headers:{
+        "Content-Type":"text/plain;charset=utf-8"
+      },
+      body:JSON.stringify({
+        message:prompt,
+        prompt:prompt,
+        mode:"study"
+      })
+    });
+
+    if(!response.ok){
+      throw new Error("HTTP Error " + response.status);
+    }
+
+    const data = await response.json();
+
+    let answer = "";
+
+    if(typeof data === "string"){
+      answer = data;
+    }else if(data && data.reply){
+      answer = data.reply;
+    }else if(data && data.response){
+      answer = data.response;
+    }else if(data && data.answer){
+      answer = data.answer;
+    }else if(data && data.text){
+      answer = data.text;
+    }else{
+      answer = JSON.stringify(data,null,2);
+    }
+
+    if(!answer){
+      answer = "Sorry, study material nahi mila.";
+    }
+
+    aiContent.innerHTML =
+      selectedMode === "practice"
+        ? formatPracticeAnswer(answer)
+        : formatAIText(answer);
+
+    /*
+      Learn/Practice ka successful result
+      revision history me save hoga.
+    */
+    if(
+      selectedMode === "learn" ||
+      selectedMode === "practice"
+    ){
+      saveRevisionTopic(
+        topic,
+        answer
+      );
+    }
+
+    result.classList.add("active");
+
+    setTimeout(function(){
+      result.scrollIntoView({
+        behavior:"smooth",
+        block:"start"
+      });
+    },120);
+
+  }catch(error){
+
+    console.error("Study Mode Error:",error);
+
+    aiContent.innerHTML =
+      '<div class="ai-subheading">⚠️ Connection Problem</div>' +
+      '<div>Connection problem aa gaya. Please dobara try karo.</div>';
+
+    result.classList.add("active");
+
+  }finally{
+
+    isSending = false;
+    startBtn.disabled = false;
+    loading.classList.remove("active");
+
+  }
+}
+
+copyBtn.addEventListener("click",async function(){
+
+  const text = aiContent.innerText.trim();
+
+  if(!text){
+    return;
+  }
+
+  try{
+
+    await navigator.clipboard.writeText(text);
+
+    copyBtn.textContent = "✓ Copied";
+
+    setTimeout(function(){
+      copyBtn.textContent = "📋 Copy";
+    },1500);
+
+  }catch(error){
+
+    const temp = document.createElement("textarea");
+    temp.value = text;
+    document.body.appendChild(temp);
+    temp.select();
+    document.execCommand("copy");
+    temp.remove();
+
+    copyBtn.textContent = "✓ Copied";
+
+    setTimeout(function(){
+      copyBtn.textContent = "📋 Copy";
+    },1500);
+  }
+
+});
+
+backBtn.addEventListener("click",function(){
+  window.location.href = "index.html";
+});
+
+function loadTheme(){
+
+  const savedTheme =
+    localStorage.getItem("jr_ai_theme");
+
+  if(savedTheme === "dark"){
+
+    document.body.classList.add("dark");
+    themeBtn.textContent = "☀️";
+
+  }else{
+
+    themeBtn.textContent = "🌙";
+
+  }
+}
+
+themeBtn.addEventListener("click",function(){
+
+  document.body.classList.toggle("dark");
+
+  const isDark =
+    document.body.classList.contains("dark");
+
+  localStorage.setItem(
+    "jr_ai_theme",
+    isDark ? "dark" : "light"
+  );
+
+  themeBtn.textContent =
+    isDark ? "☀️" : "🌙";
+
+});
+
+topicInput.addEventListener("keydown",function(event){
+
+  if(event.key === "Enter" && !event.shiftKey){
+
+    event.preventDefault();
+    startStudy();
+
+  }
+
+});
+
+loadTheme();
+updateButtonText();
+
+</script>
+
+</body>
+</html>
