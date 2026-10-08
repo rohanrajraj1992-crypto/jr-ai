@@ -1,0 +1,1417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>JR AI Class 12 Biology</title>
+
+<style>
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f4f7fb;
+  color:#172033;
+  transition:.3s;
+}
+
+header{
+  position:sticky;
+  top:0;
+  z-index:10;
+  background:#ffffff;
+  padding:14px 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  box-shadow:0 2px 12px rgba(0,0,0,.08);
+}
+
+.header-title{
+  font-size:20px;
+  font-weight:800;
+}
+
+.theme-btn,
+.back-btn{
+  border:0;
+  background:#eef2f7;
+  padding:9px 12px;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+.container{
+  max-width:900px;
+  margin:auto;
+  padding:18px;
+}
+
+.cover{
+  background:linear-gradient(135deg,#075985,#16a34a);
+  color:white;
+  border-radius:22px;
+  padding:28px 20px;
+  text-align:center;
+  box-shadow:0 10px 30px rgba(0,0,0,.15);
+  margin-bottom:20px;
+}
+
+.cover-icon{
+  font-size:60px;
+}
+
+.cover h1{
+  margin:10px 0 6px;
+  font-size:28px;
+}
+
+.cover p{
+  margin:0;
+  opacity:.9;
+}
+
+.syllabus{
+  background:white;
+  padding:18px;
+  border-radius:18px;
+  margin-bottom:20px;
+  box-shadow:0 4px 15px rgba(0,0,0,.06);
+}
+
+.syllabus h2{
+  margin-top:0;
+}
+
+.search-box{
+  margin-bottom:18px;
+}
+
+.search-box input{
+  width:100%;
+  padding:14px;
+  border:1px solid #d7dee8;
+  border-radius:13px;
+  font-size:15px;
+  outline:none;
+}
+
+.chapter-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+}
+
+.chapter-card{
+  background:white;
+  border-radius:17px;
+  padding:18px;
+  cursor:pointer;
+  border:1px solid #e1e7ef;
+  box-shadow:0 4px 14px rgba(0,0,0,.05);
+  transition:.2s;
+}
+
+.chapter-card:hover{
+  transform:translateY(-2px);
+}
+
+.chapter-number{
+  font-size:13px;
+  color:#16a34a;
+  font-weight:bold;
+  margin-bottom:7px;
+}
+
+.chapter-title{
+  font-size:17px;
+  font-weight:700;
+}
+
+.reader{
+  display:none;
+  background:white;
+  border-radius:20px;
+  padding:20px;
+  box-shadow:0 5px 20px rgba(0,0,0,.07);
+}
+
+.reader.active{
+  display:block;
+}
+
+.reader-title{
+  font-size:24px;
+  margin-top:0;
+  color:#075985;
+}
+
+.definition{
+  background:#ecfdf5;
+  border-left:5px solid #16a34a;
+  padding:15px;
+  border-radius:10px;
+  margin:15px 0;
+  line-height:1.7;
+}
+
+.formula{
+  background:#f0f9ff;
+  border-left:5px solid #0284c7;
+  padding:14px;
+  border-radius:10px;
+  margin:14px 0;
+  font-weight:600;
+  overflow-x:auto;
+}
+
+.reader p,
+.reader li{
+  line-height:1.8;
+}
+
+.reader h3{
+  margin-top:25px;
+  color:#075985;
+}
+
+.reader-actions{
+  display:flex;
+  gap:10px;
+  margin-top:25px;
+}
+
+.reader-actions button{
+  flex:1;
+  border:0;
+  padding:13px;
+  border-radius:12px;
+  background:#075985;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.progress{
+  height:7px;
+  background:#e5e7eb;
+  border-radius:10px;
+  margin:15px 0 20px;
+  overflow:hidden;
+}
+
+.progress-fill{
+  height:100%;
+  width:0;
+  background:#16a34a;
+  transition:.3s;
+}
+
+.empty{
+  display:none;
+  text-align:center;
+  padding:25px;
+  color:#64748b;
+}
+
+body.dark{
+  background:#101827;
+  color:#e5e7eb;
+}
+
+body.dark header,
+body.dark .syllabus,
+body.dark .chapter-card,
+body.dark .reader{
+  background:#172033;
+  color:#e5e7eb;
+}
+
+body.dark .theme-btn,
+body.dark .back-btn{
+  background:#253047;
+  color:white;
+}
+
+body.dark .chapter-card{
+  border-color:#2d3a50;
+}
+
+body.dark .search-box input{
+  background:#172033;
+  color:white;
+  border-color:#334155;
+}
+
+body.dark .definition{
+  background:#123025;
+}
+
+body.dark .formula{
+  background:#102b3b;
+}
+
+@media(max-width:600px){
+
+  .chapter-grid{
+    grid-template-columns:1fr;
+  }
+
+  .cover h1{
+    font-size:24px;
+  }
+
+  .reader-title{
+    font-size:21px;
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+  <button class="back-btn" onclick="goBack()">←</button>
+
+  <div class="header-title">
+    🧬 JR AI Biology
+  </div>
+
+  <button class="theme-btn" onclick="toggleTheme()">🌙</button>
+
+</header>
+
+
+<div class="container">
+
+  <section class="cover">
+
+    <div class="cover-icon">🧬</div>
+
+    <h1>JR AI Class 12 Biology</h1>
+
+    <p>Original chapter-wise Biology study book</p>
+
+  </section>
+
+
+  <section class="syllabus">
+
+    <h2>📚 Biology Syllabus</h2>
+
+    <p>
+      Class 12 Biology covers reproduction, genetics and evolution,
+      biology in human welfare, biotechnology and ecology.
+    </p>
+
+    <ul>
+      <li>Reproduction</li>
+      <li>Genetics and Evolution</li>
+      <li>Biology and Human Welfare</li>
+      <li>Biotechnology</li>
+      <li>Ecology and Environment</li>
+    </ul>
+
+  </section>
+
+
+  <div class="search-box">
+
+    <input
+      id="searchInput"
+      type="text"
+      placeholder="🔎 Search Biology chapter..."
+      oninput="searchChapters()"
+    >
+
+  </div>
+
+
+  <div id="chapterGrid" class="chapter-grid"></div>
+
+  <div id="emptyMessage" class="empty">
+    No chapter found.
+  </div>
+
+
+  <section id="reader" class="reader">
+
+    <h2 id="readerTitle" class="reader-title"></h2>
+
+    <div class="progress">
+      <div id="progressFill" class="progress-fill"></div>
+    </div>
+
+    <div id="readerContent"></div>
+
+    <div class="reader-actions">
+
+      <button onclick="previousChapter()">← Previous</button>
+
+      <button onclick="showChapters()">📚 Chapters</button>
+
+      <button onclick="nextChapter()">Next →</button>
+
+    </div>
+
+  </section>
+
+</div>
+
+
+<script>
+
+const chapters = [
+
+{
+title:"Sexual Reproduction in Flowering Plants",
+content:`
+
+<div class="definition">
+Sexual reproduction in flowering plants is the process in which male
+and female gametes participate in fertilisation to produce offspring.
+</div>
+
+<h3>1. Flower as the Reproductive Structure</h3>
+
+<p>
+A typical flower contains reproductive structures called stamens and
+carpels. The stamen represents the male reproductive part, while the
+carpel represents the female reproductive part.
+</p>
+
+<h3>2. Microsporogenesis</h3>
+
+<p>
+Microsporogenesis is the formation of microspores from microspore
+mother cells through meiosis inside the anther.
+</p>
+
+<h3>3. Pollen Grain</h3>
+
+<p>
+A pollen grain represents the male gametophyte. It usually contains
+a vegetative cell and a generative cell.
+</p>
+
+<h3>4. Megasporogenesis</h3>
+
+<p>
+Megasporogenesis is the formation of megaspores from the megaspore
+mother cell inside the ovule.
+</p>
+
+<h3>5. Embryo Sac</h3>
+
+<p>
+The mature embryo sac is the female gametophyte. In the common
+angiosperm pattern, it contains seven cells and eight nuclei.
+</p>
+
+<h3>6. Pollination</h3>
+
+<p>
+Pollination is the transfer of pollen grains from the anther to the
+stigma. It may be self-pollination or cross-pollination.
+</p>
+
+<h3>7. Fertilisation</h3>
+
+<p>
+Fertilisation is the fusion of male and female gametes to form a
+zygote.
+</p>
+
+<h3>8. Double Fertilisation</h3>
+
+<p>
+In flowering plants, one male gamete fuses with the egg to form the
+zygote, while the other fuses with the polar nuclei to form the
+primary endosperm nucleus. This is called double fertilisation.
+</p>
+
+<h3>9. Seed and Fruit Formation</h3>
+
+<p>
+After fertilisation, the ovule develops into a seed and the ovary
+usually develops into a fruit.
+</p>
+
+`
+},
+
+{
+title:"Human Reproduction",
+content:`
+
+<div class="definition">
+Human reproduction is a biological process involving the formation
+of gametes, fertilisation and development of a new individual.
+</div>
+
+<h3>1. Male Reproductive System</h3>
+
+<p>
+The male reproductive system includes the testes, ducts, accessory
+glands and external reproductive structures.
+</p>
+
+<h3>2. Female Reproductive System</h3>
+
+<p>
+The female reproductive system includes the ovaries, oviducts,
+uterus, cervix and vagina.
+</p>
+
+<h3>3. Spermatogenesis</h3>
+
+<p>
+Spermatogenesis is the formation of sperm cells in the seminiferous
+tubules of the testes.
+</p>
+
+<h3>4. Oogenesis</h3>
+
+<p>
+Oogenesis is the formation and maturation of female gametes in the
+ovaries.
+</p>
+
+<h3>5. Menstrual Cycle</h3>
+
+<p>
+The menstrual cycle is a recurring sequence of hormonal and
+reproductive changes in the female reproductive system.
+</p>
+
+<h3>6. Ovulation</h3>
+
+<p>
+Ovulation is the release of a mature secondary oocyte from the ovary.
+</p>
+
+<h3>7. Fertilisation</h3>
+
+<p>
+Fertilisation generally occurs in the ampullary region of the
+oviduct. The fusion of gametes produces a diploid zygote.
+</p>
+
+<h3>8. Implantation</h3>
+
+<p>
+Implantation is the attachment and embedding of the developing
+blastocyst into the uterine lining.
+</p>
+
+<h3>9. Pregnancy</h3>
+
+<p>
+During pregnancy, the embryo develops inside the uterus and receives
+nutrients and oxygen through the placenta.
+</p>
+
+`
+},
+
+{
+title:"Reproductive Health",
+content:`
+
+<div class="definition">
+Reproductive health refers to a state of physical, emotional,
+behavioural and social well-being related to the reproductive system.
+</div>
+
+<h3>1. Family Planning</h3>
+
+<p>
+Family planning involves methods that help individuals or couples
+plan the number and spacing of children.
+</p>
+
+<h3>2. Contraception</h3>
+
+<p>
+Contraceptive methods prevent pregnancy by interfering with
+fertilisation, ovulation or implantation.
+</p>
+
+<h3>3. Barrier Methods</h3>
+
+<p>
+Barrier methods prevent sperm from reaching the female reproductive
+tract. Condoms are an important example.
+</p>
+
+<h3>4. Intrauterine Devices</h3>
+
+<p>
+Intrauterine devices are contraceptive devices placed inside the
+uterus by qualified healthcare professionals.
+</p>
+
+<h3>5. Assisted Reproductive Technologies</h3>
+
+<p>
+Assisted reproductive technologies help address certain causes of
+infertility. Examples include IVF and related procedures.
+</p>
+
+<h3>6. Sexually Transmitted Infections</h3>
+
+<p>
+Sexually transmitted infections are infections that can spread mainly
+through sexual contact. Prevention, testing and appropriate treatment
+are important for reproductive health.
+</p>
+
+`
+},
+
+{
+title:"Principles of Inheritance and Variation",
+content:`
+
+<div class="definition">
+Inheritance is the transmission of genetic information from parents
+to offspring, while variation refers to differences among individuals.
+</div>
+
+<h3>1. Gene</h3>
+
+<p>
+A gene is a functional unit of heredity located at a specific
+position on a chromosome.
+</p>
+
+<h3>2. Alleles</h3>
+
+<p>
+Alleles are alternative forms of a gene that occupy the same locus
+on homologous chromosomes.
+</p>
+
+<h3>3. Mendel's Laws</h3>
+
+<p>
+Mendel proposed principles describing the inheritance of traits.
+Important principles include segregation of alleles and independent
+assortment under appropriate conditions.
+</p>
+
+<h3>4. Dominance</h3>
+
+<p>
+In a heterozygous condition, one allele may express its phenotype
+while another allele does not visibly express itself. This relationship
+is called dominance.
+</p>
+
+<h3>5. Incomplete Dominance</h3>
+
+<p>
+In incomplete dominance, the heterozygote shows a phenotype
+intermediate between the two homozygotes.
+</p>
+
+<h3>6. Codominance</h3>
+
+<p>
+In codominance, both alleles express themselves in the heterozygote.
+The ABO blood group system provides an important example.
+</p>
+
+<h3>7. Sex-linked Inheritance</h3>
+
+<p>
+Sex-linked traits are controlled by genes located on sex chromosomes.
+</p>
+
+<h3>8. Mutation</h3>
+
+<p>
+A mutation is a heritable change in genetic material. Mutations can
+contribute to genetic variation.
+</p>
+
+`
+},
+
+{
+title:"Molecular Basis of Inheritance",
+content:`
+
+<div class="definition">
+The molecular basis of inheritance explains how genetic information
+is stored, copied and expressed at the molecular level.
+</div>
+
+<h3>1. DNA</h3>
+
+<p>
+DNA is the major genetic material in most organisms. It stores
+biological information in the sequence of its nucleotides.
+</p>
+
+<h3>2. DNA Structure</h3>
+
+<p>
+DNA is composed of two antiparallel polynucleotide strands arranged
+in a double-helical structure.
+</p>
+
+<h3>3. Base Pairing</h3>
+
+<div class="formula">
+A = T
+</div>
+
+<div class="formula">
+G ≡ C
+</div>
+
+<p>
+Adenine pairs with thymine, while guanine pairs with cytosine.
+</p>
+
+<h3>4. DNA Replication</h3>
+
+<p>
+DNA replication produces copies of DNA before cell division.
+The process is semiconservative.
+</p>
+
+<h3>5. Transcription</h3>
+
+<p>
+Transcription is the synthesis of RNA using DNA as a template.
+</p>
+
+<h3>6. Translation</h3>
+
+<p>
+Translation is the synthesis of a polypeptide using the information
+carried by messenger RNA.
+</p>
+
+<h3>7. Genetic Code</h3>
+
+<p>
+The genetic code relates nucleotide triplets called codons to amino
+acids or termination signals during protein synthesis.
+</p>
+
+<h3>8. Gene Expression</h3>
+
+<p>
+Gene expression is the process through which information contained
+in genes is used to produce functional RNA or proteins.
+</p>
+
+`
+},
+
+{
+title:"Evolution",
+content:`
+
+<div class="definition">
+Evolution is the change in inherited characteristics of populations
+over generations.
+</div>
+
+<h3>1. Origin of Life</h3>
+
+<p>
+Scientific explanations for the origin of life consider chemical and
+biological processes that could have produced increasingly complex
+molecules and systems.
+</p>
+
+<h3>2. Evidence for Evolution</h3>
+
+<p>
+Evidence for evolution includes fossils, comparative anatomy,
+embryology, molecular similarities and biogeographical patterns.
+</p>
+
+<h3>3. Natural Selection</h3>
+
+<p>
+Natural selection occurs when heritable variations affect survival
+and reproduction, causing some variants to become more common over
+generations.
+</p>
+
+<h3>4. Genetic Drift</h3>
+
+<p>
+Genetic drift is a change in allele frequencies caused by random
+sampling, particularly important in small populations.
+</p>
+
+<h3>5. Adaptive Radiation</h3>
+
+<p>
+Adaptive radiation is the diversification of organisms from a common
+ancestor into different forms adapted to different environments.
+</p>
+
+<h3>6. Human Evolution</h3>
+
+<p>
+Human evolution describes the evolutionary history of the human
+lineage and its relationship with other primates.
+</p>
+
+`
+},
+
+{
+title:"Human Health and Disease",
+content:`
+
+<div class="definition">
+Human health involves physical, mental and social well-being, while
+disease is a condition that disturbs normal body functioning.
+</div>
+
+<h3>1. Pathogens</h3>
+
+<p>
+Pathogens are disease-causing organisms or agents. They include
+bacteria, viruses, fungi, protozoans and certain parasitic organisms.
+</p>
+
+<h3>2. Immunity</h3>
+
+<p>
+Immunity is the ability of the body to recognize and defend itself
+against potentially harmful foreign substances and pathogens.
+</p>
+
+<h3>3. Innate Immunity</h3>
+
+<p>
+Innate immunity provides general defense mechanisms that are present
+from birth.
+</p>
+
+<h3>4. Acquired Immunity</h3>
+
+<p>
+Acquired immunity develops through exposure to specific antigens and
+involves immunological memory.
+</p>
+
+<h3>5. Vaccination</h3>
+
+<p>
+Vaccination stimulates the immune system to develop protection against
+specific infectious diseases.
+</p>
+
+<h3>6. Allergies</h3>
+
+<p>
+An allergy is an exaggerated immune response to a normally harmless
+substance called an allergen.
+</p>
+
+<h3>7. Cancer</h3>
+
+<p>
+Cancer involves uncontrolled and abnormal cell growth. It can result
+from genetic changes affecting cell division and regulation.
+</p>
+
+`
+},
+
+
+{
+title:"Microbes in Human Welfare",
+content:`
+
+<div class="definition">
+Microorganisms are microscopic organisms that can be useful in food
+production, medicine, agriculture, industry and environmental processes.
+</div>
+
+<h3>1. Fermentation</h3>
+
+<p>
+Fermentation uses microorganisms to convert substrates into useful
+products. It is important in the preparation of several foods and
+beverages.
+</p>
+
+<h3>2. Antibiotics</h3>
+
+<p>
+Antibiotics are substances produced by microorganisms or obtained
+through biotechnology that can inhibit or kill susceptible bacteria.
+</p>
+
+<h3>3. Sewage Treatment</h3>
+
+<p>
+Microorganisms help break down organic matter during biological
+treatment of sewage.
+</p>
+
+<h3>4. Biogas</h3>
+
+<p>
+Biogas is produced by microbial activity during anaerobic digestion
+of organic material. Methanogenic microorganisms are important in
+this process.
+</p>
+
+<h3>5. Biofertilisers</h3>
+
+<p>
+Biofertilisers contain useful microorganisms that improve nutrient
+availability or soil fertility.
+</p>
+
+<h3>6. Biocontrol</h3>
+
+<p>
+Biocontrol uses biological organisms or their products to control
+harmful pests or pathogens.
+</p>
+
+`
+},
+
+
+{
+title:"Biotechnology: Principles and Processes",
+content:`
+
+<div class="definition">
+Biotechnology uses living organisms, cells or biological molecules to
+develop useful products and processes.
+</div>
+
+<h3>1. Genetic Engineering</h3>
+
+<p>
+Genetic engineering involves deliberate modification or transfer of
+genetic material using molecular biological techniques.
+</p>
+
+<h3>2. Restriction Enzymes</h3>
+
+<p>
+Restriction enzymes recognize specific DNA sequences and cut DNA at
+or near those sites.
+</p>
+
+<h3>3. DNA Ligase</h3>
+
+<p>
+DNA ligase joins DNA fragments by forming phosphodiester bonds between
+adjacent nucleotides.
+</p>
+
+<h3>4. Vectors</h3>
+
+<p>
+Vectors are DNA molecules used to carry foreign genetic material into
+a suitable host cell.
+</p>
+
+<h3>5. PCR</h3>
+
+<p>
+Polymerase Chain Reaction is a technique used to amplify a selected
+DNA sequence through repeated cycles of denaturation, primer
+annealing and extension.
+</p>
+
+<h3>6. Recombinant DNA</h3>
+
+<p>
+Recombinant DNA is DNA formed by joining genetic material from
+different sources.
+</p>
+
+`
+},
+
+
+{
+title:"Biotechnology and its Applications",
+content:`
+
+<div class="definition">
+Biotechnology has applications in medicine, agriculture, industry,
+diagnostics and environmental management.
+</div>
+
+<h3>1. Insulin Production</h3>
+
+<p>
+Recombinant DNA technology can be used to produce human insulin using
+genetically engineered microorganisms.
+</p>
+
+<h3>2. Gene Therapy</h3>
+
+<p>
+Gene therapy aims to treat certain disorders by introducing, removing
+or modifying genetic material in cells.
+</p>
+
+<h3>3. Molecular Diagnosis</h3>
+
+<p>
+Molecular diagnostic techniques detect specific genetic material,
+proteins or other molecular markers associated with diseases.
+</p>
+
+<h3>4. Genetically Modified Crops</h3>
+
+<p>
+Genetically modified crops contain introduced or altered genetic
+material that provides selected characteristics.
+</p>
+
+<h3>5. Bt Crops</h3>
+
+<p>
+Bt crops contain genes derived from Bacillus thuringiensis that can
+provide protection against particular insect pests.
+</p>
+
+<h3>6. Transgenic Animals</h3>
+
+<p>
+Transgenic animals contain genetic material introduced from another
+source through genetic engineering techniques.
+</p>
+
+`
+},
+
+
+{
+title:"Organisms and Populations",
+content:`
+
+<div class="definition">
+Ecology is the study of interactions among organisms and between
+organisms and their environment.
+</div>
+
+<h3>1. Population</h3>
+
+<p>
+A population is a group of individuals of the same species living in
+a particular geographical area and capable of interacting with one
+another.
+</p>
+
+<h3>2. Population Density</h3>
+
+<p>
+Population density describes the number or biomass of individuals
+present per unit area or volume.
+</p>
+
+<h3>3. Birth Rate</h3>
+
+<p>
+Birth rate is the rate at which new individuals are added to a
+population through reproduction.
+</p>
+
+<h3>4. Death Rate</h3>
+
+<p>
+Death rate is the rate at which individuals are removed from a
+population because of death.
+</p>
+
+<h3>5. Population Growth</h3>
+
+<p>
+Population size changes due to births, deaths, immigration and
+emigration.
+</p>
+
+<h3>6. Species Interactions</h3>
+
+<p>
+Important interactions include predation, competition, parasitism,
+mutualism and commensalism.
+</p>
+
+`
+},
+
+
+{
+title:"Ecosystem",
+content:`
+
+<div class="definition">
+An ecosystem is a functional unit consisting of living organisms
+interacting with one another and with their physical environment.
+</div>
+
+<h3>1. Abiotic Components</h3>
+
+<p>
+Abiotic components include temperature, water, soil, light, minerals
+and other non-living environmental factors.
+</p>
+
+<h3>2. Producers</h3>
+
+<p>
+Producers synthesize organic matter, mainly through photosynthesis,
+and form the first trophic level of most ecosystems.
+</p>
+
+<h3>3. Consumers</h3>
+
+<p>
+Consumers obtain organic nutrients by feeding on other organisms.
+</p>
+
+<h3>4. Decomposers</h3>
+
+<p>
+Decomposers break down dead organic matter and help recycle nutrients.
+</p>
+
+<h3>5. Food Chain</h3>
+
+<p>
+A food chain represents the transfer of food and energy from one
+trophic level to another.
+</p>
+
+<h3>6. Ecological Pyramids</h3>
+
+<p>
+Ecological pyramids represent relationships between trophic levels
+in terms of number, biomass or energy.
+</p>
+
+`
+},
+
+
+{
+title:"Biodiversity and Conservation",
+content:`
+
+<div class="definition">
+Biodiversity refers to the variety of life at genetic, species and
+ecosystem levels.
+</div>
+
+<h3>1. Genetic Diversity</h3>
+
+<p>
+Genetic diversity refers to variations in genetic characteristics
+within a species or population.
+</p>
+
+<h3>2. Species Diversity</h3>
+
+<p>
+Species diversity describes the variety and relative abundance of
+different species in a particular region.
+</p>
+
+<h3>3. Ecosystem Diversity</h3>
+
+<p>
+Ecosystem diversity refers to the variety of ecosystems and ecological
+processes present in an area.
+</p>
+
+<h3>4. Biodiversity Loss</h3>
+
+<p>
+Major causes of biodiversity loss include habitat destruction,
+overexploitation, invasive species and environmental changes.
+</p>
+
+<h3>5. In-situ Conservation</h3>
+
+<p>
+In-situ conservation protects organisms within their natural habitats.
+National parks and wildlife sanctuaries are examples.
+</p>
+
+<h3>6. Ex-situ Conservation</h3>
+
+<p>
+Ex-situ conservation protects organisms outside their natural
+habitats, such as in botanical gardens, zoos and seed banks.
+</p>
+
+`
+},
+
+
+{
+title:"Environmental Issues",
+content:`
+
+<div class="definition">
+Environmental issues are problems caused by natural processes or
+human activities that affect ecosystems, resources and living beings.
+</div>
+
+<h3>1. Air Pollution</h3>
+
+<p>
+Air pollution occurs when harmful substances are released into the
+atmosphere at concentrations that can cause adverse effects.
+</p>
+
+<h3>2. Water Pollution</h3>
+
+<p>
+Water pollution occurs when contaminants enter water bodies and
+alter their physical, chemical or biological characteristics.
+</p>
+
+<h3>3. Eutrophication</h3>
+
+<p>
+Eutrophication is the enrichment of water bodies with nutrients,
+often leading to excessive algal growth and oxygen depletion.
+</p>
+
+<h3>4. Greenhouse Effect</h3>
+
+<p>
+The greenhouse effect is the warming produced when certain gases in
+the atmosphere absorb and re-emit infrared radiation.
+</p>
+
+<h3>5. Global Warming</h3>
+
+<p>
+Global warming refers to the long-term increase in Earth's average
+surface temperature associated mainly with increasing concentrations
+of greenhouse gases from human activities.
+</p>
+
+<h3>6. Ozone Depletion</h3>
+
+<p>
+Ozone depletion refers to the reduction of ozone concentration in the
+stratosphere, where ozone helps absorb harmful ultraviolet radiation.
+</p>
+
+<h3>7. Waste Management</h3>
+
+<p>
+Waste management includes collection, treatment, recycling,
+recovery and safe disposal of waste.
+</p>
+
+`
+}
+
+];
+  let currentChapter = 0;
+
+
+function renderChapters(list = chapters){
+
+  const grid = document.getElementById("chapterGrid");
+
+  grid.innerHTML = "";
+
+  document.getElementById("emptyMessage").style.display =
+    list.length ? "none" : "block";
+
+  list.forEach((chapter,index)=>{
+
+    const realIndex = chapters.indexOf(chapter);
+
+    const card = document.createElement("div");
+
+    card.className = "chapter-card";
+
+    card.innerHTML = `
+      <div class="chapter-number">
+        Chapter ${realIndex + 1}
+      </div>
+
+      <div class="chapter-title">
+        ${chapter.title}
+      </div>
+    `;
+
+    card.onclick = function(){
+      openChapter(realIndex);
+    };
+
+    grid.appendChild(card);
+
+  });
+
+}
+
+
+function openChapter(index){
+
+  currentChapter = index;
+
+  const chapter = chapters[index];
+
+  document.getElementById("chapterGrid").style.display = "none";
+  document.querySelector(".search-box").style.display = "none";
+  document.querySelector(".syllabus").style.display = "none";
+
+  const reader = document.getElementById("reader");
+
+  reader.classList.add("active");
+
+  document.getElementById("readerTitle").textContent =
+    "Chapter " + (index + 1) + ": " + chapter.title;
+
+  document.getElementById("readerContent").innerHTML =
+    chapter.content;
+
+  updateProgress();
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+function showChapters(){
+
+  document.getElementById("chapterGrid").style.display = "grid";
+
+  document.querySelector(".search-box").style.display = "block";
+
+  document.querySelector(".syllabus").style.display = "block";
+
+  document.getElementById("reader").classList.remove("active");
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+function nextChapter(){
+
+  if(currentChapter < chapters.length - 1){
+
+    openChapter(currentChapter + 1);
+
+  }
+
+}
+
+
+function previousChapter(){
+
+  if(currentChapter > 0){
+
+    openChapter(currentChapter - 1);
+
+  }
+
+}
+
+
+function searchChapters(){
+
+  const query =
+    document.getElementById("searchInput")
+    .value
+    .toLowerCase()
+    .trim();
+
+  const filtered = chapters.filter(chapter =>
+    chapter.title.toLowerCase().includes(query)
+  );
+
+  renderChapters(filtered);
+
+}
+
+
+function updateProgress(){
+
+  const progress =
+    ((currentChapter + 1) / chapters.length) * 100;
+
+  document.getElementById("progressFill").style.width =
+    progress + "%";
+
+}
+
+
+function toggleTheme(){
+
+  document.body.classList.toggle("dark");
+
+  localStorage.setItem(
+    "jr_ai_theme",
+    document.body.classList.contains("dark")
+      ? "dark"
+      : "light"
+  );
+
+}
+
+
+function loadTheme(){
+
+  const theme =
+    localStorage.getItem("jr_ai_theme");
+
+  if(theme === "dark"){
+
+    document.body.classList.add("dark");
+
+  }
+
+}
+
+
+function goBack(){
+
+  window.location.href = "bookstore.html";
+
+}
+
+
+renderChapters();
+
+loadTheme();
+
+</script>
+
+</body>
+</html>
