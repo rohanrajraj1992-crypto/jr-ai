@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JR AI Heart Connection</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:#fff8f5;
+  color:#35221f;
+  min-height:100vh;
+}
+
+body.dark{
+  background:#181212;
+  color:#f7e9e6;
+}
+
+.header{
+  position:sticky;
+  top:0;
+  z-index:50;
+  background:linear-gradient(135deg,#7f1d1d,#b91c1c,#dc2626);
+  color:white;
+  padding:14px 16px;
+  box-shadow:0 4px 15px rgba(0,0,0,.17);
+}
+
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.back-btn,
+.theme-btn{
+  border:0;
+  background:rgba(255,255,255,.18);
+  color:white;
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  font-size:20px;
+  cursor:pointer;
+}
+
+.title-box{
+  flex:1;
+  text-align:center;
+}
+
+.title-box h1{
+  font-size:20px;
+  font-weight:800;
+}
+
+.title-box p{
+  font-size:12px;
+  opacity:.9;
+  margin-top:3px;
+}
+
+.cover{
+  margin:18px 16px;
+  min-height:275px;
+  border-radius:25px;
+  padding:30px 23px;
+  color:white;
+  background:
+    radial-gradient(circle at 15% 20%,rgba(255,255,255,.24),transparent 25%),
+    radial-gradient(circle at 90% 80%,rgba(255,255,255,.15),transparent 30%),
+    linear-gradient(135deg,#7f1d1d,#b91c1c,#ef4444);
+  box-shadow:0 13px 30px rgba(185,28,28,.28);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+.cover-icon{
+  font-size:52px;
+  margin-bottom:14px;
+}
+
+.cover h2{
+  font-size:31px;
+  line-height:1.12;
+  margin-bottom:10px;
+}
+
+.cover p{
+  font-size:14px;
+  line-height:1.65;
+  opacity:.95;
+}
+
+.badge{
+  display:inline-block;
+  margin-top:17px;
+  width:max-content;
+  background:rgba(255,255,255,.18);
+  border:1px solid rgba(255,255,255,.32);
+  padding:8px 14px;
+  border-radius:30px;
+  font-weight:700;
+  font-size:13px;
+}
+
+.search-box{
+  margin:0 16px 18px;
+}
+
+.search-box input{
+  width:100%;
+  border:1px solid #ead8d4;
+  background:white;
+  color:#35221f;
+  border-radius:15px;
+  padding:14px 16px;
+  outline:none;
+  font-size:15px;
+}
+
+body.dark .search-box input{
+  background:#241b1b;
+  color:white;
+  border-color:#493434;
+}
+
+.section-title{
+  padding:0 16px;
+  margin-bottom:12px;
+}
+
+.section-title h3{
+  font-size:19px;
+}
+
+.section-title p{
+  font-size:12px;
+  color:#806965;
+  margin-top:4px;
+}
+
+body.dark .section-title p{
+  color:#bca9a5;
+}
+
+.chapter-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+  padding:0 16px 20px;
+}
+
+.chapter-card{
+  background:white;
+  border:1px solid #ead8d4;
+  border-radius:18px;
+  padding:16px;
+  min-height:135px;
+  cursor:pointer;
+  transition:.2s;
+  box-shadow:0 5px 14px rgba(80,20,15,.06);
+}
+
+.chapter-card:active{
+  transform:scale(.97);
+}
+
+body.dark .chapter-card{
+  background:#241b1b;
+  border-color:#493434;
+  box-shadow:none;
+}
+
+.chapter-number{
+  width:35px;
+  height:35px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:11px;
+  background :#fee2e2;
+  color:#b91c1c;
+  font-weight:800;
+  margin-bottom:10px;
+}
+
+body.dark .chapter-number{
+  background:#4a2020;
+  color:#fca5a5;
+}
+
+.chapter-card h4{
+  font-size:14px;
+  line-height:1.4;
+}
+
+.reader{
+  display:none;
+  margin:0 16px 30px;
+}
+
+.reader.active{
+  display:block;
+}
+
+.reader-head{
+  background:white;
+  border:1px solid #ead8d4;
+  border-radius:18px;
+  padding:18px;
+  margin-bottom:12px;
+}
+
+body.dark .reader-head{
+  background:#241b1b;
+  border-color:#493434;
+}
+
+.reader-head h2{
+  font-size:23px;
+  line-height:1.3;
+  color:#b91c1c;
+}
+
+body.dark .reader-head h2{
+  color:#fca5a5;
+}
+
+.reader-content{
+  background:white;
+  border:1px solid #ead8d4;
+  border-radius:18px;
+  padding:20px;
+  line-height:1.8;
+  font-size:15px;
+  overflow:hidden;
+}
+
+body.dark .reader-content{
+  background:#241b1b;
+  border-color:#493434;
+}
+
+.reader-content h3{
+  margin:22px 0 9px;
+  color:#b91c1c;
+  font-size:18px;
+}
+
+body.dark .reader-content h3{
+  color:#fca5a5;
+}
+
+.reader-content h3:first-child{
+  margin-top:0;
+}
+
+.reader-content p{
+  margin-bottom:14px;
+}
+
+.dialogue{
+  margin:15px 0;
+  padding:14px 16px;
+  background:#fff1f1;
+  border-left:4px solid #dc2626;
+  border-radius:12px;
+  font-style:italic;
+}
+
+body.dark .dialogue{
+  background:#351d1d;
+}
+
+.quote{
+  margin:17px 0;
+  padding:16px;
+  text-align:center;
+  background:#fef2f2;
+  border-radius:14px;
+  color:#991b1b;
+  font-weight:700;
+}
+
+body.dark .quote{
+  background:#351d1d;
+  color:#fca5a5;
+}
+
+.info-box{
+  margin:15px 0;
+  padding:14px;
+  border-left:4px solid #ef4444;
+  background:#fff5f5;
+  border-radius:10px;
+}
+
+body.dark .info-box{
+  background:#351d1d;
+}
+
+.reader-nav{
+  display:flex;
+  gap:8px;
+  margin-top:12px;
+}
+
+.reader-nav button{
+  flex:1;
+  border:0;
+  border-radius:13px;
+  padding:13px 8px;
+  background:#b91c1c;
+  color:white;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.reader-nav button:disabled{
+  opacity:.4;
+}
+
+.progress-wrap{
+  margin:14px 0 0;
+}
+
+.progress-text{
+  font-size:12px;
+  color:#806965;
+  margin-bottom:6px;
+}
+
+body.dark .progress-text{
+  color:#bca9a5;
+}
+
+.progress{
+  width:100%;
+  height:7px;
+  background:#f0dcd8;
+  border-radius:20px;
+  overflow:hidden;
+}
+
+body.dark .progress{
+  background:#493434;
+}
+
+.progress-bar{
+  height:100%;
+  width:0;
+  background:#ef4444;
+  transition:.3s;
+}
+
+.chapters-btn{
+  width:100%;
+  border:1px solid #ead8d4;
+  background:white;
+  color:#35221f;
+  padding:13px;
+  border-radius:13px;
+  font-weight:700;
+  cursor:pointer;
+  margin-bottom:12px;
+}
+
+body.dark .chapters-btn{
+  background:#241b1b;
+  color:white;
+  border-color:#493434;
+}
+
+@media(max-width:360px){
+  .chapter-grid{
+    grid-template-columns:1fr;
+  }
+
+    .cover h2{
+    font-size:27px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+  <div class="topbar">
+
+    <button class="back-btn" onclick="goBack()">←</button>
+
+    <div class="title-box">
+      <h1>❤️ Heart Connection</h1>
+      <p>JR AI Original Novel</p>
+    </div>
+
+    <button class="theme-btn" onclick="toggleTheme()">🌙</button>
+
+  </div>
+</header>
+
+<section class="cover">
+
+  <div class="cover-icon">❤️</div>
+
+  <h2>Heart Connection</h2>
+
+  <p>
+    An original emotional romance about two people who discover that
+    meaningful love is built through friendship, trust, patience,
+    difficult conversations and the courage to be honest.
+  </p>
+
+  <div class="badge">
+    ❤️ Original Story • 12 Chapters
+  </div>
+
+</section>
+
+<div class="search-box">
+  <input
+    type="text"
+    id="searchInput"
+    placeholder="🔎 Search chapter..."
+    oninput="searchChapters()"
+  >
+</div>
+
+<section id="chapterSection">
+
+  <div class="section-title">
+    <h3>📖 Chapters</h3>
+    <p>Choose a chapter and start reading.</p>
+  </div>
+
+  <div class="chapter-grid" id="chapterGrid"></div>
+
+</section>
+
+<section class="reader" id="reader">
+
+  <button class="chapters-btn" onclick="showChapters()">
+    📖 Back to Chapters
+  </button>
+
+  <div class="reader-head">
+
+    <h2 id="readerTitle"></h2>
+
+    <div class="progress-wrap">
+
+      <div class="progress-text" id="progressText"></div>
+
+      <div class="progress">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <article class="reader-content" id="readerContent"></article>
+
+  <div class="reader-nav">
+    <button id="prevBtn" onclick="previousChapter()">← Previous</button>
+    <button id="nextBtn" onclick="nextChapter()">Next →</button>
+  </div>
+
+</section>
+
+<script>
+
+const chapters = [
+
+{
+title:"Chapter 1 — Two Different Worlds",
+content:`
+
+<h3>The First Glance</h3>
+
+<p>
+Anaya believed that people rarely entered our lives by accident.
+Still, she did not expect anything unusual when she walked into
+the small community library that Tuesday evening.
+</p>
+
+<p>
+She was looking for a book about architecture.
+Someone else was looking for the last available copy.
+</p>
+
+<p>
+They reached for it at exactly the same time.
+</p>
+
+<div class="dialogue">
+“Sorry,” the stranger said.
+</div>
+
+<div class="dialogue">
+“You can take it,” Anaya replied.
+</div>
+
+<p>
+His name was Rohan.
+They had almost nothing in common on paper.
+Yet their conversation somehow continued for another fifteen minutes.
+</p>
+
+<div class="quote">
+“Sometimes connection begins before we understand why.”
+</div>
+
+`
+},
+
+{
+title:"Chapter 2 — The Familiar Stranger",
+content:`
+
+<h3>Meeting Again</h3>
+
+<p>
+The next week, Anaya found the same book waiting on the same table.
+There was a small note beside it.
+</p>
+
+<div class="dialogue">
+“I finished it. You should read it now.”
+</div>
+
+<p>
+She smiled.
+She had not expected him to remember.
+</p>
+
+<p>
+Rohan was sitting near the window.
+That became their first private joke.
+</p>
+
+<p>
+They began meeting at the library every week.
+At first, they discussed books.
+Then work.
+Then family.
+Then the small details that people usually share only
+when they feel comfortable.
+</p>
+
+`
+},
+
+{
+title:"Chapter 3 — The Long Walk",
+content:`
+
+<h3>After Sunset</h3>
+
+<p>
+One evening, the library closed early.
+Rohan offered to walk with Anaya until she reached the main road.
+</p>
+
+<p>
+They talked about childhood dreams.
+Anaya admitted that she had stopped drawing because she thought
+her work was never good enough.
+</p>
+
+<div class="dialogue">
+“Then maybe you shouldn't let one bad day decide
+what the rest of your life looks like.”
+</div>
+
+<p>
+She remembered that sentence.
+</p>
+
+<div class="dialogue">
+“Will you show me your drawings someday?”
+</div>
+
+<p>
+Anaya smiled.
+</p>
+
+<div class="dialogue">
+“Maybe.”
+</div>
+
+`
+},
+
+{
+title:"Chapter 4 — Something Unspoken",
+content:`
+
+<h3>The Change</h3>
+
+<p>
+Their friendship slowly became different.
+There was simply a new warmth in their conversations.
+</p>
+
+<p>
+Rohan began sending photographs of places he thought Anaya would like.
+Anaya started saving small stories to tell him later.
+</p>
+
+<div class="dialogue">
+“I think I'm afraid of losing what we already have.”
+</div>
+
+<p>
+Rohan was quiet.
+</p>
+
+<div class="dialogue">
+“I've been afraid of exactly the same thing.”
+</div>
+
+`
+},
+
+{
+title:"Chapter 5 — The Truth Between Them",
+content:`
+
+<h3>An Honest Conversation</h3>
+
+<p>
+They sat outside the library after closing time.
+</p>
+
+<div class="dialogue">
+“I think I'm afraid.”
+</div>
+
+<div class="dialogue">
+“Of what?”
+</div>
+
+<div class="dialogue">
+“Of losing what we already have.”
+</div>
+
+<p>
+Rohan understood.
+There was no pressure.
+Only honesty.
+</p>
+
+<div class="info-box">
+A strong connection creates enough trust for two people
+to discover the answer together.
+</div>
+
+`
+},
+
+{
+title:"Chapter 6 — The First Real Date",
+content:`
+
+<h3>A Day Without Plans</h3>
+
+<p>
+Their first date happened almost by accident.
+Rohan had tickets for a small art exhibition.
+</p>
+
+<p>
+Anaya accepted.
+The exhibition was small but beautiful.
+</p>
+
+<div class="dialogue">
+“You really like this one.”
+</div>
+
+<div class="dialogue">
+“It feels honest.”
+</div>
+
+<p>
+After the exhibition, they walked through a market,
+shared a cup of tea and laughed about everything
+that had gone wrong during the afternoon.
+</p>
+
+<p>
+It was simple.
+And somehow perfect.
+</p>
+
+`
+},
+
+{
+title:"Chapter 7 — The Misunderstanding",
+content:`
+
+<h3>A Difficult Message</h3>
+
+<p>
+One evening, Anaya saw Rohan talking closely with someone
+outside his office.
+She did not know who the person was.
+</p>
+
+<p>
+Instead of asking, she became quiet.
+</p>
+
+<div class="dialogue">
+“Did I do something?”
+</div>
+
+<p>
+Anaya finally admitted what she had seen.
+Rohan explained that the person was his cousin.
+</p>
+
+<p>
+They both learned that assumptions could create distance
+much faster than truth could.
+</p>
+
+`
+},
+
+{
+title:"Chapter 8 — Learning Trust",
+content:`
+
+<h3>Beyond Words</h3>
+
+<p>
+After the misunderstanding, their relationship became stronger.
+Not because they never disagreed,
+but because they learned how to repair things.
+</p>
+
+<p>
+They learned to ask questions.
+They learned to listen.
+They learned that being close to someone did not mean
+knowing everything about them.
+</p>
+
+<div class="quote">
+“Trust is not the absence of doubt.
+It is the decision to communicate when doubt appears.”
+</div>
+
+`
+},
+
+{
+title:"Chapter 9 — The Opportunity",
+content:`
+
+<h3>A Difficult Choice</h3>
+
+<p>
+Anaya received an offer from a design company in another city.
+It was the opportunity she had wanted for years.
+</p>
+
+<div class="dialogue">
+“What do you think I should do?”
+</div>
+
+<div class="dialogue">
+“I think you should choose the life you want.”
+</div>
+
+<p>
+Rohan did not ask her to give up the opportunity.
+He respected her dreams.
+</p>
+
+<p>
+Anaya accepted the offer.
+</p>
+
+`
+},
+
+{
+title:"Chapter 10 — Distance",
+content:`
+
+<h3>Different Cities</h3>
+
+<p>
+Distance changed their routine.
+There were missed calls.
+Busy days.
+Occasional misunderstandings.
+</p>
+
+<p>
+But there were also small moments.
+Rohan sent photographs of familiar places.
+Anaya sent sketches from her new neighbourhood.
+</p>
+
+<div class="dialogue">
+“I miss you.”
+</div>
+
+<div class="dialogue">
+“I miss you too.”
+</div>
+
+<p>
+They decided that difficult did not mean impossible.
+</p>
+
+`
+},
+
+{
+title:"Chapter 11 — The Return",
+content:`
+
+<h3>Back to the Library</h3>
+
+<p>
+Almost a year later, Anaya returned to the city.
+The first place she visited was the library.
+</p>
+
+<p>
+Rohan was waiting near the same window.
+</p>
+
+<div class="dialogue">
+“You're late.”
+</div>
+
+<div class="dialogue">
+“You waited?”
+</div>
+
+<div class="dialogue">
+“I always knew you'd come back.”
+</div>
+
+<p>
+They smiled.
+They had grown separately and still found their way back
+to the same connection.
+</p>
+
+`
+},
+
+{
+title:"Chapter 12 — Heart Connection",
+content:`
+
+<h3>The Answer</h3>
+
+<p>
+That evening, they returned to the place where they had first
+talked about their fears.
+</p>
+
+<p>
+Anaya opened her old notebook.
+Inside was a drawing she had made during her first month away.
+</p>
+
+<div class="dialogue">
+“Did you keep this?”
+</div>
+
+<div class="dialogue">
+“I kept everything that reminded me why I left.”
+</div>
+
+<p>
+Rohan looked at her.
+</p>
+
+<div class="dialogue">
+“And did you find what you were looking for?”
+</div>
+
+<p>
+Anaya smiled.
+</p>
+
+<div class="dialogue">
+“I found more than that.”
+</div>
+
+<p>
+There was no dramatic declaration.
+Only the calm understanding that they had chosen
+each other without asking either person to become smaller.
+</p>
+
+<div class="quote">
+“Real connection does not ask you to lose yourself.
+It gives you someone with whom you can grow.”
+</div>
+
+<h3>The End</h3>
+
+<p>
+Their story was not finished.
+It was simply entering another chapter.
+</p>
+
+`
+}
+
+];
+
+let currentIndex = 0;
+
+const chapterGrid = document.getElementById("chapterGrid");
+const chapterSection = document.getElementById("chapterSection");
+const reader = document.getElementById("reader");
+const readerTitle = document.getElementById("readerTitle");
+const readerContent = document.getElementById("readerContent");
+const progressText = document.getElementById("progressText");
+const progressBar = document.getElementById("progressBar");
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+
+function renderChapters(list = chapters){
+
+  chapterGrid.innerHTML = "";
+
+  list.forEach((chapter) => {
+
+    const originalIndex = chapters.indexOf(chapter);
+
+    const card = document.createElement("div");
+
+    card.className = "chapter-card";
+
+    card.innerHTML = `
+      <div class="chapter-number">
+        ${originalIndex + 1}
+      </div>
+
+      <h4>${chapter.title}</h4>
+    `;
+
+    card.onclick = () => openChapter(originalIndex);
+
+    chapterGrid.appendChild(card);
+
+  });
+
+}
+
+function openChapter(index){
+
+  currentIndex = index;
+
+  chapterSection.style.display = "none";
+
+  reader.classList.add("active");
+
+  readerTitle.textContent =
+    chapters[index].title;
+
+  readerContent.innerHTML =
+    chapters[index].content;
+
+  updateNavigation();
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+function showChapters(){
+
+  reader.classList.remove("active");
+
+  chapterSection.style.display = "block";
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+function updateNavigation(){
+
+  progressText.textContent =
+    `Chapter ${currentIndex + 1} of ${chapters.length}`;
+
+  const percentage =
+    ((currentIndex + 1) / chapters.length) * 100;
+
+  progressBar.style.width =
+    percentage + "%";
+
+  prevBtn.disabled =
+    currentIndex === 0;
+
+  nextBtn.disabled =
+    currentIndex === chapters.length - 1;
+
+}
+
+function previousChapter(){
+
+  if(currentIndex > 0){
+    openChapter(currentIndex - 1);
+  }
+
+}
+
+function nextChapter(){
+
+  if(currentIndex < chapters.length - 1){
+    openChapter(currentIndex + 1);
+  }
+
+}
+
+function searchChapters(){
+
+  const query =
+    document.getElementById("searchInput")
+      .value
+      .trim()
+      .toLowerCase();
+
+  if(!query){
+
+    renderChapters();
+
+    return;
+
+  }
+
+  const filtered =
+    chapters.filter(chapter =>
+      chapter.title
+        .toLowerCase()
+        .includes(query)
+    );
+
+  renderChapters(filtered);
+
+}
+
+function toggleTheme(){
+
+  document.body.classList.toggle("dark");
+
+  localStorage.setItem(
+    "jr_ai_theme",
+    document.body.classList.contains("dark")
+      ? "dark"
+      : "light"
+  );
+
+}
+
+function loadTheme(){
+
+  const savedTheme =
+    localStorage.getItem("jr_ai_theme");
+
+  if(savedTheme === "dark"){
+    document.body.classList.add("dark");
+  }
+
+}
+
+function goBack(){
+
+  window.location.href =
+    "bookstore.html";
+
+}
+
+loadTheme();
+renderChapters();
+
+</script>
+
+</body>
+</html>
