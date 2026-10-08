@@ -1,0 +1,1694 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>JR AI General GK</title>
+
+<style>
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial,sans-serif;
+  background:#f8fafc;
+  color:#1e293b;
+  transition:.3s;
+}
+
+body.dark{
+  background:#0f172a;
+  color:#e2e8f0;
+}
+
+header{
+  position:sticky;
+  top:0;
+  z-index:100;
+  background:#fff;
+  padding:14px 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  box-shadow:0 3px 15px rgba(0,0,0,.08);
+}
+
+body.dark header{
+  background:#111827;
+}
+
+.back-btn,
+.theme-btn{
+  border:none;
+  background:#fef3c7;
+  color:#92400e;
+  width:42px;
+  height:42px;
+  border-radius:12px;
+  font-size:20px;
+  cursor:pointer;
+}
+
+body.dark .back-btn,
+body.dark .theme-btn{
+  background:#292524;
+  color:#fbbf24;
+}
+
+.header-title{
+  font-size:20px;
+  font-weight:800;
+}
+
+.container{
+  width:min(100%,950px);
+  margin:auto;
+  padding:18px;
+}
+
+.cover{
+  background:linear-gradient(
+    135deg,
+    #92400e,
+    #d97706,
+    #f59e0b
+  );
+
+  color:white;
+  min-height:270px;
+  border-radius:24px;
+  padding:28px 22px;
+
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+
+  box-shadow:
+    0 10px 30px rgba(217,119,6,.25);
+
+  margin-bottom:22px;
+}
+
+.cover-icon{
+  font-size:58px;
+  margin-bottom:12px;
+}
+
+.cover h1{
+  font-size:30px;
+  margin-bottom:10px;
+}
+
+.cover p{
+  line-height:1.6;
+  opacity:.95;
+}
+
+.badge{
+  display:inline-block;
+  margin-top:16px;
+  width:max-content;
+  background:rgba(255,255,255,.18);
+  border:1px solid rgba(255,255,255,.3);
+  padding:8px 14px;
+  border-radius:30px;
+  font-weight:700;
+}
+
+.syllabus{
+  background:white;
+  padding:18px;
+  border-radius:18px;
+  box-shadow:0 5px 18px rgba(0,0,0,.07);
+  line-height:1.6;
+  margin-bottom:18px;
+}
+
+body.dark .syllabus{
+  background:#1e293b;
+}
+
+.syllabus h2{
+  margin-bottom:10px;
+  color:#b45309;
+}
+
+body.dark .syllabus h2{
+  color:#fbbf24;
+}
+
+.search-box{
+  margin:18px 0;
+}
+
+.search-box input{
+  width:100%;
+  padding:14px 16px;
+  border:2px solid #e2e8f0;
+  border-radius:15px;
+  outline:none;
+  font-size:16px;
+  background:white;
+  color:#1e293b;
+}
+
+.search-box input:focus{
+  border-color:#f59e0b;
+}
+
+body.dark .search-box input{
+  background:#1e293b;
+  color:#f1f5f9;
+  border-color:#334155;
+}
+
+.chapter-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+}
+
+.chapter-card{
+  background:white;
+  padding:18px;
+  border-radius:18px;
+  box-shadow:0 5px 18px rgba(0,0,0,.07);
+  cursor:pointer;
+  transition:.2s;
+  border:2px solid transparent;
+}
+
+.chapter-card:hover{
+  transform:translateY(-3px);
+  border-color:#f59e0b;
+}
+
+body.dark .chapter-card{
+  background:#1e293b;
+}
+
+.chapter-number{
+  color:#b45309;
+  font-size:13px;
+  font-weight:800;
+  margin-bottom:8px;
+}
+
+body.dark .chapter-number{
+  color:#fbbf24;
+}
+
+.chapter-title{
+  font-size:17px;
+  font-weight:700;
+  line-height:1.4;
+}
+
+.empty-message{
+  display:none;
+  text-align:center;
+  padding:30px;
+  color:#64748b;
+}
+
+.reader{
+  display:none;
+  background:white;
+  border-radius:20px;
+  padding:20px;
+  box-shadow:0 5px 20px rgba(0,0,0,.08);
+}
+
+.reader.active{
+  display:block;
+}
+
+body.dark .reader{
+  background:#1e293b;
+}
+
+.reader-header{
+  border-bottom:1px solid #e2e8f0;
+  padding-bottom:15px;
+  margin-bottom:20px;
+}
+
+body.dark .reader-header{
+  border-color:#334155;
+}
+
+.reader-title{
+  font-size:25px;
+  color:#b45309;
+  line-height:1.35;
+}
+
+body.dark .reader-title{
+  color:#fbbf24;
+}
+
+.reader-content{
+  line-height:1.75;
+  font-size:16px;
+}
+
+.reader-content h3{
+  margin-top:22px;
+  margin-bottom:8px;
+  color:#b45309;
+  font-size:18px;
+}
+
+body.dark .reader-content h3{
+  color:#fbbf24;
+}
+
+.reader-content h4{
+  margin-top:16px;
+  margin-bottom:6px;
+}
+
+.reader-content p{
+  margin-bottom:12px;
+}
+
+.definition{
+  background:#fffbeb;
+  border-left:5px solid #f59e0b;
+  padding:14px;
+  border-radius:10px;
+  margin:12px 0;
+}
+
+body.dark .definition{
+  background:#451a03;
+}
+
+.formula{
+  background:#fff7ed;
+  border:1px solid #fed7aa;
+  padding:13px;
+  border-radius:10px;
+  margin:12px 0;
+  font-family:Georgia,serif;
+  font-weight:700;
+  overflow-x:auto;
+}
+
+body.dark .formula{
+  background:#431407;
+  border-color:#fb923c;
+}
+
+.reader-content ul,
+.reader-content ol{
+  margin:10px 0 15px 22px;
+}
+
+.reader-content li{
+  margin-bottom:7px;
+}
+
+.progress{
+  height:7px;
+  background:#e2e8f0;
+  border-radius:20px;
+  overflow:hidden;
+  margin:15px 0;
+}
+
+body.dark .progress{
+  background:#334155;
+}
+
+.progress-fill{
+  height:100%;
+  width:0;
+  background:#f59e0b;
+  transition:.3s;
+}
+
+.reader-controls{
+  display:flex;
+  gap:10px;
+  margin-top:24px;
+  flex-wrap:wrap;
+}
+
+.reader-controls button{
+  flex:1;
+  min-width:120px;
+  padding:13px;
+  border:none;
+  border-radius:13px;
+  background:#b45309;
+  color:white;
+  font-size:15px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.reader-controls button:disabled{
+  opacity:.45;
+  cursor:not-allowed;
+}
+
+.chapter-btn{
+  background:#475569 !important;
+}
+
+@media(max-width:600px){
+
+  .container{
+    padding:12px;
+  }
+
+  .cover{
+    min-height:250px;
+    padding:24px 18px;
+  }
+
+  .cover h1{
+    font-size:27px;
+  }
+
+  .chapter-grid{
+    grid-template-columns:1fr;
+  }
+
+  .reader{
+    padding:16px;
+  }
+
+  .reader-title{
+    font-size:22px;
+  }
+
+  .reader-content{
+    font-size:15.5px;
+  }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<button
+  class="back-btn"
+  onclick="goBack()">
+  ←
+</button>
+
+<div class="header-title">
+  🌍 JR AI General GK
+</div>
+
+<button
+  class="theme-btn"
+  onclick="toggleTheme()">
+  🌙
+</button>
+
+</header>
+
+
+<div class="container">
+
+
+<section class="cover">
+
+<div class="cover-icon">
+  🌍
+</div>
+
+<h1>
+  General Knowledge
+</h1>
+
+<p>
+  A comprehensive JR AI original General Knowledge study book covering
+  India, world geography, history, polity, science, economy, culture,
+  environment, sports and important general facts.
+</p>
+
+<div class="badge">
+  JR AI ORIGINAL STUDY BOOK
+</div>
+
+</section>
+
+
+<section class="syllabus">
+
+<h2>
+  📚 General GK Syllabus
+</h2>
+
+<p>
+This book covers important static General Knowledge topics useful for
+school students and competitive examination preparation. Study each
+chapter systematically and revise important facts regularly.
+</p>
+
+</section>
+
+
+<div class="search-box">
+
+<input
+  type="text"
+  id="searchInput"
+  placeholder="🔎 Search GK topics..."
+  oninput="searchChapters()">
+
+</div>
+
+
+<div
+  id="chapterGrid"
+  class="chapter-grid">
+</div>
+
+
+<div
+  id="emptyMessage"
+  class="empty-message">
+  No chapter found.
+</div>
+
+
+<section
+  id="reader"
+  class="reader">
+
+<div class="reader-header">
+
+<h2
+  id="readerTitle"
+  class="reader-title">
+</h2>
+
+<div class="progress">
+
+<div
+  id="progressFill"
+  class="progress-fill">
+</div>
+
+</div>
+
+</div>
+
+
+<div
+  id="readerContent"
+  class="reader-content">
+</div>
+
+
+<div class="reader-controls">
+
+<button
+  id="previousBtn"
+  onclick="previousChapter()">
+  ← Previous
+</button>
+
+<button
+  class="chapter-btn"
+  onclick="showChapters()">
+  📚 Chapters
+</button>
+
+<button
+  id="nextBtn"
+  onclick="nextChapter()">
+  Next →
+</button>
+
+</div>
+
+</section>
+
+</div>
+
+
+<script>
+
+
+const chapters = [
+
+
+{
+title:"Indian History",
+content:`
+
+<div class="definition">
+Indian history describes the development of Indian civilization,
+societies, kingdoms, empires, cultural traditions and political
+movements from ancient times to the modern period.
+</div>
+
+<h3>1. Indus Valley Civilization</h3>
+
+<p>
+The Indus Valley Civilization was one of the earliest urban
+civilizations of South Asia. Important sites include Harappa,
+Mohenjo-daro, Dholavira and Lothal.
+</p>
+
+<h3>2. Vedic Period</h3>
+
+<p>
+The Vedic period is associated with the composition of the Vedas and
+the development of important social, religious and cultural traditions.
+</p>
+
+<h3>3. Mauryan Empire</h3>
+
+<p>
+The Mauryan Empire was one of the major early empires of the Indian
+subcontinent. Chandragupta Maurya established the empire and Ashoka
+became one of its most well-known rulers.
+</p>
+
+<h3>4. Gupta Period</h3>
+
+<p>
+The Gupta period is associated with important developments in
+literature, mathematics, astronomy, art and science.
+</p>
+
+<h3>5. Medieval India</h3>
+
+<p>
+Important topics include the Delhi Sultanate, Mughal Empire,
+Vijayanagara Empire and major regional kingdoms.
+</p>
+
+<h3>6. Modern India</h3>
+
+<p>
+Modern Indian history includes European expansion, British rule,
+social reform movements and the growth of Indian nationalism.
+</p>
+
+<h3>7. Freedom Movement</h3>
+
+<p>
+Important movements include the Non-Cooperation Movement, Civil
+Disobedience Movement and Quit India Movement.
+</p>
+
+`
+},
+
+
+{
+title:"Indian Polity and Constitution",
+content:`
+
+<div class="definition">
+Indian polity deals with the Constitution, government institutions,
+fundamental rights, duties and the functioning of democratic
+governance.
+</div>
+
+<h3>1. Constitution</h3>
+
+<p>
+The Constitution of India provides the basic framework for government
+and defines powers, institutions, rights and duties.
+</p>
+
+<h3>2. Fundamental Rights</h3>
+
+<p>
+Fundamental Rights provide important constitutional protections and
+freedoms to citizens subject to constitutional provisions.
+</p>
+
+<h3>3. Fundamental Duties</h3>
+
+<p>
+Fundamental Duties describe important responsibilities expected of
+citizens under the Constitution.
+</p>
+
+<h3>4. Parliament</h3>
+
+<p>
+The Parliament of India consists of the President and two Houses:
+the Lok Sabha and Rajya Sabha.
+</p>
+
+<h3>5. President</h3>
+
+<p>
+The President is the constitutional head of the Union of India and
+performs functions according to the Constitution.
+</p>
+
+<h3>6. Prime Minister</h3>
+
+<p>
+The Prime Minister heads the Council of Ministers and plays a central
+role in the Union executive.
+</p>
+
+<h3>7. Supreme Court</h3>
+
+<p>
+The Supreme Court is the highest court in India's judicial system.
+</p>
+
+`
+},
+
+
+{
+title:"Indian Geography",
+content:`
+
+<div class="definition">
+Indian geography studies the physical features, climate, rivers,
+resources, agriculture and human geography of India.
+</div>
+
+<h3>1. Himalayas</h3>
+
+<p>
+The Himalayan mountain system forms a major geographical feature in
+northern India and influences climate and river systems.
+</p>
+
+<h3>2. Northern Plains</h3>
+
+<p>
+The Northern Plains are formed largely by alluvial deposits brought
+by major river systems.
+</p>
+
+<h3>3. Peninsular Plateau</h3>
+
+<p>
+The Peninsular Plateau is an ancient geological region containing
+important mineral resources.
+</p>
+
+<h3>4. Indian Rivers</h3>
+
+<p>
+Major river systems include the Ganga, Brahmaputra and Indus systems,
+along with important peninsular rivers.
+</p>
+
+<h3>5. Climate</h3>
+
+<p>
+India has a monsoon-dominated climate with significant regional and
+seasonal variations.
+</p>
+
+<h3>6. Agriculture</h3>
+
+<p>
+Agriculture is influenced by soil, rainfall, temperature, irrigation
+and seasonal conditions.
+</p>
+
+`
+},
+
+
+{
+title:"World Geography",
+content:`
+
+<div class="definition">
+World geography studies Earth's physical features, continents,
+oceans, climate, natural resources and human settlements.
+</div>
+
+<h3>1. Continents</h3>
+
+<p>
+The seven commonly recognized continents are Asia, Africa, Europe,
+North America, South America, Australia and Antarctica.
+</p>
+
+<h3>2. Oceans</h3>
+
+<p>
+The major oceans are the Pacific, Atlantic, Indian, Southern and
+Arctic Oceans.
+</p>
+
+<h3>3. Mountains</h3>
+
+<p>
+Major mountain systems include the Himalayas, Andes, Rockies, Alps
+and other important ranges.
+</p>
+
+<h3>4. Deserts</h3>
+
+<p>
+Important deserts include the Sahara, Arabian, Gobi, Kalahari and
+Atacama deserts.
+</p>
+
+<h3>5. Climate Zones</h3>
+
+<p>
+Earth contains different climate zones based on temperature,
+rainfall, latitude and other geographical factors.
+</p>
+
+`
+},
+
+
+{
+title:"Indian Economy",
+content:`
+
+<div class="definition">
+An economy is a system through which resources are produced,
+distributed, exchanged and consumed.
+</div>
+
+<h3>1. GDP</h3>
+
+<p>
+Gross Domestic Product represents the value of final goods and
+services produced within an economy during a specified period.
+</p>
+
+<h3>2. Inflation</h3>
+
+<p>
+Inflation refers to a sustained rise in the general price level of
+goods and services.
+</p>
+
+<h3>3. Banking</h3>
+
+<p>
+Banks accept deposits, provide loans and perform several financial
+services within the economy.
+</p>
+
+<h3>4. RBI</h3>
+
+<p>
+The Reserve Bank of India is India's central bank and performs
+important monetary and banking functions.
+</p>
+
+<h3>5. Taxation</h3>
+
+<p>
+Taxes are compulsory payments collected by governments to finance
+public expenditure and government activities.
+</p>
+
+`
+},
+
+
+{
+title:"General Science",
+content:`
+
+<div class="definition">
+General Science includes fundamental concepts from physics,
+chemistry, biology and environmental science.
+</div>
+
+<h3>1. Physics</h3>
+
+<p>
+Physics studies matter, energy, motion, forces and interactions in
+the natural world.
+</p>
+
+<h3>2. Chemistry</h3>
+
+<p>
+Chemistry studies the composition, structure, properties and
+transformations of matter.
+</p>
+
+<h3>3. Biology</h3>
+
+<p>
+Biology studies living organisms, their structure, functions,
+relationships and evolution.
+</p>
+
+<h3>4. Human Body</h3>
+
+<p>
+The human body contains coordinated systems such as the digestive,
+respiratory, circulatory and nervous systems.
+</p>
+
+<h3>5. Environment</h3>
+
+<p>
+Environmental science studies interactions between organisms and
+their physical surroundings.
+</p>
+
+`
+},
+
+
+{
+title:"Indian Culture and Heritage",
+content:`
+
+<div class="definition">
+Indian culture represents a diverse collection of traditions,
+languages, religions, arts, architecture, literature and customs.
+</div>
+
+<h3>1. Classical Dances</h3>
+
+<p>
+India has several recognized classical dance traditions including
+Bharatanatyam, Kathak, Kathakali, Kuchipudi, Odissi, Manipuri,
+Mohiniyattam and Sattriya.
+</p>
+
+<h3>2. Music</h3>
+
+<p>
+Indian classical music has two major traditions commonly known as
+Hindustani and Carnatic music.
+</p>
+
+<h3>3. Architecture</h3>
+
+<p>
+Indian architecture includes ancient temples, Buddhist monuments,
+Indo-Islamic structures, colonial architecture and modern forms.
+</p>
+
+<h3>4. Literature</h3>
+
+<p>
+Indian literature has developed in many languages and includes
+ancient texts, classical works and modern literature.
+</p>
+
+<h3>5. Festivals</h3>
+
+<p>
+India celebrates numerous regional and national festivals reflecting
+its cultural and religious diversity.
+</p>
+
+`
+},
+
+
+{
+title:"World History",
+content:`
+
+<div class="definition">
+World history studies major civilizations, political developments,
+wars, revolutions and social transformations across different regions.
+</div>
+
+<h3>1. Ancient Civilizations</h3>
+
+<p>
+Important ancient civilizations include those of Mesopotamia, Egypt,
+Greece, Rome, China and the Indus region.
+</p>
+
+<h3>2. Renaissance</h3>
+
+<p>
+The Renaissance was a major cultural and intellectual movement that
+began in Europe and influenced art, science and literature.
+</p>
+
+<h3>3. Industrial Revolution</h3>
+
+<p>
+The Industrial Revolution brought major changes in manufacturing,
+transport, technology and economic organization.
+</p>
+
+<h3>4. World War I</h3>
+
+<p>
+The First World War took place from 1914 to 1918 and involved major
+powers and alliances across the world.
+</p>
+
+<h3>5. World War II</h3>
+
+<p>
+The Second World War lasted from 1939 to 1945 and resulted in major
+political and geopolitical changes.
+</p>
+
+`
+},
+
+
+{
+title:"Environment and Ecology",
+content:`
+
+<div class="definition">
+Ecology studies relationships among organisms and between organisms
+and their physical environment.
+</div>
+
+<h3>1. Ecosystem</h3>
+
+<p>
+An ecosystem includes living organisms interacting with one another
+and with non-living components of their surroundings.
+</p>
+
+<h3>2. Food Chain</h3>
+
+<p>
+A food chain represents the transfer of food and energy from one
+organism to another.
+</p>
+
+<h3>3. Food Web</h3>
+
+<p>
+A food web consists of interconnected food chains and represents
+multiple feeding relationships.
+</p>
+
+<h3>4. Biodiversity</h3>
+
+<p>
+Biodiversity refers to the variety of living organisms at genetic,
+species and ecosystem levels.
+</p>
+
+<h3>5. Pollution</h3>
+
+<p>
+Pollution occurs when harmful substances or forms of energy enter
+the environment and adversely affect organisms or ecosystems.
+</p>
+
+<h3>6. Conservation</h3>
+
+<p>
+Conservation involves protecting natural resources, ecosystems and
+biological diversity.
+</p>
+
+`
+},
+
+
+{
+title:"Important Scientific Discoveries",
+content:`
+
+<div class="definition">
+Scientific discoveries have contributed to major developments in
+medicine, communication, transportation, energy and technology.
+</div>
+
+<h3>1. Electricity</h3>
+
+<p>
+The study of electricity led to technologies that transformed
+lighting, communication, industry and everyday life.
+</p>
+
+<h3>2. Radioactivity</h3>
+
+<p>
+The discovery and study of radioactivity contributed to developments
+in nuclear science and medical applications.
+</p>
+
+<h3>3. Vaccination</h3>
+
+<p>
+Vaccination is an important public-health development used to help
+protect against infectious diseases.
+</p>
+
+<h3>4. Penicillin</h3>
+
+<p>
+Penicillin became an important antibiotic discovery and contributed
+significantly to modern medicine.
+</p>
+
+<h3>5. Space Exploration</h3>
+
+<p>
+Space exploration has expanded scientific knowledge about Earth,
+the Solar System and the wider universe.
+</p>
+
+`
+},
+
+
+{
+title:"Computer and Information Technology",
+content:`
+
+<div class="definition">
+Computer science and information technology deal with computation,
+digital information, communication systems and software.
+</div>
+
+<h3>1. Computer</h3>
+
+<p>
+A computer is an electronic system capable of processing data
+according to programmed instructions.
+</p>
+
+<h3>2. Hardware</h3>
+
+<p>
+Hardware refers to the physical components of a computer system,
+such as processors, memory and storage devices.
+</p>
+
+<h3>3. Software</h3>
+
+<p>
+Software consists of programs and instructions that control computer
+operations.
+</p>
+
+<h3>4. Internet</h3>
+
+<p>
+The Internet is a global network of interconnected computer networks
+that communicate using standardized protocols.
+</p>
+
+<h3>5. Cyber Security</h3>
+
+<p>
+Cyber security involves protecting computer systems, networks and
+digital information from unauthorized access and other threats.
+</p>
+
+`
+},
+
+
+{
+title:"Sports and Games",
+content:`
+
+<div class="definition">
+Sports and games are important areas of General Knowledge because
+major tournaments, athletes, records and sporting events are commonly
+asked in competitive examinations.
+</div>
+
+<h3>1. Cricket</h3>
+
+<p>
+Important areas include major tournaments, international formats,
+famous records and cricket organizations.
+</p>
+
+<h3>2. Football</h3>
+
+<p>
+Football is one of the world's most widely followed sports, with
+major international and club competitions.
+</p>
+
+<h3>3. Olympics</h3>
+
+<p>
+The Olympic Games are major international multi-sport events held
+during summer and winter editions.
+</p>
+
+<h3>4. Awards</h3>
+
+<p>
+Important sporting awards recognize outstanding individual and team
+performances.
+</p>
+
+<h3>5. Records</h3>
+
+<p>
+Competitive examinations may ask about notable records, tournaments,
+venues and sporting achievements.
+</p>
+
+`
+},
+
+
+{
+title:"Important Days and Dates",
+content:`
+
+<div class="definition">
+Important days and dates commemorate historical events, social
+causes, scientific achievements and national or international
+observances.
+</div>
+
+<h3>1. Republic Day</h3>
+
+<p>
+India celebrates Republic Day on 26 January.
+</p>
+
+<h3>2. Independence Day</h3>
+
+<p>
+India celebrates Independence Day on 15 August.
+</p>
+
+<h3>3. Gandhi Jayanti</h3>
+
+<p>
+Gandhi Jayanti is observed on 2 October.
+</p>
+
+<h3>4. World Environment Day</h3>
+
+<p>
+World Environment Day is observed on 5 June.
+</p>
+
+<h3>5. International Women's Day</h3>
+
+<p>
+International Women's Day is observed on 8 March.
+</p>
+
+`
+},
+
+
+{
+title:"Countries Capitals and Currencies",
+content:`
+
+<div class="definition">
+Knowledge of countries, capitals and currencies is a common part of
+static General Knowledge.
+</div>
+
+<h3>1. India</h3>
+
+<p>
+Capital: New Delhi. Currency: Indian Rupee.
+</p>
+
+<h3>2. United States</h3>
+
+<p>
+Capital: Washington, D.C. Currency: United States Dollar.
+</p>
+
+<h3>3. United Kingdom</h3>
+
+<p>
+Capital: London. Currency: Pound Sterling.
+</p>
+
+<h3>4. Japan</h3>
+
+<p>
+Capital: Tokyo. Currency: Yen.
+</p>
+
+<h3>5. China</h3>
+
+<p>
+Capital: Beijing. Currency: Renminbi.
+</p>
+
+<h3>6. Russia</h3>
+
+<p>
+Capital: Moscow. Currency: Russian Ruble.
+</p>
+
+`
+},
+
+
+{
+title:"Important Organizations",
+content:`
+
+<div class="definition">
+International and national organizations perform important roles in
+health, finance, development, security, trade and cooperation.
+</div>
+
+<h3>1. United Nations</h3>
+
+<p>
+The United Nations is an international organization established to
+promote international cooperation and address global issues.
+</p>
+
+<h3>2. World Health Organization</h3>
+
+<p>
+The World Health Organization is a specialized agency concerned with
+international public health.
+</p>
+
+<h3>3. World Bank</h3>
+
+<p>
+The World Bank Group provides financing, knowledge and support for
+development projects and economic development.
+</p>
+
+<h3>4. International Monetary Fund</h3>
+
+<p>
+The IMF works on international monetary cooperation, financial
+stability and related economic issues.
+</p>
+
+<h3>5. UNESCO</h3>
+
+<p>
+UNESCO works in areas including education, science, culture and
+communication.
+</p>
+
+`
+},
+
+
+{
+title:"Books and Authors",
+content:`
+
+<div class="definition">
+Books and authors form an important static-GK category involving
+literature, history, politics, science and biographies.
+</div>
+
+<h3>1. Literature</h3>
+
+<p>
+Questions may ask about famous literary works, their authors,
+languages and historical context.
+</p>
+
+<h3>2. Biographies</h3>
+
+<p>
+Biographical works provide accounts of the lives and achievements of
+important individuals.
+</p>
+
+<h3>3. Autobiographies</h3>
+
+<p>
+An autobiography is a work in which a person describes their own life
+or experiences.
+</p>
+
+<h3>4. Reference Books</h3>
+
+<p>
+Reference works are designed to provide factual information about
+specific subjects or broad areas of knowledge.
+</p>
+
+`
+},
+
+
+{
+title:"Awards and Honours",
+content:`
+
+<div class="definition">
+Awards and honours recognize significant achievements in fields such
+as public service, literature, science, arts and sports.
+</div>
+
+<h3>1. Bharat Ratna</h3>
+
+<p>
+Bharat Ratna is India's highest civilian award.
+</p>
+
+<h3>2. Padma Awards</h3>
+
+<p>
+The Padma Awards are among India's major civilian honours and include
+Padma Vibhushan, Padma Bhushan and Padma Shri.
+</p>
+
+<h3>3. Nobel Prize</h3>
+
+<p>
+The Nobel Prizes recognize major achievements in several fields
+including physics, chemistry, medicine, literature, peace and
+economic sciences.
+</p>
+
+<h3>4. Sports Honours</h3>
+
+<p>
+Sports awards recognize outstanding performances and contributions
+to sporting excellence.
+</p>
+
+`
+},
+
+
+{
+title:"General Knowledge Revision",
+content:`
+
+<div class="definition">
+Revision is essential for General Knowledge because the subject
+contains a large number of independent facts and concepts.
+</div>
+
+<h3>1. Static GK</h3>
+
+<p>
+Revise history, geography, polity, science, culture, economy,
+organizations, awards and important dates.
+</p>
+
+<h3>2. One-Line Facts</h3>
+
+<p>
+Short factual statements are useful for rapid revision before
+competitive examinations.
+</p>
+
+<h3>3. Current Updates</h3>
+
+<p>
+Static GK should be combined with regularly updated current affairs
+for examination preparation.
+</p>
+
+<h3>4. Revision Method</h3>
+
+<p>
+Use repeated revision, practice questions and topic-wise recall to
+strengthen memory and improve speed.
+</p>
+
+`
+}
+
+];
+
+
+let currentChapter = 0;
+
+
+function renderChapters(list = chapters){
+
+  const grid =
+    document.getElementById("chapterGrid");
+
+  grid.innerHTML = "";
+
+  document.getElementById(
+    "emptyMessage"
+  ).style.display =
+    list.length ? "none" : "block";
+
+  list.forEach((chapter)=>{
+
+    const realIndex =
+      chapters.indexOf(chapter);
+
+    const card =
+      document.createElement("div");
+
+    card.className =
+      "chapter-card";
+
+    card.innerHTML = `
+      <div class="chapter-number">
+        Chapter ${realIndex + 1}
+      </div>
+
+      <div class="chapter-title">
+        ${chapter.title}
+      </div>
+    `;
+
+    card.onclick = function(){
+
+      openChapter(realIndex);
+
+    };
+
+    grid.appendChild(card);
+
+  });
+
+}
+
+
+function openChapter(index){
+
+  currentChapter = index;
+
+  const chapter =
+    chapters[index];
+
+  document.getElementById(
+    "chapterGrid"
+  ).style.display = "none";
+
+  document.querySelector(
+    ".search-box"
+  ).style.display = "none";
+
+  document.querySelector(
+    ".syllabus"
+  ).style.display = "none";
+
+  const reader =
+    document.getElementById("reader");
+
+  reader.classList.add("active");
+
+  document.getElementById(
+    "readerTitle"
+  ).textContent =
+    "Chapter " +
+    (index + 1) +
+    ": " +
+    chapter.title;
+
+  document.getElementById(
+    "readerContent"
+  ).innerHTML =
+    chapter.content;
+
+  document.getElementById(
+    "previousBtn"
+  ).disabled =
+    index === 0;
+
+  document.getElementById(
+    "nextBtn"
+  ).disabled =
+    index === chapters.length - 1;
+
+  updateProgress();
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+function showChapters(){
+
+  document.getElementById(
+    "chapterGrid"
+  ).style.display = "grid";
+
+  document.querySelector(
+    ".search-box"
+  ).style.display = "block";
+
+  document.querySelector(
+    ".syllabus"
+  ).style.display = "block";
+
+  document.getElementById(
+    "reader"
+  ).classList.remove("active");
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+function nextChapter(){
+
+  if(
+    currentChapter <
+    chapters.length - 1
+  ){
+
+    openChapter(
+      currentChapter + 1
+    );
+
+  }
+
+}
+
+
+function previousChapter(){
+
+  if(currentChapter > 0){
+
+    openChapter(
+      currentChapter - 1
+    );
+
+  }
+
+}
+
+
+function searchChapters(){
+
+  const query =
+    document.getElementById(
+      "searchInput"
+    ).value
+    .toLowerCase()
+    .trim();
+
+  const filtered =
+    chapters.filter(chapter =>
+      chapter.title
+      .toLowerCase()
+      .includes(query)
+    );
+
+  renderChapters(filtered);
+
+}
+
+
+function updateProgress(){
+
+  const progress =
+    ((currentChapter + 1) /
+    chapters.length) * 100;
+
+  document.getElementById(
+    "progressFill"
+  ).style.width =
+    progress + "%";
+
+}
+
+
+function toggleTheme(){
+
+  document.body.classList.toggle(
+    "dark"
+  );
+
+  localStorage.setItem(
+    "jr_ai_theme",
+    document.body.classList.contains("dark")
+      ? "dark"
+      : "light"
+  );
+
+}
+
+
+function loadTheme(){
+
+  const theme =
+    localStorage.getItem(
+      "jr_ai_theme"
+    );
+
+  if(theme === "dark"){
+
+    document.body.classList.add(
+      "dark"
+    );
+
+  }
+
+}
+
+
+function goBack(){
+
+  window.location.href =
+    "bookstore.html";
+
+}
+
+
+renderChapters();
+
+loadTheme();
+
+</script>
+
+
+</body>
+
+</html>
