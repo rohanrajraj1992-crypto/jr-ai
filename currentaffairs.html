@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JR AI Current Affairs</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f4f7fb;
+  color:#172033;
+  min-height:100vh;
+}
+
+body.dark{
+  background:#111827;
+  color:#f3f4f6;
+}
+
+.header{
+  position:sticky;
+  top:0;
+  z-index:50;
+  background:linear-gradient(135deg,#0f766e,#14b8a6);
+  color:white;
+  padding:14px 16px;
+  box-shadow:0 4px 15px rgba(0,0,0,.15);
+}
+
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.back-btn,
+.theme-btn{
+  border:0;
+  background:rgba(255,255,255,.18);
+  color:white;
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  font-size:20px;
+  cursor:pointer;
+}
+
+.title-box{
+  flex:1;
+  text-align:center;
+}
+
+.title-box h1{
+  font-size:21px;
+  font-weight:800;
+}
+
+.title-box p{
+  font-size:12px;
+  opacity:.9;
+  margin-top:3px;
+}
+
+.cover{
+  margin:18px 16px;
+  min-height:220px;
+  border-radius:24px;
+  padding:28px 22px;
+  color:white;
+  background:
+    radial-gradient(circle at 15% 20%,rgba(255,255,255,.25),transparent 25%),
+    radial-gradient(circle at 90% 80%,rgba(255,255,255,.15),transparent 30%),
+    linear-gradient(135deg,#115e59,#0f766e,#14b8a6);
+  box-shadow:0 12px 28px rgba(15,118,110,.28);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+.cover-icon{
+  font-size:48px;
+  margin-bottom:14px;
+}
+
+.cover h2{
+  font-size:30px;
+  line-height:1.15;
+  margin-bottom:10px;
+}
+
+.cover p{
+  font-size:14px;
+  line-height:1.6;
+  opacity:.95;
+}
+
+.badge{
+  display:inline-block;
+  margin-top:16px;
+  width:max-content;
+  background:rgba(255,255,255,.18);
+  border:1px solid rgba(255,255,255,.3);
+  padding:8px 14px;
+  border-radius:30px;
+  font-weight:700;
+  font-size:13px;
+}
+
+.search-box{
+  margin:0 16px 18px;
+}
+
+.search-box input{
+  width:100%;
+  border:1px solid #d7dee9;
+  background:white;
+  color:#172033;
+  border-radius:15px;
+  padding:14px 16px;
+  outline:none;
+  font-size:15px;
+}
+
+body.dark .search-box input{
+  background:#1f2937;
+  color:white;
+  border-color:#374151;
+}
+
+.section-title{
+  padding:0 16px;
+  margin-bottom:12px;
+}
+
+.section-title h3{
+  font-size:19px;
+}
+
+.section-title p{
+  font-size:12px;
+  color:#667085;
+  margin-top:4px;
+}
+
+body.dark .section-title p{
+  color:#9ca3af;
+}
+
+.chapter-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+  padding:0 16px 20px;
+}
+
+.chapter-card{
+  background:white;
+  border:1px solid #e3e8ef;
+  border-radius:17px;
+  padding:16px;
+  min-height:130px;
+  cursor:pointer;
+  transition:.2s;
+  box-shadow:0 4px 12px rgba(0,0,0,.05);
+}
+
+.chapter-card:active{
+  transform:scale(.97);
+}
+
+body.dark .chapter-card{
+  background:#1f2937;
+  border-color:#374151;
+  box-shadow:none;
+}
+
+.chapter-number{
+  width:34px;
+  height:34px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:11px;
+  background:#ccfbf1;
+  color:#0f766e;
+  font-weight:800;
+  margin-bottom:10px;
+}
+
+body.dark .chapter-number{
+  background:#134e4a;
+  color:#99f6e4;
+}
+
+.chapter-card h4{
+  font-size:14px;
+  line-height:1.35;
+}
+
+.reader{
+  display:none;
+  margin:0 16px 30px;
+}
+
+.reader.active{
+  display:block;
+}
+
+.reader-head{
+  background:white;
+  border:1px solid #e3e8ef;
+  border-radius:18px;
+  padding:18px;
+  margin-bottom:12px;
+}
+
+body.dark .reader-head{
+  background:#1f2937;
+  border-color:#374151;
+}
+
+.reader-head h2{
+  font-size:22px;
+  line-height:1.3;
+  color:#0f766e;
+}
+
+body.dark .reader-head h2{
+  color:#5eead4;
+}
+
+.reader-content{
+  background:white;
+  border:1px solid #e3e8ef;
+  border-radius:18px;
+  padding:20px;
+  line-height:1.75;
+  font-size:15px;
+  overflow:hidden;
+}
+
+body.dark .reader-content{
+  background:#1f2937;
+  border-color:#374151;
+}
+
+.reader-content h3{
+  margin:22px 0 8px;
+  color:#0f766e;
+  font-size:18px;
+}
+
+body.dark .reader-content h3{
+  color:#5eead4;
+}
+
+.reader-content h3:first-child{
+  margin-top:0;
+}
+
+.reader-content p{
+  margin-bottom:12px;
+}
+
+.reader-content ul{
+  padding-left:21px;
+  margin-bottom:14px;
+}
+
+.reader-content li{
+  margin-bottom:7px;
+}
+
+.info-box{
+  margin:15px 0;
+  padding:14px;
+  border-left:4px solid #14b8a6;
+  background:#ecfeff;
+  border-radius:10px;
+}
+
+body.dark .info-box{
+  background:#123337;
+}
+
+.reader-nav{
+  display:flex;
+  gap:8px;
+  margin-top:12px;
+}
+
+.reader-nav button{
+  flex:1;
+  border:0;
+  border-radius:13px;
+  padding:13px 8px;
+  background:#0f766e;
+  color:white;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.reader-nav button:disabled{
+  opacity:.4;
+}
+
+.progress-wrap{
+  margin:14px 0;
+}
+
+.progress-text{
+  font-size:12px;
+  color:#667085;
+  margin-bottom:6px;
+}
+
+body.dark .progress-text{
+  color:#9ca3af;
+}
+
+.progress{
+  width:100%;
+  height:7px;
+  background:#dce3ea;
+  border-radius:20px;
+  overflow:hidden;
+}
+
+body.dark .progress{
+  background:#374151;
+}
+
+.progress-bar{
+  height:100%;
+  width:0;
+  background:#14b8a6;
+  transition:.3s;
+}
+
+.chapters-btn{
+  width:100%;
+  border:1px solid #d7dee9;
+  background:white;
+  color:#172033;
+  padding:13px;
+  border-radius:13px;
+  font-weight:700;
+  cursor:pointer;
+  margin-bottom:12px;
+}
+
+body.dark .chapters-btn{
+  background:#1f2937;
+  color:white;
+  border-color:#374151;
+}
+
+@media(max-width:360px){
+  .chapter-grid{
+    grid-template-columns:1fr;
+  }
+
+  .cover h2{
+    font-size:26px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+  <div class="topbar">
+    <button class="back-btn" onclick="goBack()">←</button>
+
+    <div class="title-box">
+      <h1>📰 Current Affairs</h1>
+      <p>JR AI Original Study Book</p>
+    </div>
+
+    <button class="theme-btn" onclick="toggleTheme()">🌙</button>
+  </div>
+</header>
+
+<section class="cover">
+  <div class="cover-icon">📰</div>
+  <h2>JR AI Current Affairs</h2>
+  <p>
+    A structured current-affairs study book covering national,
+    international, economy, science, environment, defence, sports,
+    awards and important events.
+  </p>
+  <div class="badge">📚 Exam Preparation • Revision • GK</div>
+</section>
+
+<div class="search-box">
+  <input
+    type="text"
+    id="searchInput"
+    placeholder="🔎 Search current affairs topic..."
+    oninput="searchChapters()"
+  >
+</div>
+
+<section id="chapterSection">
+
+  <div class="section-title">
+    <h3>📚 Current Affairs Topics</h3>
+    <p>Select a topic to start reading.</p>
+  </div>
+
+  <div class="chapter-grid" id="chapterGrid"></div>
+
+</section>
+
+<section class="reader" id="reader">
+
+  <button class="chapters-btn" onclick="showChapters()">
+    📚 Back to Topics
+  </button>
+
+  <div class="reader-head">
+    <h2 id="readerTitle"></h2>
+
+    <div class="progress-wrap">
+      <div class="progress-text" id="progressText"></div>
+      <div class="progress">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+  </div>
+
+  <article class="reader-content" id="readerContent"></article>
+
+  <div class="reader-nav">
+    <button id="prevBtn" onclick="previousChapter()">← Previous</button>
+    <button id="nextBtn" onclick="nextChapter()">Next →</button>
+  </div>
+
+</section>
+
+<script>
+const chapters = [
+
+{
+title:"National Current Affairs",
+content:`
+<h3>Overview</h3>
+<p>
+National current affairs cover important developments within India.
+These include government decisions, public programmes, institutions,
+major events, social developments and important national announcements.
+</p>
+
+<h3>What to Track</h3>
+<ul>
+<li>Major government policies and programmes.</li>
+<li>Important appointments and resignations.</li>
+<li>Major national reports and surveys.</li>
+<li>Important court and constitutional developments.</li>
+<li>Major infrastructure and development projects.</li>
+<li>Significant national events.</li>
+</ul>
+
+<div class="info-box">
+<b>Exam Focus:</b> Remember the event, date or period, organisation involved,
+location and why the development was important.
+</div>
+`
+},
+
+{
+title:"Government Schemes and Policies",
+content:`
+<h3>Introduction</h3>
+<p>
+Government schemes and policies are frequently asked in competitive
+examinations. Questions may focus on their objectives, target groups,
+implementing ministries and major features.
+</p>
+
+<h3>Important Areas</h3>
+<ul>
+<li>Social welfare programmes.</li>
+<li>Education and skill-development schemes.</li>
+<li>Health and nutrition programmes.</li>
+<li>Agriculture and rural-development schemes.</li>
+<li>Financial inclusion initiatives.</li>
+<li>Digital governance programmes.</li>
+</ul>
+
+<h3>How to Prepare</h3>
+<p>
+For every major scheme, learn its purpose, target beneficiaries,
+implementing authority and the sector in which it operates.
+</p>
+`
+},
+
+{
+title:"Indian Economy",
+content:`
+<h3>Core Areas</h3>
+<p>
+Economic current affairs include inflation, growth, employment,
+banking, taxation, government expenditure, trade and monetary policy.
+</p>
+
+<h3>Important Indicators</h3>
+<ul>
+<li>GDP and economic growth.</li>
+<li>Inflation and price indices.</li>
+<li>Fiscal deficit.</li>
+<li>Foreign exchange reserves.</li>
+<li>Unemployment and employment trends.</li>
+<li>Exports and imports.</li>
+</ul>
+
+<h3>Banking and Monetary Policy</h3>
+<p>
+Keep track of major Reserve Bank of India decisions, monetary policy
+announcements, banking regulations and important financial developments.
+</p>
+`
+},
+
+{
+title:"Banking and Financial Affairs",
+content:`
+<h3>Important Topics</h3>
+<p>
+Banking-related current affairs include major RBI decisions,
+banking reforms, digital payments, financial institutions and
+changes affecting consumers and businesses.
+</p>
+
+<h3>Key Areas</h3>
+<ul>
+<li>Reserve Bank of India policies.</li>
+<li>Digital payment systems.</li>
+<li>Bank mergers and major announcements.</li>
+<li>Financial inclusion.</li>
+<li>Banking regulations.</li>
+<li>Insurance and financial markets.</li>
+</ul>
+
+<div class="info-box">
+<b>Revision Tip:</b> Learn the institution, announcement, purpose and
+effect of every major financial development.
+</div>
+`
+},
+
+{
+title:"International Affairs",
+content:`
+<h3>Introduction</h3>
+<p>
+International current affairs cover major developments involving
+countries, international organisations, treaties, summits and
+global diplomatic relations.
+</p>
+
+<h3>Important Areas</h3>
+<ul>
+<li>Major international summits.</li>
+<li>India's relations with other countries.</li>
+<li>International agreements.</li>
+<li>Major global conflicts and diplomatic developments.</li>
+<li>International organisations and their decisions.</li>
+<li>Global economic developments.</li>
+</ul>
+`
+},
+
+{
+title:"International Organisations",
+content:`
+<h3>Major Organisations</h3>
+<p>
+Important international organisations frequently appear in current
+affairs questions.
+</p>
+
+<ul>
+<li>United Nations.</li>
+<li>World Health Organization.</li>
+<li>World Bank.</li>
+<li>International Monetary Fund.</li>
+<li>World Trade Organization.</li>
+<li>UNESCO.</li>
+<li>International Labour Organization.</li>
+<li>International Atomic Energy Agency.</li>
+</ul>
+
+<h3>What to Remember</h3>
+<p>
+For an organisation, remember its headquarters, main function,
+important reports and major recent developments.
+</p>
+`
+},
+
+{
+title:"Science and Technology",
+content:`
+<h3>Overview</h3>
+<p>
+Science and technology current affairs include major discoveries,
+space missions, digital technologies, artificial intelligence,
+biotechnology and emerging technologies.
+</p>
+
+<h3>Important Areas</h3>
+<ul>
+<li>Artificial intelligence.</li>
+<li>Space exploration.</li>
+<li>Biotechnology.</li>
+<li>Quantum technology.</li>
+<li>Cyber technology.</li>
+<li>Medical and pharmaceutical developments.</li>
+<li>Major scientific missions.</li>
+</ul>
+
+<div class="info-box">
+<b>Exam Focus:</b> Understand the technology, organisation involved,
+purpose and practical application.
+</div>
+`
+},
+
+{
+title:"Space and ISRO",
+content:`
+<h3>Indian Space Programme</h3>
+<p>
+India's space programme is led by the Indian Space Research Organisation
+and covers launch vehicles, satellites, planetary exploration and
+scientific missions.
+</p>
+
+<h3>Important Areas</h3>
+<ul>
+<li>Satellite launches.</li>
+<li>Earth-observation missions.</li>
+<li>Communication satellites.</li>
+<li>Lunar and planetary missions.</li>
+<li>Human spaceflight programmes.</li>
+<li>Launch vehicles and space technology.</li>
+</ul>
+
+<h3>Preparation Method</h3>
+<p>
+For each major mission, remember its objective, launch vehicle,
+destination, organisation and major achievement.
+</p>
+`
+},
+
+{
+title:"Environment and Climate",
+content:`
+<h3>Introduction</h3>
+<p>
+Environmental current affairs include climate change, biodiversity,
+pollution, conservation programmes and international environmental
+agreements.
+</p>
+
+<h3>Major Areas</h3>
+<ul>
+<li>Climate change and greenhouse gases.</li>
+<li>Global climate conferences.</li>
+<li>Protected areas and wildlife conservation.</li>
+<li>Renewable energy.</li>
+<li>Air, water and plastic pollution.</li>
+<li>Biodiversity conservation.</li>
+</ul>
+`
+},
+
+{
+title:"Defence and Security",
+content:`
+<h3>Overview</h3>
+<p>
+Defence current affairs cover military exercises, defence agreements,
+new equipment, strategic partnerships and important developments
+related to national security.
+</p>
+
+<h3>Important Areas</h3>
+<ul>
+<li>Indian Armed Forces.</li>
+<li>Joint military exercises.</li>
+<li>Defence equipment and technology.</li>
+<li>Defence production.</li>
+<li>Border and maritime security.</li>
+<li>Strategic partnerships.</li>
+</ul>
+`
+},
+
+{
+title:"Awards and Honours",
+content:`
+<h3>Major Awards</h3>
+<p>
+Awards and honours are important factual areas in current affairs.
+Questions can ask about the recipient, award category, field and
+reason for recognition.
+</p>
+
+<h3>Important Categories</h3>
+<ul>
+<li>National civilian honours.</li>
+<li>Literary awards.</li>
+<li>Scientific awards.</li>
+<li>Sports awards.</li>
+<li>International prizes.</li>
+<li>Cultural and artistic honours.</li>
+</ul>
+
+<div class="info-box">
+<b>Revision Tip:</b> Make short lists of award, recipient, field and year.
+</div>
+`
+},
+
+{
+title:"Sports Current Affairs",
+content:`
+<h3>Important Sports Areas</h3>
+<p>
+Sports current affairs include major tournaments, championships,
+records, important players, teams and host countries.
+</p>
+
+<ul>
+<li>Cricket tournaments.</li>
+<li>Football championships.</li>
+<li>Olympic and Asian sporting events.</li>
+<li>Commonwealth Games.</li>
+<li>World championships.</li>
+<li>Major individual sporting achievements.</li>
+</ul>
+
+<h3>What to Remember</h3>
+<p>
+For a major event, learn the sport, tournament, host location,
+winner or major achievement and important participants.
+</p>
+`
+},
+
+{
+title:"Appointments and Important Persons",
+content:`
+<h3>Introduction</h3>
+<p>
+Important appointments are frequently included in competitive
+examination current affairs.
+</p>
+
+<h3>What to Track</h3>
+<ul>
+<li>Constitutional appointments.</li>
+<li>Heads of important institutions.</li>
+<li>International organisation leadership.</li>
+<li>Banking and regulatory appointments.</li>
+<li>Defence appointments.</li>
+<li>Major corporate and institutional appointments.</li>
+</ul>
+
+<div class="info-box">
+<b>Memory Method:</b> Connect the person's name with the institution
+and the position rather than memorising the name alone.
+</div>
+`
+},
+
+{
+title:"Reports and Indices",
+content:`
+<h3>Important Reports</h3>
+<p>
+Reports and indices provide statistical information about economies,
+societies, development, health, education, environment and governance.
+</p>
+
+<h3>Preparation Areas</h3>
+<ul>
+<li>Publishing organisation.</li>
+<li>Purpose of the report.</li>
+<li>Important indicators.</li>
+<li>India's position or major findings.</li>
+<li>Year of publication.</li>
+</ul>
+
+<h3>Exam Approach</h3>
+<p>
+Do not memorise rankings without understanding which organisation
+published the index and what exactly it measures.
+</p>
+`
+},
+
+{
+title:"Important Days and Events",
+content:`
+<h3>Important Days</h3>
+<p>
+Important days are associated with national, international, historical,
+environmental, scientific and social themes.
+</p>
+
+<h3>Common Categories</h3>
+<ul>
+<li>National days.</li>
+<li>International observances.</li>
+<li>Environment-related days.</li>
+<li>Health-related observances.</li>
+<li>Education and literacy days.</li>
+<li>Science and technology days.</li>
+</ul>
+
+<div class="info-box">
+<b>Revision Tip:</b> Remember both the date and the purpose of the observance.
+</div>
+`
+},
+
+{
+title:"Books and Authors",
+content:`
+<h3>Current Literary Affairs</h3>
+<p>
+Current affairs may include newly released books, major literary
+awards, biographies, autobiographies and important authors.
+</p>
+
+<h3>What to Remember</h3>
+<ul>
+<li>Book title.</li>
+<li>Author.</li>
+<li>Subject or theme.</li>
+<li>Major award associated with the book.</li>
+<li>Important publication-related event.</li>
+</ul>
+`
+},
+
+{
+title:"Appointments in India",
+content:`
+<h3>Important Indian Appointments</h3>
+<p>
+Appointments to major constitutional, regulatory, administrative,
+judicial and institutional positions are important for examinations.
+</p>
+
+<h3>Preparation Framework</h3>
+<ul>
+<li>Person appointed.</li>
+<li>Position.</li>
+<li>Institution.</li>
+<li>Appointment date or period.</li>
+<li>Previous position when relevant.</li>
+</ul>
+`
+},
+
+{
+title:"Current Affairs Revision",
+content:`
+<h3>Monthly Revision Method</h3>
+<p>
+Current affairs become easier to remember when information is revised
+regularly instead of being studied only once.
+</p>
+
+<h3>Four-Step Revision</h3>
+<ul>
+<li>Read the event and understand its context.</li>
+<li>Write the key fact in one short line.</li>
+<li>Connect the event with its organisation or subject.</li>
+<li>Revise the same information after increasing intervals.</li>
+</ul>
+
+<h3>Quick Revision Checklist</h3>
+<ul>
+<li>National events</li>
+<li>International affairs</li>
+<li>Economy and banking</li>
+<li>Science and technology</li>
+<li>Environment</li>
+<li>Defence</li>
+<li>Awards</li>
+<li>Sports</li>
+<li>Appointments</li>
+<li>Reports and indices</li>
+</ul>
+
+<div class="info-box">
+<b>Final Tip:</b> Current affairs preparation should focus on understanding
+the event and remembering the most exam-relevant facts.
+</div>
+`
+}
+
+];
+
+let currentIndex = 0;
+
+const chapterGrid = document.getElementById("chapterGrid");
+const chapterSection = document.getElementById("chapterSection");
+const reader = document.getElementById("reader");
+const readerTitle = document.getElementById("readerTitle");
+const readerContent = document.getElementById("readerContent");
+const progressText = document.getElementById("progressText");
+const progressBar = document.getElementById("progressBar");
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+
+function renderChapters(list = chapters){
+  chapterGrid.innerHTML = "";
+
+  list.forEach((chapter, index) => {
+    const originalIndex = chapters.indexOf(chapter);
+
+    const card = document.createElement("div");
+    card.className = "chapter-card";
+
+    card.innerHTML = `
+      <div class="chapter-number">${originalIndex + 1}</div>
+      <h4>${chapter.title}</h4>
+    `;
+
+    card.onclick = () => openChapter(originalIndex);
+    chapterGrid.appendChild(card);
+  });
+}
+
+function openChapter(index){
+  currentIndex = index;
+
+  chapterSection.style.display = "none";
+  reader.classList.add("active");
+
+  readerTitle.textContent = chapters[index].title;
+  readerContent.innerHTML = chapters[index].content;
+
+  updateNavigation();
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+}
+
+function showChapters(){
+  reader.classList.remove("active");
+  chapterSection.style.display = "block";
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+}
+
+function updateNavigation(){
+  progressText.textContent =
+    `Chapter ${currentIndex + 1} of ${chapters.length}`;
+
+  const percentage =
+       ((currentIndex + 1) / chapters.length) * 100;
+
+  progressBar.style.width = percentage + "%";
+
+  prevBtn.disabled = currentIndex === 0;
+  nextBtn.disabled = currentIndex === chapters.length - 1;
+}
+
+function previousChapter(){
+  if(currentIndex > 0){
+    openChapter(currentIndex - 1);
+  }
+}
+
+function nextChapter(){
+  if(currentIndex < chapters.length - 1){
+    openChapter(currentIndex + 1);
+  }
+}
+
+function searchChapters(){
+  const query =
+    document.getElementById("searchInput").value
+      .trim()
+      .toLowerCase();
+
+  if(!query){
+    renderChapters();
+    return;
+  }
+
+  const filtered = chapters.filter(chapter =>
+    chapter.title.toLowerCase().includes(query)
+  );
+
+  renderChapters(filtered);
+}
+
+function toggleTheme(){
+  document.body.classList.toggle("dark");
+
+  localStorage.setItem(
+    "jr_ai_theme",
+    document.body.classList.contains("dark")
+      ? "dark"
+      : "light"
+  );
+}
+
+function loadTheme(){
+  const savedTheme =
+    localStorage.getItem("jr_ai_theme");
+
+  if(savedTheme === "dark"){
+    document.body.classList.add("dark");
+  }
+}
+
+function goBack(){
+  window.location.href = "bookstore.html";
+}
+
+loadTheme();
+renderChapters();
+</script>
+
+</body>
+</html>
