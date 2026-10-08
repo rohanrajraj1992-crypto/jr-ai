@@ -1,0 +1,1576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>JR AI NDA Preparation</title>
+
+<style>
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial, sans-serif;
+  background:#f8fafc;
+  color:#1e293b;
+  transition:.3s;
+}
+
+body.dark{
+  background:#0f172a;
+  color:#e2e8f0;
+}
+
+header{
+  position:sticky;
+  top:0;
+  z-index:100;
+  background:#ffffff;
+  padding:14px 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  box-shadow:0 3px 15px rgba(0,0,0,.08);
+}
+
+body.dark header{
+  background:#111827;
+}
+
+.back-btn,
+.theme-btn{
+  border:none;
+  background:#eef2ff;
+  color:#4338ca;
+  width:42px;
+  height:42px;
+  border-radius:12px;
+  font-size:20px;
+  cursor:pointer;
+}
+
+body.dark .back-btn,
+body.dark .theme-btn{
+  background:#1e293b;
+  color:#a5b4fc;
+}
+
+.header-title{
+  font-size:20px;
+  font-weight:800;
+}
+
+.container{
+  width:min(100%,950px);
+  margin:auto;
+  padding:18px;
+}
+
+.cover{
+  background:linear-gradient(135deg,#0f766e,#14b8a6,#2dd4bf);
+  color:white;
+  min-height:270px;
+  border-radius:24px;
+  padding:28px 22px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  box-shadow:0 10px 30px rgba(13,148,136,.25);
+  margin-bottom:22px;
+}
+
+.cover-icon{
+  font-size:58px;
+  margin-bottom:12px;
+}
+
+.cover h1{
+  font-size:30px;
+  margin-bottom:10px;
+}
+
+.cover p{
+  line-height:1.6;
+  opacity:.95;
+}
+
+.badge{
+  display:inline-block;
+  margin-top:16px;
+  width:max-content;
+  background:rgba(255,255,255,.18);
+  border:1px solid rgba(255,255,255,.3);
+  padding:8px 14px;
+  border-radius:30px;
+  font-weight:700;
+}
+
+.syllabus{
+  background:white;
+  padding:18px;
+  border-radius:18px;
+  box-shadow:0 5px 18px rgba(0,0,0,.07);
+  line-height:1.6;
+  margin-bottom:18px;
+}
+
+body.dark .syllabus{
+  background:#1e293b;
+}
+
+.syllabus h2{
+  margin-bottom:10px;
+  color:#0f766e;
+}
+
+body.dark .syllabus h2{
+  color:#5eead4;
+}
+
+.search-box{
+  margin:18px 0;
+}
+
+.search-box input{
+  width:100%;
+  padding:14px 16px;
+  border:2px solid #e2e8f0;
+  border-radius:15px;
+  outline:none;
+  font-size:16px;
+  background:white;
+  color:#1e293b;
+}
+
+.search-box input:focus{
+  border-color:#14b8a6;
+}
+
+body.dark .search-box input{
+  background:#1e293b;
+  color:#f1f5f9;
+  border-color:#334155;
+}
+
+.chapter-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+}
+
+.chapter-card{
+  background:white;
+  padding:18px;
+  border-radius:18px;
+  box-shadow:0 5px 18px rgba(0,0,0,.07);
+  cursor:pointer;
+  transition:.2s;
+  border:2px solid transparent;
+}
+
+.chapter-card:hover{
+  transform:translateY(-3px);
+  border-color:#14b8a6;
+}
+
+body.dark .chapter-card{
+  background:#1e293b;
+}
+
+.chapter-number{
+  color:#0f766e;
+  font-size:13px;
+  font-weight:800;
+  margin-bottom:8px;
+}
+
+body.dark .chapter-number{
+  color:#5eead4;
+}
+
+.chapter-title{
+  font-size:17px;
+  font-weight:700;
+  line-height:1.4;
+}
+
+.empty-message{
+  display:none;
+  text-align:center;
+  padding:30px;
+  color:#64748b;
+}
+
+.reader{
+  display:none;
+  background:white;
+  border-radius:20px;
+  padding:20px;
+  box-shadow:0 5px 20px rgba(0,0,0,.08);
+}
+
+.reader.active{
+  display:block;
+}
+
+body.dark .reader{
+  background:#1e293b;
+}
+
+.reader-header{
+  border-bottom:1px solid #e2e8f0;
+  padding-bottom:15px;
+  margin-bottom:20px;
+}
+
+body.dark .reader-header{
+  border-color:#334155;
+}
+
+.reader-title{
+  font-size:25px;
+  color:#0f766e;
+  line-height:1.35;
+}
+
+body.dark .reader-title{
+  color:#5eead4;
+}
+
+.reader-content{
+  line-height:1.75;
+  font-size:16px;
+}
+
+.reader-content h3{
+  margin-top:22px;
+  margin-bottom:8px;
+  color:#0f766e;
+  font-size:18px;
+}
+
+body.dark .reader-content h3{
+  color:#5eead4;
+}
+
+.reader-content h4{
+  margin-top:16px;
+  margin-bottom:6px;
+}
+
+.reader-content p{
+  margin-bottom:12px;
+}
+
+.definition{
+  background:#ecfeff;
+  border-left:5px solid #14b8a6;
+  padding:14px;
+  border-radius:10px;
+  margin:12px 0;
+}
+
+body.dark .definition{
+  background:#164e63;
+}
+
+.formula{
+  background:#f0fdfa;
+  border:1px solid #99f6e4;
+  padding:13px;
+  border-radius:10px;
+  margin:12px 0;
+  font-family:Georgia,serif;
+  font-weight:700;
+  overflow-x:auto;
+}
+
+body.dark .formula{
+  background:#134e4a;
+  border-color:#2dd4bf;
+}
+
+.reader-content ul,
+.reader-content ol{
+  margin:10px 0 15px 22px;
+}
+
+.reader-content li{
+  margin-bottom:7px;
+}
+
+.progress{
+  height:7px;
+  background:#e2e8f0;
+  border-radius:20px;
+  overflow:hidden;
+  margin:15px 0;
+}
+
+body.dark .progress{
+  background:#334155;
+}
+
+.progress-fill{
+  height:100%;
+  width:0;
+  background:#14b8a6;
+  transition:.3s;
+}
+
+.reader-controls{
+  display:flex;
+  gap:10px;
+  margin-top:24px;
+  flex-wrap:wrap;
+}
+
+.reader-controls button{
+  flex:1;
+  min-width:120px;
+  padding:13px;
+  border:none;
+  border-radius:13px;
+  background:#0f766e;
+  color:white;
+  font-size:15px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.reader-controls button:disabled{
+  opacity:.45;
+  cursor:not-allowed;
+}
+
+.chapter-btn{
+  background:#475569 !important;
+}
+
+@media(max-width:600px){
+
+  .container{
+    padding:12px;
+  }
+
+  .cover{
+    min-height:250px;
+    padding:24px 18px;
+  }
+
+  .cover h1{
+    font-size:27px;
+  }
+
+  .chapter-grid{
+    grid-template-columns:1fr;
+  }
+
+  .reader{
+    padding:16px;
+  }
+
+  .reader-title{
+    font-size:22px;
+  }
+
+  .reader-content{
+    font-size:15.5px;
+  }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<button
+  class="back-btn"
+  onclick="goBack()">
+  ←
+</button>
+
+<div class="header-title">
+  🎖️ JR AI NDA
+</div>
+
+<button
+  class="theme-btn"
+  onclick="toggleTheme()">
+  🌙
+</button>
+
+</header>
+
+
+<div class="container">
+
+
+<section class="cover">
+
+<div class="cover-icon">
+  🎖️
+</div>
+
+<h1>
+  NDA Preparation
+</h1>
+
+<p>
+  Complete original study material for NDA written examination
+  preparation, covering Mathematics, General Ability, English,
+  Science, History, Geography, Polity and Current Affairs.
+</p>
+
+<div class="badge">
+  JR AI ORIGINAL STUDY BOOK
+</div>
+
+</section>
+
+
+<section class="syllabus">
+
+<h2>
+  📚 NDA Syllabus
+</h2>
+
+<p>
+This book covers the major areas required for NDA preparation,
+including Mathematics and General Ability Test subjects.
+Use the chapter reader for structured revision and concept building.
+</p>
+
+</section>
+
+
+<div class="search-box">
+
+<input
+  type="text"
+  id="searchInput"
+  placeholder="🔎 Search NDA topics..."
+  oninput="searchChapters()">
+
+</div>
+
+
+<div
+  id="chapterGrid"
+  class="chapter-grid">
+</div>
+
+
+<div
+  id="emptyMessage"
+  class="empty-message">
+  No chapter found.
+</div>
+
+
+<section
+  id="reader"
+class="reader">
+
+  <div class="reader-header">
+
+    <button
+      class="reader-back"
+      type="button"
+      onclick="showChapters()">
+      ← Chapters
+    </button>
+
+    <h2 id="readerTitle">
+      Chapter
+    </h2>
+
+  </div>
+
+
+  <div
+    id="readerContent"
+    class="reader-content">
+  </div>
+
+
+  <div class="reader-navigation">
+
+    <button
+      id="previousBtn"
+      type="button"
+      onclick="previousChapter()">
+      ← Previous
+    </button>
+
+    <button
+      type="button"
+      onclick="showChapters()">
+      Chapters
+    </button>
+
+    <button
+      id="nextBtn"
+      type="button"
+      onclick="nextChapter()">
+      Next →
+    </button>
+
+  </div>
+
+</section>
+
+
+<div class="progress-container">
+
+  <div
+    id="progressFill"
+    class="progress-fill">
+  </div>
+
+</div>
+
+
+</main>
+
+
+<script>
+
+
+const chapters = [
+
+{
+title:"NDA Exam Overview",
+content:`
+
+<div class="definition">
+The National Defence Academy (NDA) examination is a competitive
+examination for candidates seeking admission to the National Defence
+Academy and Naval Academy.
+</div>
+
+<h3>1. Examination Structure</h3>
+
+<p>
+The written examination generally consists of Mathematics and General
+Ability Test sections. Candidates who qualify the written examination
+are called for further selection procedures.
+</p>
+
+<h3>2. Mathematics</h3>
+
+<p>
+The Mathematics section tests numerical ability, algebra, geometry,
+trigonometry, statistics and other mathematical concepts.
+</p>
+
+<h3>3. General Ability Test</h3>
+
+<p>
+The General Ability Test covers English, General Knowledge, Physics,
+Chemistry, General Science, History, Geography and Current Events.
+</p>
+
+<h3>4. Selection Process</h3>
+
+<p>
+The selection process includes the written examination followed by
+Services Selection Board assessment and medical requirements.
+</p>
+
+`
+},
+
+{
+title:"Number System",
+content:`
+
+<div class="definition">
+The number system is the mathematical system used to represent and
+classify numbers.
+</div>
+
+<h3>1. Natural Numbers</h3>
+
+<p>
+Natural numbers are counting numbers such as 1, 2, 3, 4 and so on.
+</p>
+
+<h3>2. Whole Numbers</h3>
+
+<p>
+Whole numbers include zero along with the natural numbers.
+</p>
+
+<h3>3. Integers</h3>
+
+<p>
+Integers include positive numbers, negative numbers and zero.
+</p>
+
+<h3>4. Rational Numbers</h3>
+
+<p>
+A rational number can be expressed in the form p/q, where p and q are
+integers and q is not zero.
+</p>
+
+<h3>5. Prime Numbers</h3>
+
+<p>
+A prime number has exactly two positive factors: 1 and the number
+itself.
+</p>
+
+`
+},
+
+{
+title:"Percentage",
+content:`
+
+<div class="definition">
+Percentage expresses a quantity as a fraction of 100.
+</div>
+
+<h3>1. Basic Formula</h3>
+
+<div class="formula">
+Percentage = (Part / Whole) × 100
+</div>
+
+<h3>2. Percentage Increase</h3>
+
+<div class="formula">
+Increase % = (Increase / Original Value) × 100
+</div>
+
+<h3>3. Percentage Decrease</h3>
+
+<div class="formula">
+Decrease % = (Decrease / Original Value) × 100
+</div>
+
+<h3>4. Successive Percentage Changes</h3>
+
+<p>
+When percentage changes occur successively, each change is calculated
+using the value obtained after the previous change.
+</p>
+
+`
+},
+
+{
+title:"Profit Loss and Discount",
+content:`
+
+<div class="definition">
+Profit and loss problems compare the cost price of an item with its
+selling price.
+</div>
+
+<h3>1. Cost Price</h3>
+
+<p>
+Cost price is the amount paid to purchase an article.
+</p>
+
+<h3>2. Selling Price</h3>
+
+<p>
+Selling price is the amount received when an article is sold.
+</p>
+
+<h3>3. Profit</h3>
+
+<div class="formula">
+Profit = Selling Price − Cost Price
+</div>
+
+<h3>4. Loss</h3>
+
+<div class="formula">
+Loss = Cost Price − Selling Price
+</div>
+
+<h3>5. Discount</h3>
+
+<p>
+Discount is the reduction offered on the marked price of an article.
+</p>
+
+`
+},
+
+{
+title:"Ratio and Proportion",
+content:`
+
+<div class="definition">
+A ratio compares two quantities of the same kind using division.
+</div>
+
+<h3>1. Ratio</h3>
+
+<div class="formula">
+a : b = a/b
+</div>
+
+<h3>2. Proportion</h3>
+
+<p>
+A proportion states that two ratios are equal.
+</p>
+
+<div class="formula">
+a/b = c/d
+</div>
+
+<h3>3. Direct Proportion</h3>
+
+<p>
+In direct proportion, an increase in one quantity produces a
+corresponding increase in the other quantity.
+</p>
+
+<h3>4. Inverse Proportion</h3>
+
+<p>
+In inverse proportion, an increase in one quantity produces a
+corresponding decrease in the other quantity.
+</p>
+
+`
+},
+
+{
+title:"Average",
+content:`
+
+<div class="definition">
+Average is a measure that represents the central value of a set of
+quantities.
+</div>
+
+<h3>1. Arithmetic Mean</h3>
+
+<div class="formula">
+Average = Sum of observations / Number of observations
+</div>
+
+<h3>2. Combined Average</h3>
+
+<p>
+The combined average of different groups depends on the total sum of
+all observations and the total number of observations.
+</p>
+
+<h3>3. Weighted Average</h3>
+
+<p>
+A weighted average gives different importance or weights to different
+values.
+</p>
+
+`
+},
+
+{
+title:"Simple and Compound Interest",
+content:`
+
+<div class="definition">
+Interest is the additional amount charged or earned on a principal
+amount over time.
+</div>
+
+<h3>1. Simple Interest</h3>
+
+<div class="formula">
+SI = (P × R × T) / 100
+</div>
+
+<p>
+Here P represents principal, R represents rate of interest and T
+represents time.
+</p>
+
+<h3>2. Amount</h3>
+
+<div class="formula">
+Amount = Principal + Interest
+</div>
+
+<h3>3. Compound Interest</h3>
+
+<p>
+Compound interest is calculated on the principal together with the
+interest accumulated during previous periods.
+</p>
+
+<div class="formula">
+A = P(1 + R/100)ᵀ
+</div>
+
+`
+},
+
+{
+title:"Time and Work",
+content:`
+
+<div class="definition">
+Time and work problems relate the amount of work completed to the time
+and efficiency of workers.
+</div>
+
+<h3>1. Work Rate</h3>
+
+<p>
+If a person completes a work in a certain number of days, the fraction
+of work completed in one day represents the daily work rate.
+</p>
+
+<h3>2. Combined Work</h3>
+
+<p>
+When two or more people work together, their individual work rates are
+added to obtain the combined rate.
+</p>
+
+<h3>3. Efficiency</h3>
+
+<p>
+Efficiency represents the amount of work completed per unit of time.
+</p>
+
+<h3>4. Pipes and Cisterns</h3>
+
+<p>
+Pipes and cistern problems apply the same rate-based principles to
+filling and emptying tanks.
+</p>
+
+`
+},
+
+{
+title:"Time Speed and Distance",
+content:`
+
+<div class="definition">
+Speed describes the distance travelled per unit of time.
+</div>
+
+<h3>1. Basic Relation</h3>
+
+<div class="formula">
+Speed = Distance / Time
+</div>
+
+<h3>2. Distance</h3>
+
+<div class="formula">
+Distance = Speed × Time
+</div>
+
+<h3>3. Time</h3>
+
+<div class="formula">
+Time = Distance / Speed
+</div>
+
+<h3>4. Relative Speed</h3>
+
+<p>
+Relative speed is used to determine the rate at which the distance
+between two moving objects changes.
+</p>
+
+<h3>5. Average Speed</h3>
+
+<p>
+Average speed is total distance divided by total time taken.
+</p>
+
+`
+},
+
+{
+title:"Algebra",
+content:`
+
+<div class="definition">
+Algebra is a branch of mathematics that uses symbols and variables to
+represent quantities and relationships.
+</div>
+
+<h3>1. Linear Equations</h3>
+
+<p>
+A linear equation contains variables whose highest power is one.
+</p>
+
+<div class="formula">
+ax + b = 0
+</div>
+
+<h3>2. Quadratic Equations</h3>
+
+<p>
+A quadratic equation is a polynomial equation of degree two.
+</p>
+
+<div class="formula">
+ax² + bx + c = 0
+</div>
+
+<h3>3. Factorization</h3>
+
+<p>
+Factorization expresses an algebraic expression as a product of simpler
+factors.
+</p>
+
+<h3>4. Identities</h3>
+
+<div class="formula">
+(a+b)² = a² + 2ab + b²
+</div>
+
+<div class="formula">
+(a−b)² = a² − 2ab + b²
+</div>
+
+`
+},
+
+{
+title:"Geometry and Mensuration",
+content:`
+
+<div class="definition">
+Geometry studies shapes, figures, angles and spatial relationships,
+while mensuration deals with their measurements.
+</div>
+
+<h3>1. Triangle</h3>
+
+<p>
+A triangle is a polygon having three sides and three angles.
+</p>
+
+<h3>2. Circle</h3>
+
+<p>
+A circle is the set of points at a fixed distance from a central point.
+</p>
+
+<h3>3. Area</h3>
+
+<p>
+Area measures the surface occupied by a two-dimensional figure.
+</p>
+
+<h3>4. Volume</h3>
+
+<p>
+Volume measures the space occupied by a three-dimensional object.
+</p>
+
+<h3>5. Pythagorean Theorem</h3>
+
+<div class="formula">
+a² + b² = c²
+</div>
+
+<p>
+For a right-angled triangle, the square of the hypotenuse equals the
+sum of the squares of the other two sides.
+</p>
+
+`
+},
+
+{
+title:"Trigonometry",
+content:`
+
+<div class="definition">
+Trigonometry studies the relationships between angles and sides of
+triangles.
+</div>
+
+<h3>1. Sine</h3>
+
+<div class="formula">
+sin θ = Perpendicular / Hypotenuse
+</div>
+
+<h3>2. Cosine</h3>
+
+<div class="formula">
+cos θ = Base / Hypotenuse
+</div>
+
+<h3>3. Tangent</h3>
+
+<div class="formula">
+tan θ = Perpendicular / Base
+</div>
+
+<h3>4. Fundamental Identity</h3>
+
+<div class="formula">
+sin²θ + cos²θ = 1
+</div>
+
+<h3>5. Applications</h3>
+
+<p>
+Trigonometry is widely used in heights and distances, navigation,
+geometry and physical applications.
+</p>
+
+`
+},
+
+{
+title:"Data Interpretation",
+content:`
+
+<div class="definition">
+Data interpretation involves analyzing numerical information
+presented through tables, charts or graphs.
+</div>
+
+<h3>1. Tables</h3>
+
+<p>
+Tables organize numerical information into rows and columns for easy
+comparison.
+</p>
+
+<h3>2. Bar Graphs</h3>
+
+<p>
+Bar graphs represent quantities using rectangular bars of different
+lengths or heights.
+</p>
+
+<h3>3. Pie Charts</h3>
+
+<p>
+Pie charts represent parts of a whole using sectors of a circle.
+</p>
+
+<h3>4. Percentage Analysis</h3>
+
+<p>
+Many data interpretation questions require comparison, percentage
+change, averages and ratios.
+</p>
+
+`
+},
+
+{
+title:"Reasoning and General Intelligence",
+content:`
+
+<div class="definition">
+Reasoning involves analyzing information logically to identify
+relationships, patterns and conclusions.
+</div>
+
+<h3>1. Analogy</h3>
+
+<p>
+Analogy questions identify a similar relationship between two pairs of
+objects or concepts.
+</p>
+
+<h3>2. Series</h3>
+
+<p>
+Series questions require identification of a numerical, alphabetical
+or logical pattern.
+</p>
+
+<h3>3. Coding-Decoding</h3>
+
+<p>
+Coding-decoding problems involve identifying the rule used to transform
+one set of symbols or words into another.
+</p>
+
+<h3>4. Blood Relations</h3>
+
+<p>
+Blood relation problems require determining relationships among people
+using given family information.
+</p>
+
+<h3>5. Direction Sense</h3>
+
+<p>
+Direction problems test the ability to determine relative positions
+and movement between locations.
+</p>
+
+`
+},
+
+{
+title:"General Science",
+content:`
+
+<div class="definition">
+General science covers fundamental concepts from Physics, Chemistry
+and Biology that are useful for competitive examinations.
+</div>
+
+<h3>1. Physics</h3>
+
+<p>
+Important areas include motion, force, work, energy, electricity,
+magnetism, light and sound.
+</p>
+
+<h3>2. Chemistry</h3>
+
+<p>
+Important areas include atoms, molecules, chemical reactions, acids,
+bases, metals and non-metals.
+</p>
+
+<h3>3. Biology</h3>
+
+<p>
+Important areas include cells, tissues, human systems, nutrition,
+diseases, plants and ecology.
+</p>
+
+`
+},
+
+{
+title:"Indian History",
+content:`
+
+<div class="definition">
+Indian history describes the political, social, economic and cultural
+development of the Indian subcontinent through different periods.
+</div>
+
+<h3>1. Ancient India</h3>
+
+<p>
+Important topics include the Indus Valley Civilization, Vedic period,
+Mahajanapadas, Mauryan Empire and Gupta period.
+</p>
+
+<h3>2. Medieval India</h3>
+
+<p>
+Important topics include the Delhi Sultanate, Mughal Empire, Bhakti
+movement and regional kingdoms.
+</p>
+
+<h3>3. Modern India</h3>
+
+<p>
+Important topics include British rule, the Revolt of 1857, social
+reform movements and the Indian freedom struggle.
+</p>
+
+<h3>4. National Movement</h3>
+
+<p>
+The national movement involved several political organizations,
+mass movements and leaders who contributed to India's independence.
+</p>
+
+`
+},
+
+{
+title:"Indian Geography",
+content:`
+
+<div class="definition">
+Indian geography studies the physical features, climate, resources,
+population and economic activities of India.
+</div>
+
+<h3>1. Physical Divisions</h3>
+
+<p>
+India includes the Himalayan mountains, Northern Plains, Peninsular
+Plateau, Indian Desert, Coastal Plains and Islands.
+</p>
+
+<h3>2. Rivers</h3>
+
+<p>
+Major river systems include the Ganga, Brahmaputra, Indus and important
+peninsular rivers such as the Godavari, Krishna and Narmada.
+</p>
+
+<h3>3. Climate</h3>
+
+<p>
+India experiences a monsoon-dominated climate with significant
+regional variations in rainfall and temperature.
+</p>
+
+<h3>4. Natural Resources</h3>
+
+<p>
+India has diverse mineral, water, forest, agricultural and energy
+resources.
+</p>
+
+`
+},
+
+{
+title:"Indian Polity",
+content:`
+
+<div class="definition">
+Indian polity studies the Constitution, government institutions,
+rights, duties and political administration of India.
+</div>
+
+<h3>1. Constitution</h3>
+
+<p>
+The Constitution provides the fundamental framework for governance and
+defines powers and responsibilities of institutions.
+</p>
+
+<h3>2. Fundamental Rights</h3>
+
+<p>
+Fundamental Rights protect important freedoms and legal protections
+provided by the Constitution.
+</p>
+
+<h3>3. Parliament</h3>
+
+<p>
+The Parliament of India consists of the President and two Houses:
+the Lok Sabha and Rajya Sabha.
+</p>
+
+<h3>4. Judiciary</h3>
+
+<p>
+The judiciary interprets laws and protects constitutional and legal
+rights through the court system.
+</p>
+
+`
+},
+
+{
+title:"Current Affairs",
+content:`
+
+<div class="definition">
+Current affairs refers to important recent events and developments in
+India and around the world.
+</div>
+
+<h3>1. National Events</h3>
+
+<p>
+Important national developments, government initiatives, appointments
+and major events are relevant to competitive examinations.
+</p>
+
+<h3>2. International Events</h3>
+
+<p>
+Major international organizations, agreements, conflicts, summits and
+global developments may be important for examination preparation.
+</p>
+
+<h3>3. Science and Technology</h3>
+
+<p>
+Recent developments in space, technology, defence, medicine and
+scientific research are commonly relevant.
+</p>
+
+<h3>4. Sports and Awards</h3>
+
+<p>
+Major tournaments, championships, awards and notable achievements are
+important areas of current-affairs preparation.
+</p>
+
+`
+}
+
+];
+
+
+let currentChapter = 0;
+
+
+function renderChapters(list = chapters){
+
+  const grid =
+    document.getElementById("chapterGrid");
+
+  grid.innerHTML = "";
+
+  document.getElementById("emptyMessage").style.display =
+    list.length ? "none" : "block";
+
+  list.forEach((chapter)=>{
+
+    const realIndex =
+      chapters.indexOf(chapter);
+
+    const card =
+      document.createElement("div");
+
+    card.className =
+      "chapter-card";
+
+    card.innerHTML = `
+      <div class="chapter-number">
+        Chapter ${realIndex + 1}
+      </div>
+
+      <div class="chapter-title">
+        ${chapter.title}
+      </div>
+    `;
+
+    card.onclick = function(){
+
+      openChapter(realIndex);
+
+    };
+
+    grid.appendChild(card);
+
+  });
+
+}
+
+
+function openChapter(index){
+
+  currentChapter = index;
+
+  const chapter =
+    chapters[index];
+
+  document.getElementById(
+    "chapterGrid"
+  ).style.display = "none";
+
+  document.querySelector(
+    ".search-box"
+  ).style.display = "none";
+
+  document.querySelector(
+    ".syllabus"
+  ).style.display = "none";
+
+  const reader =
+    document.getElementById("reader");
+
+  reader.classList.add("active");
+
+  document.getElementById(
+    "readerTitle"
+  ).textContent =
+    "Chapter " +
+    (index + 1) +
+    ": " +
+    chapter.title;
+
+  document.getElementById(
+    "readerContent"
+  ).innerHTML =
+    chapter.content;
+
+  document.getElementById(
+    "previousBtn"
+  ).disabled =
+    index === 0;
+
+  document.getElementById(
+    "nextBtn"
+  ).disabled =
+    index === chapters.length - 1;
+
+  updateProgress();
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+function showChapters(){
+
+  document.getElementById(
+    "chapterGrid"
+  ).style.display = "grid";
+
+  document.querySelector(
+    ".search-box"
+  ).style.display = "block";
+
+  document.querySelector(
+    ".syllabus"
+  ).style.display = "block";
+
+  document.getElementById(
+    "reader"
+  ).classList.remove("active");
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+function nextChapter(){
+
+  if(
+    currentChapter <
+    chapters.length - 1
+  ){
+
+    openChapter(
+      currentChapter + 1
+    );
+
+  }
+
+}
+
+
+function previousChapter(){
+
+  if(currentChapter > 0){
+
+    openChapter(
+      currentChapter - 1
+    );
+
+  }
+
+}
+
+
+function searchChapters(){
+
+  const query =
+    document.getElementById(
+      "searchInput"
+    ).value
+    .toLowerCase()
+    .trim();
+
+  const filtered =
+    chapters.filter(chapter =>
+      chapter.title
+      .toLowerCase()
+      .includes(query)
+    );
+
+  renderChapters(filtered);
+
+}
+
+
+function updateProgress(){
+
+  const progress =
+    ((currentChapter + 1) /
+    chapters.length) * 100;
+
+  document.getElementById(
+    "progressFill"
+  ).style.width =
+    progress + "%";
+
+}
+
+
+function toggleTheme(){
+
+  document.body.classList.toggle(
+    "dark"
+  );
+
+  localStorage.setItem(
+    "jr_ai_theme",
+    document.body.classList.contains("dark")
+      ? "dark"
+      : "light"
+  );
+
+}
+
+
+function loadTheme(){
+
+  const theme =
+    localStorage.getItem(
+      "jr_ai_theme"
+    );
+
+  if(theme === "dark"){
+
+    document.body.classList.add(
+      "dark"
+    );
+
+  }
+
+}
+
+
+function goBack(){
+
+  window.location.href =
+    "bookstore.html";
+
+}
+
+
+renderChapters();
+
+loadTheme();
+
+</script>
+
+</body>
+</html>
