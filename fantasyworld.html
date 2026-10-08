@@ -1,0 +1,1927 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>JR AI - The Lost Kingdom</title>
+
+<style>
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f5f3ff;
+  color:#211a35;
+  transition:.3s;
+}
+
+body.dark{
+  background:#12101a;
+  color:#eee8ff;
+}
+
+.header{
+  position:sticky;
+  top:0;
+  z-index:100;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:15px;
+  color:white;
+  background:linear-gradient(135deg,#312e81,#6d28d9,#4c1d95);
+  box-shadow:0 3px 16px rgba(0,0,0,.25);
+}
+
+.back-btn,
+.theme-btn{
+  width:42px;
+  height:42px;
+  border:0;
+  border-radius:12px;
+  background:rgba(255,255,255,.15);
+  color:white;
+  font-size:20px;
+  cursor:pointer;
+}
+
+.header-title{
+  flex:1;
+}
+
+.header-title h1{
+  font-size:20px;
+}
+
+.header-title p{
+  margin-top:3px;
+  font-size:12px;
+  opacity:.82;
+}
+
+.cover{
+  width:calc(100% - 30px);
+  max-width:720px;
+  min-height:260px;
+  margin:18px auto;
+  padding:30px 20px;
+  border-radius:25px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  color:white;
+  background:
+    radial-gradient(
+      circle at top,
+      rgba(255,255,255,.2),
+      transparent 35%
+    ),
+    linear-gradient(
+      135deg,
+      #312e81,
+      #7c3aed,
+      #4c1d95
+    );
+  box-shadow:0 15px 35px rgba(76,29,149,.3);
+}
+
+.cover-icon{
+  margin-bottom:12px;
+  font-size:60px;
+}
+
+.cover h2{
+  margin-bottom:9px;
+  font-size:28px;
+}
+
+.cover p{
+  font-size:14px;
+  line-height:1.7;
+  opacity:.92;
+}
+
+.container{
+  width:calc(100% - 30px);
+  max-width:850px;
+  margin:auto;
+}
+
+.search-box{
+  width:100%;
+  margin-bottom:16px;
+  padding:14px 16px;
+  border:1px solid #ddd6fe;
+  border-radius:14px;
+  outline:none;
+  font-size:15px;
+  background:white;
+  color:#211a35;
+}
+
+body.dark .search-box{
+  background:#211d2b;
+  border-color:#49405f;
+  color:white;
+}
+
+.section-title{
+  margin-bottom:13px;
+  font-size:19px;
+}
+
+.chapter-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+}
+
+.chapter-card{
+  padding:16px;
+  border:1px solid #e5def7;
+  border-radius:17px;
+  background:white;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.chapter-card:hover{
+  transform:translateY(-2px);
+}
+
+body.dark .chapter-card{
+  background:#211d2b;
+  border-color:#49405f;
+}
+
+.chapter-number{
+  width:36px;
+  height:36px;
+  margin-bottom:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:11px;
+  background:#ede9fe;
+  color:#6d28d9;
+  font-weight:800;
+}
+
+body.dark .chapter-number{
+  background:#38265e;
+  color:#c4b5fd;
+}
+
+.chapter-card h3{
+  font-size:15px;
+  line-height:1.45;
+}
+
+.chapter-card p{
+  margin-top:7px;
+  color:#756b87;
+  font-size:12px;
+}
+
+body.dark .chapter-card p{
+  color:#b9aecb;
+}
+
+.reader{
+  display:none;
+  margin-top:18px;
+}
+
+.reader.active{
+  display:block;
+}
+
+.chapter-content{
+  padding:22px;
+  border-radius:18px;
+  background:white;
+  line-height:1.85;
+  box-shadow:0 5px 18px rgba(0,0,0,.06);
+}
+
+body.dark .chapter-content{
+  background:#211d2b;
+  box-shadow:none;
+}
+
+.chapter-content h2{
+  margin-bottom:18px;
+  color:#6d28d9;
+  line-height:1.45;
+}
+
+body.dark .chapter-content h2{
+  color:#c4b5fd;
+}
+
+.chapter-content h3{
+  margin-top:25px;
+  margin-bottom:10px;
+  color:#5b21b6;
+}
+
+body.dark .chapter-content h3{
+  color:#c4b5fd;
+}
+
+.chapter-content p{
+  margin-bottom:15px;
+}
+
+.dialogue{
+  margin:16px 0;
+  padding:14px 16px;
+  border-left:4px solid #7c3aed;
+  border-radius:10px;
+  background:#f5f3ff;
+  font-style:italic;
+}
+
+body.dark .dialogue{
+  background:#2b2338;
+  border-color:#a78bfa;
+}
+
+.magic-box{
+  margin:18px 0;
+  padding:16px;
+  border:1px solid #c4b5fd;
+  border-radius:14px;
+  background:#faf8ff;
+}
+
+body.dark .magic-box{
+  background:#29223a;
+  border-color:#6d5a94;
+}
+
+.progress{
+  margin:15px 0;
+}
+
+.progress-top{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:7px;
+  color:#756b87;
+  font-size:12px;
+}
+
+body.dark .progress-top{
+  color:#b9aecb;
+}
+
+.progress-bar{
+  height:7px;
+  overflow:hidden;
+  border-radius:20px;
+  background:#e5def7;
+}
+
+body.dark .progress-bar{
+  background:#40364e;
+}
+
+.progress-fill{
+  width:0;
+  height:100%;
+  background:linear-gradient(90deg,#7c3aed,#2563eb);
+  transition:.3s;
+}
+
+.navigation{
+  display:flex;
+  gap:10px;
+  margin:16px 0 30px;
+}
+
+.nav-btn{
+  flex:1;
+  padding:13px 8px;
+  border:0;
+  border-radius:13px;
+  background:#6d28d9;
+  color:white;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.nav-btn:disabled{
+  opacity:.4;
+  cursor:not-allowed;
+}
+
+@media(max-width:600px){
+
+  .chapter-grid{
+    grid-template-columns:1fr;
+  }
+
+  .cover{
+    min-height:225px;
+  }
+
+  .cover h2{
+    font-size:24px;
+  }
+
+  .chapter-content{
+    padding:18px;
+    font-size:15px;
+  }
+
+  .navigation{
+    gap:7px;
+  }
+
+  .nav-btn{
+    font-size:13px;
+  }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header class="header">
+
+<button
+  class="back-btn"
+  id="backBtn">
+  ←
+</button>
+
+<div class="header-title">
+
+<h1>
+  🧙 The Lost Kingdom
+</h1>
+
+<p>
+  JR AI Original Fantasy Novel
+</p>
+
+</div>
+
+<button
+  class="theme-btn"
+  id="themeBtn">
+  🌙
+</button>
+
+</header>
+
+
+<section class="cover">
+
+<div class="cover-icon">
+  🏰
+</div>
+
+<h2>
+  The Lost Kingdom
+</h2>
+
+<p>
+A magical journey through forgotten kingdoms,
+<br>
+ancient secrets, dangerous forests,
+<br>
+friendship, courage and destiny.
+</p>
+
+</section>
+
+
+<main class="container">
+
+
+<input
+  type="text"
+  id="searchInput"
+  class="search-box"
+  placeholder="🔎 Search chapters..."
+>
+
+
+<section id="chapterSection">
+
+<h2 class="section-title">
+  📚 Chapters
+</h2>
+
+<div
+  id="chapterGrid"
+  class="chapter-grid">
+</div>
+
+</section>
+
+
+<section
+  id="reader"
+  class="reader">
+
+
+<div class="progress">
+
+<div class="progress-top">
+
+<span id="progressText">
+Chapter 1 of 12
+</span>
+
+<span id="progressPercent">
+8%
+</span>
+
+</div>
+
+<div class="progress-bar">
+
+<div
+  id="progressFill"
+  class="progress-fill">
+</div>
+
+</div>
+
+</div>
+
+
+<div
+  id="chapterContent"
+  class="chapter-content">
+</div>
+
+
+<div class="navigation">
+
+<button
+  class="nav-btn"
+  id="prevBtn">
+  ← Previous
+</button>
+
+<button
+  class="nav-btn"
+  id="chapterBtn">
+  📚 Chapters
+</button>
+
+<button
+  class="nav-btn"
+  id="nextBtn">
+  Next →
+</button>
+
+</div>
+
+
+</section>
+
+</main>
+
+
+<script>
+
+
+const chapters = [
+
+
+{
+title:"The Girl From the Village",
+content:`
+
+<h2>
+Chapter 1 — The Girl From the Village
+</h2>
+
+<p>
+Mira lived in a small village surrounded by mountains.
+</p>
+
+<p>
+The villagers called the mountains the Silent Walls.
+No one crossed them.
+</p>
+
+<p>
+According to the oldest stories,
+a kingdom had once existed beyond those mountains.
+</p>
+
+<p>
+The kingdom had disappeared hundreds of years ago.
+</p>
+
+<p>
+Mira had never believed the stories.
+</p>
+
+<p>
+Until the night the blue light appeared in the forest.
+</p>
+
+<p>
+She was returning home when she saw it.
+</p>
+
+<p>
+A small glowing stone lay between the roots of an ancient tree.
+</p>
+
+<p>
+When Mira touched it, the entire forest became silent.
+</p>
+
+<div class="dialogue">
+"Who are you?"
+</div>
+
+<p>
+A voice answered from behind her.
+</p>
+
+<p>
+Mira turned.
+</p>
+
+<p>
+A boy stood between the trees.
+He wore a dark cloak and carried a silver sword.
+</p>
+
+<div class="dialogue">
+"My name is Kael."
+</div>
+
+<p>
+He looked at the glowing stone.
+</p>
+
+<div class="dialogue">
+"And you just found something that was supposed to remain lost."
+</div>
+
+`
+},
+
+
+{
+title:"The Hidden Map",
+content:`
+
+<h2>
+Chapter 2 — The Hidden Map
+</h2>
+
+<p>
+Kael took Mira to an abandoned watchtower.
+</p>
+
+<p>
+Inside the tower was a wooden table covered with old maps.
+</p>
+
+<p>
+One map showed the mountains surrounding the village.
+</p>
+
+<p>
+But another map showed something different.
+</p>
+
+<p>
+Beyond the mountains was a vast kingdom.
+</p>
+
+<div class="magic-box">
+The kingdom was marked with a single symbol:
+a silver crown surrounded by seven stars.
+</div>
+
+<p>
+Kael explained that the kingdom was called Eldoria.
+</p>
+
+<p>
+It had disappeared after its king opened an ancient gate.
+</p>
+
+<p>
+The gate had released a darkness that could not be controlled.
+</p>
+
+<p>
+The kingdom was sealed away.
+</p>
+
+<div class="dialogue">
+"Why are you telling me this?"
+</div>
+
+<p>
+Mira asked.
+</p>
+
+<p>
+Kael pointed at the glowing stone.
+</p>
+
+<div class="dialogue">
+"Because that stone is the key to opening the gate again."
+</div>
+
+<p>
+Mira stepped back.
+</p>
+
+<div class="dialogue">
+"Then destroy it."
+</div>
+
+<p>
+Kael shook his head.
+</p>
+
+<div class="dialogue">
+"I can't."
+</div>
+
+<p>
+He looked toward the mountains.
+</p>
+
+<div class="dialogue">
+"Only someone from the royal bloodline can control it."
+</div>
+
+`
+},
+
+
+{
+title:"Beyond the Mountains",
+content:`
+
+<h2>
+Chapter 3 — Beyond the Mountains
+</h2>
+
+<p>
+Mira did not sleep that night.
+</p>
+
+<p>
+By sunrise, she had made her decision.
+</p>
+
+<p>
+She would cross the mountains.
+</p>
+
+<p>
+Kael warned her about the dangers.
+</p>
+
+<p>
+There were creatures in the old forests.
+There were abandoned ruins.
+And there were people who still searched for the lost kingdom.
+</p>
+
+<p>
+Mira packed a small bag.
+</p>
+
+<div class="dialogue">
+"I am coming with you."
+</div>
+
+<p>
+Her younger brother stood at the doorway.
+</p>
+
+<div class="dialogue">
+"You can't."
+</div>
+
+<p>
+Mira smiled.
+</p>
+
+<div class="dialogue">
+"Someone has to come back and tell the story."
+</div>
+
+<p>
+They began their journey before noon.
+</p>
+
+<p>
+The path through the mountains became narrower.
+</p>
+
+<p>
+By evening, they reached a stone bridge.
+</p>
+
+<p>
+On the other side stood a forest covered in silver mist.
+</p>
+
+<p>
+Kael stopped.
+</p>
+
+<div class="dialogue">
+"From here, the old kingdom begins."
+</div>
+
+<p>
+Mira looked into the mist.
+</p>
+
+<p>
+For the first time, she understood that
+there might be no easy way home.
+</p>
+
+`
+},
+
+
+{
+title:"The Forest of Whispers",
+content:`
+
+<h2>
+Chapter 4 — The Forest of Whispers
+</h2>
+
+<p>
+The forest was unlike anything Mira had ever seen.
+</p>
+
+<p>
+The trees were enormous.
+</p>
+
+<p>
+Their leaves reflected pale blue light.
+</p>
+
+<p>
+Strange whispers moved through the branches.
+</p>
+
+<div class="dialogue">
+"Don't listen to them."
+</div>
+
+<p>
+Kael warned her.
+</p>
+
+<p>
+But then Mira heard her mother's voice.
+</p>
+
+<div class="dialogue">
+"Mira, come home."
+</div>
+
+<p>
+She stopped walking.
+</p>
+
+<p>
+The voice sounded exactly like her mother.
+</p>
+
+<p>
+Kael grabbed her hand.
+</p>
+
+<div class="dialogue">
+"It isn't real."
+</div>
+
+<p>
+Mira closed her eyes.
+</p>
+
+<p>
+The voice disappeared.
+</p>
+
+<p>
+They continued deeper into the forest.
+</p>
+
+<p>
+At midnight, they discovered a ruined stone house.
+</p>
+
+<p>
+Inside was an old woman.
+</p>
+
+<p>
+She seemed to have been waiting for them.
+</p>
+
+<div class="dialogue">
+"The kingdom remembers you."
+</div>
+
+<p>
+Mira stared at her.
+</p>
+
+<div class="dialogue">
+"You know me?"
+</div>
+
+<p>
+The woman smiled.
+</p>
+
+<div class="dialogue">
+"I knew your grandmother."
+</div>
+
+`
+},
+
+
+{
+title:"The Forgotten Queen",
+content:`
+
+<h2>
+Chapter 5 — The Forgotten Queen
+</h2>
+
+<p>
+The old woman told Mira a secret.
+</p>
+
+<p>
+Her grandmother had not been an ordinary villager.
+</p>
+
+<p>
+She had once served the royal family of Eldoria.
+</p>
+
+<p>
+When the kingdom fell,
+she escaped through a hidden passage.
+</p>
+
+<p>
+She carried the royal bloodline with her.
+</p>
+
+<div class="dialogue">
+"Your grandmother was the last guardian."
+</div>
+
+<p>
+Mira could barely believe it.
+</p>
+
+<p>
+The glowing stone suddenly became brighter.
+</p>
+
+<div class="magic-box">
+The seven stars on the map began to glow.
+</div>
+
+<p>
+The old woman looked frightened.
+</p>
+
+<div class="dialogue">
+"They know you have returned."
+</div>
+
+<p>
+Kael reached for his sword.
+</p>
+
+<div class="dialogue">
+"Who?"
+</div>
+
+<p>
+The old woman looked toward the forest.
+</p>
+
+<div class="dialogue">
+"The Shadow King."
+</div>
+
+<p>
+A cold wind passed through the room.
+</p>
+
+<p>
+The candles went out.
+</p>
+
+`
+},
+
+
+{
+title:"The Shadow King",
+content:`
+
+<h2>
+Chapter 6 — The Shadow King
+</h2>
+
+<p>
+The Shadow King was not a king in the ordinary sense.
+</p>
+
+<p>
+He was the last guardian of the darkness
+that had destroyed Eldoria.
+</p>
+
+<p>
+For centuries, he had waited for the royal bloodline
+to return.
+</p>
+
+<p>
+Now he had found it.
+</p>
+
+<p>
+Mira and Kael escaped through a hidden tunnel.
+</p>
+
+<p>
+Behind them, the old house disappeared into darkness.
+</p>
+
+<p>
+They reached a valley beneath the mountains.
+</p>
+
+<p>
+At the center stood a giant stone door.
+</p>
+
+<div class="dialogue">
+"This is the entrance to Eldoria."
+</div>
+
+<p>
+Kael placed his hand against the stone.
+</p>
+
+<p>
+Nothing happened.
+</p>
+
+<p>
+Mira stepped forward.
+</p>
+
+<p>
+The glowing stone reacted immediately.
+</p>
+
+<p>
+Seven symbols appeared across the door.
+</p>
+
+<p>
+The first one began to shine.
+</p>
+
+<div class="dialogue">
+"Only six more."
+</div>
+
+<p>
+Kael whispered.
+</p>
+
+<p>
+But behind them,
+a voice echoed through the valley.
+</p>
+
+<div class="dialogue">
+"You will not reach the seventh."
+</div>
+
+`
+},
+
+
+{
+title:"The City Beneath the Moon",
+content:`
+
+<h2>
+Chapter 7 — The City Beneath the Moon
+</h2>
+
+<p>
+The stone door opened.
+</p>
+
+<p>
+Beyond it stood a city hidden beneath the mountains.
+</p>
+
+<p>
+Tall towers rose toward a silver sky.
+</p>
+
+<p>
+Bridges floated between buildings.
+</p>
+
+<p>
+Rivers of blue light flowed through the streets.
+</p>
+
+<p>
+Mira could not speak.
+</p>
+
+<div class="dialogue">
+"Eldoria."
+</div>
+
+<p>
+Kael smiled.
+</p>
+
+<div class="dialogue">
+"Welcome to the lost kingdom."
+</div>
+
+<p>
+But the city was empty.
+</p>
+
+<p>
+No people lived there.
+</p>
+
+<p>
+Only statues remained.
+</p>
+
+<p>
+Mira entered the central palace.
+</p>
+
+<p>
+Inside she found a throne covered with dust.
+</p>
+
+<p>
+Behind it was a painting.
+</p>
+
+<p>
+The painting showed a queen holding the same glowing stone.
+</p>
+
+<p>
+The queen's face looked familiar.
+</p>
+
+<p>
+Mira moved closer.
+</p>
+
+<div class="dialogue">
+"That's my grandmother."
+</div>
+
+<p>
+Kael stared at the painting.
+</p>
+
+<p>
+The truth was finally becoming clear.
+</p>
+
+`
+},
+
+
+{
+title:"The Seven Keys",
+content:`
+
+<h2>
+Chapter 8 — The Seven Keys
+</h2>
+
+<p>
+The palace contained seven chambers.
+</p>
+
+<p>
+Each chamber held a symbol.
+</p>
+
+<p>
+Together they formed the ancient seal.
+</p>
+
+<p>
+Mira understood what she had to do.
+</p>
+
+<p>
+She needed to restore the seven keys
+before the Shadow King could enter the city.
+</p>
+
+<p>
+The first key was hidden in the palace.
+</p>
+
+<p>
+The second was beneath the river.
+</p>
+
+<p>
+The third was guarded by the stone guardians.
+</p>
+
+<p>
+The fourth rested inside the old library.
+</p>
+
+<p>
+The fifth was hidden in the royal garden.
+</p>
+
+<p>
+The sixth belonged to the last living guardian.
+</p>
+
+<p>
+The seventh was different.
+</p>
+
+<div class="dialogue">
+"Where is the seventh?"
+</div>
+
+<p>
+Mira asked.
+</p>
+
+<p>
+Kael looked at her.
+</p>
+
+<div class="dialogue">
+"Maybe it was never an object."
+</div>
+
+<p>
+Mira understood.
+</p>
+
+<p>
+The seventh key might be something only she could provide.
+</p>
+
+<p>
+Her courage.
+</p>
+
+<p>
+Her choice.
+</p>
+
+<p>
+Her willingness to protect the kingdom.
+</p>
+
+`
+},
+
+
+{
+title:"The Battle at Dawn",
+content:`
+
+<h2>
+Chapter 9 — The Battle at Dawn
+</h2>
+
+<p>
+The Shadow King entered Eldoria before sunrise.
+</p>
+
+<p>
+Dark clouds covered the silver sky.
+</p>
+
+<p>
+The empty statues began moving.
+</p>
+
+<p>
+Kael stood at the palace entrance.
+</p>
+
+<div class="dialogue">
+"You don't have to fight."
+</div>
+
+<p>
+Mira looked at him.
+</p>
+
+<div class="dialogue">
+"If I run, everyone loses."
+</div>
+
+<p>
+The battle began.
+</p>
+
+<p>
+The stone guardians protected the palace.
+</p>
+
+<p>
+Kael fought beside them.
+</p>
+
+<p>
+Mira carried the glowing stone toward the central chamber.
+</p>
+
+<p>
+The Shadow King followed.
+</p>
+
+<div class="dialogue">
+"You are wasting your time."
+</div>
+
+<p>
+Mira turned.
+</p>
+
+<div class="dialogue">
+"Maybe."
+</div>
+
+<p>
+She raised the stone.
+</p>
+
+<div class="dialogue">
+"But this kingdom deserves another chance."
+</div>
+
+<p>
+The seven symbols began shining together.
+</p>
+
+<p>
+The darkness moved toward her.
+</p>
+
+<p>
+For one terrifying moment,
+everything became silent.
+</p>
+
+<p>
+Then the entire kingdom filled with light.
+</p>
+
+`
+},
+
+
+{
+title:"The Choice",
+content:`
+
+<h2>
+Chapter 10 — The Choice
+</h2>
+
+<p>
+Mira woke inside the royal chamber.
+</p>
+
+<p>
+The Shadow King was gone.
+</p>
+
+<p>
+The seven keys had disappeared.
+</p>
+
+<p>
+In their place stood a single crown.
+</p>
+
+<p>
+Kael entered the room.
+</p>
+
+<div class="dialogue">
+"The kingdom is waiting."
+</div>
+
+<p>
+Mira looked at the crown.
+</p>
+
+<div class="dialogue">
+"For me?"
+</div>
+
+<p>
+Kael nodded.
+</p>
+
+<p>
+But Mira did not take it.
+</p>
+
+<div class="dialogue">
+"I don't know how to be a queen."
+</div>
+
+<p>
+Kael smiled.
+</p>
+
+<div class="dialogue">
+"Neither did the first queen."
+</div>
+
+<p>
+Mira understood.
+</p>
+
+<p>
+Being a ruler was not about knowing everything.
+</p>
+
+<p>
+It was about choosing what was right
+when there was no easy answer.
+</p>
+
+<p>
+She picked up the crown.
+</p>
+
+<p>
+The kingdom awakened.
+</p>
+
+`
+},
+
+
+{
+title:"The Kingdom Awakens",
+content:`
+
+<h2>
+Chapter 11 — The Kingdom Awakens
+</h2>
+
+<p>
+The bells of Eldoria rang for the first time
+in hundreds of years.
+</p>
+
+<p>
+Lights appeared across the city.
+</p>
+
+<p>
+Doors opened.
+</p>
+
+<p>
+People slowly returned from hidden places.
+</p>
+
+<p>
+They had been waiting for the royal bloodline.
+</p>
+
+<p>
+Mira stood before them.
+</p>
+
+<p>
+She did not promise that everything would be perfect.
+</p>
+
+<p>
+She promised something simpler.
+</p>
+
+<div class="dialogue">
+"I will listen."
+</div>
+
+<p>
+The people remained silent.
+</p>
+
+<p>
+Then one person stepped forward.
+</p>
+
+<div class="dialogue">
+"Welcome home, Your Highness."
+</div>
+
+<p>
+Mira looked toward the mountains.
+</p>
+
+<p>
+Her village was still beyond them.
+</p>
+
+<p>
+She knew she had a choice.
+</p>
+
+<p>
+She could stay inside the palace forever.
+</p>
+
+<p>
+Or she could build a bridge between the old kingdom
+and the world outside.
+</p>
+
+<p>
+She chose the bridge.
+</p>
+
+`
+},
+
+
+{
+title:"The New Queen",
+content:`
+
+<h2>
+Chapter 12 — The New Queen
+</h2>
+
+<p>
+One year later,
+Eldoria was no longer a forgotten kingdom.
+</p>
+
+<p>
+Trade routes connected it with nearby villages.
+</p>
+
+<p>
+The forests were protected.
+</p>
+
+<p>
+The old magic was studied carefully.
+</p>
+
+<p>
+The palace gates remained open.
+</p>
+
+<p>
+Mira still visited her village whenever she could.
+</p>
+
+<p>
+Kael became the kingdom's chief guardian.
+</p>
+
+<p>
+One evening,
+Mira stood on the highest tower.
+</p>
+
+<p>
+The mountains looked peaceful below her.
+</p>
+
+<p>
+She remembered the night she had found
+the glowing stone.
+</p>
+
+<p>
+She had been only a village girl.
+</p>
+
+<p>
+She had been afraid.
+</p>
+
+<p>
+But she had walked forward anyway.
+</p>
+
+<div class="dialogue">
+"Maybe courage was never about being fearless."
+</div>
+
+<p>
+Kael stood beside her.
+</p>
+
+<div class="dialogue">
+"Then what is it?"
+</div>
+
+<p>
+Mira smiled.
+</p>
+
+<div class="dialogue">
+"Choosing to move forward while you're afraid."
+</div>
+
+<p>
+Far below,
+the lights of Eldoria filled the valley.
+</p>
+
+<p>
+The lost kingdom was no longer lost.
+</p>
+
+<h3>
+The End
+</h3>
+
+<p>
+And somewhere beyond the mountains,
+new stories were already beginning.
+</p>
+
+`
+
+}
+
+];
+
+
+const chapterGrid =
+document.getElementById("chapterGrid");
+
+const chapterSection =
+document.getElementById("chapterSection");
+
+const reader =
+document.getElementById("reader");
+
+const chapterContent =
+document.getElementById("chapterContent");
+
+const searchInput =
+document.getElementById("searchInput");
+
+const prevBtn =
+document.getElementById("prevBtn");
+
+const nextBtn =
+document.getElementById("nextBtn");
+
+const chapterBtn =
+document.getElementById("chapterBtn");
+
+const progressText =
+document.getElementById("progressText");
+
+const progressPercent =
+document.getElementById("progressPercent");
+
+const progressFill =
+document.getElementById("progressFill");
+
+const themeBtn =
+document.getElementById("themeBtn");
+
+const backBtn =
+document.getElementById("backBtn");
+
+
+let currentIndex = 0;
+
+
+function renderChapters(list){
+
+  chapterGrid.innerHTML = "";
+
+  list.forEach(function(chapter){
+
+    const originalIndex =
+      chapters.indexOf(chapter);
+
+    const card =
+      document.createElement("div");
+
+    card.className =
+      "chapter-card";
+
+    card.innerHTML = `
+
+      <div class="chapter-number">
+        ${originalIndex + 1}
+      </div>
+
+      <h3>
+        ${chapter.title}
+      </h3>
+
+      <p>
+        Read chapter ${originalIndex + 1}
+      </p>
+
+    `;
+
+    card.addEventListener(
+      "click",
+      function(){
+
+        openChapter(originalIndex);
+
+      }
+    );
+
+    chapterGrid.appendChild(card);
+
+  });
+
+}
+
+
+function openChapter(index){
+
+  if(
+    index < 0 ||
+    index >= chapters.length
+  ){
+
+    return;
+
+  }
+
+  currentIndex = index;
+
+  chapterSection.style.display =
+    "none";
+
+  reader.classList.add("active");
+
+  chapterContent.innerHTML =
+    chapters[index].content;
+
+  updateNavigation();
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+function showChapters(){
+
+  reader.classList.remove("active");
+
+  chapterSection.style.display =
+    "block";
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+function updateNavigation(){
+
+  progressText.textContent =
+    "Chapter " +
+    (currentIndex + 1) +
+    " of " +
+    chapters.length;
+
+  const percentage =
+    Math.round(
+      ((currentIndex + 1) /
+      chapters.length) * 100
+    );
+
+  progressPercent.textContent =
+    percentage + "%";
+
+  progressFill.style.width =
+    percentage + "%";
+
+  prevBtn.disabled =
+    currentIndex === 0;
+
+  nextBtn.disabled =
+    currentIndex ===
+    chapters.length - 1;
+
+}
+
+
+function searchChapters(){
+
+  const query =
+    searchInput.value
+      .toLowerCase()
+      .trim();
+
+  if(!query){
+
+    renderChapters(chapters);
+
+    return;
+
+  }
+
+  const filtered =
+    chapters.filter(function(chapter){
+
+      return chapter.title
+        .toLowerCase()
+        .includes(query);
+
+    });
+
+  renderChapters(filtered);
+
+}
+
+
+prevBtn.addEventListener(
+  "click",
+  function(){
+
+    if(currentIndex > 0){
+
+      openChapter(
+        currentIndex - 1
+      );
+
+    }
+
+  }
+);
+
+
+nextBtn.addEventListener(
+  "click",
+  function(){
+
+    if(
+      currentIndex <
+      chapters.length - 1
+    ){
+
+      openChapter(
+        currentIndex + 1
+      );
+
+    }
+
+  }
+);
+
+
+chapterBtn.addEventListener(
+  "click",
+  showChapters
+);
+
+
+themeBtn.addEventListener(
+  "click",
+  function(){
+
+    document.body.classList.toggle(
+      "dark"
+    );
+
+    const isDark =
+      document.body.classList.contains(
+        "dark"
+      );
+
+    localStorage.setItem(
+      "jr_ai_theme",
+      isDark ? "dark" : "light"
+    );
+
+    themeBtn.textContent =
+      isDark ? "☀️" : "🌙";
+
+  }
+);
+
+
+backBtn.addEventListener(
+  "click",
+  function(){
+
+    window.location.href =
+      "bookstore.html";
+
+  }
+);
+
+
+function loadTheme(){
+
+  const savedTheme =
+    localStorage.getItem(
+      "jr_ai_theme"
+    );
+
+  if(savedTheme === "dark"){
+
+    document.body.classList.add(
+      "dark"
+    );
+
+    themeBtn.textContent =
+      "☀️";
+
+  }
+
+}
+
+
+searchInput.addEventListener(
+  "input",
+  searchChapters
+);
+
+
+loadTheme();
+
+renderChapters(chapters);
+
+updateNavigation();
+
+</script>
+
+</body>
+</html>
