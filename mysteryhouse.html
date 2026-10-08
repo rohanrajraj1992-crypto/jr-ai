@@ -1,0 +1,2040 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Mystery House | JR AI Book Store</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f4f7fb;
+  color:#172033;
+  min-height:100vh;
+  transition:background .25s,color .25s;
+}
+
+body.dark{
+  background:#101522;
+  color:#f1f5f9;
+}
+
+/* HEADER */
+
+.header{
+  position:sticky;
+  top:0;
+  z-index:1000;
+  height:64px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 16px;
+  background:#111827;
+  color:white;
+  box-shadow:0 4px 18px rgba(0,0,0,.18);
+}
+
+.header-left{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.back-btn,
+.theme-btn{
+  border:none;
+  background:#263244;
+  color:white;
+  width:40px;
+  height:40px;
+  border-radius:12px;
+  font-size:19px;
+  cursor:pointer;
+}
+
+.header-title{
+  font-size:18px;
+  font-weight:800;
+}
+
+/* COVER */
+
+.cover{
+  margin:18px auto;
+  width:calc(100% - 28px);
+  max-width:900px;
+  min-height:230px;
+  border-radius:24px;
+  padding:28px 22px;
+  display:flex;
+  align-items:center;
+  gap:22px;
+  color:white;
+  background:
+    radial-gradient(circle at top right,#334155 0,#111827 48%,#020617 100%);
+  box-shadow:0 14px 35px rgba(0,0,0,.22);
+}
+
+.cover-icon{
+  width:125px;
+  height:160px;
+  flex-shrink:0;
+  border-radius:16px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:64px;
+  background:linear-gradient(145deg,#1e293b,#020617);
+  border:1px solid rgba(255,255,255,.15);
+  box-shadow:0 12px 25px rgba(0,0,0,.3);
+}
+
+.cover-info h1{
+  font-size:31px;
+  margin-bottom:10px;
+}
+
+.cover-info p{
+  color:#cbd5e1;
+  line-height:1.6;
+  font-size:15px;
+}
+
+/* SEARCH */
+
+.search-wrap{
+  width:calc(100% - 28px);
+  max-width:900px;
+  margin:0 auto 18px;
+}
+
+.search-box{
+  width:100%;
+  height:50px;
+  border:1px solid #d6dce6;
+  border-radius:16px;
+  padding:0 16px;
+  font-size:15px;
+  outline:none;
+  background:white;
+  color:#172033;
+  box-shadow:0 5px 16px rgba(15,23,42,.06);
+}
+
+.search-box:focus{
+  border-color:#64748b;
+}
+
+body.dark .search-box{
+  background:#1a2232;
+  color:#f8fafc;
+  border-color:#334155;
+}
+
+/* CHAPTER SECTION */
+
+.chapter-section{
+  width:calc(100% - 28px);
+  max-width:900px;
+  margin:0 auto 30px;
+}
+
+.section-heading{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:14px;
+}
+
+.section-heading h2{
+  font-size:22px;
+}
+
+.chapter-count{
+  font-size:13px;
+  color:#64748b;
+}
+
+body.dark .chapter-count{
+  color:#94a3b8;
+}
+
+.chapter-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+}
+
+.chapter-card{
+  background:white;
+  border:1px solid #e2e8f0;
+  border-radius:18px;
+  padding:16px;
+  min-height:150px;
+  box-shadow:0 7px 20px rgba(15,23,42,.06);
+  transition:transform .2s,box-shadow .2s;
+}
+
+.chapter-card:hover{
+  transform:translateY(-2px);
+  box-shadow:0 12px 26px rgba(15,23,42,.1);
+}
+
+body.dark .chapter-card{
+  background:#182131;
+  border-color:#2d3a4d;
+  box-shadow:none;
+}
+
+.chapter-number{
+  width:38px;
+  height:38px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:12px;
+  background:#e2e8f0;
+  color:#1e293b;
+  font-weight:800;
+  margin-bottom:12px;
+}
+
+body.dark .chapter-number{
+  background:#293548;
+  color:#e2e8f0;
+}
+
+.chapter-card h3{
+  font-size:16px;
+  line-height:1.4;
+  margin-bottom:12px;
+}
+
+.read-btn{
+  border:none;
+  background:#1e293b;
+  color:white;
+  padding:9px 13px;
+  border-radius:11px;
+  font-size:13px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.read-btn:hover{
+  background:#334155;
+}
+
+.no-result{
+  display:none;
+  padding:30px;
+  text-align:center;
+  color:#64748b;
+  background:white;
+  border-radius:18px;
+}
+
+body.dark .no-result{
+  background:#182131;
+  color:#94a3b8;
+}
+
+/* READER */
+
+.reader{
+  display:none;
+  width:calc(100% - 28px);
+  max-width:900px;
+  margin:0 auto 35px;
+}
+
+.reader.active{
+  display:block;
+}
+
+.reader-top{
+  background:white;
+  border:1px solid #e2e8f0;
+  border-radius:20px;
+  padding:20px;
+  margin-bottom:14px;
+  box-shadow:0 7px 20px rgba(15,23,42,.06);
+}
+
+body.dark .reader-top{
+  background:#182131;
+  border-color:#2d3a4d;
+  box-shadow:none;
+}
+
+.reader-top h2{
+  font-size:24px;
+  line-height:1.35;
+  margin-bottom:8px;
+}
+
+.reader-top p{
+  color:#64748b;
+  font-size:14px;
+}
+
+body.dark .reader-top p{
+  color:#94a3b8;
+}
+
+.reader-content{
+  background:white;
+  border:1px solid #e2e8f0;
+  border-radius:20px;
+  padding:22px;
+  line-height:1.8;
+  font-size:16px;
+  box-shadow:0 7px 20px rgba(15,23,42,.06);
+}
+
+body.dark .reader-content{
+  background:#182131;
+  border-color:#2d3a4d;
+  box-shadow:none;
+}
+
+.reader-content p{
+  margin-bottom:18px;
+}
+
+.reader-content h3{
+  margin:26px 0 14px;
+  font-size:21px;
+}
+
+.dialogue{
+  margin:20px 0;
+  padding:15px 18px;
+  border-left:4px solid #475569;
+  background:#f1f5f9;
+  border-radius:12px;
+  font-weight:700;
+  font-style:italic;
+}
+
+body.dark .dialogue{
+  background:#222c3c;
+  border-left-color:#94a3b8;
+}
+
+/* NAVIGATION */
+
+.navigation{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:10px;
+  margin-top:15px;
+}
+
+.navigation button{
+  min-height:46px;
+  border:none;
+  border-radius:13px;
+  background:#1e293b;
+  color:white;
+  font-weight:700;
+  cursor:pointer;
+  padding:8px;
+}
+
+.navigation button:hover{
+  background:#334155;
+}
+
+.navigation button:disabled{
+  opacity:.4;
+  cursor:not-allowed;
+}
+
+.progress-wrap{
+  margin-top:15px;
+  text-align:center;
+}
+
+.progress-bar{
+  width:100%;
+  height:8px;
+  border-radius:20px;
+  overflow:hidden;
+  background:#dbe2ea;
+}
+
+body.dark .progress-bar{
+  background:#2d3748;
+}
+
+.progress-fill{
+  height:100%;
+  width:0;
+  background:#475569;
+  border-radius:20px;
+  transition:width .25s;
+}
+
+.progress-text{
+  margin-top:8px;
+  font-size:13px;
+  color:#64748b;
+}
+
+body.dark .progress-text{
+  color:#94a3b8;
+}
+
+/* FOOTER */
+
+.footer{
+  text-align:center;
+  padding:25px 15px 35px;
+  color:#64748b;
+  font-size:13px;
+}
+
+body.dark .footer{
+  color:#94a3b8;
+}
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+  .header{
+    height:60px;
+  }
+
+  .header-title{
+    font-size:16px;
+  }
+
+  .cover{
+    min-height:190px;
+    padding:20px 16px;
+    gap:15px;
+  }
+
+  .cover-icon{
+    width:90px;
+    height:125px;
+    font-size:46px;
+  }
+
+  .cover-info h1{
+    font-size:23px;
+  }
+
+  .cover-info p{
+    font-size:13px;
+  }
+
+  .chapter-grid{
+    grid-template-columns:1fr;
+  }
+
+  .reader-content{
+    padding:18px;
+    font-size:15px;
+  }
+
+  .reader-top h2{
+    font-size:21px;
+  }
+
+  .navigation button{
+    font-size:12px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+
+  <div class="header-left">
+
+    <button
+      class="back-btn"
+      type="button"
+      onclick="goBack()"
+      aria-label="Back"
+    >
+      ←
+    </button>
+
+    <div class="header-title">
+      🕯️ Mystery House
+    </div>
+
+  </div>
+
+  <button
+    class="theme-btn"
+    type="button"
+    onclick="toggleTheme()"
+    aria-label="Toggle theme"
+  >
+    🌙
+  </button>
+
+</header>
+
+
+<section class="cover">
+
+  <div class="cover-icon">
+    🏚️
+  </div>
+
+  <div class="cover-info">
+
+    <h1>Mystery House</h1>
+
+    <p>
+      A mysterious house, forgotten secrets, hidden rooms
+      and a story that refuses to stay buried.
+    </p>
+
+  </div>
+
+</section>
+
+
+<div class="search-wrap">
+
+  <input
+    id="searchInput"
+    class="search-box"
+    type="text"
+    placeholder="🔎 Search chapters..."
+    autocomplete="off"
+  >
+
+</div>
+
+
+<section
+  id="chapterSection"
+  class="chapter-section"
+>
+
+  <div class="section-heading">
+
+    <h2>Chapters</h2>
+
+    <span
+      id="chapterCount"
+      class="chapter-count"
+    >
+      12 Chapters
+    </span>
+
+  </div>
+
+  <div
+    id="chapterGrid"
+    class="chapter-grid"
+  ></div>
+
+  <div
+    id="noResult"
+    class="no-result"
+  >
+    No chapter found.
+  </div>
+
+</section>
+
+
+<section
+  id="reader"
+  class="reader"
+>
+
+  <div class="reader-top">
+
+    <h2 id="readerTitle">
+      Mystery House
+    </h2>
+
+    <p id="readerSubtitle">
+      JR AI Original Story
+    </p>
+
+  </div>
+
+  <article
+    id="readerContent"
+    class="reader-content"
+  ></article>
+
+  <div class="navigation">
+
+    <button
+      id="prevBtn"
+      type="button"
+      onclick="previousChapter()"
+    >
+      ← Previous
+    </button>
+
+    <button
+      type="button"
+      onclick="showChapters()"
+    >
+      📚 Chapters
+    </button>
+
+    <button
+      id="nextBtn"
+      type="button"
+      onclick="nextChapter()"
+    >
+      Next →
+    </button>
+
+  </div>
+
+  <div class="progress-wrap">
+
+    <div class="progress-bar">
+
+      <div
+        id="progressFill"
+        class="progress-fill"
+      ></div>
+
+    </div>
+
+    <div
+      id="progressText"
+      class="progress-text"
+    >
+      Chapter 1 of 12
+    </div>
+
+  </div>
+
+</section>
+
+
+<footer class="footer">
+  JR AI Original Book • Mystery House
+</footer>
+
+
+<script>
+
+const chapters = [
+
+  {
+    title: "The Road to Blackwood",
+    content: `
+      <p>
+        The road to Blackwood House was almost completely empty.
+      </p>
+
+      <p>
+        Nora drove slowly through the rain, following the directions
+        her grandfather had left behind.
+      </p>
+
+      <p>
+        She had not visited the house since childhood.
+      </p>
+
+      <p>
+        At the end of the road, the old house appeared through the fog.
+      </p>
+
+      <p>
+        Its windows were dark, its walls were covered with age,
+        and the iron gate stood open as if someone had been waiting.
+      </p>
+
+      <div class="dialogue">
+        "This place still gives me the same feeling."
+      </div>
+
+      <p>
+        Nora switched off the engine and looked at the house.
+      </p>
+
+      <p>
+        She had come for answers.
+      </p>
+
+      <p>
+        Nora opened the car door and stepped into the cold rain.
+      </p>
+
+      <p>
+        She picked up her bag from the passenger seat and walked
+        slowly toward the iron gate.
+      </p>
+
+      <p>
+        The gate moved slightly in the wind.
+      </p>
+
+      <p>
+        Behind her, the road disappeared into the fog.
+      </p>
+
+      <p>
+        Nora looked back one last time.
+      </p>
+
+      <div class="dialogue">
+        "I should have listened to Grandpa."
+      </div>
+
+      <p>
+        She pushed the gate open and entered the property.
+      </p>
+
+      <p>
+        The moment she stepped inside, the gate closed behind her.
+      </p>
+
+      <p>
+        Nora turned around.
+      </p>
+
+      <p>
+        The wind had completely stopped.
+      </p>
+
+      <p>
+        She stared at the gate for a few seconds before continuing
+        toward the house.
+      </p>
+
+      <p>
+        The front door was already open.
+      </p>
+
+      <p>
+        Nora stopped at the entrance.
+      </p>
+
+      <div class="dialogue">
+        "Hello?"
+      </div>
+
+      <p>
+        No one answered.
+      </p>
+
+      <p>
+        She stepped inside.
+      </p>
+
+      <p>
+        The door slowly closed behind her.
+      </p>
+    `
+  },
+
+  {
+    title: "The Empty House",
+    content: `
+      <p>
+        The front door opened with a long, painful creak.
+      </p>
+
+      <p>
+        Nora stepped inside and looked around.
+      </p>
+
+      <p>
+        Everything appeared exactly as she remembered it.
+      </p>
+
+      <p>
+        The old staircase stood in the center of the hall.
+        Paintings covered the walls.
+        A grandfather clock stood silently near the fireplace.
+      </p>
+
+      <p>
+        Yet the house felt as if someone had left only minutes ago.
+      </p>
+
+      <p>
+        A cup was sitting on the kitchen table.
+      </p>
+
+      <p>
+        It was still warm.
+      </p>
+
+      <div class="dialogue">
+        "Impossible."
+      </div>
+
+      <p>
+        Nora looked toward the hallway.
+      </p>
+
+      <p>
+        She was certain she was alone.
+            </p>
+
+      <p>
+        Nora slowly walked toward the hallway.
+      </p>
+
+      <p>
+        The house was silent again.
+      </p>
+
+      <p>
+        She looked at the warm cup on the table.
+      </p>
+
+      <p>
+        Someone had definitely been here.
+      </p>
+
+      <p>
+        Nora picked up the cup and examined it carefully.
+      </p>
+
+      <p>
+        There was a faint mark on the bottom.
+      </p>
+
+      <p>
+        A single letter.
+      </p>
+
+      <div class="dialogue">
+        "B."
+      </div>
+
+      <p>
+        She remembered the name Blackwood.
+      </p>
+
+      <p>
+        Her grandfather had always told her that some family secrets
+        were better left forgotten.
+      </p>
+
+      <p>
+        Nora had never understood what he meant.
+      </p>
+
+      <p>
+        Until now.
+      </p>
+
+      <p>
+        A soft sound came from upstairs.
+      </p>
+
+      <p>
+        Nora looked toward the staircase.
+      </p>
+
+      <div class="dialogue">
+        "Is someone there?"
+      </div>
+
+      <p>
+        No answer came.
+      </p>
+
+      <p>
+        She slowly climbed the stairs.
+      </p>
+
+      <p>
+        Halfway up, she noticed something lying on the floor.
+      </p>
+
+      <p>
+        It was an old photograph.
+      </p>
+
+      <p>
+        Nora picked it up.
+      </p>
+
+      <p>
+        The photograph showed her grandfather standing
+        in front of Blackwood House.
+      </p>
+
+      <p>
+        But he was not alone.
+      </p>
+
+      <p>
+        Someone was standing beside him.
+      </p>
+
+      <p>
+        The person's face had been scratched away.
+      </p>
+
+      <p>
+        On the back of the photograph were four words.
+      </p>
+
+      <div class="dialogue">
+        "Never trust the house."
+      </div>
+
+      <p>
+        Nora looked toward the dark hallway.
+      </p>
+
+      <p>
+        For the first time, she wondered if coming back
+        had been a mistake.
+      </p>
+    `
+  },
+
+  {
+    title: "The Brass Key",
+    content: `
+      <p>
+        Nora discovered a small brass key hidden inside an old drawer.
+      </p>
+
+      <p>
+        No label explained what it opened.
+      </p>
+
+      <p>
+        She placed it carefully inside her coat pocket.
+      </p>
+
+      <p>
+        Somewhere upstairs, a floorboard creaked.
+      </p>
+
+      <p>
+        Nora stopped moving.
+      </p>
+
+      <p>
+        She waited.
+      </p>
+
+      <p>
+        Nothing happened.
+      </p>
+
+      <p>
+        She looked at the brass key again.
+      </p>
+
+      <p>
+        A tiny number had been engraved on its surface.
+      </p>
+
+      <div class="dialogue">
+        "17."
+      </div>
+
+      <p>
+        Nora had no idea what the number meant.
+      </p>
+
+      <p>
+        She placed the key back inside her pocket.
+      </p>
+
+      <p>
+        Then she noticed a small locked drawer beneath the desk.
+      </p>
+
+      <p>
+        The brass key fit perfectly.
+      </p>
+
+      <p>
+        Inside the drawer was an old notebook.
+      </p>
+
+      <p>
+        The first page contained only one sentence.
+      </p>
+
+      <div class="dialogue">
+        "When the clock stops, open the seventeenth door."
+      </div>
+
+      <p>
+        Nora read the sentence twice.
+      </p>
+
+      <p>
+        She looked toward the grandfather clock.
+      </p>
+
+      <p>
+        Its hands were still moving.
+      </p>
+    `
+  },
+
+  {
+    title: "The Room Beneath the House",
+    content: `
+      <p>
+        The key eventually led Nora to a hidden room beneath the house.
+      </p>
+
+      <p>
+        Old photographs covered the walls.
+      </p>
+
+      <p>
+        Most showed people Nora had never seen before.
+      </p>
+
+      <p>
+        One photograph showed her grandfather as a young man.
+      </p>
+
+      <p>
+        Beside him stood a young woman.
+      </p>
+
+      <p>
+        Her face had been scratched out.
+      </p>
+
+      <p>
+        Nora searched through the room until she found an old notebook.
+      </p>
+
+      <div class="dialogue">
+        "Do not open the seventeenth door."
+      </div>
+
+      <p>
+        Nora read the sentence twice.
+      </p>
+
+      <p>
+        The house suddenly felt much colder.
+      </p>
+    `
+  },
+
+  {
+    title: "The Stranger Upstairs",
+    content: `
+      <p>
+        Nora heard footsteps coming from the upper floor.
+      </p>
+
+      <p>
+        She followed the sound carefully.
+      </p>
+
+      <p>
+        At the end of the corridor, she saw a shadow disappear
+        behind a closed door.
+      </p>
+
+      <p>
+        Nora reached for the door handle.
+      </p>
+
+      <p>
+        It was locked.
+      </p>
+
+      <div class="dialogue">
+        "Who's there?"
+      </div>
+
+      <p>
+        No answer came.
+      </p>
+
+      <p>
+        Then three quiet knocks came from the other side.
+      </p>
+
+      <p>
+        Knock.
+      </p>
+
+      <p>
+        Knock.
+      </p>
+
+      <p>
+        Knock.
+      </p>
+
+      <p>
+        Nora stepped away from the door.
+      </p>
+    `
+  },
+
+  {
+    title: "The Missing Grandfather",
+    content: `
+      <p>
+        Nora discovered that her grandfather had been investigating
+        the house for years.
+      </p>
+
+      <p>
+        His notebooks contained dates, names, photographs and warnings.
+      </p>
+
+      <p>
+        One sentence appeared repeatedly:
+      </p>
+
+      <div class="dialogue">
+        "Do not trust the person who knows the house better than you."
+      </div>
+
+      <p>
+        Nora remembered the last conversation she had with her grandfather.
+      </p>
+
+      <p>
+        He had told her never to return to Blackwood House.
+      </p>
+
+      <p>
+        Now she understood that he had not been trying to scare her.
+      </p>
+
+      <p>
+        He had been trying to protect her.
+      </p>
+    `
+  },
+
+  {
+    title: "The Railway Station",
+    content: `
+      <p>
+        An old railway ticket found inside the notebook led Nora
+        to a forgotten railway station.
+      </p>
+
+      <p>
+        The station had been closed for more than twenty years.
+      </p>
+
+      <p>
+        Nora searched the abandoned office and found a metal box.
+      </p>
+
+      <p>
+        Inside was another photograph.
+      </p>
+
+      <p>
+        The same mysterious woman appeared in it.
+      </p>
+
+      <p>
+        On the back of the photograph was an address.
+      </p>
+
+      <div class="dialogue">
+        "Blackwood House."
+      </div>
+
+      <p>
+        Nora stared at the words.
+      </p>
+
+      <p>
+        The mystery had begun long before she was born.
+      </p>
+    `
+  },
+
+  {
+    title: "The Cemetery",
+    content: `
+      <p>
+        The final clue from the railway station took Nora to an old cemetery.
+      </p>
+
+      <p>
+        The rain had almost stopped when she entered through the iron gate.
+      </p>
+
+      <p>
+        One grave carried a name she had seen before.
+      </p>
+
+      <p>
+        The same name appeared in her grandfather's oldest notebook.
+      </p>
+
+      <p>
+        Nora touched the cold stone.
+      </p>
+
+      <div class="dialogue">
+        "Why did you hide her?"
+      </div>
+
+      <p>
+        A voice answered from somewhere behind her.
+      </p>
+
+      <div class="dialogue">
+        "Because the truth was more dangerous than the lie."
+      </div>
+
+      <p>
+        Nora turned around.
+      </p>
+
+      <p>
+        Nobody was there.
+      </p>
+    `
+  },
+
+  {
+    title: "The Final Notebook",
+    content: `
+      <p>
+        Nora returned to Blackwood House with the final notebook.
+      </p>
+
+      <p>
+        The pages revealed that her grandfather had discovered
+        the truth decades earlier.
+      </p>
+
+      <p>
+        But he had deliberately hidden it from everyone.
+      </p>
+
+      <p>
+        The final page contained only one instruction.
+      </p>
+
+      <div class="dialogue">
+        "Wait until the clock stops."
+      </div>
+
+      <p>
+        Nora looked toward the grandfather clock.
+      </p>
+
+      <p>
+        The hands were moving.
+      </p>
+
+      <p>
+        Then suddenly they stopped.
+      </p>
+
+      <p>
+        11:17.
+      </p>
+
+      <p>
+        Somewhere inside the house, a lock clicked open.
+      </p>
+    `
+  },
+
+  {
+    title: "The Person Behind Everything",
+    content: `
+      <p>
+        Nora finally discovered who had been watching the house.
+      </p>
+
+      <p>
+        The stranger was not there to harm her.
+      </p>
+
+      <p>
+        He had been protecting the secret her grandfather
+        had spent his life trying to bury.
+      </p>
+
+      <p>
+        He handed Nora an old photograph.
+      </p>
+
+      <p>
+        The picture showed her grandfather standing beside the same woman.
+      </p>
+
+      <p>
+        This time, the woman's face had not been scratched out.
+      </p>
+
+      <p>
+        Nora recognized her.
+      </p>
+
+      <div class="dialogue">
+        "My grandmother."
+      </div>
+
+      <p>
+        The stranger nodded.
+      </p>
+
+      <p>
+        The secret was finally beginning to reveal itself.
+      </p>
+    `
+  },
+
+  {
+    title: "The Last Door",
+    content: `
+      <p>
+        One final locked door remained.
+      </p>
+
+      <p>
+        Nora used the brass key she had found inside the clock.
+      </p>
+
+      <p>
+        The lock opened immediately.
+      </p>
+
+      <p>
+        Behind the door was a small room containing the original
+        photographs and documents from decades earlier.
+      </p>
+
+      <p>
+        At the center of the room was a wooden desk.
+      </p>
+
+      <p>
+        On it was a letter addressed to Nora.
+      </p>
+
+      <div class="dialogue">
+        "If you are reading this, then you are ready to know the truth."
+      </div>
+
+      <p>
+        Nora opened the letter.
+      </p>
+
+      <p>
+        Everything her grandfather had hidden was finally there.
+      </p>
+    `
+  },
+
+  {
+    title: "The House Remembers",
+    content: `
+      <p>
+        One portrait remained untouched.
+      </p>
+
+      <p>
+        It showed a young woman standing beside a man.
+      </p>
+
+      <div class="dialogue">
+        "Who are you?"
+      </div>
+
+      <p>
+        The woman in the portrait looked strangely familiar.
+      </p>
+
+      <p>
+        Nora stepped closer and studied the photograph carefully.
+        There was something about the woman's eyes that reminded her
+        of old pictures she had seen at her grandfather's house.
+      </p>
+
+      <p>
+        She looked at the man standing beside her.
+        His face had been scratched away with something sharp.
+      </p>
+
+      <div class="dialogue">
+        "Who are you?"
+      </div>
+
+      <p>
+        Nora whispered the question again, almost expecting the portrait
+        to answer.
+      </p>
+
+      <p>
+        It didn't.
+      </p>
+
+      <h3>The Clock</h3>
+
+      <p>
+        A large grandfather clock stood against the far wall.
+        Its wooden surface was covered with a thin layer of dust.
+      </p>
+
+      <p>
+        Nora walked toward it and noticed something unusual.
+        The clock hands were frozen at exactly 11:17.
+      </p>
+
+      <p>
+        She checked her phone.
+      </p>
+
+      <p>
+        11:17 p.m.
+      </p>
+
+      <p>
+        For several seconds, nothing happened.
+      </p>
+
+      <p>
+        Then the clock made a sudden sound.
+      </p>
+
+      <div class="dialogue">
+        Tick.
+      </div>
+
+      <p>
+        Nora froze.
+      </p>
+
+      <p>
+        The minute hand moved forward.
+      </p>
+
+      <div class="dialogue">
+        Tick.
+      </div>
+
+      <p>
+        Another movement.
+      </p>
+
+      <p>
+        Nora stepped closer.
+      </p>
+
+      <p>
+        A small section beneath the clock slowly opened.
+      </p>
+
+      <p>
+        Inside was a narrow compartment.
+      </p>
+
+      <p>
+        There was only one thing inside it.
+      </p>
+
+      <p>
+        A small brass key.
+      </p>
+
+      <p>
+        Nora picked it up.
+      </p>
+
+      <p>
+        A number had been engraved into the metal.
+      </p>
+
+      <div class="dialogue">
+        "17."
+      </div>
+
+      <p>
+        She looked back at the hallway.
+      </p>
+
+      <p>
+        There were seventeen doors.
+      </p>
+
+      <p>
+        Most of them were locked.
+      </p>
+
+      <p>
+        Nora slowly walked toward the first door.
+      </p>
+
+      <p>
+        The brass key felt strangely warm in her hand.
+      </p>
+
+      <p>
+        She tried the key.
+      </p>
+
+      <p>
+        Nothing happened.
+      </p>
+
+      <p>
+        She moved to the second door.
+      </p>
+
+      <p>
+        The key turned.
+      </p>
+
+      <p>
+        The lock clicked.
+      </p>
+
+      <p>
+        Nora pushed the door open.
+      </p>
+
+      <p>
+        Behind it was a small library.
+      </p>
+
+      <p>
+        Thousands of old books filled the shelves.
+      </p>
+
+      <p>
+        Most of them were covered in dust.
+      </p>
+
+      <p>
+        But three books on the middle shelf looked completely clean.
+      </p>
+
+      <p>
+        Someone had touched them recently.
+      </p>
+
+      <div class="dialogue">
+        "Someone has been here."
+      </div>
+
+      <p>
+        Nora slowly reached toward the middle book.
+      </p>
+
+      <p>
+        She pulled it from the shelf.
+      </p>
+
+      <p>
+        A quiet mechanical click came from behind the wall.
+      </p>
+
+      <p>
+        The bookshelf moved several inches.
+      </p>
+
+      <p>
+        Behind it was a narrow staircase leading downward.
+      </p>
+
+      <p>
+        Nora stared into the darkness.
+      </p>
+
+      <div class="dialogue">
+        "What were you hiding, Grandpa?"
+      </div>
+
+      <p>
+        She switched on her flashlight.
+      </p>
+
+      <p>
+        Then she took the first step down.
+      </p>
+
+      <p>
+        The door behind her slowly closed.
+      </p>
+
+      <p>
+        Nora stopped.
+      </p>
+
+      <p>
+        She turned around.
+      </p>
+
+      <p>
+        The door was completely shut.
+      </p>
+
+      <p>
+        She tried the handle.
+      </p>
+
+      <p>
+        It wouldn't move.
+      </p>
+
+      <p>
+        Then she heard something below.
+      </p>
+
+      <div class="dialogue">
+        "Nora..."
+      </div>
+
+      <p>
+        She held her breath.
+      </p>
+
+      <p>
+        The voice sounded familiar.
+      </p>
+
+      <p>
+        Too familiar.
+      </p>
+
+      <p>
+        She slowly pointed the flashlight down the stairs.
+      </p>
+
+      <p>
+        At the bottom stood a man holding an old photograph.
+      </p>
+
+      <p>
+        He looked up at her.
+      </p>
+
+      <div class="dialogue">
+        "You finally found it."
+      </div>
+
+      <p>
+        Nora's hands tightened around the flashlight.
+      </p>
+
+      <p>
+        The man stepped forward.
+      </p>
+
+      <p>
+        And in his hand was the same photograph
+        she had found upstairs.
+      </p>
+
+      <p>
+        The photograph of the woman and the man.
+      </p>
+
+      <p>
+        Nora looked at his face.
+      </p>
+
+      <p>
+        Then at the scratched-out face in the portrait.
+      </p>
+
+      <p>
+        Suddenly, everything began to make sense.
+      </p>
+
+      <div class="dialogue">
+        "You're the man in the photograph."
+      </div>
+
+      <p>
+        The stranger said nothing.
+      </p>
+
+      <p>
+        Instead, he turned the photograph around.
+      </p>
+
+      <p>
+        Written on the back were three words.
+      </p>
+
+      <div class="dialogue">
+        "The house remembers."
+      </div>
+
+      <p>
+        Nora stared at the words.
+      </p>
+
+      <p>
+        Somewhere above them, the grandfather clock began to strike.
+      </p>
+
+      <p>
+        Eleven times.
+      </p>
+
+      <p>
+        Then silence returned to Blackwood House.
+      </p>
+
+      <h3>End</h3>
+
+      <p>
+        Nora finally understood that the mystery had never been
+        about the house alone.
+      </p>
+
+      <p>
+        It was about the people who had lived there,
+        the secrets they had carried,
+        and the truth they had tried to leave behind.
+      </p>
+
+      <p>
+        She looked once more at the old photograph.
+      </p>
+
+      <p>
+        This time, she was no longer afraid.
+      </p>
+    `
+  }
+
+];
+
+
+const chapterGrid =
+  document.getElementById("chapterGrid");
+
+const chapterSection =
+  document.getElementById("chapterSection");
+
+const reader =
+  document.getElementById("reader");
+
+const readerTitle =
+  document.getElementById("readerTitle");
+
+const readerContent =
+  document.getElementById("readerContent");
+
+const searchInput =
+  document.getElementById("searchInput");
+
+const chapterCount =
+  document.getElementById("chapterCount");
+
+const noResult =
+  document.getElementById("noResult");
+
+const prevBtn =
+  document.getElementById("prevBtn");
+
+const nextBtn =
+  document.getElementById("nextBtn");
+
+const progressFill =
+  document.getElementById("progressFill");
+
+const progressText =
+  document.getElementById("progressText");
+
+
+let currentIndex = 0;
+
+
+function renderChapters(list){
+
+  chapterGrid.innerHTML = "";
+
+  chapterCount.textContent =
+    `${list.length} Chapter${list.length === 1 ? "" : "s"}`;
+
+  if(list.length === 0){
+
+    noResult.style.display = "block";
+
+    return;
+  }
+
+  noResult.style.display = "none";
+
+
+  list.forEach(function(chapter){
+
+    const originalIndex =
+      chapters.indexOf(chapter);
+
+    const card =
+      document.createElement("div");
+
+    card.className =
+      "chapter-card";
+
+
+    card.innerHTML = `
+
+      <div class="chapter-number">
+        ${originalIndex + 1}
+      </div>
+
+      <h3>
+        ${chapter.title}
+      </h3>
+
+      <button
+        class="read-btn"
+        type="button"
+        onclick="openChapter(${originalIndex})"
+      >
+        Read Chapter
+      </button>
+
+    `;
+
+
+    chapterGrid.appendChild(card);
+
+  });
+
+}
+
+
+function openChapter(index){
+
+  if(
+    index < 0 ||
+    index >= chapters.length
+  ){
+    return;
+  }
+
+
+  currentIndex = index;
+
+
+  chapterSection.style.display =
+    "none";
+
+  reader.classList.add("active");
+
+
+  readerTitle.textContent =
+    `Chapter ${currentIndex + 1}: ${chapters[currentIndex].title}`;
+
+
+  readerContent.innerHTML =
+    chapters[currentIndex].content;
+
+
+  updateNavigation();
+
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+function showChapters(){
+
+  reader.classList.remove("active");
+
+  chapterSection.style.display =
+    "block";
+
+  searchInput.focus();
+
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+function previousChapter(){
+
+  if(currentIndex > 0){
+
+    openChapter(
+      currentIndex - 1
+    );
+
+  }
+
+}
+
+
+function nextChapter(){
+
+  if(
+    currentIndex <
+    chapters.length - 1
+  ){
+
+    openChapter(
+      currentIndex + 1
+    );
+
+  }
+
+}
+
+
+function updateNavigation(){
+
+  const total =
+    chapters.length;
+
+  const current =
+    currentIndex + 1;
+
+
+  progressText.textContent =
+    `Chapter ${current} of ${total}`;
+
+
+  const percentage =
+    (current / total) * 100;
+
+
+  progressFill.style.width =
+    percentage + "%";
+
+
+  prevBtn.disabled =
+    currentIndex === 0;
+
+
+  nextBtn.disabled =
+    currentIndex === total - 1;
+
+}
+
+
+function searchChapters(){
+
+  const query =
+    searchInput.value
+      .trim()
+      .toLowerCase();
+
+
+  if(query === ""){
+
+    renderChapters(chapters);
+
+    return;
+  }
+
+
+  const filtered =
+    chapters.filter(function(chapter){
+
+      const title =
+        chapter.title.toLowerCase();
+
+      const content =
+        chapter.content.toLowerCase();
+
+      return(
+        title.includes(query) ||
+        content.includes(query)
+      );
+
+    });
+
+
+  renderChapters(filtered);
+
+}
+
+
+function toggleTheme(){
+
+  document.body.classList.toggle("dark");
+
+
+  const theme =
+    document.body.classList.contains("dark")
+      ? "dark"
+      : "light";
+
+
+  localStorage.setItem(
+    "jr_ai_theme",
+    theme
+  );
+
+}
+
+
+function loadTheme(){
+
+  const savedTheme =
+    localStorage.getItem(
+      "jr_ai_theme"
+    );
+
+
+  if(savedTheme=== "dark"){
+
+    document.body.classList.add("dark");
+
+  }
+
+}
+
+
+searchInput.addEventListener(
+  "input",
+  searchChapters
+);
+
+
+loadTheme();
+
+renderChapters(chapters);
+
+updateNavigation();
+
+</script>
+
+</body>
+</html>
