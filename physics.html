@@ -1,0 +1,1889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JR AI • Class 12 Physics</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial, sans-serif;
+  background:#f4f7fb;
+  color:#172033;
+  transition:.3s;
+}
+
+body.dark{
+  background:#101522;
+  color:#edf2ff;
+}
+
+.header{
+  position:sticky;
+  top:0;
+  z-index:100;
+  height:62px;
+  background:#ffffff;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 14px;
+  box-shadow:0 2px 12px rgba(0,0,0,.08);
+}
+
+.dark .header{
+  background:#171d2b;
+}
+
+.header-left{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.back-btn,
+.theme-btn{
+  border:0;
+  background:#eef3ff;
+  width:40px;
+  height:40px;
+  border-radius:12px;
+  font-size:20px;
+  cursor:pointer;
+}
+
+.dark .back-btn,
+.dark .theme-btn{
+  background:#252d40;
+  color:white;
+}
+
+.header-title{
+  font-size:18px;
+  font-weight:800;
+}
+
+.container{
+  width:100%;
+  max-width:850px;
+  margin:auto;
+  padding:16px;
+}
+
+/* COVER */
+
+.cover{
+  background:linear-gradient(135deg,#172554,#2563eb,#06b6d4);
+  color:white;
+  border-radius:24px;
+  padding:28px 20px;
+  min-height:250px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  box-shadow:0 10px 28px rgba(37,99,235,.25);
+}
+
+.cover-icon{
+  font-size:58px;
+  margin-bottom:12px;
+}
+
+.cover h1{
+  font-size:29px;
+  margin-bottom:8px;
+}
+
+.cover p{
+  opacity:.95;
+  font-size:14px;
+}
+
+.badges{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  justify-content:center;
+  margin-top:18px;
+}
+
+.badge{
+  background:rgba(255,255,255,.18);
+  border:1px solid rgba(255,255,255,.3);
+  padding:7px 12px;
+  border-radius:20px;
+  font-size:12px;
+}
+
+/* SEARCH */
+
+.search-box{
+  margin-top:16px;
+  position:relative;
+}
+
+.search-box input{
+  width:100%;
+  padding:15px 48px 15px 16px;
+  border:2px solid #e2e8f0;
+  border-radius:16px;
+  outline:none;
+  font-size:15px;
+  background:white;
+  color:#172033;
+}
+
+.dark .search-box input{
+  background:#171d2b;
+  border-color:#30394d;
+  color:white;
+}
+
+.search-icon{
+  position:absolute;
+  right:16px;
+  top:13px;
+  font-size:20px;
+}
+
+/* SECTION */
+
+.section{
+  margin-top:18px;
+}
+
+.section-title{
+  font-size:20px;
+  font-weight:800;
+  margin-bottom:12px;
+}
+
+/* SYLLABUS */
+
+.syllabus{
+  background:white;
+  border-radius:18px;
+  padding:17px;
+  box-shadow:0 4px 15px rgba(0,0,0,.05);
+}
+
+.dark .syllabus{
+  background:#171d2b;
+}
+
+.syllabus p{
+  font-size:14px;
+  line-height:1.7;
+  margin-bottom:8px;
+}
+
+.syllabus ul{
+  padding-left:20px;
+}
+
+.syllabus li{
+  margin:7px 0;
+  line-height:1.5;
+}
+
+/* CHAPTERS */
+
+.chapter-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:11px;
+}
+
+.chapter-card{
+  background:white;
+  border:0;
+  border-radius:17px;
+  padding:16px 12px;
+  text-align:left;
+  cursor:pointer;
+  box-shadow:0 4px 14px rgba(0,0,0,.06);
+  transition:.2s;
+  color:#172033;
+}
+
+.dark .chapter-card{
+  background:#171d2b;
+  color:white;
+}
+
+.chapter-card:active{
+  transform:scale(.97);
+}
+
+.chapter-number{
+  display:inline-flex;
+  width:30px;
+  height:30px;
+  align-items:center;
+  justify-content:center;
+  background:#e8f0ff;
+  color:#2563eb;
+  border-radius:10px;
+  font-size:12px;
+  font-weight:800;
+  margin-bottom:9px;
+}
+
+.dark .chapter-number{
+  background:#253455;
+}
+
+.chapter-card h3{
+  font-size:14px;
+  line-height:1.35;
+}
+
+.chapter-card p{
+  margin-top:5px;
+  color:#64748b;
+  font-size:11px;
+}
+
+.dark .chapter-card p{
+  color:#aab5c9;
+}
+
+/* READER */
+
+.reader{
+  display:none;
+  background:white;
+  border-radius:20px;
+  padding:18px;
+  box-shadow:0 5px 18px rgba(0,0,0,.06);
+}
+
+.dark .reader{
+  background:#171d2b;
+}
+
+.reader.active{
+  display:block;
+}
+
+.reader-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:15px;
+}
+
+.reader-top h2{
+  font-size:20px;
+  line-height:1.3;
+}
+
+.chapter-label{
+  color:#2563eb;
+  font-size:12px;
+  font-weight:800;
+}
+
+.content h3{
+  font-size:18px;
+  margin:22px 0 9px;
+}
+
+.content h4{
+  font-size:15px;
+  margin:17px 0 7px;
+}
+
+.content p{
+  font-size:14px;
+  line-height:1.75;
+  margin:8px 0;
+}
+
+.content ul,
+.content ol{
+  padding-left:21px;
+  margin:8px 0;
+}
+
+.content li{
+  font-size:14px;
+  line-height:1.65;
+  margin:5px 0;
+}
+
+.definition{
+  background:#eff6ff;
+  border-left:4px solid #2563eb;
+  padding:13px;
+  border-radius:10px;
+  margin:12px 0;
+  font-size:14px;
+  line-height:1.65;
+}
+
+.dark .definition{
+  background:#202c43;
+}
+
+.formula{
+  background:#f8fafc;
+  border:1px solid #dbe4ef;
+  padding:13px;
+  border-radius:12px;
+  margin:10px 0;
+  font-family:Georgia,serif;
+  font-size:15px;
+  overflow-x:auto;
+}
+
+.dark .formula{
+  background:#111827;
+  border-color:#344054;
+}
+
+.note{
+  background:#fff7ed;
+  border-left:4px solid #f97316;
+  padding:13px;
+  border-radius:10px;
+  margin:12px 0;
+  font-size:13px;
+  line-height:1.6;
+}
+
+.dark .note{
+  background:#302318;
+}
+
+.question-box{
+  background:#f0fdf4;
+  border-left:4px solid #16a34a;
+  padding:13px;
+  border-radius:10px;
+  margin:10px 0;
+  font-size:14px;
+  line-height:1.6;
+}
+
+.dark .question-box{
+  background:#172b22;
+}
+
+/* NAVIGATION */
+
+.reader-nav{
+  display:flex;
+  gap:9px;
+  margin-top:20px;
+}
+
+.nav-btn{
+  flex:1;
+  border:0;
+  padding:13px 8px;
+  border-radius:13px;
+  background:#2563eb;
+  color:white;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.nav-btn.secondary{
+  background:#e8eef8;
+  color:#172033;
+}
+
+.dark .nav-btn.secondary{
+  background:#293347;
+  color:white;
+}
+
+.progress-wrap{
+  margin-top:15px;
+}
+
+.progress-bar{
+  height:7px;
+  background:#e2e8f0;
+  border-radius:10px;
+  overflow:hidden;
+}
+
+.dark .progress-bar{
+  background:#30394d;
+}
+
+.progress{
+  height:100%;
+  width:0%;
+  background:#2563eb;
+  transition:.3s;
+}
+
+.progress-text{
+  text-align:center;
+  margin-top:6px;
+  font-size:11px;
+  color:#64748b;
+}
+
+/* MOBILE */
+
+@media(max-width:600px){
+  .container{
+    padding:12px;
+  }
+
+  .cover{
+    min-height:230px;
+  }
+
+  .cover h1{
+    font-size:25px;
+  }
+
+  .chapter-grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .reader{
+    padding:15px;
+  }
+
+  .content p,
+  .content li{
+    font-size:13.5px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+
+  <div class="header-left">
+    <button class="back-btn" onclick="goBack()">←</button>
+
+    <div class="header-title">
+      📘 Class 12 Physics
+    </div>
+  </div>
+
+  <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">
+    🌙
+  </button>
+
+</header>
+
+
+<main class="container">
+
+  <!-- COVER -->
+
+  <section class="cover">
+
+    <div class="cover-icon">⚡</div>
+
+    <h1>Class 12 Physics</h1>
+
+    <p>
+      Complete Study Book • Notes • Formulas • Important Questions
+    </p>
+
+    <div class="badges">
+      <span class="badge">📚 Board Level</span>
+      <span class="badge">🧠 Concept Based</span>
+      <span class="badge">📝 Exam Revision</span>
+    </div>
+
+  </section>
+
+
+  <!-- SEARCH -->
+
+  <div class="search-box">
+
+    <input
+      type="text"
+      id="searchInput"
+      placeholder="🔎 Search chapter or topic..."
+      oninput="searchChapters()"
+    >
+
+    <span class="search-icon">🔍</span>
+
+  </div>
+
+
+  <!-- SYLLABUS -->
+
+  <section class="section">
+
+    <div class="section-title">
+      📋 Class 12 Physics Syllabus
+    </div>
+
+    <div class="syllabus">
+
+      <p>
+        This JR AI Physics book covers the major Class 12 Physics
+        concepts in a structured, exam-oriented format.
+      </p>
+
+      <ul>
+
+        <li>Electric Charges and Fields</li>
+        <li>Electrostatic Potential and Capacitance</li>
+        <li>Current Electricity</li>
+        <li>Moving Charges and Magnetism</li>
+        <li>Magnetism and Matter</li>
+        <li>Electromagnetic Induction</li>
+        <li>Alternating Current</li>
+        <li>Electromagnetic Waves</li>
+        <li>Ray Optics and Optical Instruments</li>
+        <li>Wave Optics</li>
+        <li>Dual Nature of Radiation and Matter</li>
+        <li>Atoms</li>
+        <li>Nuclei</li>
+        <li>Semiconductor Electronics</li>
+
+      </ul>
+
+    </div>
+
+  </section>
+
+
+  <!-- CHAPTER LIST -->
+
+  <section class="section">
+
+    <div class="section-title">
+      📚 Chapters
+    </div>
+
+    <div class="chapter-grid" id="chapterGrid"></div>
+
+  </section>
+
+
+  <!-- READER -->
+
+  <section class="section">
+
+    <div class="reader" id="reader">
+
+      <div class="reader-top">
+
+        <div>
+          <div class="chapter-label" id="chapterLabel">
+            CHAPTER 1
+          </div>
+
+          <h2 id="chapterTitle">
+            Chapter Title
+          </h2>
+        </div>
+
+      </div>
+
+      <div class="content" id="chapterContent"></div>
+
+      <div class="reader-nav">
+
+        <button
+          class="nav-btn secondary"
+          onclick="previousChapter()"
+        >
+          ← Previous
+        </button>
+
+        <button
+          class="nav-btn secondary"
+          onclick="showChapters()"
+        >
+          📚 Chapters
+        </button>
+
+        <button
+          class="nav-btn"
+          onclick="nextChapter()"
+        >
+          Next →
+        </button>
+
+      </div>
+
+      <div class="progress-wrap">
+
+        <div class="progress-bar">
+          <div class="progress" id="progress"></div>
+        </div>
+
+        <div class="progress-text" id="progressText">
+          Chapter 1 of 14
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+</main>
+
+
+<script>
+
+/* =========================
+   CHAPTER DATA
+========================= */
+
+const chapters = [
+
+{
+title:"Electric Charges and Fields",
+
+content:`
+
+<h3>1. Electric Charge</h3>
+
+<div class="definition">
+<b>Definition:</b> Electric charge is a fundamental property of matter
+responsible for electrical interaction between particles.
+</div>
+
+<p>
+There are two types of electric charge: positive charge and negative charge.
+Like charges repel each other, while unlike charges attract each other.
+</p>
+
+<h3>2. Properties of Electric Charge</h3>
+
+<ul>
+<li>Charge is additive.</li>
+<li>Charge is conserved.</li>
+<li>Charge is quantized.</li>
+<li>Charge is invariant with respect to the observer's frame in classical physics.</li>
+</ul>
+
+<div class="formula">
+q = ne
+</div>
+
+<p>
+Here q is the total charge, n is an integer and e is the elementary charge.
+</p>
+
+<h3>3. Coulomb's Law</h3>
+
+<div class="definition">
+Coulomb's law states that the electrostatic force between two point charges
+is directly proportional to the product of their charges and inversely
+proportional to the square of the distance between them.
+</div>
+
+<div class="formula">
+F = k |q₁q₂| / r²
+</div>
+
+<p>
+The force acts along the line joining the two charges.
+</p>
+
+<h3>4. Electric Field</h3>
+
+<div class="definition">
+Electric field at a point is the force experienced by a unit positive test
+charge placed at that point.
+</div>
+
+<div class="formula">
+E = F / q
+</div>
+
+<h3>5. Electric Field Due to a Point Charge</h3>
+
+<div class="formula">
+E = kq / r²
+</div>
+
+<p>
+The direction is radially outward for a positive charge and radially inward
+for a negative charge.
+</p>
+
+<h3>6. Electric Flux</h3>
+
+<p>
+Electric flux represents the amount of electric field passing through a
+surface.
+</p>
+
+<div class="formula">
+Φ = E A cosθ
+</div>
+
+<h3>7. Gauss's Law</h3>
+
+<div class="definition">
+The total electric flux through a closed surface is proportional to the
+net charge enclosed by that surface.
+</div>
+
+<div class="formula">
+Φ = qₑₙc / ε₀
+</div>
+
+<div class="note">
+<b>Exam Focus:</b> Coulomb's law, electric field, electric flux and Gauss's
+law are important conceptual and numerical areas.
+</div>
+
+<h3>Important Questions</h3>
+
+<div class="question-box">
+1. State and explain Coulomb's law.
+</div>
+
+<div class="question-box">
+2. Define electric field intensity and derive its expression for a point charge.
+</div>
+
+<div class="question-box">
+3. What is electric flux? State Gauss's law.
+</div>
+
+`
+
+},
+
+{
+title:"Electrostatic Potential and Capacitance",
+
+content:`
+
+<h3>1. Electric Potential</h3>
+
+<div class="definition">
+Electric potential at a point is the work done per unit positive test charge
+in bringing it from infinity to that point without acceleration.
+</div>
+
+<div class="formula">
+V = W / q
+</div>
+
+<h3>2. Potential Difference</h3>
+
+<p>
+Potential difference between two points represents the work done per unit
+charge in moving a test charge between those points.
+</p>
+
+<h3>3. Potential Due to a Point Charge</h3>
+
+<div class="formula">
+V = kq / r
+</div>
+
+<h3>4. Equipotential Surface</h3>
+
+<p>
+An equipotential surface is a surface on which electric potential has the
+same value at every point. No work is done in moving a charge along an
+equipotential surface.
+</p>
+
+<h3>5. Capacitance</h3>
+
+<div class="definition">
+Capacitance is the ratio of charge stored on a conductor to the potential
+difference across it.
+</div>
+
+<div class="formula">
+C = Q / V
+</div>
+
+<h3>6. Parallel Plate Capacitor</h3>
+
+<div class="formula">
+C = ε₀A / d
+</div>
+
+<p>
+Here A is the plate area and d is the separation between the plates.
+</p>
+
+<h3>7. Energy Stored in a Capacitor</h3>
+
+<div class="formula">
+U = ½CV²
+</div>
+
+<div class="note">
+<b>Remember:</b> Capacitance depends on geometry and dielectric properties,
+not directly on the charge stored.
+</div>
+
+<h3>Important Questions</h3>
+
+<div class="question-box">
+1. Define capacitance and derive the capacitance of a parallel plate capacitor.
+</div>
+
+<div class="question-box">
+2. Explain the effect of a dielectric on capacitance.
+</div>
+
+<div class="question-box">
+3. Derive the energy stored in a capacitor.
+</div>
+
+`
+
+},
+
+{
+title:"Current Electricity",
+
+content:`
+
+<h3>1. Electric Current</h3>
+
+<div class="definition">
+Electric current is the rate of flow of electric charge through a cross-section
+of a conductor.
+</div>
+
+<div class="formula">
+I = Q / t
+</div>
+
+<h3>2. Drift Velocity</h3>
+
+<p>
+Free electrons in a conductor move randomly. In the presence of an electric
+field, they acquire a small average velocity called drift velocity.
+</p>
+
+<h3>3. Current Density</h3>
+
+<div class="formula">
+J = I / A
+</div>
+
+<p>
+Current density describes the current flowing per unit area of cross-section.
+</p>
+
+<h3>4. Ohm's Law</h3>
+
+<div class="definition">
+At constant physical conditions, the current through a conductor is directly
+proportional to the potential difference across it.
+</div>
+
+<div class="formula">
+V = IR
+</div>
+
+<h3>5. Resistance</h3>
+
+<div class="formula">
+R = ρL / A
+</div>
+
+<p>
+Resistance depends on the material, length, cross-sectional area and temperature.
+</p>
+
+<h3>6. Resistivity</h3>
+
+<div class="definition">
+Resistivity is an intrinsic property of a material that measures its opposition
+to the flow of electric current.
+</div>
+
+<h3>7. Series and Parallel Combination</h3>
+
+<p>
+For resistors in series, the same current flows through each resistor.
+For resistors in parallel, the potential difference across each branch is the same.
+</p>
+
+<div class="formula">
+Series: R = R₁ + R₂ + R₃
+</div>
+
+<div class="formula">
+Parallel: 1/R = 1/R₁ + 1/R₂ + 1/R₃
+</div>
+
+<h3>8. Electrical Power</h3>
+
+<div class="formula">
+P = VI = I²R = V²/R
+</div>
+
+<h3>Important Questions</h3>
+
+<div class="question-box">
+1. State Ohm's law and discuss its limitations.
+</div>
+
+<div class="question-box">
+2. Explain drift velocity and derive the relation between current and drift velocity.
+</div>
+
+<div class="question-box">
+3. Derive the equivalent resistance for series and parallel combinations.
+</div>
+
+`
+
+},
+
+{
+title:"Moving Charges and Magnetism",
+
+content:`
+
+<h3>1. Magnetic Force on a Moving Charge</h3>
+
+<div class="formula">
+F = qvB sinθ
+</div>
+
+<p>
+The magnetic force is perpendicular to both the velocity of the charge and
+the magnetic field.
+</p>
+
+<h3>2. Motion of a Charged Particle</h3>
+
+<p>
+A charged particle moving perpendicular to a uniform magnetic field follows
+a circular path because the magnetic force acts as the centripetal force.
+</p>
+
+<div class="formula">
+r = mv / qB
+</div>
+
+<h3>3. Force on a Current-Carrying Conductor</h3>
+
+<div class="formula">
+F = BIL sinθ
+</div>
+
+<h3>4. Biot-Savart Law</h3>
+
+<p>
+The Biot-Savart law relates the magnetic field produced by a current element
+to the current, distance and orientation of the element.
+</p>
+
+<h3>5. Ampere's Circuital Law</h3>
+
+<div class="formula">
+∮B·dl = μ₀I
+</div>
+
+<h3>Important Questions</h3>
+
+<div class="question-box">
+1. Derive the expression for the force on a moving charge in a magnetic field.
+</div>
+
+<div class="question-box">
+2. Explain the motion of a charged particle in a uniform magnetic field.
+</div>
+
+<div class="question-box">
+3. State Biot-Savart law and explain its application.
+</div>
+
+`
+
+},
+
+{
+title:"Magnetism and Matter",
+
+content:`
+
+<h3>1. Magnetic Dipole</h3>
+
+<p>
+A magnetic dipole is a system having two equal and opposite magnetic poles
+separated by a small distance.
+</p>
+
+<h3>2. Magnetic Dipole Moment</h3>
+
+<div class="formula">
+M = m × 2l
+</div>
+
+<h3>3. Earth's Magnetism</h3>
+
+<p>
+Earth behaves approximately like a giant magnet. Its magnetic field can be
+described using quantities such as magnetic declination, inclination and
+horizontal component.
+</p>
+
+<h3>4. Magnetic Materials</h3>
+
+<ul>
+<li>Diamagnetic materials</li>
+<li>Paramagnetic materials</li>
+<li>Ferromagnetic materials</li>
+</ul>
+
+<div class="note">
+Ferromagnetic materials can show strong magnetisation and may retain
+magnetism after the external field is removed.
+</div>
+
+<h3>Important Questions</h3>
+
+<div class="question-box">
+1. Differentiate between diamagnetic, paramagnetic and ferromagnetic materials.
+</div>
+
+<div class="question-box">
+2. Define magnetic dipole moment.
+</div>
+
+`
+
+},
+
+{
+title:"Electromagnetic Induction",
+
+content:`
+
+<h3>1. Electromagnetic Induction</h3>
+
+<div class="definition">
+Electromagnetic induction is the production of an emf in a circuit due to a
+change in magnetic flux linked with the circuit.
+</div>
+
+<h3>2. Magnetic Flux</h3>
+
+<div class="formula">
+Φ = BA cosθ
+</div>
+
+<h3>3. Faraday's Law</h3>
+
+<div class="formula">
+ε = -dΦ/dt
+</div>
+
+<p>
+The negative sign represents Lenz's law and indicates that the induced effect
+opposes the change producing it.
+</p>
+
+<h3>4. Lenz's Law</h3>
+
+<p>
+The direction of induced current is such that it opposes the change in magnetic
+flux responsible for producing it.
+</p>
+
+<h3>5. Self Induction</h3>
+
+<p>
+Self induction is the phenomenon in which a changing current in a coil induces
+an emf in the same coil.
+</p>
+
+<div class="formula">
+ε = -L dI/dt
+</div>
+
+<h3>Important Questions</h3>
+
+<div class="question-box">
+1. State Faraday's laws of electromagnetic induction.
+</div>
+
+<div class="question-box">
+2. Explain Lenz's law using an example.
+</div>
+
+`
+
+},
+
+{
+title:"Alternating Current",
+
+content:`
+
+<h3>1. Alternating Current</h3>
+
+<p>
+An alternating current changes its magnitude and direction periodically.
+</p>
+
+<div class="formula">
+i = I₀ sinωt
+</div>
+
+<h3>2. RMS Value</h3>
+
+<div class="formula">
+Iᵣₘₛ = I₀ / √2
+</div>
+
+<h3>3. AC Through Resistor</h3>
+
+<p>
+In a purely resistive circuit, voltage and current are in phase.
+</p>
+
+<h3>4. AC Through Inductor</h3>
+
+<p>
+In a purely inductive circuit, current lags voltage by a quarter cycle.
+</p>
+
+<h3>5. AC Through Capacitor</h3>
+
+<p>
+In a purely capacitive circuit, current leads voltage by a quarter cycle.
+</p>
+
+<h3>6. Transformer</h3>
+
+<p>
+A transformer transfers electrical energy between circuits through
+electromagnetic induction and is used to change AC voltage levels.
+</p>
+
+<div class="formula">
+V₂/V₁ = N₂/N₁
+</div>
+
+<h3>Important Questions</h3>
+
+<div class="question-box">
+1. Define RMS value of alternating current.
+</div>
+
+<div class="question-box">
+2. Explain the working principle of a transformer.
+</div>
+
+`
+
+},
+
+{
+title:"Electromagnetic Waves",
+
+content:`
+
+<h3>1. Electromagnetic Waves</h3>
+
+<div class="definition">
+Electromagnetic waves are oscillating electric and magnetic fields that can
+propagate through space.
+</div>
+
+<h3>2. Properties</h3>
+
+<ul>
+<li>They can travel through vacuum.</li>
+<li>Electric and magnetic  fields are mutually perpendicular.</li>
+<li>They are transverse waves.</li>
+<li>In vacuum, they travel at the speed of light.</li>
+</ul>
+
+<div class="formula">
+c = 1 / √(μ₀ε₀)
+</div>
+
+<h3>3. Electromagnetic Spectrum</h3>
+
+<p>
+The electromagnetic spectrum includes radio waves, microwaves, infrared,
+visible light, ultraviolet, X-rays and gamma rays.
+</p>
+
+<div class="note">
+The different regions mainly differ in wavelength, frequency and energy.
+</div>
+
+<h3>Important Questions</h3>
+
+<div class="question-box">
+1. State the properties of electromagnetic waves.
+</div>
+
+<div class="question-box">
+2. Arrange the major regions of the electromagnetic spectrum in order of frequency.
+</div>
+
+`
+
+},
+
+{
+title:"Ray Optics and Optical Instruments",
+
+content:`
+
+<h3>1. Reflection</h3>
+
+<p>
+Reflection is the return of light into the same medium after striking a surface.
+</p>
+
+<h3>2. Refraction</h3>
+
+<div class="definition">
+Refraction is the change in direction of light when it passes obliquely from
+one transparent medium to another.
+</div>
+
+<h3>3. Snell's Law</h3>
+
+<div class="formula">
+n₁ sin i = n₂ sin r
+</div>
+
+<h3>4. Lens Formula</h3>
+
+<div class="formula">
+1/f = 1/v - 1/u
+</div>
+
+<h3>5. Magnification</h3>
+
+<div class="formula">
+m = v/u
+</div>
+
+<h3>6. Total Internal Reflection</h3>
+
+<p>
+When light travels from a denser medium to a rarer medium and the angle of
+incidence exceeds the critical angle, total internal reflection can occur.
+</p>
+
+<h3>7. Optical Instruments</h3>
+
+<p>
+Important optical instruments include the microscope and telescope. They use
+lenses or mirrors to form magnified images.
+</p>
+
+<h3>Important Questions</h3>
+
+<div class="question-box">
+1. State Snell's law of refraction.
+</div>
+
+<div class="question-box">
+2. Derive the lens formula.
+</div>
+
+<div class="question-box">
+3. Explain total internal reflection and its applications.
+</div>
+
+`
+
+},
+
+{
+title:"Wave Optics",
+
+content:`
+
+<h3>1. Wave Nature of Light</h3>
+
+<p>
+Wave optics explains phenomena such as interference, diffraction and
+polarisation that cannot be fully explained using only the ray model.
+</p>
+
+<h3>2. Interference</h3>
+
+<div class="definition">
+Interference is the redistribution of intensity produced when two or more
+coherent waves overlap.
+</div>
+
+<h3>3. Young's Double Slit Experiment</h3>
+
+<p>
+Young's experiment demonstrates the wave nature of light through the formation
+of alternate bright and dark fringes.
+</p>
+
+<div class="formula">
+β = λD/d
+</div>
+
+<h3>4. Diffraction</h3>
+
+<p>
+Diffraction is the bending and spreading of waves when they pass through
+small apertures or around obstacles.
+</p>
+
+<h3>5. Polarisation</h3>
+
+<p>
+Polarisation demonstrates the transverse nature of light by restricting the
+direction of oscillation of the electric field.
+</p>
+
+<h3>Important Questions</h3>
+
+<div class="question-box">
+1. Explain Young's double-slit experiment.
+</div>
+
+<div class="question-box">
+2. What is interference?
+</div>
+
+<div class="question-box">
+3. Explain diffraction and polarisation.
+</div>
+
+`
+
+},
+
+{
+title:"Dual Nature of Radiation and Matter",
+
+content:`
+
+<h3>1. Photoelectric Effect</h3>
+
+<div class="definition">
+The photoelectric effect is the emission of electrons from a material surface
+when electromagnetic radiation of suitable frequency falls on it.
+</div>
+
+<h3>2. Einstein's Photoelectric Equation</h3>
+
+<div class="formula">
+hν = φ + Kₘₐₓ
+</div>
+
+<p>
+Here φ is the work function and Kₘₐₓ is the maximum kinetic energy of emitted
+photoelectrons.
+</p>
+
+<h3>3. Matter Waves</h3>
+
+<p>
+According to de Broglie's hypothesis, particles can exhibit wave-like
+properties.
+</p>
+
+<div class="formula">
+λ = h/p
+</div>
+
+<h3>Important Questions</h3>
+
+<div class="question-box">
+1. Explain the photoelectric effect.
+</div>
+
+<div class="question-box">
+2. State Einstein's photoelectric equation.
+</div>
+
+<div class="question-box">
+3. Explain de Broglie's matter-wave hypothesis.
+</div>
+
+`
+
+},
+
+{
+title:"Atoms",
+
+content:`
+
+<h3>1. Rutherford Model</h3>
+
+<p>
+Rutherford's experiment established the presence of a small, dense and
+positively charged nucleus inside the atom.
+</p>
+
+<h3>2. Bohr Model</h3>
+
+<p>
+Bohr proposed that electrons occupy certain allowed stationary orbits and
+that radiation is emitted or absorbed when an electron changes its energy state.
+</p>
+
+<div class="formula">
+Eₙ ∝ -1/n²
+</div>
+
+<h3>3. Hydrogen Spectrum</h3>
+
+<p>
+Hydrogen produces spectral lines corresponding to transitions between
+quantised energy levels.
+</p>
+
+<div class="formula">
+1/λ = R(1/n₁² - 1/n₂²)
+</div>
+
+<h3>Important Questions</h3>
+
+<div class="question-box">
+1. Explain Rutherford's atomic model.
+</div>
+
+<div class="question-box">
+2. State the main postulates of Bohr's model.
+</div>
+
+`
+
+},
+
+{
+title:"Nuclei",
+
+content:`
+
+<h3>1. Atomic Nucleus</h3>
+
+<p>
+The nucleus contains protons and neutrons, collectively called nucleons.
+</p>
+
+<h3>2. Nuclear Size</h3>
+
+<div class="formula">
+R = R₀A^(1/3)
+</div>
+
+<h3>3. Mass Defect</h3>
+
+<div class="definition">
+Mass defect is the difference between the total mass of the separated
+nucleons and the actual mass of the nucleus.
+</div>
+
+<h3>4. Binding Energy</h3>
+
+<div class="formula">
+E = Δmc²
+</div>
+
+<p>
+Binding energy represents the energy required to separate a nucleus completely
+into its constituent nucleons.
+</p>
+
+<h3>5. Nuclear Fission</h3>
+
+<p>
+Nuclear fission is the splitting of a heavy nucleus into smaller nuclei with
+the release of energy.
+</p>
+
+<h3>6. Nuclear Fusion</h3>
+
+<p>
+Nuclear fusion is the combination of light nuclei to form a heavier nucleus,
+with energy release under suitable conditions.
+</p>
+
+<h3>Important Questions</h3>
+
+<div class="question-box">
+1. Define mass defect and binding energy.
+</div>
+
+<div class="question-box">
+2. Explain nuclear fission and fusion.
+</div>
+
+`
+
+},
+
+{
+title:"Semiconductor Electronics",
+
+content:`
+
+<h3>1. Semiconductor</h3>
+
+<div class="definition">
+A semiconductor is a material whose electrical conductivity lies between
+that of a conductor and an insulator and can be controlled by factors such
+as temperature and doping.
+</div>
+
+<h3>2. Intrinsic Semiconductor</h3>
+
+<p>
+A pure semiconductor is called an intrinsic semiconductor.
+</p>
+
+<h3>3. Extrinsic Semiconductor</h3>
+
+<p>
+A semiconductor whose conductivity is modified by adding controlled impurities
+is called an extrinsic semiconductor.
+</p>
+
+<h3>4. P-type and N-type</h3>
+
+<p>
+Doping can produce p-type material with holes as majority carriers or n-type
+material with electrons as majority carriers.
+</p>
+
+<h3>5. PN Junction</h3>
+
+<p>
+A PN junction is formed when p-type and n-type semiconductor regions are
+joined. A depletion region develops around the junction.
+</p>
+
+<h3>6. Diode</h3>
+
+<p>
+A semiconductor diode primarily allows current to flow easily in one direction
+under forward-bias conditions.
+</p>
+
+<h3>7. Digital Logic</h3>
+
+<p>
+Logic gates perform basic logical operations. Important gates include AND,
+OR and NOT.
+</p>
+
+<h3>Important Questions</h3>
+
+<div class="question-box">
+1. Differentiate between intrinsic and extrinsic semiconductors.
+</div>
+
+<div class="question-box">
+2. Explain the formation of a PN junction.
+</div>
+
+<div class="question-box">
+3. Explain the working of a semiconductor diode.
+</div>
+
+`
+
+}
+
+];
+
+
+/* =========================
+   ELEMENTS
+========================= */
+
+const chapterGrid =
+  document.getElementById("chapterGrid");
+
+const reader =
+  document.getElementById("reader");
+
+const chapterTitle =
+  document.getElementById("chapterTitle");
+
+const chapterLabel =
+  document.getElementById("chapterLabel");
+
+const chapterContent =
+  document.getElementById("chapterContent");
+
+const progress =
+  document.getElementById("progress");
+
+const progressText =
+  document.getElementById("progressText");
+
+let currentChapter = 0;
+
+
+/* =========================
+   CHAPTER LIST
+========================= */
+
+function renderChapters(list = chapters){
+
+  chapterGrid.innerHTML = "";
+
+  list.forEach((chapter, index) => {
+
+    const originalIndex =
+      chapters.indexOf(chapter);
+
+    const card =
+      document.createElement("button");
+
+    card.className = "chapter-card";
+
+    card.innerHTML = `
+      <span class="chapter-number">
+        ${originalIndex + 1}
+      </span>
+
+      <h3>${chapter.title}</h3>
+
+      <p>Open chapter →</p>
+    `;
+
+    card.onclick = function(){
+      openChapter(originalIndex);
+    };
+
+    chapterGrid.appendChild(card);
+
+  });
+
+}
+
+
+/* =========================
+   OPEN CHAPTER
+========================= */
+
+function openChapter(index){
+
+  if(index < 0 || index >= chapters.length) return;
+
+  currentChapter = index;
+
+  const chapter =
+    chapters[currentChapter];
+
+  chapterTitle.textContent =
+    chapter.title;
+
+  chapterLabel.textContent =
+    "CHAPTER " + (currentChapter + 1);
+
+  chapterContent.innerHTML =
+    chapter.content;
+
+  reader.classList.add("active");
+
+  updateProgress();
+
+  setTimeout(function(){
+
+    reader.scrollIntoView({
+      behavior:"smooth",
+      block:"start"
+    });
+
+  },100);
+
+}
+
+
+/* =========================
+   NEXT
+========================= */
+
+function nextChapter(){
+
+  if(currentChapter < chapters.length - 1){
+
+    openChapter(currentChapter + 1);
+
+  }
+
+}
+
+
+/* =========================
+   PREVIOUS
+========================= */
+
+function previousChapter(){
+
+  if(currentChapter > 0){
+
+    openChapter(currentChapter - 1);
+
+  }
+
+}
+
+
+/* =========================
+   SHOW CHAPTERS
+========================= */
+
+function showChapters(){
+
+  reader.classList.remove("active");
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+/* =========================
+   PROGRESS
+========================= */
+
+function updateProgress(){
+
+  const percent =
+    ((currentChapter + 1) / chapters.length) * 100;
+
+  progress.style.width =
+    percent + "%";
+
+  progressText.textContent =
+    "Chapter " +
+    (currentChapter + 1) +
+    " of " +
+    chapters.length;
+
+}
+
+
+/* =========================
+   SEARCH
+========================= */
+
+function searchChapters(){
+
+  const query =
+    document.getElementById("searchInput")
+    .value
+    .toLowerCase()
+    .trim();
+
+  if(!query){
+
+    renderChapters();
+
+    return;
+
+  }
+
+  const filtered =
+    chapters.filter(chapter =>
+      chapter.title
+        .toLowerCase()
+        .includes(query)
+    );
+
+  renderChapters(filtered);
+
+}
+
+
+/* =========================
+   DARK MODE
+========================= */
+
+function toggleTheme(){
+
+  document.body.classList.toggle("dark");
+
+  const isDark =
+    document.body.classList.contains("dark");
+
+  localStorage.setItem(
+    "jr_physics_theme",
+    isDark ? "dark" : "light"
+  );
+
+  document.getElementById("themeBtn")
+    .textContent = isDark ? "☀️" : "🌙";
+
+}
+
+
+/* =========================
+   LOAD THEME
+========================= */
+
+function loadTheme(){
+
+  const theme =
+    localStorage.getItem("jr_physics_theme");
+
+  if(theme === "dark"){
+
+    document.body.classList.add("dark");
+
+    document.getElementById("themeBtn")
+      .textContent = "☀️";
+
+  }
+
+}
+
+
+/* =========================
+   BACK
+========================= */
+
+function goBack(){
+
+  window.location.href =
+    "bookstore.html";
+
+}
+
+
+/* =========================
+   START
+========================= */
+
+renderChapters();
+
+loadTheme();
+
+</script>
+
+</body>
+</html>
