@@ -1,0 +1,1424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>JR AI UPSC Preparation</title>
+
+<style>
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial,sans-serif;
+  background:#f4f7fb;
+  color:#172033;
+  transition:0.3s;
+}
+
+body.dark{
+  background:#10151f;
+  color:#f2f4f8;
+}
+
+.header{
+  position:sticky;
+  top:0;
+  z-index:20;
+  background:linear-gradient(135deg,#312e81,#4f46e5);
+  color:white;
+  padding:14px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  box-shadow:0 3px 12px rgba(0,0,0,0.18);
+}
+
+.header-left{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.back-btn,
+.theme-btn{
+  border:none;
+  background:rgba(255,255,255,0.18);
+  color:white;
+  width:40px;
+  height:40px;
+  border-radius:12px;
+  font-size:20px;
+  cursor:pointer;
+}
+
+.header-title{
+  font-size:18px;
+  font-weight:bold;
+}
+
+.cover{
+  margin:18px;
+  min-height:220px;
+  border-radius:22px;
+  background:linear-gradient(135deg,#312e81,#6366f1);
+  color:white;
+  padding:28px 22px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  box-shadow:0 8px 25px rgba(0,0,0,0.18);
+}
+
+.cover-icon{
+  font-size:58px;
+  margin-bottom:12px;
+}
+
+.cover h1{
+  font-size:26px;
+  margin-bottom:8px;
+}
+
+.cover p{
+  font-size:14px;
+  opacity:0.92;
+}
+
+.container{
+  padding:0 16px 40px;
+  max-width:900px;
+  margin:auto;
+}
+
+.syllabus{
+  background:white;
+  border-radius:18px;
+  padding:18px;
+  margin-bottom:18px;
+  box-shadow:0 3px 15px rgba(0,0,0,0.07);
+}
+
+body.dark .syllabus{
+  background:#18202d;
+}
+
+.syllabus h2{
+  font-size:20px;
+  margin-bottom:12px;
+}
+
+.syllabus p{
+  line-height:1.65;
+  font-size:14px;
+}
+
+.search-box{
+  margin-bottom:18px;
+}
+
+.search-box input{
+  width:100%;
+  padding:14px 16px;
+  border:2px solid #e2e8f0;
+  border-radius:14px;
+  outline:none;
+  font-size:15px;
+  background:white;
+  color:#172033;
+}
+
+body.dark .search-box input{
+  background:#18202d;
+  color:white;
+  border-color:#334155;
+}
+
+.chapter-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+}
+
+.chapter-card{
+  background:white;
+  padding:16px;
+  border-radius:17px;
+  cursor:pointer;
+  box-shadow:0 3px 14px rgba(0,0,0,0.07);
+  transition:0.2s;
+  border-left:5px solid #4f46e5;
+}
+
+.chapter-card:active{
+  transform:scale(0.97);
+}
+
+body.dark .chapter-card{
+  background:#18202d;
+}
+
+.chapter-number{
+  color:#4f46e5;
+  font-size:12px;
+  font-weight:bold;
+  margin-bottom:7px;
+}
+
+.chapter-title{
+  font-size:15px;
+  font-weight:bold;
+  line-height:1.4;
+}
+
+.empty-message{
+  display:none;
+  text-align:center;
+  padding:30px;
+  color:#64748b;
+}
+
+.reader{
+  display:none;
+  background:white;
+  border-radius:20px;
+  overflow:hidden;
+  box-shadow:0 4px 20px rgba(0,0,0,0.09);
+}
+
+.reader.active{
+  display:block;
+}
+
+body.dark .reader{
+  background:#18202d;
+}
+
+.reader-header{
+  background:linear-gradient(135deg,#3730a3,#6366f1);
+  color:white;
+  padding:20px;
+}
+
+.reader-header h2{
+  font-size:20px;
+  line-height:1.4;
+}
+
+.progress-bar{
+  height:5px;
+  background:rgba(255,255,255,0.25);
+  margin-top:14px;
+  border-radius:10px;
+  overflow:hidden;
+}
+
+.progress-fill{
+  height:100%;
+  width:0;
+  background:white;
+  transition:0.3s;
+}
+
+.reader-content{
+  padding:20px;
+  line-height:1.75;
+  font-size:15px;
+}
+
+.reader-content h3{
+  margin-top:22px;
+  margin-bottom:8px;
+  color:#4f46e5;
+  font-size:18px;
+}
+
+.reader-content h4{
+  margin-top:16px;
+  margin-bottom:6px;
+}
+
+body.dark .reader-content h3{
+      color:#818cf8;
+}
+
+.definition{
+  background:#eef2ff;
+  border-left:5px solid #4f46e5;
+  padding:14px;
+  border-radius:10px;
+  margin:12px 0;
+}
+
+body.dark .definition{
+  background:#202040;
+}
+
+.formula{
+  background:#f1f5ff;
+  padding:14px;
+  border-radius:10px;
+  margin:12px 0;
+  font-weight:bold;
+  overflow-x:auto;
+}
+
+body.dark .formula{
+  background:#222344;
+}
+
+.reader-content ul{
+  padding-left:22px;
+  margin:8px 0;
+}
+
+.reader-content li{
+  margin-bottom:7px;
+}
+
+.note{
+  background:#f8fafc;
+  border-radius:10px;
+  padding:13px;
+  margin:12px 0;
+}
+
+body.dark .note{
+  background:#202938;
+}
+
+.navigation{
+  display:flex;
+  gap:10px;
+  padding:16px;
+  border-top:1px solid #e2e8f0;
+}
+
+body.dark .navigation{
+  border-color:#334155;
+}
+
+.navigation button{
+  flex:1;
+  padding:13px;
+  border:none;
+  border-radius:12px;
+  background:#4f46e5;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.navigation button:nth-child(2){
+  background:#475569;
+}
+
+@media(max-width:500px){
+
+  .chapter-grid{
+    grid-template-columns:1fr;
+  }
+
+  .cover{
+    margin:14px;
+  }
+
+  .reader-content{
+    padding:17px;
+  }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header class="header">
+
+  <div class="header-left">
+
+    <button
+      class="back-btn"
+      onclick="goBack()"
+    >
+      ←
+    </button>
+
+    <div class="header-title">
+      📘 UPSC Preparation
+    </div>
+
+  </div>
+
+  <button
+    class="theme-btn"
+    onclick="toggleTheme()"
+  >
+    🌙
+  </button>
+
+</header>
+
+
+<div class="cover">
+
+  <div class="cover-icon">
+    🏛️
+  </div>
+
+  <h1>
+    JR AI UPSC Preparation
+  </h1>
+
+  <p>
+    Original structured study material for Civil Services preparation
+  </p>
+
+</div>
+
+
+<div class="container">
+
+
+<div class="syllabus">
+
+  <h2>📚 UPSC Study Guide</h2>
+
+  <p>
+    This JR AI preparation book covers major areas of UPSC preparation,
+    including Indian History, Geography, Indian Polity, Economy,
+    Environment, Science and Technology, International Relations,
+    Governance, Society and General Studies.
+  </p>
+
+</div>
+
+
+<div class="search-box">
+
+  <input
+    id="searchInput"
+    type="text"
+    placeholder="🔎 Search subjects..."
+    oninput="searchChapters()"
+  >
+
+</div>
+
+
+<div
+  id="chapterGrid"
+  class="chapter-grid"
+></div>
+
+
+<div
+  id="emptyMessage"
+  class="empty-message"
+>
+  No subject found.
+</div>
+
+
+<div
+  id="reader"
+  class="reader"
+>
+
+  <div class="reader-header">
+
+    <h2 id="readerTitle"></h2>
+
+    <div class="progress-bar">
+
+      <div
+        id="progressFill"
+        class="progress-fill"
+      ></div>
+
+    </div>
+
+  </div>
+
+
+  <div
+    id="readerContent"
+    class="reader-content"
+  ></div>
+
+
+  <div class="navigation">
+
+    <button onclick="previousChapter()">
+      ← Previous
+    </button>
+
+    <button onclick="showChapters()">
+      📚 Subjects
+    </button>
+
+    <button onclick="nextChapter()">
+      Next →
+    </button>
+
+  </div>
+
+</div>
+
+</div>
+
+
+<script>
+
+const chapters = [
+
+{
+title:"Indian History",
+content:`
+
+<div class="definition">
+Indian History studies the political, social, economic, cultural and
+intellectual development of the Indian subcontinent from ancient times
+to the present.
+</div>
+
+<h3>1. Ancient India</h3>
+
+<p>
+Important areas include the Indus Valley Civilization, Vedic culture,
+Mahajanapadas, Buddhism, Jainism, Mauryan Empire and Gupta period.
+</p>
+
+<h3>2. Medieval India</h3>
+
+<p>
+Important themes include the Delhi Sultanate, Mughal Empire, regional
+kingdoms, administrative systems, art, architecture and cultural
+developments.
+</p>
+
+<h3>3. Modern India</h3>
+
+<p>
+Modern Indian history includes European expansion, British rule,
+economic changes, social reform movements and the growth of Indian
+nationalism.
+</p>
+
+<h3>4. Freedom Struggle</h3>
+
+<p>
+Important areas include the Revolt of 1857, formation of the Indian
+National Congress, Swadeshi Movement, Non-Cooperation Movement, Civil
+Disobedience Movement, Quit India Movement and constitutional
+developments.
+</p>
+
+<h3>5. Post-Independence India</h3>
+
+<p>
+Post-independence topics include nation-building, integration of
+states, economic planning, democratic institutions and major political
+developments.
+</p>
+
+`
+},
+
+{
+title:"Indian Polity and Constitution",
+content:`
+
+<div class="definition">
+Indian Polity examines the Constitution, institutions of government,
+rights, duties and the functioning of India's democratic system.
+</div>
+
+<h3>1. Constitution</h3>
+
+<p>
+The Constitution establishes the framework of government, defines
+powers of institutions and protects constitutional values and rights.
+</p>
+
+<h3>2. Fundamental Rights</h3>
+
+<p>
+Fundamental Rights provide constitutional protections for important
+individual freedoms and equality.
+</p>
+
+<h3>3. Directive Principles</h3>
+
+<p>
+Directive Principles provide constitutional guidance for governance
+and the pursuit of social and economic welfare.
+</p>
+
+<h3>4. Fundamental Duties</h3>
+
+<p>
+Fundamental Duties describe important responsibilities expected from
+citizens under the Constitution.
+</p>
+
+<h3>5. Parliament</h3>
+
+<p>
+The Parliament consists of the President and two Houses, the Lok Sabha
+and the Rajya Sabha.
+</p>
+
+<h3>6. Judiciary</h3>
+
+<p>
+The Supreme Court and High Courts form important parts of India's
+judicial system and interpret constitutional and legal provisions.
+</p>
+
+<h3>7. Federalism</h3>
+
+<p>
+Indian federalism involves distribution of legislative and executive
+powers between the Union and the States.
+</p>
+
+`
+},
+
+{
+title:"Indian Geography",
+content:`
+
+<div class="definition">
+Indian Geography studies the physical environment, resources,
+population, economic activities and regional characteristics of India.
+</div>
+
+<h3>1. Physical Features</h3>
+
+<p>
+India contains the Himalayan mountains, northern plains, Peninsular
+Plateau, desert regions, coastal plains and islands.
+</p>
+
+<h3>2. Drainage System</h3>
+
+<p>
+Major river systems include the Himalayan rivers and Peninsular rivers.
+They influence agriculture, settlement, transport and ecosystems.
+</p>
+
+<h3>3. Climate</h3>
+
+<p>
+The Indian climate is strongly influenced by the monsoon system,
+relief, latitude and seasonal pressure patterns.
+</p>
+
+<h3>4. Agriculture</h3>
+
+<p>
+Agriculture depends on climate, soil, irrigation, technology and
+market conditions. Major crops include rice, wheat, pulses, cotton,
+sugarcane and oilseeds.
+</p>
+
+<h3>5. Natural Resources</h3>
+
+<p>
+India possesses mineral, water, forest and energy resources that
+support economic development.
+</p>
+
+`
+},
+
+{
+title:"Indian Economy",
+content:`
+
+<div class="definition">
+Indian Economy covers production, consumption, investment, employment,
+public finance, banking, trade and economic development.
+</div>
+
+<h3>1. National Income</h3>
+
+<p>
+National income measures the value of economic activity and income
+generated within an economy using established national accounting
+methods.
+</p>
+
+<h3>2. Inflation</h3>
+
+<p>
+Inflation refers to a sustained increase in the general price level
+of goods and services.
+</p>
+
+<h3>3. Monetary Policy</h3>
+
+<p>
+Monetary policy involves measures used by the central bank to
+influence money, credit and financial conditions in the economy.
+</p>
+
+<h3>4. Fiscal Policy</h3>
+
+<p>
+Fiscal policy concerns government taxation, expenditure and borrowing
+and their effects on economic activity.
+</p>
+
+<h3>5. Banking</h3>
+
+<p>
+Banks accept deposits, provide credit, facilitate payments and perform
+other financial functions.
+</p>
+
+<h3>6. External Sector</h3>
+
+<p>
+The external sector includes international trade, foreign investment,
+exchange rates and the balance of payments.
+</p>
+
+`
+},
+
+{
+title:"Environment and Ecology",
+content:`
+
+<div class="definition">
+Ecology studies relationships between living organisms and their
+physical environment, while environmental studies examine broader
+environmental processes and human impacts.
+</div>
+
+<h3>1. Ecosystem</h3>
+
+<p>
+An ecosystem consists of living organisms interacting with one
+another and with non-living components of their environment.
+</p>
+
+<h3>2. Biodiversity</h3>
+
+<p>
+Biodiversity refers to the variety of life at genetic, species and
+ecosystem levels.
+</p>
+
+<h3>3. Food Chain</h3>
+
+<p>
+A food chain describes the transfer of energy and nutrients through
+feeding relationships between organisms.
+</p>
+
+<h3>4. Pollution</h3>
+
+<p>
+Pollution occurs when harmful substances or forms of energy enter the
+environment and adversely affect organisms or ecological processes.
+</p>
+
+<h3>5. Climate Change</h3>
+
+<p>
+Climate change refers to long-term changes in climate patterns.
+Human activities, particularly greenhouse-gas emissions, are an
+important driver of recent global warming.
+</p>
+
+`
+},
+
+{
+title:"Science and Technology",
+content:`
+
+<div class="definition">
+Science and Technology covers major scientific principles and
+technological developments relevant to society, economy and governance.
+</div>
+
+<h3>1. Space Technology</h3>
+
+<p>
+Space technology includes satellites, launch vehicles, remote sensing,
+navigation systems and space-based communication.
+</p>
+
+<h3>2. Biotechnology</h3>
+
+<p>
+Biotechnology applies biological systems or processes to develop
+products and technologies in areas such as medicine, agriculture and
+industry.
+</p>
+
+<h3>3. Artificial Intelligence</h3>
+
+<p>
+Artificial intelligence refers to computational systems designed to
+perform tasks that involve capabilities such as pattern recognition,
+prediction, reasoning or language processing.
+</p>
+
+<h3>4. Nanotechnology</h3>
+
+<p>
+Nanotechnology deals with materials and structures at extremely small
+scales where physical and chemical properties can differ from those
+of larger structures.
+</p>
+
+<h3>5. Nuclear Technology</h3>
+
+<p>
+Nuclear technology involves applications of nuclear processes in
+energy, medicine, industry and scientific research.
+</p>
+
+`
+},
+
+{
+title:"Governance",
+content:`
+
+<div class="definition">
+Governance refers to the processes, institutions and mechanisms
+through which public decisions are made and implemented.
+</div>
+
+<h3>1. Transparency</h3>
+
+<p>
+Transparency allows citizens and institutions to access relevant
+information about public decisions and activities.
+</p>
+
+<h3>2. Accountability</h3>
+
+<p>
+Accountability means that public authorities are answerable for their
+decisions, actions and use of public resources.
+</p>
+
+<h3>3. E-Governance</h3>
+
+<p>
+E-governance uses digital technologies to improve government services,
+communication and administrative processes.
+</p>
+
+<h3>4. Citizen Participation</h3>
+
+<p>
+Citizen participation can involve consultation, public feedback,
+community institutions and other democratic processes.
+</p>
+
+`
+},
+
+{
+title:"Indian Society",
+content:`
+
+<div class="definition">
+Indian Society examines India's social structure, diversity,
+institutions, demographic changes and major social issues.
+</div>
+
+<h3>1. Diversity</h3>
+
+<p>
+India has substantial linguistic, religious, cultural and regional
+diversity.
+</p>
+
+<h3>2. Caste</h3>
+
+<p>
+Caste has historically influenced social organization and continues
+to be an important subject in the study of Indian society.
+</p>
+
+<h3>3. Women and Society</h3>
+
+<p>
+Important issues include women's education, health, employment,
+political participation, safety and social empowerment.
+</p>
+
+<h3>4. Population</h3>
+
+<p>
+Population studies examine fertility, mortality, migration, age
+structure, urbanization and demographic transition.
+</p>
+
+<h3>5. Urbanization</h3>
+
+<p>
+Urbanization involves the growth of towns and cities and changes in
+economic activity, settlement patterns and social relations.
+</p>
+
+`
+},
+
+{
+title:"International Relations",
+content:`
+
+<div class="definition">
+International Relations studies interactions among countries,
+international organizations and other global actors.
+</div>
+
+<h3>1. Foreign Policy</h3>
+
+<p>
+Foreign policy consists of the principles and actions through which a
+country manages its relations with other countries and global
+institutions.
+</p>
+
+<h3>2. United Nations</h3>
+
+<p>
+The United Nations is an international organization that provides a
+forum for cooperation on peace, security, development and other
+global issues.
+</p>
+
+<h3>3. Regional Organizations</h3>
+
+<p>
+Regional organizations promote cooperation among countries in areas
+such as trade, security, development and cultural relations.
+</p>
+
+<h3>4. India and Neighbours</h3>
+
+<p>
+India's relations with neighbouring countries involve issues of
+security, trade, connectivity, water, migration and regional
+cooperation.
+</p>
+
+`
+},
+
+{
+title:"Ethics and Integrity",
+content:`
+
+<div class="definition">
+Ethics deals with principles that guide judgments about right conduct,
+responsibility and public behaviour.
+</div>
+
+<h3>1. Integrity</h3>
+
+<p>
+Integrity means maintaining consistency between ethical principles,
+values and conduct.
+</p>
+
+<h3>2. Objectivity</h3>
+
+<p>
+Objectivity involves making decisions based on relevant facts and
+evidence rather than personal preferences or improper influence.
+</p>
+
+<h3>3. Empathy</h3>
+
+<p>
+Empathy is the ability to understand another person's situation and
+perspective.
+</p>
+
+<h3>4. Accountability</h3>
+
+<p>
+Accountability requires individuals in public roles to accept
+responsibility for their decisions and actions.
+</p>
+
+<h3>5. Probity</h3>
+
+<p>
+Probity refers to high standards of honesty, integrity and ethical
+conduct in public affairs.
+</p>
+
+`
+},
+
+{
+title:"Disaster Management",
+content:`
+
+<div class="definition">
+Disaster management involves measures taken to prevent, prepare for,
+respond to and recover from disasters.
+</div>
+
+<h3>1. Disaster Risk</h3>
+
+<p>
+Disaster risk depends on the interaction of hazards with exposure,
+vulnerability and capacity.
+</p>
+
+<h3>2. Preparedness</h3>
+
+<p>
+Preparedness includes planning, training, early-warning systems,
+resource arrangements and public awareness before disasters occur.
+</p>
+
+<h3>3. Response</h3>
+
+<p>
+Response involves immediate actions such as search and rescue,
+medical assistance, evacuation and emergency coordination.
+</p>
+
+<h3>4. Recovery</h3>
+
+<p>
+Recovery includes restoring essential services, rebuilding damaged
+infrastructure and supporting affected communities.
+</p>
+
+`
+},
+
+{
+title:"Agriculture",
+content:`
+
+<div class="definition">
+Agriculture involves cultivation of crops and related activities
+that contribute to food security, employment and rural livelihoods.
+</div>
+
+<h3>1. Irrigation</h3>
+
+<p>
+Irrigation supplies water to agricultural fields when rainfall is
+insufficient or irregular.
+</p>
+
+<h3>2. Green Revolution</h3>
+
+<p>
+The Green Revolution involved the adoption of improved seeds,
+irrigation, fertilizers, pesticides and modern farming practices that
+increased agricultural production in several regions.
+</p>
+
+<h3>3. Food Security</h3>
+
+<p>
+Food security concerns the availability, accessibility and adequate
+utilization of sufficient food.
+</p>
+
+<h3>4. Agricultural Marketing</h3>
+
+<p>
+Agricultural marketing includes activities involved in collecting,
+storing, transporting, processing and selling farm produce.
+</p>
+
+`
+},
+
+{
+title:"Social Justice",
+content:`
+
+<div class="definition">
+Social justice concerns fair access to rights, opportunities,
+resources and participation in society.
+</div>
+
+<h3>1. Education</h3>
+
+<p>
+Access to quality education contributes to human development, social
+mobility and economic opportunity.
+</p>
+
+<h3>2. Health</h3>
+
+<p>
+Public health policies aim to improve access to preventive and
+curative healthcare and reduce avoidable inequalities.
+</p>
+
+<h3>3. Vulnerable Groups</h3>
+
+<p>
+Social policy may address the needs of children, persons with
+disabilities, disadvantaged communities, elderly persons and other
+vulnerable groups.
+</p>
+
+<h3>4. Inclusive Development</h3>
+
+<p>
+Inclusive development seeks to ensure that the benefits of economic
+and social progress reach different sections of society.
+</p>
+
+`
+},
+
+{
+title:"Internal Security",
+content:`
+
+<div class="definition">
+Internal security concerns threats and challenges that affect the
+security, stability and integrity of a country within its territory.
+</div>
+
+<h3>1. Terrorism</h3>
+
+<p>
+Terrorism involves the use or threat of violence to create fear and
+pursue political, ideological or other objectives.
+</p>
+
+<h3>2. Cyber Security</h3>
+
+<p>
+Cyber security involves protecting computer systems, networks,
+information and digital infrastructure from unauthorized access,
+disruption and other threats.
+</p>
+
+<h3>3. Border Management</h3>
+
+<p>
+Border management includes measures related to surveillance,
+security, lawful movement of people and goods, and coordination among
+relevant agencies.
+</p>
+
+<h3>4. Organized Crime</h3>
+
+<p>
+Organized crime involves structured criminal activity carried out
+systematically for economic or other illicit purposes.
+</p>
+
+`
+},
+
+{
+title:"Current Affairs and Revision",
+content:`
+
+<div class="definition">
+Current Affairs covers recent important developments that may be
+relevant to competitive examinations.
+</div>
+
+<h3>1. National Developments</h3>
+
+<p>
+Revise major government policies, important appointments, awards,
+legislation, infrastructure projects and significant national events.
+</p>
+
+<h3>2. International Developments</h3>
+
+<p>
+Follow major international organizations, agreements, summits,
+conflicts, diplomatic developments and global economic events.
+</p>
+
+<h3>3. Science and Technology</h3>
+
+<p>
+Important scientific missions, technological innovations, space
+developments and major research developments should be revised.
+</p>
+
+<h3>4. Environment</h3>
+<p>
+Important environmental agreements, climate developments,
+conservation initiatives and major environmental reports can be
+relevant.
+</p>
+
+<div class="note">
+For current affairs, always revise recent information from reliable
+and up-to-date sources because facts and events change over time.
+</div>
+
+`
+}
+
+];
+
+
+let currentChapter = 0;
+
+
+function renderChapters(list = chapters){
+
+  const grid =
+    document.getElementById("chapterGrid");
+
+  grid.innerHTML = "";
+
+  document.getElementById("emptyMessage").style.display =
+    list.length ? "none" : "block";
+
+  list.forEach((chapter)=>{
+
+    const realIndex =
+      chapters.indexOf(chapter);
+
+    const card =
+      document.createElement("div");
+
+    card.className =
+      "chapter-card";
+
+    card.innerHTML = `
+      <div class="chapter-number">
+        Subject ${realIndex + 1}
+      </div>
+
+      <div class="chapter-title">
+        ${chapter.title}
+      </div>
+    `;
+
+    card.onclick = function(){
+
+      openChapter(realIndex);
+
+    };
+
+    grid.appendChild(card);
+
+  });
+
+}
+
+
+function openChapter(index){
+
+  currentChapter = index;
+
+  const chapter =
+    chapters[index];
+
+  document.getElementById(
+    "chapterGrid"
+  ).style.display = "none";
+
+  document.querySelector(
+    ".search-box"
+  ).style.display = "none";
+
+  document.querySelector(
+    ".syllabus"
+  ).style.display = "none";
+
+  const reader =
+    document.getElementById("reader");
+
+  reader.classList.add("active");
+
+  document.getElementById(
+    "readerTitle"
+  ).textContent =
+    "Subject " +
+    (index + 1) +
+    ": " +
+    chapter.title;
+
+  document.getElementById(
+    "readerContent"
+  ).innerHTML =
+    chapter.content;
+
+  updateProgress();
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+function showChapters(){
+
+  document.getElementById(
+    "chapterGrid"
+  ).style.display = "grid";
+
+  document.querySelector(
+    ".search-box"
+  ).style.display = "block";
+
+  document.querySelector(
+    ".syllabus"
+  ).style.display = "block";
+
+  document.getElementById(
+    "reader"
+  ).classList.remove("active");
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+function nextChapter(){
+
+  if(
+    currentChapter <
+    chapters.length - 1
+  ){
+
+    openChapter(
+      currentChapter + 1
+    );
+
+  }
+
+}
+
+
+function previousChapter(){
+
+  if(currentChapter > 0){
+
+    openChapter(
+      currentChapter - 1
+    );
+
+  }
+
+}
+
+
+function searchChapters(){
+
+  const query =
+    document.getElementById(
+      "searchInput"
+    )
+    .value
+    .toLowerCase()
+    .trim();
+
+  const filtered =
+    chapters.filter(chapter =>
+      chapter.title
+      .toLowerCase()
+      .includes(query)
+  );
+
+  renderChapters(filtered);
+
+}
+
+
+function updateProgress(){
+
+  const progress =
+    ((currentChapter + 1) /
+    chapters.length) * 100;
+
+  document.getElementById(
+    "progressFill"
+  ).style.width =
+    progress + "%";
+
+}
+
+
+function toggleTheme(){
+
+  document.body.classList.toggle(
+    "dark"
+  );
+
+  localStorage.setItem(
+    "jr_ai_theme",
+    document.body.classList.contains("dark")
+      ? "dark"
+      : "light"
+  );
+
+}
+
+
+function loadTheme(){
+
+  const theme =
+    localStorage.getItem(
+      "jr_ai_theme"
+    );
+
+  if(theme === "dark"){
+
+    document.body.classList.add(
+      "dark"
+    );
+
+  }
+
+}
+
+
+function goBack(){
+
+  window.location.href =
+    "bookstore.html";
+
+}
+
+
+renderChapters();
+
+loadTheme();
+
+</script>
+
+</body>
+</html>
