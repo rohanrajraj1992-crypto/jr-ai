@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>JR AI SSC Preparation</title>
+
+<style>
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f5f7ff;
+  color:#172033;
+  transition:.3s;
+}
+
+body.dark{
+  background:#0f172a;
+  color:#e5e7eb;
+}
+
+.header{
+  position:sticky;
+  top:0;
+  z-index:20;
+  padding:14px 16px;
+  background:linear-gradient(135deg,#7c3aed,#4f46e5);
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  box-shadow:0 4px 18px rgba(0,0,0,.15);
+}
+
+.header-title{
+  font-size:20px;
+  font-weight:800;
+}
+
+.header-actions{
+  display:flex;
+  gap:8px;
+}
+
+.icon-btn{
+  border:0;
+  background:rgba(255,255,255,.18);
+  color:white;
+  width:40px;
+  height:40px;
+  border-radius:12px;
+  font-size:19px;
+  cursor:pointer;
+}
+
+.cover{
+  margin:18px auto;
+  width:calc(100% - 30px);
+  max-width:650px;
+  min-height:210px;
+  border-radius:24px;
+  padding:25px;
+  background:
+    linear-gradient(135deg,#312e81,#7c3aed,#a855f7);
+  color:white;
+  box-shadow:0 12px 30px rgba(76,29,149,.3);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+.cover-icon{
+  font-size:48px;
+  margin-bottom:10px;
+}
+
+.cover h1{
+  margin:0;
+  font-size:30px;
+}
+
+.cover p{
+  margin:10px 0 0;
+  line-height:1.5;
+  opacity:.92;
+}
+
+.container{
+  width:calc(100% - 30px);
+  max-width:900px;
+  margin:auto;
+}
+
+.section-title{
+  margin:22px 0 10px;
+  font-size:20px;
+  font-weight:800;
+}
+
+.syllabus{
+  background:white;
+  padding:18px;
+  border-radius:18px;
+  box-shadow:0 5px 18px rgba(0,0,0,.07);
+  line-height:1.6;
+}
+
+body.dark .syllabus{
+  background:#1e293b;
+}
+
+.search-box{
+  margin:18px 0;
+}
+
+.search-box input{
+  width:100%;
+  padding:15px 17px;
+  border:2px solid #ddd6fe;
+  border-radius:15px;
+  outline:none;
+  font-size:15px;
+  background:white;
+  color:#172033;
+}
+
+body.dark .search-box input{
+  background:#1e293b;
+  color:#fff;
+  border-color:#475569;
+}
+
+.chapter-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:14px;
+  margin-bottom:25px;
+}
+
+.chapter-card{
+  background:white;
+  border-radius:18px;
+  padding:18px;
+  min-height:125px;
+  cursor:pointer;
+  border:1px solid #e9e7ff;
+  box-shadow:0 5px 16px rgba(0,0,0,.06);
+  transition:.2s;
+}
+
+.chapter-card:hover{
+  transform:translateY(-3px);
+}
+
+body.dark .chapter-card{
+  background:#1e293b;
+  border-color:#334155;
+}
+
+.chapter-number{
+  color:#7c3aed;
+  font-size:13px;
+  font-weight:700;
+  margin-bottom:9px;
+}
+
+.chapter-title{
+  font-size:17px;
+  font-weight:800;
+  line-height:1.35;
+}
+
+.empty-message{
+  display:none;
+  text-align:center;
+  padding:30px;
+  color:#64748b;
+}
+
+.reader{
+  display:none;
+  margin-bottom:30px;
+}
+
+.reader.active{
+  display:block;
+}
+
+.reader-header{
+  background:white;
+  padding:18px;
+  border-radius:18px;
+  box-shadow:0 5px 18px rgba(0,0,0,.07);
+  margin-bottom:15px;
+}
+
+body.dark .reader-header{
+  background:#1e293b;
+}
+
+.reader-title{
+  margin:0;
+  font-size:23px;
+  line-height:1.3;
+}
+
+.progress{
+  height:7px;
+  background:#e5e7eb;
+  border-radius:10px;
+  overflow:hidden;
+  margin-top:14px;
+}
+
+body.dark .progress{
+  background:#334155;
+}
+
+.progress-fill{
+  height:100%;
+  width:0;
+  background:linear-gradient(90deg,#7c3aed,#4f46e5);
+  transition:.3s;
+}
+
+.reader-content{
+  background:white;
+  padding:22px;
+  border-radius:20px;
+  box-shadow:0 5px 18px rgba(0,0,0,.07);
+  line-height:1.75;
+  font-size:16px;
+}
+
+body.dark .reader-content{
+  background:#1e293b;
+}
+
+.reader-content h3{
+  margin-top:25px;
+  margin-bottom:8px;
+  color:#7c3aed;
+  font-size:19px;
+}
+
+.reader-content h4{
+  margin-top:18px;
+  margin-bottom:6px;
+}
+
+body.dark .reader-content h3{
+  color:#a78bfa;
+}
+
+.definition{
+  padding:15px;
+  background:#f3e8ff;
+  border-left:5px solid #7c3aed;
+  border-radius:10px;
+  margin:15px 0;
+}
+
+body.dark .definition{
+  background:#312e81;
+  border-left-color:#a78bfa;
+}
+
+.formula{
+  padding:14px;
+  margin:14px 0;
+  background:#eef2ff;
+  border-radius:10px;
+  font-weight:700;
+  overflow-x:auto;
+}
+
+body.dark .formula{
+  background:#172554;
+}
+
+.reader-content li{
+  margin:7px 0;
+}
+
+.navigation{
+  display:flex;
+  gap:10px;
+  margin-top:15px;
+}
+
+.nav-btn{
+  flex:1;
+  border:0;
+  padding:14px;
+  border-radius:14px;
+  background:#4f46e5;
+  color:white;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.nav-btn.secondary{
+  background:#7c3aed;
+}
+
+.nav-btn:disabled{
+  opacity:.45;
+  cursor:not-allowed;
+}
+
+.back-btn{
+  width:100%;
+  margin-top:10px;
+  padding:14px;
+  border:0;
+  border-radius:14px;
+  background:#e5e7eb;
+  color:#111827;
+  font-weight:700;
+  cursor:pointer;
+}
+
+body.dark .back-btn{
+  background:#334155;
+  color:white;
+}
+
+.footer{
+  text-align:center;
+  padding:30px 15px;
+  color:#64748b;
+  font-size:13px;
+}
+
+@media(max-width:600px){
+
+  .cover{
+    min-height:190px;
+    padding:21px;
+  }
+
+  .cover h1{
+    font-size:26px;
+  }
+
+  .chapter-grid{
+    grid-template-columns:1fr;
+  }
+
+  .reader-content{
+    padding:18px;
+    font-size:15px;
+  }
+
+  .reader-title{
+    font-size:20px;
+  }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header class="header">
+
+  <div class="header-title">
+    📚 JR AI • SSC Preparation
+  </div>
+
+  <div class="header-actions">
+
+    <button
+      class="icon-btn"
+      onclick="toggleTheme()"
+      type="button">
+      🌙
+    </button>
+
+  </div>
+
+</header>
+
+
+<div class="cover">
+
+  <div class="cover-icon">
+    📝
+  </div>
+
+  <h1>SSC Preparation</h1>
+
+  <p>
+    Original JR AI study book covering the major subjects,
+    concepts, formulas and exam-oriented preparation areas
+    for SSC examinations.
+  </p>
+
+</div>
+
+
+<div class="container">
+
+
+<div class="section-title">
+  📌 About This Book
+</div>
+
+
+<div class="syllabus">
+
+<p>
+This book is designed as a structured preparation resource for
+SSC examinations. It covers Quantitative Aptitude, Reasoning,
+English, General Awareness and other important preparation areas.
+</p>
+
+<p>
+Each chapter focuses on important concepts, definitions,
+methods, examples and revision points.
+</p>
+
+</div>
+
+
+<div class="section-title">
+  📖 Chapters
+</div>
+
+
+<div class="search-box">
+
+<input
+  id="searchInput"
+  type="text"
+  placeholder="🔎 Search SSC chapter..."
+  oninput="searchChapters()">
+
+</div>
+
+
+<div
+  id="chapterGrid"
+  class="chapter-grid">
+</div>
+
+
+<div
+  id="emptyMessage"
+  class="empty-message">
+
+  No chapter found.
+
+</div>
+
+
+<div
+  id="reader"
+  class="reader">
+
+
+<div class="reader-header">
+
+<h2
+  id="readerTitle"
+  class="reader-title">
+</h2>
+
+
+<div class="progress">
+
+<div
+  id="progressFill"
+  class="progress-fill">
+</div>
+
+</div>
+
+</div>
+
+
+<div
+  id="readerContent"
+  class="reader-content">
+</div>
+
+
+<div class="navigation">
+
+<button
+  class="nav-btn"
+  id="previousBtn"
+  onclick="previousChapter()">
+  ← Previous
+</button>
+
+<button
+  class="nav-btn secondary"
+  id="nextBtn"
+  onclick="nextChapter()">
+  Next →
+</button>
+
+</div>
+
+
+<button
+  class="back-btn"
+  onclick="showChapters()">
+  📚 Back to Chapters
+</button>
+
+
+</div>
+
+
+</div>
+
+
+<div class="footer">
+
+JR AI Original Study Book • SSC Preparation
+
+</div>
+
+
+<script>
+
+
+const chapters = [
+
+{
+title:"SSC Exam Overview",
+content:`
+
+<div class="definition">
+SSC examinations are competitive examinations conducted by the
+Staff Selection Commission for recruitment to various posts in
+the Government of India.
+</div>
+
+<h3>1. Major Subjects</h3>
+
+<p>
+Common SSC examinations test areas such as Quantitative Aptitude,
+General Intelligence and Reasoning, English Language and General
+Awareness.
+</p>
+
+<h3>2. Preparation Strategy</h3>
+
+<p>
+A systematic preparation strategy should include concept building,
+regular practice, revision and analysis of mistakes.
+</p>
+
+<h3>3. Time Management</h3>
+
+<p>
+Candidates should practise solving questions accurately within
+limited time because competitive examinations are generally
+time-bound.
+</p>
+
+`
+},
+
+{
+title:"Number System",
+content:`
+
+<div class="definition">
+The number system is the mathematical framework used to represent
+and classify numbers.
+</div>
+
+<h3>1. Natural Numbers</h3>
+
+<p>
+Natural numbers are counting numbers such as 1, 2, 3, 4 and so on.
+</p>
+
+<h3>2. Whole Numbers</h3>
+
+<p>
+Whole numbers include zero along with the natural numbers.
+</p>
+
+<h3>3. Integers</h3>
+
+<p>
+Integers include positive numbers, negative numbers and zero.
+</p>
+
+<h3>4. Prime Numbers</h3>
+
+<p>
+A prime number has exactly two positive factors: 1 and the number itself.
+</p>
+
+<h3>5. Divisibility</h3>
+
+<p>
+Divisibility rules provide quick methods for determining whether
+one number is exactly divisible by another.
+</p>
+
+`
+},
+
+{
+title:"Percentage",
+content:`
+
+<div class="definition">
+Percentage expresses a quantity as a fraction of 100.
+</div>
+
+<h3>1. Basic Formula</h3>
+
+<div class="formula">
+Percentage = (Part / Whole) × 100
+</div>
+
+<h3>2. Percentage Increase</h3>
+
+<p>
+Percentage increase compares the increase with the original value.
+</p>
+
+<div class="formula">
+Percentage Increase =
+(Increase / Original Value) × 100
+</div>
+
+<h3>3. Percentage Decrease</h3>
+
+<div class="formula">
+Percentage Decrease =
+(Decrease / Original Value) × 100
+</div>
+
+<h3>4. Successive Percentage Changes</h3>
+
+<p>
+When two percentage changes occur successively, the second change
+is applied to the value obtained after the first change.
+</p>
+
+`
+},
+
+{
+title:"Profit Loss and Discount",
+content:`
+
+<div class="definition">
+Profit and loss problems compare the cost price of an article
+with its selling price.
+</div>
+
+<h3>1. Cost Price</h3>
+
+<p>
+Cost price is the amount paid to purchase an article.
+</p>
+
+<h3>2. Selling Price</h3>
+
+<p>
+Selling price is the amount received when an article is sold.
+</p>
+
+<h3>3. Profit</h3>
+
+<div class="formula">
+Profit = Selling Price − Cost Price
+</div>
+
+<h3>4. Loss</h3>
+
+<div class="formula">
+Loss = Cost Price − Selling Price
+</div>
+
+<h3>5. Discount</h3>
+
+<p>
+Discount is the reduction offered on the marked price of an article.
+</p>
+
+`
+},
+
+{
+title:"Ratio and Proportion",
+content:`
+
+<div class="definition">
+A ratio compares two quantities of the same kind using division.
+</div>
+
+<h3>1. Ratio</h3>
+
+<div class="formula">
+a : b = a / b
+</div>
+
+<h3>2. Proportion</h3>
+
+<p>
+Two ratios are said to be in proportion when they are equal.
+</p>
+
+<div class="formula">
+a : b = c : d
+</div>
+
+<h3>3. Direct Proportion</h3>
+
+<p>
+In direct proportion, two quantities increase or decrease together
+in the same ratio.
+</p>
+
+<h3>4. Inverse Proportion</h3>
+
+<p>
+In inverse proportion, an increase in one quantity corresponds to
+a decrease in the other quantity.
+</p>
+
+`
+},
+
+{
+title:"Average",
+content:`
+
+<div class="definition">
+Average represents the central value obtained by distributing the
+total equally among all observations.
+</div>
+
+<h3>1. Basic Formula</h3>
+
+<div class="formula">
+Average = Sum of Observations / Number of Observations
+</div>
+
+<h3>2. Combined Average</h3>
+
+<p>
+For different groups, the combined average is calculated using the
+total of all observations divided by the total number of observations.
+</p>
+
+<h3>3. Average and Replacement</h3>
+
+<p>
+When one value is replaced by another, the change in the total
+can be used to determine the new average efficiently.
+</p>
+
+`
+},
+
+{
+title:"Simple and Compound Interest",
+content:`
+
+<div class="definition">
+Interest is the amount earned or paid for the use of money over
+a period of time.
+</div>
+
+<h3>1. Simple Interest</h3>
+
+<div class="formula">
+SI = (P × R × T) / 100
+</div>
+
+<h3>2. Amount</h3>
+
+<div class="formula">
+Amount = Principal + Interest
+</div>
+
+<h3>3. Compound Interest</h3>
+
+<p>
+In compound interest, interest is calculated on the principal as
+well as accumulated interest from previous periods.
+</p>
+
+<div class="formula">
+A = P(1 + R/100)ᵀ
+</div>
+
+`
+},
+
+{
+title:"Time Work and Pipes",
+content:`
+
+<div class="definition">
+Time and work problems relate the amount of work completed to
+the rate at which work is performed.
+</div>
+
+<h3>1. Work Rate</h3>
+
+<p>
+If a person completes a job in a certain number of days, the
+fraction of work completed in one day is the reciprocal of that
+number.
+</p>
+
+<h3>2. Combined Work</h3>
+
+<p>
+When people work together, their individual work rates are added
+to obtain the combined rate.
+</p>
+
+<h3>3. Pipes and Cisterns</h3>
+
+<p>
+Pipes and cistern problems use the same rate concept. Inlet pipes
+add water while outlet pipes remove water.
+</p>
+
+`
+},
+
+{
+title:"Time Speed and Distance",
+content:`
+
+<div class="definition">
+Time, speed and distance are related quantities used to describe
+motion.
+</div>
+
+<h3>1. Basic Relation</h3>
+
+<div class="formula">
+Speed = Distance / Time
+</div>
+
+<div class="formula">
+Distance = Speed × Time
+</div>
+
+<div class="formula">
+Time = Distance / Speed
+</div>
+
+<h3>2. Relative Speed</h3>
+
+<p>
+Relative speed is used to determine the rate at which the distance
+between two moving objects changes.
+</p>
+
+<h3>3. Trains</h3>
+
+<p>
+Train problems commonly involve the time required for a train to
+cross a person, platform or another train.
+</p>
+
+`
+},
+
+{
+title:"Algebra",
+content:`
+
+<div class="definition">
+Algebra uses symbols and variables to represent unknown quantities
+and relationships.
+</div>
+
+<h3>1. Linear Equations</h3>
+
+<p>
+A linear equation contains variables only to the first degree.
+</p>
+
+<h3>2. Identities</h3>
+
+<div class="formula">
+(a+b)² = a² + 2ab + b²
+</div>
+
+<div class="formula">
+(a−b)² = a² − 2ab + b²
+</div>
+
+<div class="formula">
+a²−b² = (a−b)(a+b)
+</div>
+
+<h3>3. Simplification</h3>
+
+<p>
+Algebraic expressions can be simplified by combining like terms
+and applying standard identities.
+</p>
+
+`
+},
+
+{
+title:"Geometry and Mensuration",
+content:`
+
+<div class="definition">
+Geometry studies shapes, sizes, positions and properties of figures,
+while mensuration deals with their measurements.
+</div>
+
+<h3>1. Triangle</h3>
+
+<p>
+The sum of the interior angles of a triangle is 180°.
+</p>
+
+<h3>2. Circle</h3>
+
+<div class="formula">
+Area = πr²
+</div>
+
+<div class="formula">
+Circumference = 2πr
+</div>
+
+<h3>3. Rectangle</h3>
+
+<div class="formula">
+Area = Length × Breadth
+</div>
+
+<h3>4. Cuboid</h3>
+
+<div class="formula">
+Volume = Length × Breadth × Height
+</div>
+
+<h3>5. Cylinder</h3>
+
+<div class="formula">
+Volume = πr²h
+</div>
+
+`
+},
+
+{
+title:"Trigonometry",
+content:`
+
+<div class="definition">
+Trigonometry studies relationships between angles and sides of
+triangles.
+</div>
+
+<h3>1. Basic Ratios</h3>
+
+<p>
+For a right-angled triangle, the primary trigonometric ratios are
+sine, cosine and tangent.
+</p>
+
+<div class="formula">
+sin θ = Perpendicular / Hypotenuse
+</div>
+
+<div class="formula">
+cos θ = Base / Hypotenuse
+</div>
+
+<div class="formula">
+tan θ = Perpendicular / Base
+</div>
+
+<h3>2. Important Identity</h3>
+
+<div class="formula">
+sin²θ + cos²θ = 1
+</div>
+
+`
+},
+
+{
+title:"Data Interpretation",
+content:`
+
+<div class="definition">
+Data interpretation involves analysing numerical information
+presented through tables, charts and graphs.
+</div>
+
+<h3>1. Tables</h3>
+
+<p>
+Tables arrange numerical information in rows and columns for
+comparison and calculation.
+</p>
+
+<h3>2. Bar Graphs</h3>
+
+<p>
+Bar graphs use rectangular bars to compare quantities across
+different categories.
+</p>
+
+<h3>3. Pie Charts</h3>
+
+<p>
+A pie chart represents parts of a whole using sectors of a circle.
+</p>
+
+<h3>4. Percentage Analysis</h3>
+
+<p>
+Many data interpretation questions require percentage comparison,
+ratio, average and difference calculations.
+</p>
+
+`
+},
+
+{
+title:"Reasoning",
+content:`
+
+<div class="definition">
+Reasoning questions test the ability to identify patterns,
+relationships and logical conclusions.
+</div>
+
+<h3>1. Analogy</h3>
+
+<p>
+Analogy questions require identifying a similar relationship between
+two pairs of objects or concepts.
+</p>
+
+<h3>2. Classification</h3>
+
+<p>
+Classification involves identifying the item that does not belong
+to a particular group.
+</p>
+
+<h3>3. Series</h3>
+
+<p>
+Series questions contain a sequence in which numbers, letters or
+symbols follow a particular pattern.
+</p>
+
+<h3>4. Coding-Decoding</h3>
+
+<p>
+Coding-decoding questions involve identifying a rule used to
+transform one set of symbols or words into another.
+</p>
+
+`
+},
+
+{
+title:"English Language",
+content:`
+
+<div class="definition">
+English Language questions in SSC examinations generally test
+grammar, vocabulary, comprehension and correct usage.
+</div>
+
+<h3>1. Parts of Speech</h3>
+
+<p>
+The major parts of speech include nouns, pronouns, verbs, adjectives,
+adverbs, prepositions, conjunctions and interjections.
+</p>
+
+<h3>2. Tenses</h3>
+
+<p>
+Tenses indicate the time or state of an action. The major categories
+are present, past and future.
+</p>
+
+<h3>3. Subject-Verb Agreement</h3>
+
+<p>
+The verb should agree with its subject in number and person.
+</p>
+
+<h3>4. Vocabulary</h3>
+
+<p>
+Vocabulary preparation includes synonyms, antonyms, one-word
+substitutions, idioms and commonly confused words.
+</p>
+
+`
+},
+
+{
+title:"General Awareness",
+content:`
+
+<div class="definition">
+General Awareness covers important information about history,
+geography, polity, economy, science, culture and other areas.
+</div>
+
+<h3>1. History</h3>
+
+<p>
+Important areas include ancient, medieval and modern Indian history
+and major events of the freedom movement.
+</p>
+
+<h3>2. Geography</h3>
+
+<p>
+Preparation includes physical geography, Indian geography,
+climate, rivers, resources and agriculture.
+</p>
+
+<h3>3. Polity</h3>
+
+<p>
+Important areas include the Constitution, Parliament, judiciary,
+fundamental rights and major constitutional institutions.
+</p>
+
+<h3>4. Science</h3>
+
+<p>
+General science questions commonly cover basic concepts from
+physics, chemistry and biology.
+</p>
+
+`
+},
+
+{
+title:"Current Affairs",
+content:`
+
+<div class="definition">
+Current affairs refers to significant recent events and developments
+in India and around the world.
+</div>
+
+<h3>1. National Events</h3>
+
+<p>
+Important national developments, government programmes and major
+events should be revised regularly.
+</p>
+
+<h3>2. International Events</h3>
+
+<p>
+Major international organisations, agreements, summits and global
+developments are useful areas for preparation.
+</p>
+
+<h3>3. Awards and Appointments</h3>
+
+<p>
+Important awards, honours, appointments and recognitions should be
+reviewed from reliable and recent sources.
+</p>
+
+<h3>4. Sports</h3>
+
+<p>
+Major tournaments, championships, records and important sports
+events are commonly included in general awareness preparation.
+</p>
+
+`
+}
+
+];
+
+
+let currentChapter = 0;
+
+
+function renderChapters(list = chapters){
+
+  const grid =
+    document.getElementById("chapterGrid");
+
+  grid.innerHTML = "";
+
+  document.getElementById("emptyMessage").style.display =
+    list.length ? "none" : "block";
+
+  list.forEach((chapter)=>{
+
+    const realIndex =
+      chapters.indexOf(chapter);
+
+    const card =
+      document.createElement("div");
+
+    card.className =
+      "chapter-card";
+
+    card.innerHTML = `
+      <div class="chapter-number">
+        Chapter ${realIndex + 1}
+      </div>
+
+      <div class="chapter-title">
+        ${chapter.title}
+      </div>
+    `;
+
+    card.onclick = function(){
+
+      openChapter(realIndex);
+
+    };
+
+    grid.appendChild(card);
+
+  });
+
+}
+
+
+function openChapter(index){
+
+  currentChapter = index;
+
+  const chapter =
+    chapters[index];
+
+  document.getElementById(
+    "chapterGrid"
+      ).style.display = "none";
+
+  document.querySelector(
+    ".search-box"
+  ).style.display = "none";
+
+  document.querySelector(
+    ".syllabus"
+  ).style.display = "none";
+
+  const reader =
+    document.getElementById("reader");
+
+  reader.classList.add("active");
+
+  document.getElementById(
+    "readerTitle"
+  ).textContent =
+    "Chapter " +
+    (index + 1) +
+    ": " +
+    chapter.title;
+
+  document.getElementById(
+    "readerContent"
+  ).innerHTML =
+    chapter.content;
+
+  document.getElementById(
+    "previousBtn"
+  ).disabled =
+    index === 0;
+
+  document.getElementById(
+    "nextBtn"
+  ).disabled =
+    index === chapters.length - 1;
+
+  updateProgress();
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+function showChapters(){
+
+  document.getElementById(
+    "chapterGrid"
+  ).style.display = "grid";
+
+  document.querySelector(
+    ".search-box"
+  ).style.display = "block";
+
+  document.querySelector(
+    ".syllabus"
+  ).style.display = "block";
+
+  document.getElementById(
+    "reader"
+  ).classList.remove("active");
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+function nextChapter(){
+
+  if(
+    currentChapter <
+    chapters.length - 1
+  ){
+
+    openChapter(
+      currentChapter + 1
+    );
+
+  }
+
+}
+
+
+function previousChapter(){
+
+  if(currentChapter > 0){
+
+    openChapter(
+      currentChapter - 1
+    );
+
+  }
+
+}
+
+
+function searchChapters(){
+
+  const query =
+    document.getElementById(
+      "searchInput"
+    ).value
+    .toLowerCase()
+    .trim();
+
+  const filtered =
+    chapters.filter(chapter =>
+      chapter.title
+      .toLowerCase()
+      .includes(query)
+    );
+
+  renderChapters(filtered);
+
+}
+
+
+function updateProgress(){
+
+  const progress =
+    ((currentChapter + 1) /
+    chapters.length) * 100;
+
+  document.getElementById(
+    "progressFill"
+  ).style.width =
+    progress + "%";
+
+}
+
+
+function toggleTheme(){
+
+  document.body.classList.toggle(
+    "dark"
+  );
+
+  localStorage.setItem(
+    "jr_ai_theme",
+    document.body.classList.contains("dark")
+      ? "dark"
+      : "light"
+  );
+
+}
+
+
+function loadTheme(){
+
+  const theme =
+    localStorage.getItem(
+      "jr_ai_theme"
+    );
+
+  if(theme === "dark"){
+
+    document.body.classList.add(
+      "dark"
+    );
+
+  }
+
+}
+
+
+renderChapters();
+
+loadTheme();
+
+</script>
+
+
+</body>
+
+</html>
