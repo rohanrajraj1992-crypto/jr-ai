@@ -1,0 +1,1453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>JR AI Book Store</title>
+
+<style>
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  -webkit-tap-highlight-color:transparent;
+}
+
+body{
+  font-family:Arial, sans-serif;
+  background:#f4f6fb;
+  color:#182033;
+  min-height:100vh;
+  transition:0.3s;
+}
+
+body.dark{
+  background:#0f1420;
+  color:#f2f4f8;
+}
+
+
+/* HEADER */
+
+.header{
+  position:sticky;
+  top:0;
+  z-index:1000;
+
+  height:64px;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  padding:0 16px;
+
+  background:#ffffff;
+  border-bottom:1px solid #e5e8ef;
+  box-shadow:0 3px 15px rgba(0,0,0,0.06);
+}
+
+body.dark .header{
+  background:#171d2b;
+  border-color:#293143;
+}
+
+.header-left{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.back-btn,
+.theme-btn{
+  border:none;
+  background:#eef1f7;
+  color:#182033;
+
+  width:40px;
+  height:40px;
+
+  border-radius:12px;
+
+  font-size:20px;
+
+  cursor:pointer;
+}
+
+body.dark .back-btn,
+body.dark .theme-btn{
+  background:#252d3d;
+  color:#ffffff;
+}
+
+.logo{
+  font-size:21px;
+  font-weight:800;
+}
+
+
+/* HERO */
+
+.hero{
+  padding:28px 18px 20px;
+  text-align:center;
+}
+
+.hero h1{
+  font-size:28px;
+  margin-bottom:8px;
+}
+
+.hero p{
+  color:#687086;
+  font-size:14px;
+  line-height:1.5;
+}
+
+body.dark .hero p{
+  color:#aab2c3;
+}
+
+
+/* SEARCH */
+
+.search-box{
+  max-width:700px;
+  margin:0 auto 18px;
+
+  padding:0 16px;
+}
+
+.search-wrap{
+  display:flex;
+  align-items:center;
+
+  background:#ffffff;
+  border:1px solid #dfe4ee;
+
+  border-radius:16px;
+
+  padding:0 14px;
+
+  height:52px;
+
+  box-shadow:0 5px 18px rgba(0,0,0,0.05);
+}
+
+body.dark .search-wrap{
+  background:#171d2b;
+  border-color:#30394d;
+}
+
+.search-icon{
+  font-size:19px;
+  margin-right:9px;
+}
+
+#searchInput{
+  width:100%;
+  height:100%;
+
+  border:none;
+  outline:none;
+
+  background:transparent;
+
+  color:inherit;
+
+  font-size:15px;
+}
+
+#searchInput::placeholder{
+  color:#8b93a5;
+}
+
+
+/* CATEGORIES */
+
+.categories{
+  display:flex;
+  gap:9px;
+
+  overflow-x:auto;
+
+  padding:4px 16px 16px;
+
+  scrollbar-width:none;
+}
+
+.categories::-webkit-scrollbar{
+  display:none;
+}
+
+.category-btn{
+  flex:0 0 auto;
+
+  border:none;
+
+  background:#ffffff;
+  color:#4c5569;
+
+  border:1px solid #dfe4ee;
+
+  padding:10px 15px;
+
+  border-radius:30px;
+
+  font-size:13px;
+  font-weight:700;
+
+  cursor:pointer;
+
+  white-space:nowrap;
+}
+
+.category-btn.active{
+  background:#202a44;
+  color:#ffffff;
+  border-color:#202a44;
+}
+
+body.dark .category-btn{
+  background:#171d2b;
+  color:#c5ccda;
+  border-color:#30394d;
+}
+
+body.dark .category-btn.active{
+  background:#ffffff;
+  color:#111827;
+}
+
+
+/* STORE */
+
+.store{
+  max-width:1100px;
+  margin:0 auto;
+
+  padding:10px 16px 50px;
+}
+
+.section-title{
+  font-size:18px;
+  font-weight:800;
+
+  margin:10px 0 15px;
+}
+
+
+/* BOOK GRID */
+
+.book-grid{
+  display:grid;
+
+  grid-template-columns:
+    repeat(auto-fill,minmax(145px,1fr));
+
+  gap:16px;
+}
+
+
+/* BOOK CARD */
+
+.book-card{
+  background:#ffffff;
+
+  border:1px solid #e1e5ee;
+
+  border-radius:18px;
+
+  padding:12px;
+
+  cursor:pointer;
+
+  box-shadow:0 5px 18px rgba(0,0,0,0.05);
+
+  transition:
+    transform 0.18s,
+    box-shadow 0.18s;
+
+  overflow:hidden;
+}
+
+.book-card:active{
+  transform:scale(0.97);
+}
+
+.book-card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 10px 25px rgba(0,0,0,0.10);
+}
+
+body.dark .book-card{
+  background:#171d2b;
+  border-color:#30394d;
+}
+
+
+/* COVER */
+
+.book-cover{
+  height:185px;
+
+  border-radius:13px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-size:55px;
+
+  margin-bottom:11px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #202a44,
+      #4b5f91
+    );
+
+  color:#ffffff;
+
+  position:relative;
+
+  overflow:hidden;
+}
+
+.book-cover::after{
+  content:"JR AI";
+
+  position:absolute;
+
+  bottom:9px;
+  left:0;
+  right:0;
+
+  text-align:center;
+
+  font-size:10px;
+  letter-spacing:2px;
+
+  opacity:0.75;
+  font-weight:800;
+}
+
+
+/* COVER COLORS */
+
+.cover-blue{
+  background:
+    linear-gradient(145deg,#172554,#2563eb);
+}
+
+.cover-purple{
+  background:
+    linear-gradient(145deg,#3b0764,#9333ea);
+}
+
+.cover-green{
+  background:
+    linear-gradient(145deg,#064e3b,#10b981);
+}
+
+.cover-red{
+  background:
+    linear-gradient(145deg,#450a0a,#dc2626);
+}
+
+.cover-orange{
+  background:
+    linear-gradient(145deg,#7c2d12,#f97316);
+}
+
+.cover-gold{
+  background:
+    linear-gradient(145deg,#713f12,#eab308);
+}
+
+.cover-pink{
+  background:
+    linear-gradient(145deg,#831843,#ec4899);
+}
+
+.cover-dark{
+  background:
+    linear-gradient(145deg,#111827,#374151);
+}
+
+.cover-mystery{
+  background:
+    linear-gradient(145deg,#111827,#312e81);
+}
+
+.cover-fantasy{
+  background:
+    linear-gradient(145deg,#312e81,#7c3aed);
+}
+
+
+/* BOOK TEXT */
+
+.book-title{
+  font-size:15px;
+  font-weight:800;
+
+  line-height:1.25;
+
+  margin-bottom:6px;
+}
+
+.book-info{
+  font-size:12px;
+
+  line-height:1.4;
+
+  color:#737c90;
+}
+
+body.dark .book-info{
+  color:#aab2c3;
+}
+
+
+/* NO RESULTS */
+
+.no-results{
+  display:none;
+
+  text-align:center;
+
+  padding:45px 20px;
+
+  color:#7b8498;
+}
+
+.no-results .emoji{
+  font-size:42px;
+  margin-bottom:10px;
+}
+
+.no-results h3{
+  color:inherit;
+  margin-bottom:6px;
+}
+
+
+/* FOOTER */
+
+.footer{
+  text-align:center;
+
+  padding:25px 15px 35px;
+
+  color:#8a92a5;
+
+  font-size:12px;
+}
+
+
+/* MOBILE */
+
+@media(max-width:520px){
+
+  .header{
+    height:60px;
+  }
+
+  .logo{
+    font-size:18px;
+  }
+
+  .hero{
+    padding-top:23px;
+  }
+
+  .hero h1{
+    font-size:24px;
+  }
+
+  .book-grid{
+    grid-template-columns:
+      repeat(2,minmax(0,1fr));
+
+    gap:12px;
+  }
+
+  .book-card{
+    padding:10px;
+    border-radius:16px;
+  }
+
+  .book-cover{
+    height:175px;
+    font-size:48px;
+  }
+
+  .book-title{
+    font-size:14px;
+  }
+
+}
+
+@media(min-width:700px){
+
+  .book-grid{
+    grid-template-columns:
+      repeat(4,minmax(0,1fr));
+  }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- HEADER -->
+
+<header class="header">
+
+  <div class="header-left">
+
+    <button
+      class="back-btn"
+      id="backBtn"
+      type="button"
+    >
+      ←
+    </button>
+
+    <div class="logo">
+      📚 JR AI Book Store
+    </div>
+
+  </div>
+
+  <button
+    class="theme-btn"
+    id="themeBtn"
+    type="button"
+  >
+    🌙
+  </button>
+
+</header>
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+  <h1>
+    📚 Explore JR AI Books
+  </h1>
+
+  <p>
+    Study, prepare, discover stories and learn something new.
+  </p>
+
+</section>
+
+
+<!-- SEARCH -->
+
+<div class="search-box">
+
+  <div class="search-wrap">
+
+    <span class="search-icon">
+      🔎
+    </span>
+
+    <input
+      type="text"
+      id="searchInput"
+      placeholder="Search books, subjects or stories..."
+      autocomplete="off"
+    >
+
+  </div>
+
+</div>
+
+
+<!-- CATEGORIES -->
+
+<div class="categories" id="categories">
+
+  <button
+    class="category-btn active"
+    data-category="all"
+    type="button"
+  >
+    All
+  </button>
+
+  <button
+    class="category-btn"
+    data-category="school"
+    type="button"
+  >
+    🏫 School
+  </button>
+
+  <button
+    class="category-btn"
+    data-category="competitive"
+    type="button"
+  >
+    🎯 Competitive
+  </button>
+
+  <button
+    class="category-btn"
+    data-category="gk"
+    type="button"
+  >
+    🧠 GK
+  </button>
+
+  <button
+    class="category-btn"
+    data-category="romance"
+    type="button"
+  >
+    💗 Romance
+  </button>
+
+  <button
+    class="category-btn"
+    data-category="dark-romance"
+    type="button"
+  >
+    🖤 Dark Romance
+  </button>
+
+  <button
+    class="category-btn"
+    data-category="mystery"
+    type="button"
+  >
+    🕵️ Mystery
+  </button>
+
+  <button
+    class="category-btn"
+    data-category="novel"
+    type="button"
+  >
+    📖 Novels
+  </button>
+
+</div>
+
+
+<!-- STORE -->
+
+<main class="store">
+
+  <div class="section-title">
+    📖 All Books
+  </div>
+
+
+  <div
+    class="book-grid"
+    id="bookGrid"
+  >
+
+
+    <!-- SCHOOL -->
+
+
+    <div
+      class="book-card"
+      data-category="school"
+      data-title="Class 12 Physics Physics"
+      data-id="class12-physics"
+      data-page="physics.html"
+    >
+
+      <div class="book-cover cover-blue">
+        ⚡
+      </div>
+
+      <div class="book-title">
+        JR AI Class 12 Physics
+      </div>
+
+      <div class="book-info">
+        Chapter-wise Physics study book.
+      </div>
+
+    </div>
+
+
+    <div
+      class="book-card"
+      data-category="school"
+      data-title="Class 12 Maths Mathematics"
+      data-id="class12-maths"
+      data-page="maths.html"
+    >
+
+      <div class="book-cover cover-purple">
+        ∑
+      </div>
+
+      <div class="book-title">
+        JR AI Class 12 Maths
+      </div>
+
+      <div class="book-info">
+        Complete chapter-wise Maths study book.
+      </div>
+
+    </div>
+
+
+    <div
+      class="book-card"
+      data-category="school"
+      data-title="Class 12 Biology"
+      data-id="class12-biology"
+      data-page="biology.html"
+    >
+
+      <div class="book-cover cover-green">
+        🧬
+      </div>
+
+      <div class="book-title">
+        JR AI Class 12 Biology
+      </div>
+
+      <div class="book-info">
+        Detailed Biology study material.
+      </div>
+
+    </div>
+
+
+    <div
+      class="book-card"
+      data-category="school"
+      data-title="Class 10 Science"
+      data-id="class10-science"
+      data-page="class10science.html"
+    >
+
+      <div class="book-cover cover-blue">
+        🔬
+      </div>
+
+      <div class="book-title">
+        JR AI Class 10 Science
+      </div>
+
+      <div class="book-info">
+        Complete Class 10 Science guide.
+      </div>
+
+    </div>
+
+
+    <div
+      class="book-card"
+      data-category="school"
+      data-title="Biotechnology"
+      data-id="biotechnology"
+      data-page="Biotechnology.html"
+    >
+
+      <div class="book-cover cover-green">
+        🧬
+      </div>
+
+      <div class="book-title">
+        JR AI Biotechnology
+      </div>
+
+      <div class="book-info">
+        Biotechnology study material.
+      </div>
+
+    </div>
+
+
+    <!-- COMPETITIVE -->
+
+
+    <div
+      class="book-card"
+      data-category="competitive"
+      data-title="Bihar Police Bihar Police Exam"
+      data-id="bihar-police"
+      data-page="biharpolice.html"
+    >
+
+      <div class="book-cover cover-red">
+        👮
+      </div>
+
+      <div class="book-title">
+        Bihar Police
+      </div>
+
+      <div class="book-info">
+        Topic-wise Bihar Police preparation.
+      </div>
+
+    </div>
+
+
+    <div
+      class="book-card"
+      data-category="competitive"
+      data-title="UPSC Civil Services"
+      data-id="upsc"
+      data-page="upsc.html"
+    >
+
+      <div class="book-cover cover-gold">
+        🏛️
+      </div>
+
+      <div class="book-title">
+        UPSC Preparation
+      </div>
+
+      <div class="book-info">
+        Subject-wise UPSC preparation material.
+      </div>
+
+    </div>
+
+
+    <div
+      class="book-card"
+      data-category="competitive"
+      data-title="SSC Staff Selection Commission"
+      data-id="ssc"
+      data-page="ssc.html"
+    >
+
+      <div class="book-cover cover-orange">
+        🎯
+      </div>
+
+      <div class="book-title">
+        SSC Preparation
+      </div>
+
+      <div class="book-info">
+        Complete SSC preparation chapters.
+      </div>
+
+    </div>
+
+
+    <div
+      class="book-card"
+      data-category="competitive"
+      data-title="Railway Railway Exam"
+      data-id="railway"
+      data-page="railway.html"
+    >
+
+      <div class="book-cover cover-blue">
+        🚆
+      </div>
+
+      <div class="book-title">
+        Railway Preparation
+      </div>
+
+      <div class="book-info">
+        Railway exam preparation material.
+      </div>
+
+    </div>
+
+
+    <div
+      class="book-card"
+      data-category="competitive"
+      data-title="NDA National Defence Academy"
+      data-id="nda"
+      data-page="nda.html"
+    >
+
+      <div class="book-cover cover-green">
+        🪖
+      </div>
+
+      <div class="book-title">
+        NDA Preparation
+      </div>
+
+      <div class="book-info">
+        NDA subject-wise preparation guide.
+      </div>
+
+    </div>
+
+
+    <!-- GK -->
+
+
+    <div
+      class="book-card"
+      data-category="gk"
+      data-title="General GK General Knowledge"
+      data-id="general-gk"
+      data-page="generalgk.html"
+    >
+
+      <div class="book-cover cover-gold">
+        🧠
+      </div>
+
+      <div class="book-title">
+        General GK
+      </div>
+
+      <div class="book-info">
+        Important general knowledge topics.
+      </div>
+
+    </div>
+
+
+    <div
+      class="book-card"
+      data-category="gk"
+      data-title="Current Affairs"
+      data-id="current-affairs"
+      data-page="currentaffairs.html"
+    >
+
+      <div class="book-cover cover-orange">
+        📰
+      </div>
+
+      <div class="book-title">
+        Current Affairs
+      </div>
+
+      <div class="book-info">
+        Current-affairs learning and revision.
+      </div>
+
+    </div>
+
+
+    <!-- ROMANCE -->
+
+
+    <div
+      class="book-card"
+      data-category="romance"
+      data-title="Soft Romance When We Met Again"
+      data-id="soft-romance"
+      data-page="softromance.html"
+    >
+
+      <div class="book-cover cover-pink">
+        💗
+      </div>
+
+      <div class="book-title">
+        When We Met Again
+      </div>
+
+      <div class="book-info">
+        An original emotional romance story.
+      </div>
+
+    </div>
+
+
+    <div
+      class="book-card"
+      data-category="romance"
+      data-title="Heart Connection Romance"
+      data-id="heart-connection"
+      data-page="heartconnection.html"
+    >
+
+      <div class="book-cover cover-pink">
+        ❤️
+      </div>
+
+      <div class="book-title">
+        Heart Connection
+      </div>
+
+      <div class="book-info">
+        A story about trust and connection.
+      </div>
+
+    </div>
+
+
+    <!-- DARK ROMANCE -->
+
+
+    <div
+      class="book-card"
+      data-category="dark-romance"
+      data-title="Dark Romance The Love Hypothesis"
+      data-id="dark-romance"
+      data-page="darkromance.html"
+    >
+
+      <div class="book-cover cover-dark">
+        🖤
+      </div>
+
+      <div class="book-title">
+        The Love Hypothesis
+      </div>
+
+      <div class="book-info">
+        Original suspenseful dark romance.
+      </div>
+
+    </div>
+
+
+    <!-- MYSTERY -->
+
+
+    <div
+      class="book-card"
+      data-category="mystery"
+      data-title="Mystery House Blackwood"
+      data-id="mystery-house"
+      data-page="mysteryhouse.html"
+    >
+
+      <div class="book-cover cover-mystery">
+        🏚️
+      </div>
+
+      <div class="book-title">
+        Mystery House
+      </div>
+
+      <div class="book-info">
+        A dark mystery around Blackwood House.
+      </div>
+
+    </div>
+
+
+    <div
+      class="book-card"
+      data-category="mystery"
+      data-title="Lost Secret Mystery"
+      data-id="lost-secret"
+      data-page="lostsecret.html"
+    >
+
+      <div class="book-cover cover-mystery">
+        🔐
+      </div>
+
+      <div class="book-title">
+        Lost Secret
+      </div>
+
+      <div class="book-info">
+        An original mystery full of secrets.
+      </div>
+
+    </div>
+
+
+    <!-- NOVELS -->
+
+
+    <div
+      class="book-card"
+      data-category="novel"
+      data-title="Emotional Novel The Last Letter"
+      data-id="emotional-novel"
+      data-page="emotionalnovel.html"
+    >
+
+      <div class="book-cover cover-purple">
+        💌
+      </div>
+
+      <div class="book-title">
+        The Last Letter
+      </div>
+
+      <div class="book-info">
+        An emotional original novel.
+      </div>
+
+    </div>
+
+
+    <div
+      class="book-card"
+      data-category="novel"
+      data-title="Fantasy The Lost Kingdom"
+      data-id="fantasy-world"
+      data-page="fantasyworld.html"
+    >
+
+      <div class="book-cover cover-fantasy">
+        🏰
+      </div>
+
+      <div class="book-title">
+        The Lost Kingdom
+      </div>
+
+      <div class="book-info">
+        An original fantasy adventure.
+      </div>
+
+    </div>
+
+
+  </div>
+
+
+  <!-- NO RESULTS -->
+
+  <div
+    class="no-results"
+    id="noResults"
+  >
+
+    <div class="emoji">
+      🔎
+    </div>
+
+    <h3>
+      No books found
+    </h3>
+
+    <p>
+      Try another title, subject or category.
+    </p>
+
+  </div>
+
+</main>
+
+
+<footer class="footer">
+  © JR AI • Original Learning & Stories
+</footer>
+
+
+<script>
+
+
+/* ELEMENTS */
+
+const searchInput =
+  document.getElementById("searchInput");
+
+const bookGrid =
+  document.getElementById("bookGrid");
+
+const noResults =
+  document.getElementById("noResults");
+
+const categoryButtons =
+  document.querySelectorAll(".category-btn");
+
+const themeBtn =
+  document.getElementById("themeBtn");
+
+const backBtn =
+  document.getElementById("backBtn");
+
+const bookCards =
+  document.querySelectorAll(".book-card");
+
+
+let activeCategory = "all";
+
+
+/* OPEN BOOK */
+
+function openBook(card){
+
+  const title =
+    card.dataset.title || "";
+
+  const bookId =
+    card.dataset.id || "";
+
+  const category =
+    card.dataset.category || "";
+
+  const page =
+    card.dataset.page || "";
+
+  const cover =
+    card.querySelector(".book-cover")
+      ? card.querySelector(".book-cover").textContent.trim()
+      : "📚";
+
+
+  localStorage.setItem(
+    "jr_selected_book",
+    title
+  );
+
+  localStorage.setItem(
+    "jr_selected_book_id",
+    bookId
+  );
+
+  localStorage.setItem(
+    "jr_selected_category",
+    category
+  );
+
+  localStorage.setItem(
+    "jr_selected_cover",
+    cover
+  );
+
+
+  if(page){
+
+    window.location.href = page;
+
+  }
+
+}
+
+
+/* BOOK CLICK */
+
+bookCards.forEach(function(card){
+
+  card.addEventListener(
+    "click",
+    function(){
+
+      openBook(card);
+
+    }
+  );
+
+});
+
+
+/* FILTER */
+
+function filterBooks(){
+
+  const query =
+    searchInput.value
+      .toLowerCase()
+      .trim();
+
+
+  let visibleCount = 0;
+
+
+  bookCards.forEach(function(card){
+
+    const category =
+      card.dataset.category
+        .toLowerCase();
+
+    const title =
+      card.dataset.title
+        .toLowerCase();
+
+    const visibleText =
+      card.textContent
+        .toLowerCase();
+
+
+    const categoryMatch =
+      activeCategory === "all" ||
+      category === activeCategory;
+
+
+    const searchMatch =
+      !query ||
+      title.includes(query) ||
+      visibleText.includes(query);
+
+
+    if(
+      categoryMatch &&
+      searchMatch
+    ){
+
+      card.style.display = "";
+
+      visibleCount++;
+
+    }else{
+
+      card.style.display = "none";
+
+    }
+
+  });
+
+
+  if(visibleCount === 0){
+
+    noResults.style.display =
+      "block";
+
+  }else{
+
+    noResults.style.display =
+      "none";
+
+  }
+
+}
+
+
+/* SEARCH */
+
+searchInput.addEventListener(
+  "input",
+  filterBooks
+);
+
+
+/* CATEGORY BUTTONS */
+
+categoryButtons.forEach(function(button){
+
+  button.addEventListener(
+    "click",
+    function(){
+
+      categoryButtons.forEach(
+        function(btn){
+
+          btn.classList.remove(
+            "active"
+          );
+
+        }
+      );
+
+
+      button.classList.add(
+        "active"
+      );
+
+
+      activeCategory =
+        button.dataset.category;
+
+
+      filterBooks();
+
+    }
+  );
+
+});
+
+
+/* THEME */
+
+function loadTheme(){
+
+  const savedTheme =
+    localStorage.getItem(
+      "jr_ai_theme"
+    );
+
+
+  if(savedTheme === "dark"){
+
+    document.body.classList.add(
+      "dark"
+    );
+
+    themeBtn.textContent =
+      "☀️";
+
+  }else{
+
+    themeBtn.textContent =
+      "🌙";
+
+  }
+
+}
+
+
+themeBtn.addEventListener(
+  "click",
+  function(){
+
+    document.body.classList.toggle(
+      "dark"
+    );
+
+
+    const isDark =
+      document.body.classList.contains(
+        "dark"
+      );
+
+
+    localStorage.setItem(
+      "jr_ai_theme",
+      isDark
+        ? "dark"
+        : "light"
+    );
+
+
+    themeBtn.textContent =
+      isDark
+        ? "☀️"
+        : "🌙";
+
+  }
+);
+
+
+/* BACK */
+
+backBtn.addEventListener(
+  "click",
+  function(){
+
+    window.location.href =
+      "index.html";
+
+  }
+);
+
+
+/* START */
+
+loadTheme();
+
+filterBooks();
+
+
+</script>
+
+</body>
+</html>
