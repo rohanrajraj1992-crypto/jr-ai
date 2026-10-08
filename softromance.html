@@ -1,0 +1,1412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>JR AI Soft Romance</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:#fff7fb;
+  color:#33202a;
+  min-height:100vh;
+}
+
+body.dark{
+  background:#181218;
+  color:#f7eaf0;
+}
+
+.header{
+  position:sticky;
+  top:0;
+  z-index:50;
+  background:linear-gradient(135deg,#9d174d,#db2777);
+  color:white;
+  padding:14px 16px;
+  box-shadow:0 4px 15px rgba(0,0,0,.16);
+}
+
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.back-btn,
+.theme-btn{
+  border:0;
+  background:rgba(255,255,255,.18);
+  color:white;
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  font-size:20px;
+  cursor:pointer;
+}
+
+.title-box{
+  flex:1;
+  text-align:center;
+}
+
+.title-box h1{
+  font-size:20px;
+  font-weight:800;
+}
+
+.title-box p{
+  font-size:12px;
+  opacity:.9;
+  margin-top:3px;
+}
+
+.cover{
+  margin:18px 16px;
+  min-height:270px;
+  border-radius:25px;
+  padding:30px 23px;
+  color:white;
+  background:
+    radial-gradient(circle at 15% 20%,rgba(255,255,255,.25),transparent 24%),
+    radial-gradient(circle at 90% 85%,rgba(255,255,255,.16),transparent 28%),
+    linear-gradient(135deg,#831843,#be185d,#ec4899);
+  box-shadow:0 13px 30px rgba(190,24,93,.28);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+.cover-icon{
+  font-size:52px;
+  margin-bottom:14px;
+}
+
+.cover h2{
+  font-size:31px;
+  line-height:1.12;
+  margin-bottom:10px;
+}
+
+.cover p{
+  font-size:14px;
+  line-height:1.65;
+  opacity:.95;
+}
+
+.badge{
+  display:inline-block;
+  margin-top:17px;
+  width:max-content;
+  background:rgba(255,255,255,.18);
+  border:1px solid rgba(255,255,255,.32);
+  padding:8px 14px;
+  border-radius:30px;
+  font-weight:700;
+  font-size:13px;
+}
+
+.search-box{
+  margin:0 16px 18px;
+}
+
+.search-box input{
+  width:100%;
+  border:1px solid #ead4df;
+  background:white;
+  color:#33202a;
+  border-radius:15px;
+  padding:14px 16px;
+  outline:none;
+  font-size:15px;
+}
+
+body.dark .search-box input{
+  background:#241c23;
+  color:white;
+  border-color:#493440;
+}
+
+.section-title{
+  padding:0 16px;
+  margin-bottom:12px;
+}
+
+.section-title h3{
+  font-size:19px;
+}
+
+.section-title p{
+  font-size:12px;
+  color:#806875;
+  margin-top:4px;
+}
+
+body.dark .section-title p{
+  color:#bdaab4;
+}
+
+.chapter-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+  padding:0 16px 20px;
+}
+
+.chapter-card{
+  background:white;
+  border:1px solid #ead4df;
+  border-radius:18px;
+  padding:16px;
+  min-height:135px;
+  cursor:pointer;
+  transition:.2s;
+  box-shadow:0 5px 14px rgba(88,20,50,.06);
+}
+
+.chapter-card:active{
+  transform:scale(.97);
+}
+
+body.dark .chapter-card{
+  background:#241c23;
+  border-color:#493440;
+  box-shadow:none;
+}
+
+.chapter-number{
+  width:35px;
+  height:35px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:11px;
+  background:#fce7f3;
+  color:#be185d;
+  font-weight:800;
+  margin-bottom:10px;
+}
+
+body.dark .chapter-number{
+  background:#4a1732;
+  color:#f9a8d4;
+}
+
+.chapter-card h4{
+  font-size:14px;
+  line-height:1.4;
+}
+
+.reader{
+  display:none;
+  margin:0 16px 30px;
+}
+
+.reader.active{
+  display:block;
+}
+
+.reader-head{
+  background:white;
+  border:1px solid #ead4df;
+  border-radius:18px;
+  padding:18px;
+  margin-bottom:12px;
+}
+
+body.dark .reader-head{
+  background:#241c23;
+  border-color:#493440;
+}
+
+.reader-head h2{
+  font-size:23px;
+  line-height:1.3;
+  color:#be185d;
+}
+
+body.dark .reader-head h2{
+  color:#f9a8d4;
+}
+
+.reader-content{
+  background:white;
+  border:1px solid #ead4df;
+  border-radius:18px;
+  padding:20px;
+  line-height:1.8;
+  font-size:15px;
+  overflow:hidden;
+}
+
+body.dark .reader-content{
+  background:#241c23;
+  border-color:#493440;
+}
+
+.reader-content h3{
+  margin:22px 0 9px;
+  color:#be185d;
+  font-size:18px;
+}
+
+body.dark .reader-content h3{
+  color:#f9a8d4;
+}
+
+.reader-content h3:first-child{
+  margin-top:0;
+}
+
+.reader-content p{
+  margin-bottom:14px;
+}
+
+.dialogue{
+  margin:15px 0;
+  padding:14px 16px;
+  background:#fff1f7;
+  border-left:4px solid #db2777;
+  border-radius:12px;
+  font-style:italic;
+}
+
+body.dark .dialogue{
+  background:#351c29;
+}
+
+.quote{
+  margin:17px 0;
+  padding:16px;
+  text-align:center;
+  background:#fdf2f8;
+  border-radius:14px;
+  color:#9d174d;
+  font-weight:700;
+}
+
+body.dark .quote{
+  background:#341b29;
+  color:#f9a8d4;
+}
+
+.info-box{
+  margin:15px 0;
+  padding:14px;
+  border-left:4px solid #ec4899;
+  background:#fdf2f8;
+  border-radius:10px;
+}
+
+body.dark .info-box{
+  background:#341b29;
+}
+
+.reader-nav{
+  display:flex;
+  gap:8px;
+  margin-top:12px;
+}
+
+.reader-nav button{
+  flex:1;
+  border:0;
+  border-radius:13px;
+  padding:13px 8px;
+  background:#be185d;
+  color:white;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.reader-nav button:disabled{
+  opacity:.4;
+}
+
+.progress-wrap{
+  margin:14px 0 0;
+}
+
+.progress-text{
+  font-size:12px;
+  color:#806875;
+  margin-bottom:6px;
+}
+
+body.dark .progress-text{
+  color:#bdaab4;
+}
+
+.progress{
+  width:100%;
+  height:7px;
+  background:#f1dce6;
+  border-radius:20px;
+  overflow:hidden;
+}
+
+body.dark .progress{
+  background:#493440;
+}
+
+.progress-bar{
+  height:100%;
+  width:0;
+  background:#ec4899;
+  transition:.3s;
+}
+
+.chapters-btn{
+  width:100%;
+  border:1px solid #ead4df;
+  background:white;
+  color:#33202a;
+  padding:13px;
+  border-radius:13px;
+  font-weight:700;
+  cursor:pointer;
+  margin-bottom:12px;
+}
+
+body.dark .chapters-btn{
+  background:#241c23;
+  color:white;
+  border-color:#493440;
+}
+
+@media(max-width:360px){
+  .chapter-grid{
+    grid-template-columns:1fr;
+  }
+
+  .cover h2{
+    font-size:27px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+  <div class="topbar">
+
+    <button class="back-btn" onclick="goBack()">←</button>
+
+    <div class="title-box">
+      <h1>💕 Soft Romance</h1>
+      <p>JR AI Original Novel</p>
+    </div>
+
+    <button class="theme-btn" onclick="toggleTheme()">🌙</button>
+
+  </div>
+</header>
+
+<section class="cover">
+
+  <div class="cover-icon">🌷</div>
+
+  <h2>When We Met Again</h2>
+
+  <p>
+    A gentle original romance about two people who meet at the right
+    moment, learn to trust each other and discover that love can grow
+    quietly through ordinary days.
+  </p>
+
+  <div class="badge">
+    💗 Original Story • 12 Chapters
+  </div>
+
+</section>
+
+<div class="search-box">
+  <input
+    type="text"
+    id="searchInput"
+    placeholder="🔎 Search chapter..."
+    oninput="searchChapters()"
+  >
+</div>
+
+<section id="chapterSection">
+
+  <div class="section-title">
+    <h3>📖 Chapters</h3>
+    <p>Choose a chapter and start reading.</p>
+  </div>
+
+  <div class="chapter-grid" id="chapterGrid"></div>
+
+</section>
+
+<section class="reader" id="reader">
+
+  <button class="chapters-btn" onclick="showChapters()">
+    📖 Back to Chapters
+  </button>
+
+  <div class="reader-head">
+
+    <h2 id="readerTitle"></h2>
+
+    <div class="progress-wrap">
+      <div class="progress-text" id="progressText"></div>
+
+      <div class="progress">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <article class="reader-content" id="readerContent"></article>
+
+  <div class="reader-nav">
+    <button id="prevBtn" onclick="previousChapter()">← Previous</button>
+    <button id="nextBtn" onclick="nextChapter()">Next →</button>
+  </div>
+
+</section>
+
+<footer style="text-align:center;padding:8px 16px 24px;font-size:11px;color:#806875;">
+  JR AI Soft Romance • Original Story
+</footer>
+
+<script>
+
+const chapters = [
+
+{
+title:"Chapter 1 — The Unexpected Meeting",
+content:`
+
+<h3>A Rainy Afternoon</h3>
+
+<p>
+The rain had started without warning.
+Mira stood beneath the narrow roof of a small café, holding a notebook
+against her chest while watching the street disappear behind a curtain
+of silver water.
+</p>
+
+<p>
+She had planned to spend only twenty minutes there.
+Instead, the rain had turned twenty minutes into almost an hour.
+</p>
+
+<p>
+She looked at the empty chair across from her and sighed.
+</p>
+
+<div class="dialogue">
+“Apparently the weather has other plans.”
+</div>
+
+<p>
+A voice came from behind her.
+</p>
+
+<div class="dialogue">
+“Looks like it.”
+</div>
+
+<p>
+Mira turned.
+A man stood near the counter, shaking rain from the sleeve of his jacket.
+He looked around for a seat, then noticed the empty chair.
+</p>
+
+<p>
+“Is anyone sitting there?” he asked.
+</p>
+
+<p>
+Mira shook her head.
+</p>
+
+<div class="dialogue">
+“No. You can sit.”
+</div>
+
+<p>
+His name was Aarav.
+At first, they talked only about the rain.
+Then the conversation somehow moved to books, work, old songs,
+and the strange feeling of meeting someone who did not feel completely
+like a stranger.
+</p>
+
+<p>
+Neither of them knew it yet, but that ordinary rainy afternoon
+was going to become the beginning of something neither had planned.
+</p>
+
+<div class="quote">
+“Some stories begin quietly.”
+</div>
+
+`
+},
+
+{
+title:"Chapter 2 — Small Conversations",
+content:`
+
+<h3>A New Routine</h3>
+
+<p>
+After that afternoon, Mira returned to the café the following Saturday.
+She told herself it was because she liked the coffee.
+</p>
+
+<p>
+Aarav was already there.
+</p>
+
+<div class="dialogue">
+“You came back,” he said.
+</div>
+
+<div class="dialogue">
+“So did you.”
+</div>
+
+<p>
+He smiled.
+That became their first small joke.
+</p>
+
+<p>
+Soon, Saturdays became a quiet routine.
+They did not call it a friendship.
+They did not call it anything.
+They simply talked.
+</p>
+
+<p>
+Mira discovered that Aarav loved old films and hated crowded places.
+Aarav learned that Mira wrote ideas in the margins of almost every book
+she owned.
+</p>
+
+<p>
+Their conversations were never dramatic.
+That was what made them comfortable.
+</p>
+
+<p>
+They could sit together for an hour without feeling the need
+to fill every silence.
+</p>
+
+<div class="info-box">
+The strongest connections do not always begin with dramatic moments.
+Sometimes they begin with simple conversations that feel easy.
+</div>
+
+`
+},
+
+{
+title:"Chapter 3 — The Walk Home",
+content:`
+
+<h3>An Evening Walk</h3>
+
+<p>
+One evening, the café closed earlier than usual.
+The sky was clear, and the streets were unusually calm.
+</p>
+
+<p>
+Aarav offered to walk Mira home.
+</p>
+
+<p>
+They talked about childhood memories as they walked.
+Mira spoke about the dreams she had once been afraid to pursue.
+Aarav admitted that he had changed his own plans several times
+because he was afraid of choosing the wrong path.
+</p>
+
+<div class="dialogue">
+“Maybe nobody really knows what they’re doing,” Mira said.
+</div>
+
+<div class="dialogue">
+“Maybe we just get better at pretending.”
+</div>
+
+<p>
+She laughed.
+</p>
+
+<p>
+At her gate, neither of them immediately said goodbye.
+</p>
+
+<p>
+There was a brief silence.
+Not uncomfortable.
+Just full.
+</p>
+
+<p>
+“Goodnight, Mira.”
+</p>
+
+<p>
+“Goodnight, Aarav.”
+</p>
+
+<p>
+She watched him walk away before quietly opening the gate.
+</p>
+
+<div class="quote">
+“Sometimes a goodbye lasts longer than the walk home.”
+</div>
+
+`
+},
+
+{
+title:"Chapter 4 — Something Changes",
+content:`
+
+<h3>The Message</h3>
+
+<p>
+The next Saturday, Aarav did not come to the café.
+Mira tried not to look at the door every few minutes.
+</p>
+
+<p>
+By evening, she received a message.
+</p>
+
+<div class="dialogue">
+“Sorry I couldn't come today. Work became complicated.”
+</div>
+
+<p>
+Mira stared at the screen.
+She typed three different replies before finally sending:
+</p>
+
+<div class="dialogue">
+“No problem. Hope everything is okay.”
+</div>
+
+<p>
+His reply arrived almost immediately.
+</p>
+
+<div class="dialogue">
+“Now it is.”
+</div>
+
+<p>
+Mira smiled despite herself.
+Something had changed.
+</p>
+
+<p>
+They began talking more often.
+A message in the morning.
+A short call at night.
+A photograph of a book.
+A joke during a busy afternoon.
+</p>
+
+<p>
+Nothing had been announced.
+Nothing had been promised.
+But the distance between them was becoming smaller.
+</p>
+
+`
+},
+
+{
+title:"Chapter 5 — The Honest Question",
+content:`
+
+<h3>What Are We?</h3>
+
+<p>
+One evening, they sat on a quiet bench outside the café.
+Mira finally decided that she did not want to keep guessing.
+</p>
+
+<div class="dialogue">
+“Can I ask you something?”
+</div>
+
+<div class="dialogue">
+“Of course.”
+</div>
+
+<div class="dialogue">
+“What is this between us?”
+</div>
+
+<p>
+Aarav looked at her for a moment.
+</p>
+
+<p>
+“I've been asking myself the same question.”
+</p>
+
+<p>
+Mira waited.
+</p>
+
+<div class="dialogue">
+“And?”
+</div>
+
+<div class="dialogue">
+“I like you. More than a friend. But I don't want to rush you.”
+</div>
+
+<p>
+She looked down and smiled.
+</p>
+
+<div class="dialogue">
+“I don't want to rush either.”
+</div>
+
+<p>
+For the first time, they spoke honestly about what they wanted.
+They agreed that neither of them needed to pretend.
+</p>
+
+<div class="info-box">
+A healthy relationship begins with honesty, respect and the freedom
+to communicate without pressure.
+</div>
+
+`
+},
+
+{
+title:"Chapter 6 — The First Date",
+content:`
+
+<h3>A Simple Plan</h3>
+
+<p>
+Their first date was not expensive or elaborate.
+They visited a small bookstore, shared coffee and walked through
+a quiet park.
+</p>
+
+<p>
+Mira expected nervousness.
+Instead, she felt strangely peaceful.
+</p>
+
+<p>
+Aarav bought an old paperback because Mira had mentioned it earlier.
+</p>
+
+<div class="dialogue">
+“You remembered?”
+</div>
+
+<div class="dialogue">
+“I remember things that matter to me.”
+</div>
+
+<p>
+Mira looked at him for a second longer than usual.
+</p>
+
+<p>
+They spent the afternoon laughing over terrible jokes and arguing
+playfully about which film was better.
+</p>
+
+<p>
+When the evening ended, Aarav asked if she had enjoyed the day.
+</p>
+
+<div class="dialogue">
+“I did.”
+</div>
+
+<div class="dialogue">
+“Good.”
+</div>
+
+<p>
+He smiled.
+</p>
+
+<p>
+“So did I.”
+</p>
+
+`
+},
+
+{
+title:"Chapter 7 — The Difficult Week",
+content:`
+
+<h3>Distance</h3>
+
+<p>
+The following weeks were not as easy.
+Mira's work became demanding.
+Aarav's responsibilities increased.
+Messages became shorter.
+Calls became less frequent.
+</p>
+
+<p>
+Neither of them had stopped caring.
+But both were tired.
+</p>
+
+<p>
+One evening, Mira finally said what she had been thinking.
+</p>
+
+<div class="dialogue">
+“I feel like we're becoming distant.”
+</div>
+
+<p>
+Aarav was quiet.
+</p>
+
+<div class="dialogue">
+“I feel it too.”
+</div>
+
+<p>
+Instead of blaming each other, they talked about what was actually
+happening.
+</p>
+
+<p>
+They agreed that affection could not replace communication.
+They needed to make space for each other without expecting
+perfection every day.
+</p>
+
+<p>
+The conversation did not solve everything immediately.
+But it prevented a misunderstanding from becoming a wall.
+</p>
+
+`
+},
+
+{
+title:"Chapter 8 — The Fear of Losing It",
+content:`
+
+<h3>An Old Fear</h3>
+
+<p>
+Mira had been hurt before.
+That was something she rarely talked about.
+</p>
+
+<p>
+One night, she finally told Aarav why she sometimes pulled away
+when things started feeling serious.
+</p>
+
+<div class="dialogue">
+“I think part of me expects people to leave.”
+</div>
+
+<p>
+Aarav did not try to give her a perfect answer.
+</p>
+
+<div class="dialogue">
+“I can't promise that life will never hurt us.”
+</div>
+
+<p>
+She looked at him.
+</p>
+
+<div class="dialogue">
+“But I can promise that I won't make decisions for you.
+If something changes, we'll talk about it.”
+</div>
+
+<p>
+Those words meant more to her than a dramatic promise ever could.
+</p>
+
+<p>
+Trust did not arrive in one moment.
+It grew through consistency.
+</p>
+
+<div class="quote">
+“Love becomes safer when people are allowed to be honest.”
+</div>
+
+`
+},
+
+{
+title:"Chapter 9 — A New Beginning",
+content:`
+
+<h3>The Decision</h3>
+
+<p>
+Months passed.
+They learned each other's habits, weaknesses and strengths.
+</p>
+
+<p>
+One Sunday morning, Mira received an opportunity to work in another city.
+It was something she had wanted for years.
+</p>
+
+<p>
+But she was afraid.
+</p>
+
+<div class="dialogue">
+“What if I leave and everything changes?”
+</div>
+
+<p>
+Aarav smiled.
+</p>
+
+<div class="dialogue">
+“Then we'll figure out what changes.”
+</div>
+
+<p>
+He did not ask her to give up the opportunity.
+He did not make the decision for her.
+</p>
+
+<p>
+Instead, they discussed what long distance would actually require.
+Regular calls.
+Honesty.
+Patience.
+Visits when possible.
+And enough independence for both of them to continue growing.
+</p>
+
+<p>
+Mira accepted the opportunity.
+</p>
+
+`
+},
+
+{
+title:"Chapter 10 — Across the Distance",
+content:`
+
+<h3>Different Cities</h3>
+
+<p>
+Distance was harder than they expected.
+Some days were good.
+Some days were lonely.
+</p>
+
+<p>
+They discovered that relationships were not built only from special
+dates and romantic moments.
+They were also built from ordinary conversations.
+</p>
+
+<p>
+Aarav would call while walking home.
+Mira would send photographs of the streets near her new apartment.
+They watched the same film from different cities.
+</p>
+
+<div class="dialogue">
+“Are you still there?”
+</div>
+
+<div class="dialogue">
+“Always.”
+</div>
+
+<p>
+Neither pretended that distance was easy.
+But they kept choosing communication instead of assumptions.
+</p>
+
+`
+},
+
+{
+title:"Chapter 11 — Coming Home",
+content:`
+
+<h3>The Station</h3>
+
+<p>
+Several months later, Mira returned for a short visit.
+</p>
+
+<p>
+Aarav waited at the station.
+When he saw her, he smiled in the same quiet way he had smiled
+the first afternoon at the café.
+</p>
+
+<p>
+Mira walked toward him.
+</p>
+
+<div class="dialogue">
+“You look different.”
+</div>
+
+<div class="dialogue">
+“So do you.”
+</div>
+
+<div class="dialogue">
+“Is that good?”
+</div>
+
+<div class="dialogue">
+“I think so.”
+</div>
+
+<p>
+They laughed.
+</p>
+
+<p>
+The city looked familiar.
+But they were not the same people who had once met under a café roof
+during a rainy afternoon.
+</p>
+
+<p>
+They had grown.
+Separately.
+And together.
+</p>
+
+`
+},
+
+{
+title:"Chapter 12 — The Quiet Answer",
+content:`
+
+<h3>Back at the Café</h3>
+
+<p>
+They returned to the same café where everything had started.
+</p>
+
+<p>
+The same window.
+The same corner.
+A different season.
+</p>
+
+<p>
+Mira opened the old notebook she had carried that first day.
+Inside was a small sentence she had written months ago:
+</p>
+
+<div class="quote">
+“Some people enter your life quietly and stay loudly in your heart.”
+</div>
+
+<p>
+Aarav read it and smiled.
+</p>
+
+<div class="dialogue">
+“You wrote that?”
+</div>
+
+<div class="dialogue">
+“A long time ago.”
+</div>
+
+<div class="dialogue">
+“I like it.”
+</div>
+
+<p>
+Mira closed the notebook.
+</p>
+
+<div class="dialogue">
+“I think I finally understand something.”
+</div>
+
+<div class="dialogue">
+“What?”
+</div>
+
+<div class="dialogue">
+“Love doesn't always have to be dramatic.”
+</div>
+
+<p>
+Aarav nodded.
+</p>
+
+<div class="dialogue">
+“Sometimes it is just two people choosing each other,
+again and again.”
+</div>
+
+<p>
+Outside, the first drops of rain began to fall.
+</p>
+
+<p>
+Mira smiled.
+</p>
+
+<p>
+This time, neither of them needed to run from the rain.
+</p>
+
+<div class="quote">
+The best love stories are not always the loudest ones.
+Sometimes they are simply the ones that stay.
+</div>
+
+<h3>The End</h3>
+
+<p>
+Their story was not perfect.
+It was not meant to be.
+</p>
+
+<p>
+It was honest, imperfect, patient and still growing.
+And perhaps that was the most beautiful part of it.
+</p>
+
+`
+}
+
+];
+
+let currentIndex = 0;
+
+const chapterGrid = document.getElementById("chapterGrid");
+const chapterSection = document.getElementById("chapterSection");
+const reader = document.getElementById("reader");
+const readerTitle = document.getElementById("readerTitle");
+const readerContent = document.getElementById("readerContent");
+const progressText = document.getElementById("progressText");
+const progressBar = document.getElementById("progressBar");
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+
+function renderChapters(list = chapters){
+
+  chapterGrid.innerHTML = "";
+
+  list.forEach((chapter) => {
+
+    const originalIndex = chapters.indexOf(chapter);
+
+    const card = document.createElement("div");
+
+    card.className = "chapter-card";
+
+    card.innerHTML = `
+      <div class="chapter-number">
+        ${originalIndex + 1}
+      </div>
+
+            <h4>${chapter.title}</h4>
+    `;
+
+    card.onclick = () => openChapter(originalIndex);
+
+    chapterGrid.appendChild(card);
+
+  });
+
+}
+
+function openChapter(index){
+
+  currentIndex = index;
+
+  chapterSection.style.display = "none";
+
+  reader.classList.add("active");
+
+  readerTitle.textContent =
+    chapters[index].title;
+
+  readerContent.innerHTML =
+    chapters[index].content;
+
+  localStorage.setItem("jr_ai_soft_romance_chapter", String(index));
+  updateNavigation();
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+function showChapters(){
+
+  reader.classList.remove("active");
+
+  chapterSection.style.display = "block";
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+function updateNavigation(){
+
+  progressText.textContent =
+    `Chapter ${currentIndex + 1} of ${chapters.length}`;
+
+  const percentage =
+    ((currentIndex + 1) / chapters.length) * 100;
+
+  progressBar.style.width =
+    percentage + "%";
+
+  prevBtn.disabled =
+    currentIndex === 0;
+
+  nextBtn.disabled =
+    currentIndex === chapters.length - 1;
+
+}
+
+function previousChapter(){
+
+  if(currentIndex > 0){
+    openChapter(currentIndex - 1);
+  }
+
+}
+
+function nextChapter(){
+
+  if(currentIndex < chapters.length - 1){
+    openChapter(currentIndex + 1);
+  }
+
+}
+
+function searchChapters(){
+
+  const query =
+    document.getElementById("searchInput")
+      .value
+      .trim()
+      .toLowerCase();
+
+  if(!query){
+
+    renderChapters();
+
+    return;
+
+  }
+
+  const filtered =
+    chapters.filter(chapter =>
+      chapter.title
+        .toLowerCase()
+        .includes(query)
+    );
+
+  renderChapters(filtered);
+
+}
+
+function toggleTheme(){
+
+  document.body.classList.toggle("dark");
+
+  localStorage.setItem(
+    "jr_ai_theme",
+    document.body.classList.contains("dark")
+      ? "dark"
+      : "light"
+  );
+
+}
+
+function loadTheme(){
+
+  const savedTheme =
+    localStorage.getItem("jr_ai_theme");
+
+  if(savedTheme === "dark"){
+    document.body.classList.add("dark");
+  }
+
+}
+
+function goBack(){
+
+  if(window.history.length > 1){
+    window.history.back();
+  }else{
+    window.location.href = "bookstore.html";
+  }
+
+}
+
+loadTheme();
+renderChapters();
+
+const savedChapter = parseInt(
+  localStorage.getItem("jr_ai_soft_romance_chapter"),
+  10
+);
+
+if(Number.isInteger(savedChapter) &&
+   savedChapter >= 0 &&
+   savedChapter < chapters.length){
+  // Keep the chapter saved, but don't auto-open it.
+  // The chapter list remains the starting screen.
+}
+
+</script>
+
+</body>
+</html>
