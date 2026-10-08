@@ -1,0 +1,1823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>JR AI - The Last Letter</title>
+
+<style>
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:#fff7f8;
+  color:#291b20;
+  transition:.3s;
+}
+
+body.dark{
+  background:#151116;
+  color:#f8e9ed;
+}
+
+.header{
+  position:sticky;
+  top:0;
+  z-index:100;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:15px;
+  color:white;
+  background:linear-gradient(135deg,#7f1d3d,#4c1028);
+  box-shadow:0 3px 15px rgba(0,0,0,.2);
+}
+
+.back-btn,
+.theme-btn{
+  width:42px;
+  height:42px;
+  border:0;
+  border-radius:12px;
+  background:rgba(255,255,255,.15);
+  color:white;
+  font-size:20px;
+  cursor:pointer;
+}
+
+.header-title{
+  flex:1;
+}
+
+.header-title h1{
+  font-size:20px;
+}
+
+.header-title p{
+  margin-top:3px;
+  font-size:12px;
+  opacity:.82;
+}
+
+.cover{
+  width:calc(100% - 30px);
+  max-width:700px;
+  min-height:245px;
+  margin:18px auto;
+  padding:30px 20px;
+  border-radius:24px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  color:white;
+  background:
+    linear-gradient(
+      135deg,
+      #831843,
+      #be185d,
+      #7f1d3d
+    );
+  box-shadow:0 12px 30px rgba(127,29,61,.25);
+}
+
+.cover-icon{
+  margin-bottom:12px;
+  font-size:58px;
+}
+
+.cover h2{
+  margin-bottom:9px;
+  font-size:28px;
+}
+
+.cover p{
+  font-size:14px;
+  line-height:1.7;
+  opacity:.92;
+}
+
+.container{
+  width:calc(100% - 30px);
+  max-width:850px;
+  margin:auto;
+}
+
+.search-box{
+  width:100%;
+  margin-bottom:16px;
+  padding:14px 16px;
+  border:1px solid #ead5dc;
+  border-radius:14px;
+  outline:none;
+  font-size:15px;
+  background:white;
+  color:#291b20;
+}
+
+body.dark .search-box{
+  background:#211a20;
+  border-color:#4b3540;
+  color:white;
+}
+
+.section-title{
+  margin-bottom:13px;
+  font-size:19px;
+}
+
+.chapter-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+}
+
+.chapter-card{
+  padding:16px;
+  border:1px solid #eadde1;
+  border-radius:17px;
+  background:white;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.chapter-card:hover{
+  transform:translateY(-2px);
+}
+
+body.dark .chapter-card{
+  background:#211a20;
+  border-color:#4b3540;
+}
+
+.chapter-number{
+  width:36px;
+  height:36px;
+  margin-bottom:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:11px;
+  background:#fce7f3;
+  color:#9d174d;
+  font-weight:800;
+}
+
+body.dark .chapter-number{
+  background:#4a1d32;
+  color:#f9a8d4;
+}
+
+.chapter-card h3{
+  font-size:15px;
+  line-height:1.45;
+}
+
+.chapter-card p{
+  margin-top:7px;
+  color:#806873;
+  font-size:12px;
+}
+
+body.dark .chapter-card p{
+  color:#c8aeb9;
+}
+
+.reader{
+  display:none;
+  margin-top:18px;
+}
+
+.reader.active{
+  display:block;
+}
+
+.chapter-content{
+  padding:22px;
+  border-radius:18px;
+  background:white;
+  line-height:1.85;
+  box-shadow:0 5px 18px rgba(0,0,0,.06);
+}
+
+body.dark .chapter-content{
+  background:#211a20;
+  box-shadow:none;
+}
+
+.chapter-content h2{
+  margin-bottom:18px;
+  color:#9d174d;
+  line-height:1.45;
+}
+
+body.dark .chapter-content h2{
+  color:#f9a8d4;
+}
+
+.chapter-content h3{
+  margin-top:25px;
+  margin-bottom:10px;
+  color:#831843;
+}
+
+body.dark .chapter-content h3{
+  color:#f3b2cd;
+}
+
+.chapter-content p{
+  margin-bottom:15px;
+}
+
+.dialogue{
+  margin:16px 0;
+  padding:14px 16px;
+  border-left:4px solid #be185d;
+  border-radius:10px;
+  background:#fdf2f8;
+  font-style:italic;
+}
+
+body.dark .dialogue{
+  background:#30202a;
+  border-color:#ec4899;
+}
+
+.progress{
+  margin:15px 0;
+}
+
+.progress-top{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:7px;
+  color:#806873;
+  font-size:12px;
+}
+
+body.dark .progress-top{
+  color:#c8aeb9;
+}
+
+.progress-bar{
+  height:7px;
+  overflow:hidden;
+  border-radius:20px;
+  background:#f0dfe5;
+}
+
+body.dark .progress-bar{
+  background:#40303a;
+}
+
+.progress-fill{
+  width:0;
+  height:100%;
+  background:linear-gradient(90deg,#be185d,#9333ea);
+  transition:.3s;
+}
+
+.navigation{
+  display:flex;
+  gap:10px;
+  margin:16px 0 30px;
+}
+
+.nav-btn{
+  flex:1;
+  padding:13px 8px;
+  border:0;
+  border-radius:13px;
+  background:#9d174d;
+  color:white;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.nav-btn:disabled{
+  opacity:.4;
+  cursor:not-allowed;
+}
+
+@media(max-width:600px){
+
+  .chapter-grid{
+    grid-template-columns:1fr;
+  }
+
+  .cover{
+    min-height:220px;
+  }
+
+  .cover h2{
+    font-size:24px;
+  }
+
+  .chapter-content{
+    padding:18px;
+    font-size:15px;
+  }
+
+  .navigation{
+    gap:7px;
+  }
+
+  .nav-btn{
+    font-size:13px;
+  }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header class="header">
+
+<button
+  class="back-btn"
+  id="backBtn">
+  ←
+</button>
+
+<div class="header-title">
+
+<h1>
+  ❤️ The Last Letter
+</h1>
+
+<p>
+  JR AI Original Emotional Novel
+</p>
+
+</div>
+
+<button
+  class="theme-btn"
+  id="themeBtn">
+  🌙
+</button>
+
+</header>
+
+
+<section class="cover">
+
+<div class="cover-icon">
+  💌
+</div>
+
+<h2>
+  The Last Letter
+</h2>
+
+<p>
+A story about family, memories,
+<br>
+goodbyes, forgiveness and finding
+<br>
+the courage to begin again.
+</p>
+
+</section>
+
+
+<main class="container">
+
+
+<input
+  type="text"
+  id="searchInput"
+  class="search-box"
+  placeholder="🔎 Search chapters..."
+>
+
+
+<section id="chapterSection">
+
+<h2 class="section-title">
+  📚 Chapters
+</h2>
+
+<div
+  id="chapterGrid"
+  class="chapter-grid">
+</div>
+
+</section>
+
+
+<section
+  id="reader"
+  class="reader">
+
+
+<div class="progress">
+
+<div class="progress-top">
+
+<span id="progressText">
+Chapter 1 of 12
+</span>
+
+<span id="progressPercent">
+8%
+</span>
+
+</div>
+
+
+<div class="progress-bar">
+
+<div
+  id="progressFill"
+  class="progress-fill">
+</div>
+
+</div>
+
+</div>
+
+
+<div
+  id="chapterContent"
+  class="chapter-content">
+</div>
+
+
+<div class="navigation">
+
+<button
+  class="nav-btn"
+  id="prevBtn">
+  ← Previous
+</button>
+
+<button
+  class="nav-btn"
+  id="chapterBtn">
+  📚 Chapters
+</button>
+
+<button
+  class="nav-btn"
+  id="nextBtn">
+  Next →
+</button>
+
+</div>
+
+
+</section>
+
+</main>
+
+
+<script>
+
+
+const chapters = [
+
+
+{
+title:"The Empty Room",
+content:`
+
+<h2>
+Chapter 1 — The Empty Room
+</h2>
+
+<p>
+Anaya returned home three days after her grandmother's funeral.
+The house looked exactly the same, but somehow it felt completely different.
+</p>
+
+<p>
+The curtains were still open.
+The old clock still ticked above the hallway.
+Her grandmother's reading glasses were still lying beside the window.
+</p>
+
+<p>
+Everything was there.
+</p>
+
+<p>
+Except the person who had made the house feel alive.
+</p>
+
+<p>
+Anaya walked into the small bedroom at the end of the corridor.
+She had avoided entering it since the funeral.
+</p>
+
+<p>
+On the table was a wooden box.
+</p>
+
+<p>
+Her name was written on the lid.
+</p>
+
+<div class="dialogue">
+"Anaya."
+</div>
+
+<p>
+She opened it.
+</p>
+
+<p>
+Inside was a single envelope.
+</p>
+
+<p>
+The envelope was old.
+The paper had turned slightly yellow.
+</p>
+
+<p>
+There was no stamp.
+No address.
+</p>
+
+<p>
+Only one sentence was written on the front.
+</p>
+
+<div class="dialogue">
+"Read this when you are ready."
+</div>
+
+<p>
+Anaya sat beside the window.
+</p>
+
+<p>
+She had no idea that the letter would change
+the way she remembered her entire family.
+</p>
+
+`
+},
+
+
+{
+title:"The First Letter",
+content:`
+
+<h2>
+Chapter 2 — The First Letter
+</h2>
+
+<p>
+Anaya opened the envelope carefully.
+</p>
+
+<p>
+The handwriting was unmistakable.
+</p>
+
+<p>
+It belonged to her grandmother.
+</p>
+
+<div class="dialogue">
+"My dear Anaya,
+if you are reading this, I am no longer there to explain everything myself."
+</div>
+
+<p>
+Anaya stopped reading.
+</p>
+
+<p>
+She wiped her eyes and continued.
+</p>
+
+<div class="dialogue">
+"There are things I should have told you years ago.
+Not because I wanted to hide them,
+but because I was afraid you were too young to understand."
+</div>
+
+<p>
+The letter spoke about Anaya's childhood.
+</p>
+
+<p>
+It mentioned the summer when her parents separated.
+The year her father left the city.
+The years when Anaya believed he had simply chosen
+not to be part of her life.
+</p>
+
+<p>
+But then came the sentence that made her heart stop.
+</p>
+
+<div class="dialogue">
+"Your father did not leave because he stopped loving you."
+</div>
+
+<p>
+Anaya read the sentence again.
+</p>
+
+<p>
+And again.
+</p>
+
+<p>
+For years she had carried anger toward a man
+she barely remembered.
+</p>
+
+<p>
+Now, for the first time, she wondered
+whether she had been angry at the wrong person.
+</p>
+
+`
+},
+
+
+{
+title:"The Old Photograph",
+content:`
+
+<h2>
+Chapter 3 — The Old Photograph
+</h2>
+
+<p>
+The next morning Anaya searched the house.
+</p>
+
+<p>
+She opened drawers.
+She checked old cupboards.
+She looked through albums.
+</p>
+
+<p>
+Finally, she found a photograph hidden inside a book.
+</p>
+
+<p>
+It showed her father holding her when she was four years old.
+</p>
+
+<p>
+Her mother stood beside him.
+</p>
+
+<p>
+All three were smiling.
+</p>
+
+<p>
+Anaya stared at the photograph for a long time.
+</p>
+
+<div class="dialogue">
+"I don't remember this."
+</div>
+
+<p>
+Behind the photograph was another message.
+</p>
+
+<div class="dialogue">
+"He wanted to stay."
+</div>
+
+<p>
+There was a phone number below it.
+</p>
+
+<p>
+Anaya immediately felt nervous.
+</p>
+
+<p>
+The number looked old.
+</p>
+
+<p>
+She did not know whether it still worked.
+</p>
+
+<p>
+But she saved it anyway.
+</p>
+
+<p>
+That evening, she finally made the call.
+</p>
+
+<p>
+The phone rang once.
+</p>
+
+<p>
+Twice.
+</p>
+
+<p>
+Three times.
+</p>
+
+<p>
+Then someone answered.
+</p>
+
+<div class="dialogue">
+"Hello?"
+</div>
+
+<p>
+Anaya could not speak.
+</p>
+
+<p>
+She knew that voice.
+</p>
+
+`
+},
+
+
+{
+title:"The Voice",
+content:`
+
+<h2>
+Chapter 4 — The Voice
+</h2>
+
+<div class="dialogue">
+"Who is this?"
+</div>
+
+<p>
+Anaya finally found her voice.
+</p>
+
+<div class="dialogue">
+"It's me."
+</div>
+
+<p>
+Silence.
+</p>
+
+<div class="dialogue">
+"Anaya?"
+</div>
+
+<p>
+She closed her eyes.
+</p>
+
+<div class="dialogue">
+"Yes."
+</div>
+
+<p>
+Her father breathed slowly.
+</p>
+
+<div class="dialogue">
+"I've wanted to hear your voice for years."
+</div>
+
+<p>
+Anaya had imagined this conversation many times.
+</p>
+
+<p>
+She had imagined shouting.
+She had imagined asking why he abandoned her.
+</p>
+
+<p>
+But now the words refused to come.
+</p>
+
+<div class="dialogue">
+"Why did you leave?"
+</div>
+
+<p>
+Her father remained silent for several seconds.
+</p>
+
+<div class="dialogue">
+"I didn't want to."
+</div>
+
+<p>
+He explained that the separation had followed
+a difficult period in the family.
+</p>
+
+<p>
+He had tried to stay in contact.
+</p>
+
+<p>
+But every attempt had failed.
+</p>
+
+<p>
+Anaya listened.
+</p>
+
+<p>
+She did not know whether to believe everything.
+</p>
+
+<p>
+But she knew one thing.
+</p>
+
+<p>
+The story she had believed for twenty years
+was incomplete.
+</p>
+
+`
+},
+
+
+{
+title:"The Distance",
+content:`
+
+<h2>
+Chapter 5 — The Distance
+</h2>
+
+<p>
+Over the next few weeks, Anaya and her father
+began talking regularly.
+</p>
+
+<p>
+At first the conversations were short.
+</p>
+
+<p>
+Then they became longer.
+</p>
+
+<p>
+He told her stories about her childhood.
+</p>
+
+<p>
+He remembered things she had completely forgotten.
+</p>
+
+<div class="dialogue">
+"You used to hate thunderstorms."
+</div>
+
+<p>
+Anaya smiled.
+</p>
+
+<div class="dialogue">
+"I still do."
+</div>
+
+<p>
+Her father laughed.
+</p>
+
+<p>
+For the first time, the distance between them
+felt smaller.
+</p>
+
+<p>
+But there was still one question
+Anaya was afraid to ask.
+</p>
+
+<div class="dialogue">
+"Why didn't you come back?"
+</div>
+
+<p>
+Her father became quiet.
+</p>
+
+<div class="dialogue">
+"Because I thought your life was better without my problems."
+</div>
+
+<p>
+Anaya looked at the photograph on her desk.
+</p>
+
+<p>
+She finally understood that sometimes
+people leave not because they do not care,
+but because they believe their absence
+will protect the people they love.
+</p>
+
+`
+},
+
+
+{
+title:"The Hidden Truth",
+content:`
+
+<h2>
+Chapter 6 — The Hidden Truth
+</h2>
+
+<p>
+Anaya returned to her grandmother's house.
+</p>
+
+<p>
+She read the remaining letters.
+</p>
+
+<p>
+One of them explained what had happened years ago.
+</p>
+
+<p>
+Her grandmother had been afraid
+that Anaya would blame herself for the family separation.
+</p>
+
+<p>
+She had kept the truth hidden
+until she believed Anaya was ready.
+</p>
+
+<div class="dialogue">
+"Sometimes adults make decisions
+because they are afraid.
+That because they are afraid.
+That does not make every decision right."
+</div>
+
+<p>
+Anaya cried quietly.
+</p>
+
+<p>
+She realized that her grandmother had carried
+the secret for years.
+</p>
+
+<p>
+Not because she wanted to control the family,
+but because she had been trying to protect everyone.
+</p>
+
+<p>
+Still, Anaya wished she had known earlier.
+</p>
+
+<p>
+Truth could hurt.
+</p>
+
+<p>
+But uncertainty could hurt even more.
+</p>
+
+`
+},
+
+
+{
+title:"The Meeting",
+content:`
+
+<h2>
+Chapter 7 — The Meeting
+</h2>
+
+<p>
+Two months later, Anaya met her father.
+</p>
+
+<p>
+They chose a quiet café near the river.
+</p>
+
+<p>
+When he walked in, she barely recognized him.
+</p>
+
+<p>
+He looked older than she remembered.
+</p>
+
+<p>
+For a moment neither knew what to say.
+</p>
+
+<div class="dialogue">
+"You're taller than I remember."
+</div>
+
+<p>
+Anaya smiled.
+</p>
+
+<div class="dialogue">
+"And you're older."
+</div>
+
+<p>
+They both laughed.
+</p>
+
+<p>
+The tension slowly disappeared.
+</p>
+
+<p>
+They spent hours talking.
+</p>
+
+<p>
+About childhood.
+About mistakes.
+About the years they had missed.
+</p>
+
+<p>
+There was no magical moment
+when everything suddenly became perfect.
+</p>
+
+<p>
+There were still painful questions.
+</p>
+
+<p>
+There were still things they disagreed about.
+</p>
+
+<p>
+But for the first time,
+they were sitting at the same table.
+</p>
+
+<p>
+That was enough for one day.
+</p>
+
+`
+},
+
+
+{
+title:"What Forgiveness Means",
+content:`
+
+<h2>
+Chapter 8 — What Forgiveness Means
+</h2>
+
+<p>
+Anaya used to think forgiveness meant forgetting.
+</p>
+
+<p>
+Now she understood differently.
+</p>
+
+<p>
+Forgiveness did not erase the past.
+</p>
+
+<p>
+It did not make every mistake acceptable.
+</p>
+
+<p>
+It simply meant choosing not to carry
+the same anger forever.
+</p>
+
+<p>
+Her father apologized.
+</p>
+
+<div class="dialogue">
+"I cannot give you back those years."
+</div>
+
+<p>
+Anaya looked at him.
+</p>
+
+<div class="dialogue">
+"No. You can't."
+</div>
+
+<p>
+There was a long silence.
+</p>
+
+<div class="dialogue">
+"But maybe we can stop losing more."
+</div>
+
+<p>
+Her father nodded.
+</p>
+
+<p>
+That was the beginning of their relationship.
+</p>
+
+<p>
+Not a perfect beginning.
+</p>
+
+<p>
+Just an honest one.
+</p>
+
+`
+},
+
+
+{
+title:"The Final Letter",
+content:`
+
+<h2>
+Chapter 9 — The Final Letter
+</h2>
+
+<p>
+Months later, Anaya discovered one final envelope.
+</p>
+
+<p>
+It had been hidden beneath the floorboard
+of her grandmother's room.
+</p>
+
+<p>
+The letter was shorter than the others.
+</p>
+
+<div class="dialogue">
+"Anaya,
+I know you may be angry with me.
+If you are, you have every right."
+</div>
+
+<p>
+Anaya continued reading.
+</p>
+
+<div class="dialogue">
+"I spent too much of my life believing
+that protecting people meant deciding
+what they should know."
+</div>
+
+<p>
+The final paragraph made her cry.
+</p>
+
+<div class="dialogue">
+"Love is not always about keeping someone safe.
+Sometimes love means trusting them
+with the truth."
+</div>
+
+<p>
+Anaya folded the letter.
+</p>
+
+<p>
+She finally understood why her grandmother
+had left the letters behind.
+</p>
+
+<p>
+She had wanted Anaya to know the truth
+without carrying the burden of her mistakes.
+</p>
+
+`
+},
+
+
+{
+title:"Coming Home",
+content:`
+
+<h2>
+Chapter 10 — Coming Home
+</h2>
+
+<p>
+A year passed.
+</p>
+
+<p>
+Anaya's father began visiting regularly.
+</p>
+
+<p>
+They celebrated birthdays.
+</p>
+
+<p>
+They argued about small things.
+</p>
+
+<p>
+They laughed about old memories.
+</p>
+
+<p>
+They slowly created new ones.
+</p>
+
+<p>
+One evening, Anaya returned to the old house.
+</p>
+
+<p>
+The room that once felt empty
+was now filled with sunlight.
+</p>
+
+<p>
+She placed the letters inside a new box.
+</p>
+
+<p>
+Beside them, she placed the old photograph.
+</p>
+
+<p>
+Then she added a new photograph.
+</p>
+
+<p>
+It showed her, her mother,
+and her father together.
+</p>
+
+<p>
+The family was not the same as before.
+</p>
+
+<p>
+But perhaps it did not need to be.
+</p>
+
+<p>
+Some families are rebuilt.
+</p>
+
+<p>
+Not by returning to the past,
+but by choosing what comes next.
+</p>
+
+`
+},
+
+
+{
+title:"The Last Goodbye",
+content:`
+
+<h2>
+Chapter 11 — The Last Goodbye
+</h2>
+
+<p>
+On the anniversary of her grandmother's death,
+Anaya visited the place where her ashes had been scattered.
+</p>
+
+<p>
+She carried the letters with her.
+</p>
+
+<p>
+She sat quietly beneath a tree.
+</p>
+
+<div class="dialogue">
+"I finally understand."
+</div>
+
+<p>
+The wind moved gently through the leaves.
+</p>
+
+<p>
+Anaya smiled.
+</p>
+
+<div class="dialogue">
+"I was angry for so long."
+</div>
+
+<p>
+She looked at the letters.
+</p>
+
+<div class="dialogue">
+"But I don't want to be angry anymore."
+</div>
+
+<p>
+She did not throw the letters away.
+</p>
+
+<p>
+She kept them.
+</p>
+
+<p>
+Not because she needed the past,
+but because the past had taught her something.
+</p>
+
+<p>
+People make mistakes.
+</p>
+
+<p>
+People hide things.
+</p>
+
+<p>
+People leave.
+</p>
+
+<p>
+But sometimes they also return.
+</p>
+
+<p>
+And sometimes,
+if given enough courage,
+they learn how to stay.
+</p>
+
+`
+},
+
+
+{
+title:"A New Beginning",
+content:`
+
+<h2>
+Chapter 12 — A New Beginning
+</h2>
+
+<p>
+Three years later, Anaya moved into a small apartment
+of her own.
+</p>
+
+<p>
+On the wall above her desk,
+she placed the old photograph.
+</p>
+
+<p>
+Beside it was a new picture of her family.
+</p>
+
+<p>
+The two photographs looked completely different.
+</p>
+
+<p>
+Yet they belonged together.
+</p>
+
+<p>
+One represented everything they had lost.
+</p>
+
+<p>
+The other represented everything they had rebuilt.
+</p>
+
+<p>
+Anaya opened her notebook.
+</p>
+
+<p>
+She began writing a letter.
+</p>
+
+<p>
+This time, the letter was not from someone else.
+</p>
+
+<p>
+It was from her.
+</p>
+
+<div class="dialogue">
+"Dear future me,
+if you ever forget how far you have come,
+remember the girl who once believed
+that broken things could never be repaired."
+</div>
+
+<p>
+She stopped writing.
+</p>
+
+<p>
+Then she smiled.
+</p>
+
+<p>
+Some things could not be repaired exactly
+as they had been.
+</p>
+
+<p>
+Some people could not return the lost years.
+</p>
+
+<p>
+But life was not only about what had been lost.
+</p>
+
+<p>
+It was also about what could still be created.
+</p>
+
+<h3>
+The End
+</h3>
+
+<p>
+Anaya closed the notebook.
+</p>
+
+<p>
+Outside the window,
+the city lights slowly came alive.
+</p>
+
+<p>
+For the first time in years,
+tomorrow did not feel frightening.
+</p>
+
+<p>
+It felt like a beginning.
+</p>
+
+`
+
+}
+
+];
+
+
+const chapterGrid =
+document.getElementById("chapterGrid");
+
+const chapterSection =
+document.getElementById("chapterSection");
+
+const reader =
+document.getElementById("reader");
+
+const chapterContent =
+document.getElementById("chapterContent");
+
+const searchInput =
+document.getElementById("searchInput");
+
+const prevBtn =
+document.getElementById("prevBtn");
+
+const nextBtn =
+document.getElementById("nextBtn");
+
+const chapterBtn =
+document.getElementById("chapterBtn");
+
+const progressText =
+document.getElementById("progressText");
+
+const progressPercent =
+document.getElementById("progressPercent");
+
+const progressFill =
+document.getElementById("progressFill");
+
+const themeBtn =
+document.getElementById("themeBtn");
+
+const backBtn =
+document.getElementById("backBtn");
+
+
+let currentIndex = 0;
+
+
+function renderChapters(list){
+
+  chapterGrid.innerHTML = "";
+
+  list.forEach(function(chapter){
+
+    const originalIndex =
+      chapters.indexOf(chapter);
+
+    const card =
+      document.createElement("div");
+
+    card.className =
+      "chapter-card";
+
+    card.innerHTML = `
+
+      <div class="chapter-number">
+        ${originalIndex + 1}
+      </div>
+
+      <h3>
+        ${chapter.title}
+      </h3>
+
+      <p>
+        Read chapter ${originalIndex + 1}
+      </p>
+
+    `;
+
+    card.addEventListener(
+      "click",
+      function(){
+
+        openChapter(originalIndex);
+
+      }
+    );
+
+    chapterGrid.appendChild(card);
+
+  });
+
+}
+
+
+function openChapter(index){
+
+  if(
+    index < 0 ||
+    index >= chapters.length
+  ){
+
+    return;
+
+  }
+
+  currentIndex = index;
+
+  chapterSection.style.display =
+    "none";
+
+  reader.classList.add("active");
+
+  chapterContent.innerHTML =
+    chapters[index].content;
+
+  updateNavigation();
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+function showChapters(){
+
+  reader.classList.remove("active");
+
+  chapterSection.style.display =
+    "block";
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+function updateNavigation(){
+
+  progressText.textContent =
+    "Chapter " +
+    (currentIndex + 1) +
+    " of " +
+    chapters.length;
+
+  const percentage =
+    Math.round(
+      ((currentIndex + 1) /
+      chapters.length) * 100
+    );
+
+  progressPercent.textContent =
+    percentage + "%";
+
+  progressFill.style.width =
+    percentage + "%";
+
+  prevBtn.disabled =
+    currentIndex === 0;
+
+  nextBtn.disabled =
+    currentIndex ===
+    chapters.length - 1;
+
+}
+
+
+function searchChapters(){
+
+  const query =
+    searchInput.value
+      .toLowerCase()
+      .trim();
+
+  if(!query){
+
+    renderChapters(chapters);
+
+    return;
+
+  }
+
+  const filtered =
+    chapters.filter(function(chapter){
+
+      return chapter.title
+        .toLowerCase()
+        .includes(query);
+
+    });
+
+  renderChapters(filtered);
+
+}
+
+
+prevBtn.addEventListener(
+  "click",
+  function(){
+
+    if(currentIndex > 0){
+
+      openChapter(
+        currentIndex - 1
+      );
+
+    }
+
+  }
+);
+
+
+nextBtn.addEventListener(
+  "click",
+  function(){
+
+    if(
+      currentIndex <
+      chapters.length - 1
+    ){
+
+      openChapter(
+        currentIndex + 1
+      );
+
+    }
+
+  }
+);
+
+
+chapterBtn.addEventListener(
+  "click",
+  showChapters
+);
+
+
+themeBtn.addEventListener(
+  "click",
+  function(){
+
+    document.body.classList.toggle(
+      "dark"
+    );
+
+    const isDark =
+      document.body.classList.contains(
+        "dark"
+      );
+
+    localStorage.setItem(
+      "jr_ai_theme",
+      isDark ? "dark" : "light"
+    );
+
+    themeBtn.textContent =
+      isDark ? "☀️" : "🌙";
+
+  }
+);
+
+
+backBtn.addEventListener(
+  "click",
+  function(){
+
+    window.location.href =
+      "bookstore.html";
+
+  }
+);
+
+
+function loadTheme(){
+
+  const savedTheme =
+    localStorage.getItem(
+      "jr_ai_theme"
+    );
+
+  if(savedTheme === "dark"){
+
+    document.body.classList.add(
+      "dark"
+    );
+
+    themeBtn.textContent =
+      "☀️";
+
+  }
+
+}
+
+
+searchInput.addEventListener(
+  "input",
+  searchChapters
+);
+
+
+loadTheme();
+
+renderChapters(chapters);
+
+updateNavigation();
+
+</script>
+
+</body>
+</html>
