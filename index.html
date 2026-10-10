@@ -43,7 +43,7 @@ body.dark .app {
 /* HEADER */
 
 .header {
-  position: fixed;
+  position: absolute;
   left: 0;
   right: 0;
   top: 0;
@@ -54,7 +54,6 @@ body.dark .app {
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
   border-bottom: 1px solid #aaa;
 }
 
@@ -189,7 +188,7 @@ body.dark .menu-item:hover {
 /* TOOLS */
 
 .tools {
-  position: fixed;
+  position: absolute;
   left: 0;
   right: 0;
   top: 58px;
@@ -225,7 +224,7 @@ body.dark .tool-btn {
 /* CHAT */
 
 .chat {
-  position: fixed;
+  position: absolute;
   left: 0;
   right: 0;
   top: 116px;
@@ -325,7 +324,7 @@ body.dark .dot {
 /* INPUT */
 
 .bottom {
-  position: fixed;
+  position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
@@ -578,12 +577,96 @@ body.dark .more-menu button {
   color: white;
 }
   
+
+
+/* ===== JR AI PREMIUM MIDNIGHT REDESIGN ===== */
+:root{color-scheme:dark;--jr-bg:#070b18;--jr-panel:rgba(17,24,46,.76);--jr-line:rgba(146,164,255,.18);--jr-blue:#62a5ff;--jr-violet:#9c7bff;--jr-text:#f4f6ff;--jr-muted:#a6b0cc}
+html,body{background:var(--jr-bg);color:var(--jr-text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+body:not(.dark){background:var(--jr-bg);color:var(--jr-text)}
+.app{background:radial-gradient(ellipse at 50% 0%,rgba(49,76,165,.18),transparent 55%),linear-gradient(145deg,#080c1b,#090d1b 55%,#100b24);isolation:isolate}
+body.dark .app{background:radial-gradient(ellipse at 50% 0%,rgba(49,76,165,.18),transparent 55%),linear-gradient(145deg,#080c1b,#090d1b 55%,#100b24)}
+.header{position:absolute;z-index:20;height:64px;min-height:64px;background:rgba(8,12,28,.78);color:#f7f8ff;border-bottom:1px solid rgba(135,158,255,.15);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:0 8px 28px rgba(0,0,0,.12)}
+body.dark .header{background:rgba(8,12,28,.78);color:#f7f8ff;border-bottom-color:rgba(135,158,255,.15)}
+.header-title{font-size:20px;letter-spacing:.4px;font-weight:800;background:linear-gradient(100deg,#fff 10%,#a9caff 52%,#b9a1ff 90%);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 0 28px rgba(94,143,255,.13)}
+.menu-btn,.more-btn{color:#dfe7ff;border-radius:13px;transition:background .2s,transform .2s}
+.menu-btn:hover,.more-btn:hover{background:rgba(117,145,255,.12)}
+.tools{position:absolute;z-index:10;top:64px;height:60px;padding:9px 12px;background:rgba(8,12,28,.58);border-bottom:1px solid rgba(135,158,255,.1);gap:9px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+body.dark .tools{background:rgba(8,12,28,.58);border-bottom-color:rgba(135,158,255,.1)}
+.tool-btn{border:1px solid rgba(144,164,255,.18);border-radius:13px;background:linear-gradient(145deg,rgba(32,43,76,.92),rgba(17,24,46,.9));color:#e8edff;font-size:11px;letter-spacing:.35px;padding:9px 5px;box-shadow:inset 0 1px rgba(255,255,255,.06),0 7px 18px rgba(0,0,0,.14);transition:transform .22s,border-color .22s,box-shadow .22s}
+body.dark .tool-btn{background:linear-gradient(145deg,rgba(32,43,76,.92),rgba(17,24,46,.9));color:#e8edff}
+.tool-btn:hover{transform:translateY(-2px);border-color:rgba(115,157,255,.55);box-shadow:0 8px 24px rgba(52,94,215,.17)}
+.chat{position:absolute;z-index:2;top:124px;bottom:78px;padding:18px 14px 24px;background:transparent;scrollbar-width:thin;scrollbar-color:rgba(120,145,255,.35) transparent}
+body.dark .chat{background:transparent}
+.message{border-radius:18px;border:1px solid rgba(147,164,255,.13);box-shadow:0 10px 28px rgba(0,0,0,.12);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);line-height:1.6}
+.message.ai{background:rgba(23,31,57,.88);color:#edf1ff;margin-left:0}
+body.dark .message.ai{background:rgba(23,31,57,.88);color:#edf1ff}
+.message.user{background:linear-gradient(135deg,#347be8,#7858e8);border-color:rgba(190,205,255,.25);box-shadow:0 8px 25px rgba(68,93,225,.22)}
+.bottom{position:absolute;z-index:1000;height:78px;padding:12px 12px max(12px,env(safe-area-inset-bottom));gap:9px;background:linear-gradient(180deg,rgba(8,12,28,.06),rgba(8,12,28,.92) 32%);z-index:1000;align-items:center}
+body.dark .bottom{background:linear-gradient(180deg,rgba(8,12,28,.06),rgba(8,12,28,.92) 32%)}
+.input{height:49px;padding:0 17px;border:1px solid rgba(142,163,255,.23);border-radius:17px;background:rgba(20,28,51,.92);color:#f6f7ff;box-shadow:inset 0 1px rgba(255,255,255,.04),0 8px 25px rgba(0,0,0,.16);font-size:14px}
+.input::placeholder{color:#8d9ab9}
+.input:focus{border-color:rgba(105,151,255,.72);box-shadow:0 0 0 3px rgba(92,132,255,.11),0 8px 25px rgba(0,0,0,.18)}
+.send-btn{height:48px;flex:0 0 76px;width:76px;border:1px solid rgba(186,199,255,.28);border-radius:16px;background:linear-gradient(135deg,#428cff,#8158f2);color:white;box-shadow:0 7px 24px rgba(85,98,245,.28);transition:transform .2s,filter .2s;font-size:12px;letter-spacing:.5px}
+.send-btn:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.send-btn:active{transform:scale(.97)}
+.menu{z-index:1000;background:rgba(12,17,36,.97);color:#f4f6ff;border-right:1px solid rgba(146,164,255,.2);box-shadow:15px 0 55px rgba(0,0,0,.38);backdrop-filter:blur(20px)}
+body.dark .menu{background:rgba(12,17,36,.97);color:#f4f6ff}
+.menu-title{border-bottom-color:rgba(146,164,255,.17);padding-top:23px;padding-bottom:19px;color:#dce7ff}
+body.dark .menu-title{border-bottom-color:rgba(146,164,255,.17)}
+.menu-item{color:#dbe3ff;border-radius:12px;width:calc(100% - 18px);margin:3px 9px;padding:14px 13px;transition:background .2s,color .2s}
+.menu-item:hover,body.dark .menu-item:hover{background:rgba(98,132,255,.15);color:#fff}
+body.dark .menu-item{color:#dbe3ff}
+.close-menu,.back-btn{color:inherit}
+.overlay{background:rgba(3,6,17,.62);backdrop-filter:blur(4px)}
+.more-menu{background:rgba(15,22,44,.98);border:1px solid rgba(146,164,255,.2);border-radius:15px;box-shadow:0 18px 45px rgba(0,0,0,.4)}
+.more-menu button,body.dark .more-menu button{color:#e7ecff;border-radius:9px}
+.more-menu button:hover,.more-menu button:active{background:rgba(98,132,255,.16)}
+body.dark .more-menu{background:rgba(15,22,44,.98)}
+.history-panel{background:#080c1b;color:#f4f6ff}
+body.dark .history-panel{background:#080c1b;color:#f4f6ff}
+.history-header,body.dark .history-header{background:rgba(13,19,39,.98);border-bottom-color:rgba(146,164,255,.17)}
+.history-card,body.dark .history-card{background:rgba(23,31,57,.88);border:1px solid rgba(146,164,255,.14);border-radius:14px;color:#f0f3ff}
+.history-card:hover,body.dark .history-card:hover{background:rgba(38,50,88,.9)}
+.typing,body.dark .typing{background:rgba(23,31,57,.88);border:1px solid rgba(146,164,255,.14)}
+.dot,body.dark .dot{background:#9fbaff}
+/* Ambient animated background */
+.ambient{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.ambient-orb{position:absolute;border-radius:50%;filter:blur(2px);opacity:.3;mix-blend-mode:screen;animation:orbDrift 17s ease-in-out infinite alternate}
+.ambient-orb.one{width:230px;height:230px;top:12%;left:-95px;background:radial-gradient(circle at 40% 40%,rgba(61,132,255,.46),rgba(74,65,211,.12) 46%,transparent 72%);animation-duration:19s}
+.ambient-orb.two{width:290px;height:290px;top:32%;right:-135px;background:radial-gradient(circle at 40% 40%,rgba(155,92,255,.4),rgba(62,81,210,.1) 48%,transparent 72%);animation-duration:23s;animation-delay:-7s}
+.ambient-orb.three{width:210px;height:210px;bottom:2%;left:25%;background:radial-gradient(circle,rgba(44,168,255,.2),transparent 70%);animation-duration:21s;animation-delay:-4s}
+.particle-field{position:absolute;inset:0}
+.particle{position:absolute;width:3px;height:3px;border-radius:50%;background:#9fc4ff;box-shadow:0 0 8px 2px rgba(104,151,255,.42);opacity:0;animation:particleFloat var(--duration,14s) linear infinite;animation-delay:var(--delay,0s)}
+@keyframes orbDrift{0%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(22px,-17px,0) scale(1.06)}100%{transform:translate3d(-12px,24px,0) scale(.96)}}
+@keyframes particleFloat{0%{transform:translate3d(0,22px,0) scale(.65);opacity:0}12%{opacity:.62}75%{opacity:.45}100%{transform:translate3d(var(--drift,18px),-130px,0) scale(1.15);opacity:0}}
+/* Centered welcome / hero */
+.landing-hero{position:relative;z-index:1;min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:16px 5px 24px;animation:heroEnter .65s ease both}
+.hero-mark{width:66px;height:66px;border-radius:23px;display:grid;place-items:center;margin:0 auto 19px;font-size:31px;background:linear-gradient(145deg,rgba(54,110,234,.35),rgba(121,79,224,.25));border:1px solid rgba(158,181,255,.35);box-shadow:inset 0 1px rgba(255,255,255,.16),0 0 34px rgba(74,113,255,.2),0 15px 32px rgba(0,0,0,.22);transform:perspective(400px) rotateX(8deg) rotateY(-8deg);animation:markFloat 5s ease-in-out infinite}
+.hero-eyebrow{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:#9db8ff;font-weight:800;margin-bottom:11px}
+.hero-title{margin:0;font-size:clamp(29px,7.6vw,43px);line-height:1.08;letter-spacing:-1.5px;font-weight:850;color:#f8f9ff}
+.hero-title span{display:block;background:linear-gradient(100deg,#75b7ff 10%,#9a8cff 55%,#d0a8ff 95%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 18px rgba(113,125,255,.16))}
+.hero-subtitle{max-width:320px;margin:15px auto 23px;font-size:13px;line-height:1.65;color:#a9b4d0}
+.hero-prompt-label{font-size:10px;letter-spacing:1.3px;text-transform:uppercase;color:#8190b4;margin-bottom:10px}
+.hero-prompts{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;max-width:365px;margin:0 auto}
+.hero-prompt{border:1px solid rgba(140,161,255,.2);background:linear-gradient(145deg,rgba(28,39,72,.72),rgba(17,24,46,.78));color:#dce6ff;border-radius:999px;padding:10px 12px;font-size:11px;box-shadow:inset 0 1px rgba(255,255,255,.04);cursor:pointer;transition:transform .2s,border-color .2s,background .2s}
+.hero-prompt:hover{transform:translateY(-2px);border-color:rgba(133,164,255,.6);background:rgba(40,54,97,.9)}
+.hero-footnote{font-size:10px;color:#6f7d9e;margin-top:20px;letter-spacing:.25px}
+@keyframes heroEnter{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}
+@keyframes markFloat{0%,100%{transform:perspective(400px) rotateX(8deg) rotateY(-8deg) translateY(0)}50%{transform:perspective(400px) rotateX(4deg) rotateY(5deg) translateY(-5px)}}
+@media(min-width:700px){.chat{padding-left:max(24px,calc((100% - 760px)/2));padding-right:max(24px,calc((100% - 760px)/2))}.landing-hero{max-width:760px;margin:auto}.hero-title{font-size:48px}.hero-subtitle{font-size:14px}.tool-btn{font-size:12px}}
+@media(max-height:650px){.landing-hero{justify-content:flex-start;padding-top:22px}.hero-mark{width:50px;height:50px;border-radius:17px;font-size:24px;margin-bottom:12px}.hero-subtitle{margin:10px auto 14px}.hero-footnote{margin-top:12px}.hero-title{font-size:30px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}.particle-field{display:none}}
+
 </style>
 </head>
 
 <body>
 
 <div class="app">
+  <div class="ambient" aria-hidden="true">
+    <div class="ambient-orb one"></div><div class="ambient-orb two"></div><div class="ambient-orb three"></div>
+    <div class="particle-field" id="particleField"></div>
+  </div>
 
   <!-- HEADER -->
 
@@ -1368,6 +1451,9 @@ function addMessage(
   shouldRecord
 ) {
 
+  const landingHero = document.getElementById("landingHero");
+  if (landingHero) landingHero.remove();
+
   const message =
     document.createElement(
       "div"
@@ -1448,29 +1534,36 @@ function addMessage(
 ========================================= */
 
 function showWelcome() {
-
   chat.innerHTML = "";
-
   currentChat = [];
-
   currentChatId = null;
 
-
-  addMessage(
-
-  "🤖 WELCOME TO JR AI! 👋\n" +
-  "💬 MUJHSE KUCH BHI PUCHHO!\n" +
-  "🧠 SAWAL PUCHHO • IDEAS LO • JAANKARI • PAO\n" +
-  "📚 KISI BHI TOPIC KE NOTES BANAO! ✨",
-
-  "ai",
-
-  false
-
-);
-
+  const hero = document.createElement("section");
+  hero.className = "landing-hero";
+  hero.id = "landingHero";
+  hero.innerHTML = `
+    <div class="hero-mark" aria-hidden="true">✦</div>
+    <div class="hero-eyebrow">YOUR PERSONAL AI WORKSPACE</div>
+    <h1 class="hero-title">Think smarter.<span>Create faster.</span></h1>
+    <p class="hero-subtitle">Welcome to JR AI — ask questions, explore ideas, understand tough topics and make learning feel effortless.</p>
+    <div class="hero-prompt-label">TRY ASKING JR AI</div>
+    <div class="hero-prompts">
+      <button class="hero-prompt" type="button" data-prompt="Explain a difficult topic simply">🧠 Explain a topic</button>
+      <button class="hero-prompt" type="button" data-prompt="Help me solve a question step by step">✨ Solve a question</button>
+      <button class="hero-prompt" type="button" data-prompt="Give me creative ideas for a project">💡 Get ideas</button>
+      <button class="hero-prompt" type="button" data-prompt="Help me make smart study notes">📚 Make study notes</button>
+    </div>
+    <div class="hero-footnote">AI for learning · ideas · everyday questions</div>
+  `;
+  chat.appendChild(hero);
+  hero.querySelectorAll("[data-prompt]").forEach(function(button) {
+    button.addEventListener("click", function() {
+      messageInput.value = button.getAttribute("data-prompt") || "";
+      messageInput.focus({preventScroll:true});
+      sendMessage();
+    });
+  });
 }
-
 
 /* =========================================
    TYPING INDICATOR
@@ -1561,6 +1654,50 @@ function scrollToBottom() {
 
 
 /* =========================================
+   JR AI CO-FOUNDER INFORMATION
+========================================= */
+
+function getJrAiIdentityAnswer(message) {
+  const question = message
+    .toLowerCase()
+    .replace(/[^\p{L}\p{N}\s]/gu, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  const asksAboutCoFounder =
+    /\bco\s*founder\b/.test(question) ||
+    /\bcofounder\b/.test(question) ||
+    question.includes("सह संस्थापक") ||
+    question.includes("सह-संस्थापक");
+
+  const asksAboutJrAi =
+    /\bjr\s*ai\b/.test(question) ||
+    /\bjrai\b/.test(question) ||
+    question.includes("जेआर एआई");
+
+  const asksWho =
+    /\bwho\b/.test(question) ||
+    /\bkon\b/.test(question) ||
+    /\bkaun\b/.test(question) ||
+    question.includes("कौन");
+
+  if (asksAboutCoFounder && (asksAboutJrAi || asksWho)) {
+    const isHindiOrHinglish =
+      /\b(kon|kaun|hai|hain|ka|ki|ke|kya|batao)\b/.test(question) ||
+      /[\u0900-\u097F]/.test(message);
+
+    if (!isHindiOrHinglish) {
+      return "Jiya Kumari is the co-founder of this JR AI app.";
+    }
+
+    return "🤖 JR AI app ki co-founder Jiya Kumari hain.";
+  }
+
+  return null;
+}
+
+
+/* =========================================
    SEND MESSAGE
 ========================================= */
 
@@ -1574,6 +1711,18 @@ async function sendMessage() {
     messageInput.value.trim();
 
   if (!message) {
+    return;
+  }
+
+  // Answer JR AI co-founder questions locally in the user's language.
+  const identityAnswer =
+    getJrAiIdentityAnswer(message);
+
+  if (identityAnswer) {
+    addMessage(message, "user", true);
+    messageInput.value = "";
+    addMessage(identityAnswer, "ai", true);
+    saveCurrentChat();
     return;
   }
 
@@ -2282,7 +2431,7 @@ function loadTheme() {
   const theme =
     localStorage.getItem(
       "jr_ai_theme"
-    ) || "light";
+    ) || "dark";
 
 
   if (
@@ -2408,6 +2557,24 @@ aboutBtn.addEventListener(
 
 
 
+/* Gentle floating particles (kept lightweight for mobile) */
+(function createAmbientParticles() {
+  const field = document.getElementById("particleField");
+  if (!field || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const count = window.innerWidth < 520 ? 20 : 32;
+  for (let i = 0; i < count; i++) {
+    const particle = document.createElement("span");
+    particle.className = "particle";
+    particle.style.left = (Math.random() * 100) + "%";
+    particle.style.top = (15 + Math.random() * 85) + "%";
+    particle.style.setProperty("--duration", (10 + Math.random() * 12) + "s");
+    particle.style.setProperty("--delay", (-Math.random() * 18) + "s");
+    particle.style.setProperty("--drift", ((Math.random() * 70) - 35) + "px");
+    if (i % 5 === 0) { particle.style.width = "4px"; particle.style.height = "4px"; }
+    field.appendChild(particle);
+  }
+})();
+
 /* =========================================
    INITIALIZE
 ========================================= */
@@ -2418,7 +2585,17 @@ loadTheme();
 
 showWelcome();
 
-/* Keyboard khulne par welcome greeting ko upar scroll na hone do */
+/* Mobile keyboard khulte waqt empty-chat greeting ko stable rakho */
+if (messageInput) {
+  messageInput.addEventListener("focus", function() {
+    if (currentChat.length === 0) {
+      requestAnimationFrame(function() {
+        chat.scrollTop = 0;
+      });
+    }
+  });
+}
+
 if (window.visualViewport) {
   window.visualViewport.addEventListener("resize", function() {
     if (currentChat.length === 0) {
