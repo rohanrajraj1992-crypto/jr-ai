@@ -279,6 +279,12 @@ body:after{
   transform:scale(.97);
 }
 
+.quick.selected{
+  border-color:rgba(91,140,255,.9);
+  background:linear-gradient(135deg,rgba(91,140,255,.20),rgba(155,108,255,.18));
+  box-shadow:0 0 0 1px rgba(91,140,255,.15),0 8px 22px rgba(91,80,255,.12);
+}
+
 .quick b{
   display:block;
   font-size:12px;
@@ -758,7 +764,27 @@ body:after{
 body.dark{
   background:var(--bg);
 }
+
+/* PPT preview inside Make Notes */
+.ppt-preview{width:min(100%,760px);margin:8px auto 16px;padding:14px;border:1px solid rgba(108,99,255,.35);border-radius:20px;background:linear-gradient(145deg,rgba(22,27,54,.98),rgba(12,16,34,.98));box-shadow:0 18px 45px rgba(0,0,0,.25);color:#f7f8ff}
+.ppt-preview-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:12px}
+.ppt-preview-head h3{font-size:17px;margin:0 0 4px}.ppt-preview-head p{font-size:12px;color:#b8bfdc;margin:0;line-height:1.5}
+.ppt-slide-list{display:grid;grid-template-columns:1fr;gap:12px}
+.ppt-slide-card{overflow:hidden;border-radius:14px;background:#f7f8ff;color:#20264a;border:1px solid rgba(108,99,255,.2);box-shadow:0 8px 24px rgba(0,0,0,.16)}
+.ppt-slide-top{padding:10px 12px;background:linear-gradient(110deg,#182044,#39356d);color:#fff;font-size:11px;font-weight:800;letter-spacing:.4px}
+.ppt-slide-content{padding:13px}.ppt-slide-content h4{font-size:17px;line-height:1.25;margin:0 0 10px;color:#20264a}
+.ppt-slide-content ul{padding-left:19px;margin:0;color:#414866;font-size:13px;line-height:1.5}.ppt-slide-content li{margin:0 0 6px}
+.ppt-diagram{margin-top:12px;padding:10px;border-radius:12px;background:#edf0ff;border:1px solid #dce1ff}
+.ppt-diagram-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;color:#555c8c;margin-bottom:8px}
+.ppt-flow{display:flex;align-items:stretch;justify-content:center;gap:5px;flex-wrap:wrap}
+.ppt-flow-box{flex:1 1 75px;min-width:65px;max-width:150px;display:flex;align-items:center;justify-content:center;text-align:center;padding:8px 6px;border-radius:9px;background:white;border:1px solid #aeb9ff;color:#27305e;font-size:11px;font-weight:700;overflow-wrap:anywhere}
+.ppt-flow-arrow{align-self:center;color:#6d63d8;font-size:18px;font-weight:900}
+.ppt-download-btn{border:0;border-radius:12px;background:linear-gradient(110deg,#5b8cff,#9364ff);color:white;padding:12px 15px;font-size:13px;font-weight:800;cursor:pointer;box-shadow:0 8px 22px rgba(91,140,255,.25);width:100%;margin-top:13px}
+.ppt-download-btn:disabled{opacity:.65;cursor:wait}.ppt-small-note{font-size:11px;line-height:1.5;color:#b8bfdc;margin-top:8px}
+@media(min-width:650px){.ppt-slide-list{grid-template-columns:repeat(2,minmax(0,1fr))}.ppt-preview{padding:18px}}
+
 </style>
+  <script src="https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js"></script>
 </head>
 
 <body>
@@ -893,6 +919,16 @@ body.dark{
       >
         <b>✨ Improve Notes</b>
         <span>Messy → premium notes</span>
+      </button>
+
+      <button
+        class="quick ppt-quick"
+        type="button"
+        id="pptModeBtn"
+        data-ppt-mode="true"
+      >
+        <b>🎞️ PPT Maker</b>
+        <span>Full chapter → PowerPoint</span>
       </button>
 
     </div>
@@ -1037,454 +1073,296 @@ body.dark{
 
 
 <script>
-/* =========================================
-   JR AI SMART NOTES
-   API + FILE / ALBUM / CAMERA FIXED
-========================================= */
+'use strict';
 
-const API_URL =
-"https://script.google.com/macros/s/AKfycbwyW1sNFAI9lgYH_7_FWng44IWUUrbIadwPMRM6vr84C8w41rWvBkACuIAasVmAHT/exec";
-
-const chat = document.getElementById("chat");
-const messageInput = document.getElementById("messageInput");
-const sendBtn = document.getElementById("sendBtn");
-const backBtn = document.getElementById("backBtn");
-const pinBtn = document.getElementById("pinBtn");
-const pinMenu = document.getElementById("pinMenu");
-const fileBtn = document.getElementById("fileBtn");
-const albumBtn = document.getElementById("albumBtn");
-const cameraBtn = document.getElementById("cameraBtn");
-const fileInput = document.getElementById("fileInput");
-const albumInput = document.getElementById("albumInput");
-const voiceBtn = document.getElementById("voiceBtn");
-const cameraScreen = document.getElementById("cameraScreen");
-const cameraVideo = document.getElementById("cameraVideo");
-const cameraCloseBtn = document.getElementById("cameraCloseBtn");
-const cameraTakeBtn = document.getElementById("cameraTakeBtn");
-const xpLabel = document.getElementById("xpLabel");
+/* JR AI MAKE NOTES — standalone, self-contained script */
+const API_URL = "https://script.google.com/macros/s/AKfycbwyW1sNFAI9lgYH_7_FWng44IWUUrbIadwPMRM6vrmw84C8w41rWvBkACuIAasVmAHT/exec";
+const $ = (id) => document.getElementById(id);
+const chat = $('chat');
+const messageInput = $('messageInput');
+const sendBtn = $('sendBtn');
+const pinBtn = $('pinBtn');
+const pinMenu = $('pinMenu');
+const fileBtn = $('fileBtn');
+const albumBtn = $('albumBtn');
+const cameraBtn = $('cameraBtn');
+const fileInput = $('fileInput');
+const albumInput = $('albumInput');
+const voiceBtn = $('voiceBtn');
+const cameraScreen = $('cameraScreen');
+const cameraVideo = $('cameraVideo');
+const cameraCloseBtn = $('cameraCloseBtn');
+const cameraTakeBtn = $('cameraTakeBtn');
+const pptModeBtn = $('pptModeBtn');
+const backBtn = $('backBtn');
+const xpLabel = $('xpLabel');
 
 let isSending = false;
+let pptMode = false;
+let selectedQuickPrompt = '';
+let selectedFiles = [];
 let cameraStream = null;
 let recognition = null;
-let selectedQuickPrompt = "";
+let xp = Number(localStorage.getItem('jr_ai_notes_xp') || 0);
 
-/* USER ID */
-const USER_KEY = "jr_ai_user_id";
-function getUserId(){
-  let userId = localStorage.getItem(USER_KEY);
-  if(!userId){
-    userId = "jr_" + Date.now() + "_" +
-      Math.random().toString(36).slice(2);
-    localStorage.setItem(USER_KEY, userId);
+function getUserId() {
+  let id = localStorage.getItem('jr_ai_user_id');
+  if (!id) {
+    id = 'jr_' + Date.now() + '_' + Math.random().toString(36).slice(2);
+    localStorage.setItem('jr_ai_user_id', id);
   }
-  return userId;
+  return id;
 }
-
-/* XP */
-const XP_KEY = "jr_ai_notes_xp";
-function updateProgress(){
-  const xp = Number(localStorage.getItem(XP_KEY) || 0);
-  const level = Math.floor(xp / 100) + 1;
-  xpLabel.textContent = "⚡ Level " + level + " · " + xp + " XP";
+function scrollToBottom() {
+  requestAnimationFrame(() => { chat.scrollTop = chat.scrollHeight; });
 }
-function addXP(amount){
-  let xp = Number(localStorage.getItem(XP_KEY) || 0);
-  xp += amount;
-  localStorage.setItem(XP_KEY, String(xp));
-  updateProgress();
-}
-updateProgress();
-
-/* SCROLL */
-function scrollToBottom(){
-  requestAnimationFrame(() => {
-    chat.scrollTop = chat.scrollHeight;
-  });
-}
-
-/* MESSAGE */
-function addMessage(text, type){
-  const message = document.createElement("div");
-  message.className = "message " + type;
-  chat.appendChild(message);
-
-  if(type === "ai"){
-    let i = 0;
-    function typeNext(){
-      if(i < text.length){
-        message.textContent += text.slice(i, i + 3);
-        i += 3;
-        scrollToBottom();
-        setTimeout(typeNext, 15);
-      }
-    }
-    typeNext();
-  }else{
-    message.textContent = text;
-    scrollToBottom();
-  }
-}
-
-/* TYPING */
-function showTyping(){
-  hideTyping();
-  const typing = document.createElement("div");
-  typing.className = "typing";
-  typing.id = "typingIndicator";
-  for(let i=0;i<3;i++){
-    const dot = document.createElement("div");
-    dot.className = "dot";
-    typing.appendChild(dot);
-  }
-  chat.appendChild(typing);
+function addMessage(text, type='ai') {
+  const el = document.createElement('div');
+  el.className = 'message ' + type;
+  el.textContent = String(text ?? '');
+  chat.appendChild(el);
   scrollToBottom();
+  return el;
 }
-function hideTyping(){
-  const typing = document.getElementById("typingIndicator");
-  if(typing) typing.remove();
+function showTyping() {
+  hideTyping();
+  const el = document.createElement('div');
+  el.className = 'typing'; el.id = 'typingIndicator';
+  for (let i=0;i<3;i++) { const dot=document.createElement('div'); dot.className='dot'; el.appendChild(dot); }
+  chat.appendChild(el); scrollToBottom();
 }
-
-/* NOTES */
-async function createNotes(){
-  if(isSending) return;
-
+function hideTyping() { const el=$('typingIndicator'); if (el) el.remove(); }
+function updateXP(amount=0) {
+  xp += amount; localStorage.setItem('jr_ai_notes_xp', String(xp));
+  if (xpLabel) xpLabel.textContent = `⚡ Level ${Math.floor(xp/100)+1} · ${xp} XP`;
+}
+function setMode(isPpt) {
+  pptMode = isPpt;
+  if (pptModeBtn) pptModeBtn.classList.toggle('selected', pptMode);
+  document.querySelectorAll('.quick[data-prompt]').forEach(b=>b.classList.remove('selected'));
+  if (pptMode) selectedQuickPrompt='';
+  messageInput.placeholder = pptMode ? 'Chapter ya topic likho... e.g. Photosynthesis' : 'Topic likho… e.g. Photosynthesis';
+  sendBtn.textContent = pptMode ? '🎞️ MAKE PPT' : '✨ NOTES';
+}
+function renderAttachments() {
+  let old = $('attachmentStatus'); if (old) old.remove();
+  if (!selectedFiles.length) return;
+  const status=document.createElement('div'); status.id='attachmentStatus'; status.className='attachment-status';
+  status.style.cssText='font-size:12px;color:var(--muted);padding:5px 8px;max-width:100%;overflow-wrap:anywhere;';
+  status.textContent='📎 ' + selectedFiles.map(f=>f.name).join(', ');
+  document.querySelector('.bottom').prepend(status);
+}
+function clearAttachments() { selectedFiles=[]; fileInput.value=''; albumInput.value=''; renderAttachments(); }
+function openPicker(input) { if (input) { input.click(); if (pinMenu) pinMenu.classList.remove('show'); } }
+async function readTextFile(file) {
+  if (/\.(txt|md|csv|json|html|js|css|xml)$/i.test(file.name) || file.type.startsWith('text/')) {
+    try { return `\n\nAttached text file (${file.name}):\n` + (await file.text()).slice(0,18000); } catch (_) { return `\nAttached file: ${file.name}`; }
+  }
+  return `\n\nUser attached file: ${file.name} (${file.type || 'unknown type'}). If its contents are not provided, tell the user you cannot read the file contents in this chat.`;
+}
+async function createNotes() {
+  if (isSending) return;
   const topic = messageInput.value.trim();
-  if(!topic){
-    messageInput.focus();
+  if (!topic && !selectedFiles.length) { messageInput.focus(); return; }
+  if (pptMode && selectedFiles.length) {
+    addMessage('PPT Maker abhi topic/text se PPT banata hai. Attached file ka text copy karke topic box mein paste kar do.', 'ai');
     return;
   }
+  if (pptMode) return createPowerPoint(topic);
 
-  isSending = true;
-  sendBtn.disabled = true;
-  messageInput.disabled = true;
-  voiceBtn.disabled = true;
-
-  addMessage(topic, "user");
-  messageInput.value = "";
-  showTyping();
-
-  const prompt = selectedQuickPrompt
-    ? selectedQuickPrompt + topic
-    : "Create detailed, well-organized, student-friendly notes on this topic: " +
-      topic +
-      ". Include clear headings, definitions, important points, explanations, examples where useful, key terms, and a concise revision summary. Cover the topic thoroughly and make the notes easy to study.";
-
-  selectedQuickPrompt = "";
-
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 60000);
-
-  try{
-    const response = await fetch(API_URL,{
-      method:"POST",
-      headers:{
-        "Content-Type":"text/plain;charset=utf-8"
-      },
-      body:JSON.stringify({
-        message:prompt,
-        userId:getUserId()
-      }),
-      signal:controller.signal
-    });
-
-    if(!response.ok){
-      throw new Error("Server error: " + response.status);
-    }
-
-    const data = await response.json();
-    clearTimeout(timeout);
+  isSending=true; sendBtn.disabled=true; messageInput.disabled=true; voiceBtn.disabled=true;
+  const userText = topic || 'Please make study notes from my attached file.';
+  addMessage(userText + (selectedFiles.length ? '\n📎 ' + selectedFiles.map(f=>f.name).join(', ') : ''), 'user');
+  messageInput.value=''; showTyping();
+  try {
+    let attachmentText='';
+    for (const file of selectedFiles) attachmentText += await readTextFile(file);
+    const prompt = (selectedQuickPrompt ? selectedQuickPrompt : 'Create detailed, well-organized, student-friendly notes on this topic: ') + userText + attachmentText + '\nInclude clear headings, definitions, important points, explanations, examples where useful, key terms, and a concise revision summary. Cover the topic thoroughly and make the notes easy to study.';
+    selectedQuickPrompt=''; document.querySelectorAll('.quick[data-prompt]').forEach(b=>b.classList.remove('selected'));
+    clearAttachments();
+    const controller=new AbortController(); const timeout=setTimeout(()=>controller.abort(),60000);
+    let response;
+    try {
+      response=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({message:prompt,userId:getUserId()}),signal:controller.signal});
+    } finally { clearTimeout(timeout); }
+    if (!response.ok) throw new Error('Server error: '+response.status);
+    const data=await response.json();
+    if (data && data.error) throw new Error(data.error);
+    const answer=data && data.answer ? String(data.answer).trim() : '';
+    if (!answer) throw new Error('AI ne empty response diya. Please try again.');
+    hideTyping(); addMessage(answer,'ai'); updateXP(10);
+  } catch (err) {
     hideTyping();
-
-    if(data && data.error){
-      addMessage("⚠️ " + data.error,"ai");
-      return;
-    }
-
-    const answer = data && data.answer
-      ? String(data.answer).trim()
-      : "";
-
-    if(!answer){
-      addMessage("⚠️ AI ne empty response diya. Please try again.","ai");
-      return;
-    }
-
-    addMessage(answer,"ai");
-    addXP(10);
-    saveCurrentChat();
-
-  }catch(error){
-    clearTimeout(timeout);
-    hideTyping();
-
-    let errorText = "⚠️ Kuch problem aa gayi. Please try again.";
-    if(error && error.name === "AbortError"){
-      errorText = "⚠️ Server response me zyada time lag raha hai. Please try again.";
-    }else if(error && error.message){
-      errorText = "⚠️ " + error.message;
-    }
-    addMessage(errorText,"ai");
-  }finally{
-    isSending = false;
-    sendBtn.disabled = false;
-    messageInput.disabled = false;
-    voiceBtn.disabled = false;
-    messageInput.focus({preventScroll:true});
-    scrollToBottom();
+    let msg = err && err.name==='AbortError' ? 'Server response mein zyada time lag raha hai. Dobara try karo.' : (err && err.message ? err.message : 'Kuch problem aa gayi.');
+    if (location.protocol === 'file:') msg += '\n\nAap file ko direct Chrome (file://) se chala rahe ho. API, microphone aur camera ke liye GitHub Pages wali https:// website par test karo.';
+    addMessage('⚠️ Notes nahi ban paaye: '+msg,'ai');
+  } finally {
+    isSending=false; sendBtn.disabled=false; messageInput.disabled=false; voiceBtn.disabled=false;
+    sendBtn.textContent=pptMode?'🎞️ MAKE PPT':'✨ NOTES'; messageInput.focus({preventScroll:true}); scrollToBottom();
   }
 }
+let currentPptx = null;
+let currentPptFilename = 'JR-AI-Presentation.pptx';
 
-/* BASIC CHAT SAVE - safe even if other pages are absent */
-function saveCurrentChat(){
-  try{
-    const messages = [...chat.querySelectorAll(".message")]
-      .map(el => ({
-        type: el.classList.contains("user") ? "user" : "ai",
-        text: el.textContent.trim()
-      }))
-      .filter(x => x.text);
-
-    localStorage.setItem("jr_ai_notes_last_chat", JSON.stringify(messages));
-  }catch(e){}
+function parsePptSlides(raw) {
+  const lines=String(raw||'').replace(/```[\w-]*\n?/g,'').replace(/```/g,'').replace(/\r/g,'').split('\n');
+  const slides=[]; let current=null;
+  for (const line of lines) {
+    const trimmed=line.trim();
+    const m=trimmed.match(/^\*{0,2}SLIDE\s*\d+\s*[:.)\-–]\s*(.*?)\*{0,2}$/i);
+    if (m) { if(current) slides.push(current); current={title:m[1].replace(/^\*+|\*+$/g,'').trim(),bullets:[],diagram:[]}; }
+    else if(current && trimmed) {
+      const dm=trimmed.match(/^DIAGRAM\s*:\s*(.*)$/i);
+      if(dm) current.diagram=dm[1].split(/\s*(?:->|→|\|)\s*/).map(t=>t.replace(/^[-*•]\s*/,'').trim()).filter(Boolean).slice(0,5);
+      else { const t=trimmed.replace(/^[-*•]\s*/,'').replace(/^\d+[.)]\s*/,'').replace(/^\*+|\*+$/g,'').trim(); if(t) current.bullets.push(t); }
+    }
+  }
+  if(current) slides.push(current);
+  const result=slides.filter(s=>s.title || s.bullets.length).slice(0,20);
+  result.forEach((s,i)=>{if(!s.diagram.length) s.diagram=deriveDiagram(s,i);});
+  return result;
 }
-
-/* BACK */
-backBtn.addEventListener("click", () => {
-  if(isSending) return;
-  if(history.length > 1) history.back();
-  else window.location.href = "index.html";
-});
-
-/* QUICK START */
-document.querySelectorAll(".quick").forEach(btn => {
-  btn.addEventListener("click", () => {
-    selectedQuickPrompt = btn.dataset.prompt || "";
-    messageInput.focus();
-    messageInput.scrollIntoView({behavior:"smooth",block:"center"});
+function deriveDiagram(slide,index) {
+  const clean=slide.bullets.map(t=>t.replace(/^[^:]{1,35}:\s*/, '').replace(/[.!?]+$/,'').trim()).filter(Boolean);
+  if(index===0) return ['TOPIC','Main Ideas','Learn & Revise'];
+  if(/process|step|cycle|life cycle|working|mechanism|how/i.test(slide.title+' '+slide.bullets.join(' '))) return (clean.slice(0,4).length>=2?clean.slice(0,4):['Start','Process','Result']);
+  if(/compare|difference|types|classification/i.test(slide.title+' '+slide.bullets.join(' '))) return ['Types / Ideas','Compare','Choose / Result'];
+  return clean.slice(0,4).length>=2?clean.slice(0,4):[slide.title||'Concept','Explanation','Example','Summary'];
+}
+function addDiagramToSlide(slide,pptx,items,cover) {
+  const nodes=(items||[]).slice(0,4); if(nodes.length<2) return;
+  const x0=cover?0.8:6.7, y0=cover?5.15:2.15, totalW=cover?10.9:5.75, boxW=Math.min(1.42,(totalW-(nodes.length-1)*0.28)/nodes.length), gap=nodes.length>1?(totalW-boxW*nodes.length)/(nodes.length-1):0;
+  nodes.forEach((txt,i)=>{
+    const x=x0+i*(boxW+gap);
+    slide.addShape(pptx.ShapeType.roundRect,{x,y:y0,w:boxW,h:0.72,rectRadius:0.08,line:{color:cover?'8DA2FF':'8C8AF4',width:1},fill:{color:cover?'252F60':'E9ECFF'}});
+    slide.addText(String(txt).slice(0,65),{x:x+0.05,y:y0+0.08,w:boxW-0.1,h:0.56,fontFace:'Aptos',fontSize:Math.min(12,boxW*8),bold:true,color:cover?'FFFFFF':'27305E',align:'center',valign:'mid',fit:'shrink',margin:0.02});
+    if(i<nodes.length-1) slide.addText('→',{x:x+boxW,y:y0+0.19,w:gap,h:0.28,fontFace:'Aptos',fontSize:16,bold:true,color:cover?'B8C4FF':'655BCE',align:'center',margin:0});
   });
-});
-
-/* SEND */
-sendBtn.addEventListener("click", createNotes);
-
-messageInput.addEventListener("keydown", event => {
-  if(event.key === "Enter" && !event.shiftKey){
-    event.preventDefault();
-    createNotes();
-  }
-});
-
-/* ATTACHMENT MENU */
-pinBtn.addEventListener("click", event => {
-  event.stopPropagation();
-  pinMenu.classList.toggle("show");
-});
-
-document.addEventListener("click", event => {
-  if(!event.target.closest(".pin-wrap")){
-    pinMenu.classList.remove("show");
-  }
-});
-
-/*
-  IMPORTANT:
-  Do not use display:none for the actual input on some Android WebViews.
-  opacity/positioning keeps it clickable by the browser while it remains invisible.
-*/
-[fileInput, albumInput].forEach(input => {
-  input.style.position = "fixed";
-  input.style.left = "-9999px";
-  input.style.width = "1px";
-  input.style.height = "1px";
-  input.style.opacity = "0";
-  input.style.pointerEvents = "none";
-});
-
-/* FILE PICKER */
-fileBtn.addEventListener("click", () => {
-  pinMenu.classList.remove("show");
-  setTimeout(() => fileInput.click(), 50);
-});
-
-/* ALBUM / GALLERY */
-albumBtn.addEventListener("click", () => {
-  pinMenu.classList.remove("show");
-  setTimeout(() => albumInput.click(), 50);
-});
-
-/* FILE SELECTED */
-fileInput.addEventListener("change", () => {
-  const files = [...fileInput.files];
-  if(files.length){
-    showSelectedFiles(files);
-  }
-  fileInput.value = "";
-});
-
-/* IMAGES SELECTED */
-albumInput.addEventListener("change", () => {
-  const files = [...albumInput.files];
-  if(files.length){
-    showSelectedFiles(files);
-  }
-  albumInput.value = "";
-});
-
-function showSelectedFiles(files){
-  const names = files.map(f => f.name).join(", ");
-  addMessage(
-    "📎 Selected: " + names,
-    "user"
-  );
-
-  // Put the selected filename(s) into the input as context.
-  // The files themselves are not uploaded to Gemini by this page.
-  messageInput.value =
-    "Use these selected file(s) as reference: " + names;
-  messageInput.focus();
 }
-
-/* CAMERA */
-cameraBtn.addEventListener("click", async () => {
-  pinMenu.classList.remove("show");
-
-  /*
-    getUserMedia needs a secure context. GitHub Pages/HTTPS works.
-    If the Android WebView blocks it, use the native file picker camera
-    fallback below.
-  */
-  try{
-    if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
-      throw new Error("Camera API unavailable");
-    }
-
-    cameraStream = await navigator.mediaDevices.getUserMedia({
-      video:{facingMode:{ideal:"environment"}},
-      audio:false
+function renderPptPreview(topic,slides) {
+  const wrap=document.createElement('section'); wrap.className='ppt-preview';
+  const head=document.createElement('div'); head.className='ppt-preview-head';
+  const intro=document.createElement('div');
+  const title=document.createElement('h3'); title.textContent='🎞️ Your PPT is ready to preview';
+  const sub=document.createElement('p'); sub.textContent=`${topic} · ${slides.length} slides · Check the explanation and diagrams below before downloading.`;
+  intro.append(title,sub); head.appendChild(intro); wrap.appendChild(head);
+  const list=document.createElement('div'); list.className='ppt-slide-list';
+  slides.forEach((data,i)=>{
+    const card=document.createElement('article'); card.className='ppt-slide-card';
+    const top=document.createElement('div'); top.className='ppt-slide-top'; top.textContent=`SLIDE ${String(i+1).padStart(2,'0')} / ${String(slides.length).padStart(2,'0')}`;
+    const content=document.createElement('div'); content.className='ppt-slide-content';
+    const h=document.createElement('h4'); h.textContent=data.title||`Slide ${i+1}`; content.appendChild(h);
+    const ul=document.createElement('ul'); data.bullets.forEach(b=>{const li=document.createElement('li');li.textContent=b;ul.appendChild(li);}); content.appendChild(ul);
+    const diagram=document.createElement('div'); diagram.className='ppt-diagram';
+    const dl=document.createElement('div'); dl.className='ppt-diagram-label'; dl.textContent='Visual diagram'; diagram.appendChild(dl);
+    const flow=document.createElement('div'); flow.className='ppt-flow';
+    (data.diagram||deriveDiagram(data,i)).forEach((node,j,arr)=>{const box=document.createElement('div');box.className='ppt-flow-box';box.textContent=node;flow.appendChild(box);if(j<arr.length-1){const arrow=document.createElement('div');arrow.className='ppt-flow-arrow';arrow.textContent='→';flow.appendChild(arrow);}});
+    diagram.appendChild(flow); content.appendChild(diagram); card.append(top,content); list.appendChild(card);
+  });
+  wrap.appendChild(list);
+  const download=document.createElement('button'); download.type='button'; download.className='ppt-download-btn'; download.textContent='⬇️ Download PowerPoint (.pptx)';
+  download.addEventListener('click',async()=>{
+    if(!currentPptx){addMessage('⚠️ PPT file ready nahi hai. Topic dobara generate karo.','ai');return;}
+    download.disabled=true; download.textContent='⏳ Preparing download…';
+    try { await currentPptx.writeFile({fileName:currentPptFilename}); download.textContent='✅ Download started — tap again if needed'; updateXP(5); }
+    catch(e){download.textContent='❌ Download failed — tap to retry';addMessage('⚠️ Download nahi hua: '+(e.message||'Please Chrome mein download permission check karo.'),'ai');}
+    finally {download.disabled=false;}
+  });
+  wrap.appendChild(download);
+  const note=document.createElement('div');note.className='ppt-small-note';note.textContent='PPT is shown here first. Download tabhi hoga jab aap upar button tap karoge. Diagrams are included in the preview and PowerPoint slides.';wrap.appendChild(note);
+  chat.appendChild(wrap); scrollToBottom();
+}
+async function createPowerPoint(topic) {
+  if (!topic) { messageInput.focus(); return; }
+  if (!window.pptxgen && !window.PptxGenJS) { addMessage('⚠️ PowerPoint library load nahi hui. Internet on karke GitHub Pages https:// website par reload karo.','ai'); return; }
+  isSending=true; sendBtn.disabled=true; messageInput.disabled=true; voiceBtn.disabled=true;
+  addMessage('🎞️ PPT ke liye topic: '+topic,'user'); messageInput.value=''; showTyping();
+  const prompt=`You are an excellent teacher who makes clear visual lessons for students. Create a thorough, easy-to-understand PowerPoint lesson on: ${topic}. Assume the learner is a beginner. Use 10 to 14 slides for a full chapter (or 8+ slides for a small topic). Explain concepts in simple everyday language, define every important term, explain WHY and HOW things happen, use a relatable real-life analogy and at least 2 worked examples where relevant, add common mistakes/misconceptions, exam tips, recap and conclusion. Avoid vague or overly short bullets; each bullet should teach a complete useful idea in plain language. Include at least one clear visual flow/process/concept diagram on EVERY slide except a pure title slide. Use only accurate topic-specific diagram labels and order. Return ONLY this exact structure: SLIDE 1: Title, then 3-5 lines beginning '- ' and one line 'DIAGRAM: label 1 -> label 2 -> label 3' (2 to 5 short labels). Repeat for each slide. Diagram should be a meaningful process, cycle, hierarchy, comparison, structure or concept map relevant to that particular slide, not generic filler. First slide may be title/learning goals; include an overview, foundational concepts, detailed explanation, process/mechanism, real-world applications, worked example(s), common errors, recap and conclusion. Do not use markdown tables, do not add intro text outside slide format.`;
+  const controller=new AbortController(); const timeout=setTimeout(()=>controller.abort(),90000);
+  try {
+    const response=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({message:prompt,userId:getUserId()}),signal:controller.signal});
+    if(!response.ok) throw new Error('Server error: '+response.status);
+    const data=await response.json(); if(data && data.error) throw new Error(data.error);
+    const answer=data && data.answer ? String(data.answer).trim() : ''; if(!answer) throw new Error('AI ne empty response diya.');
+    const slides=parsePptSlides(answer); if(!slides.length) throw new Error('AI ka slide format samajh nahi aaya. Dobara try karo.');
+    const Pptx=window.pptxgen||window.PptxGenJS; const pptx=new Pptx();
+    pptx.layout='LAYOUT_WIDE'; pptx.author='JR AI'; pptx.subject='AI-generated study presentation'; pptx.title=topic; pptx.company='JR AI';
+    pptx.theme={headFontFace:'Aptos Display',bodyFontFace:'Aptos',lang:'en-US'};
+    slides.forEach((d,i)=>{
+      const slide=pptx.addSlide(); const cover=i===0; slide.background={color:cover?'101633':(i%2?'F5F7FF':'FFFFFF')};
+      slide.addShape(pptx.ShapeType.rect,{x:0,y:0,w:0.18,h:7.5,line:{color:'6C63FF',transparency:100},fill:{color:'6C63FF'}});
+      slide.addText(d.title||('Slide '+(i+1)),{x:0.65,y:cover?0.55:0.4,w:11.8,h:cover?0.95:0.7,fontFace:'Aptos Display',fontSize:cover?30:24,bold:true,color:cover?'FFFFFF':'20264A',margin:0.05,fit:'shrink'});
+      slide.addShape(pptx.ShapeType.line,{x:0.68,y:cover?1.55:1.2,w:1.2,h:0,line:{color:'6C63FF',width:3}});
+      const bullets=d.bullets.slice(0,5).map(t=>({text:t,options:{bullet:{indent:14},hanging:3,breakLine:true,paraSpaceAfterPt:8}}));
+      if(bullets.length) slide.addText(bullets,{x:0.78,y:cover?1.85:1.48,w:cover?10.9:5.45,h:cover?2.65:4.85,fontFace:'Aptos',fontSize:cover?18:15,color:cover?'E8ECFF':'343B5B',margin:0.08,valign:'top',fit:'shrink',paraSpaceAfterPt:8,breakLine:false});
+      addDiagramToSlide(slide,pptx,d.diagram,cover);
+      slide.addText('JR AI • STUDY PRESENTATION',{x:0.7,y:7.1,w:10.7,h:0.22,fontFace:'Aptos',fontSize:9,color:cover?'AAB4E8':'7A819D',margin:0});
+      slide.addText(String(i+1).padStart(2,'0'),{x:11.85,y:7.08,w:0.7,h:0.25,fontFace:'Aptos',fontSize:10,bold:true,color:cover?'FFFFFF':'626B91',align:'right',margin:0});
     });
-
-    cameraVideo.srcObject = cameraStream;
-    cameraScreen.classList.add("show");
-  }catch(error){
-    // Reliable Android WebView fallback: open camera through file chooser.
-    const cameraInput = document.createElement("input");
-    cameraInput.type = "file";
-    cameraInput.accept = "image/*";
-    cameraInput.setAttribute("capture","environment");
-    cameraInput.style.position = "fixed";
-    cameraInput.style.left = "-9999px";
-    document.body.appendChild(cameraInput);
-
-    cameraInput.addEventListener("change", () => {
-      const files = [...cameraInput.files];
-      if(files.length) showSelectedFiles(files);
-      cameraInput.remove();
-    }, {once:true});
-
-    cameraInput.click();
+    const safe=topic.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,55)||'jr-ai-presentation';
+    currentPptx=pptx; currentPptFilename=safe+'-JR-AI.pptx';
+    hideTyping(); renderPptPreview(topic,slides); addMessage(`✅ ${slides.length} slides ready hain. Neeche preview dekho; download ke liye “Download PowerPoint” button tap karo.`,'ai'); updateXP(20);
+  } catch(err) {
+    hideTyping(); let msg=err&&err.name==='AbortError'?'Server response mein time lag raha hai. Dobara try karo.':(err&&err.message?err.message:'Unknown error');
+    if(location.protocol==='file:') msg+='\nDirect file:// ke bajay GitHub Pages https:// URL use karo.';
+    addMessage('⚠️ PPT nahi ban paayi: '+msg,'ai');
+  } finally {
+    clearTimeout(timeout); isSending=false; sendBtn.disabled=false; messageInput.disabled=false; voiceBtn.disabled=false;
+    sendBtn.textContent=pptMode?'🎞️ MAKE PPT':'✨ NOTES'; messageInput.focus({preventScroll:true}); scrollToBottom();
   }
-});
-
-cameraCloseBtn.addEventListener("click", closeCamera);
-
-function closeCamera(){
-  if(cameraStream){
-    cameraStream.getTracks().forEach(track => track.stop());
-    cameraStream = null;
-  }
-  cameraVideo.srcObject = null;
-  cameraScreen.classList.remove("show");
 }
 
-cameraTakeBtn.addEventListener("click", () => {
-  if(!cameraStream) return;
+/* Quick prompt and PPT mode */
+if (pptModeBtn) pptModeBtn.addEventListener('click',()=>{ setMode(!pptMode); if(pptMode) addMessage('🎞️ PPT Maker mode ON. Chapter/topic likho aur MAKE PPT dabao.','ai'); });
+document.querySelectorAll('.quick[data-prompt]').forEach(button=>button.addEventListener('click',()=>{
+  selectedQuickPrompt=button.getAttribute('data-prompt')||''; setMode(false); button.classList.add('selected');
+  messageInput.placeholder='Topic likho, phir NOTES dabao...'; messageInput.focus({preventScroll:true});
+}));
+sendBtn.addEventListener('click',createNotes);
+messageInput.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();createNotes();}});
+if(backBtn) backBtn.addEventListener('click',()=>{ if(history.length>1) history.back(); else location.href='index.html'; });
 
-  const canvas = document.createElement("canvas");
-  canvas.width = cameraVideo.videoWidth || 1280;
-  canvas.height = cameraVideo.videoHeight || 720;
+/* File and photo picker */
+if(pinBtn) pinBtn.addEventListener('click',e=>{e.stopPropagation(); if(pinMenu) pinMenu.classList.toggle('show');});
+document.addEventListener('click',e=>{if(pinMenu && !pinMenu.contains(e.target) && e.target!==pinBtn) pinMenu.classList.remove('show');});
+if(fileBtn) fileBtn.addEventListener('click',()=>openPicker(fileInput));
+if(albumBtn) albumBtn.addEventListener('click',()=>openPicker(albumInput));
+if(fileInput) fileInput.addEventListener('change',()=>{selectedFiles=[...selectedFiles,...Array.from(fileInput.files||[])];renderAttachments();if(selectedFiles.length)addMessage('📎 File selected: '+selectedFiles.map(f=>f.name).join(', ')+'. Ab topic/question likh kar NOTES dabao. Text files (.txt/.md/.csv) ka text notes mein include hoga.','ai');});
+if(albumInput) albumInput.addEventListener('change',()=>{selectedFiles=[...selectedFiles,...Array.from(albumInput.files||[])];renderAttachments();if(selectedFiles.length)addMessage('🖼️ Image select ho gayi. Image attach karne ka control kaam kar raha hai, lekin current text API image ko directly read nahi karti. Image se notes banane ke liye OCR/vision backend add karna hoga.','ai');});
 
-  const ctx = canvas.getContext("2d");
-  ctx.drawImage(cameraVideo,0,0,canvas.width,canvas.height);
-
-  canvas.toBlob(blob => {
-    if(!blob) return;
-
-    const file = new File(
-      [blob],
-      "JR-AI-camera-" + Date.now() + ".jpg",
-      {type:"image/jpeg"}
-    );
-
-    closeCamera();
-    showSelectedFiles([file]);
-  },"image/jpeg",0.92);
+/* Voice typing: requires Chrome HTTPS / microphone permission */
+if(voiceBtn) voiceBtn.addEventListener('click',()=>{
+  const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SpeechRecognition){addMessage('🎙️ Is Chrome mode mein voice typing supported nahi hai. GitHub Pages HTTPS par latest Chrome use karo, ya keyboard ka microphone use karo.','ai');return;}
+  if(recognition){try{recognition.stop();}catch(_){} recognition=null;voiceBtn.classList.remove('listening');voiceBtn.textContent='🎙️';return;}
+  recognition=new SpeechRecognition(); recognition.lang='hi-IN'; recognition.interimResults=false; recognition.continuous=false;
+  recognition.onstart=()=>{voiceBtn.classList.add('listening');voiceBtn.textContent='⏹️';addMessage('🎙️ Sun raha hoon… ab bolo.','ai');};
+  recognition.onresult=e=>{const text=e.results&&e.results[0]&&e.results[0][0]?e.results[0][0].transcript:''; if(text) messageInput.value=(messageInput.value+' '+text).trim();};
+  recognition.onerror=e=>addMessage('⚠️ Voice input error: '+(e.error||'microphone permission check karo'),'ai');
+  recognition.onend=()=>{recognition=null;voiceBtn.classList.remove('listening');voiceBtn.textContent='🎙️';messageInput.focus({preventScroll:true});};
+  try{recognition.start();}catch(e){addMessage('⚠️ Microphone start nahi hua. Chrome permission check karo.','ai');}
 });
 
-/* VOICE */
-voiceBtn.addEventListener("click", () => {
-  const SpeechRecognition =
-    window.SpeechRecognition ||
-    window.webkitSpeechRecognition;
-
-  if(!SpeechRecognition){
-    alert("Voice input is not supported on this device/browser.");
-    return;
-  }
-
-  if(recognition){
-    recognition.stop();
-    recognition = null;
-    voiceBtn.classList.remove("listening");
-    return;
-  }
-
-  recognition = new SpeechRecognition();
-  recognition.lang = "en-IN";
-  recognition.interimResults = false;
-  recognition.continuous = false;
-
-  recognition.onstart = () => {
-    voiceBtn.classList.add("listening");
-  };
-
-  recognition.onresult = event => {
-    const text = event.results[0][0].transcript || "";
-    messageInput.value = text;
-    messageInput.focus();
-  };
-
-  recognition.onerror = () => {
-    voiceBtn.classList.remove("listening");
-    recognition = null;
-  };
-
-  recognition.onend = () => {
-    voiceBtn.classList.remove("listening");
-    recognition = null;
-  };
-
-  recognition.start();
+/* Camera capture */
+async function closeCamera(){if(cameraStream){cameraStream.getTracks().forEach(t=>t.stop());cameraStream=null;} if(cameraVideo)cameraVideo.srcObject=null; if(cameraScreen)cameraScreen.classList.remove('show');}
+if(cameraBtn) cameraBtn.addEventListener('click',async()=>{
+  if(pinMenu)pinMenu.classList.remove('show');
+  if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){addMessage('📷 Camera ke liye page HTTPS (GitHub Pages) par kholo; file:// mode camera ko block kar sakta hai.','ai');return;}
+  try{cameraStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'},audio:false});cameraVideo.srcObject=cameraStream;cameraScreen.classList.add('show');await cameraVideo.play();}
+  catch(e){addMessage('⚠️ Camera open nahi hua: '+(e.message||'Chrome site permission allow karo.'),'ai');}
+});
+if(cameraCloseBtn)cameraCloseBtn.addEventListener('click',closeCamera);
+if(cameraTakeBtn)cameraTakeBtn.addEventListener('click',()=>{
+  if(!cameraVideo||!cameraVideo.videoWidth){addMessage('⚠️ Camera frame abhi ready nahi hai.','ai');return;}
+  const canvas=document.createElement('canvas');canvas.width=cameraVideo.videoWidth;canvas.height=cameraVideo.videoHeight;canvas.getContext('2d').drawImage(cameraVideo,0,0);
+  canvas.toBlob(blob=>{if(blob){const f=new File([blob],'jr-ai-camera-'+Date.now()+'.jpg',{type:'image/jpeg'});selectedFiles.push(f);renderAttachments();addMessage('📷 Photo capture ho gayi. Current AI API image ko directly analyze nahi karti; OCR/vision backend ke baad hi photo se answers milenge.','ai');}closeCamera();},'image/jpeg',0.9);
 });
 
-/* RESTORE LAST NOTES CHAT */
-function restoreLastChat(){
-  try{
-    const saved = JSON.parse(
-      localStorage.getItem("jr_ai_notes_last_chat") || "[]"
-    );
-
-    if(Array.isArray(saved) && saved.length){
-      saved.forEach(item => {
-        if(item && item.text) addMessage(item.text,item.type || "ai");
-      });
-    }
-  }catch(e){}
-}
-
-/* Leave welcome screen clean on first open */
-restoreLastChat();
-
-window.addEventListener("beforeunload", closeCamera);
+/* Theme shortcut: double-tap header brand to toggle theme */
+const brandTitle=document.querySelector('.brand-title');
+if(brandTitle){brandTitle.title='Double-tap to switch theme';brandTitle.addEventListener('dblclick',()=>{document.body.classList.toggle('dark');localStorage.setItem('jr_ai_theme',document.body.classList.contains('dark')?'dark':'light');});}
+if(localStorage.getItem('jr_ai_theme')==='dark')document.body.classList.add('dark');
+updateXP(0);
 </script>
 
 </body>
