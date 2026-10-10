@@ -657,6 +657,22 @@ body.dark .history-panel{background:#080c1b;color:#f4f6ff}
 @media(max-height:650px){.landing-hero{justify-content:flex-start;padding-top:22px}.hero-mark{width:50px;height:50px;border-radius:17px;font-size:24px;margin-bottom:12px}.hero-subtitle{margin:10px auto 14px}.hero-footnote{margin-top:12px}.hero-title{font-size:30px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}.particle-field{display:none}}
 
+
+/* ===== INPUT / MOBILE KEYBOARD POLISH ===== */
+.bottom{left:0;right:0;box-sizing:border-box;padding-left:max(12px,env(safe-area-inset-left));padding-right:max(12px,env(safe-area-inset-right))}
+.input{min-width:0;flex:1;appearance:none;-webkit-appearance:none;touch-action:manipulation}
+.input:focus{outline:none}
+.send-btn{white-space:nowrap;touch-action:manipulation}
+@media (max-width:380px){
+  .bottom{gap:7px;padding-left:9px;padding-right:9px}
+  .input{padding-left:12px;padding-right:12px;font-size:14px}
+  .send-btn{width:66px;flex-basis:66px;font-size:11px}
+}
+@media (max-height:520px){
+  .bottom{height:66px;padding-top:8px;padding-bottom:max(8px,env(safe-area-inset-bottom))}
+  .input,.send-btn{height:44px}
+}
+
 </style>
 </head>
 
@@ -1654,46 +1670,86 @@ function scrollToBottom() {
 
 
 /* =========================================
-   JR AI CO-FOUNDER INFORMATION
+   JR AI FOUNDER / OWNER INFORMATION
 ========================================= */
 
 function getJrAiIdentityAnswer(message) {
   const question = message
     .toLowerCase()
-    .replace(/[^\p{L}\p{N}\s]/gu, " ")
+    .replace(/[^\p{L}\p{M}\p{N}\s]/gu, " ")
     .replace(/\s+/g, " ")
     .trim();
 
+  // Match identity questions in English, Hindi, and Hinglish,
+  // even when the user does not mention "JR AI" explicitly.
+  const roleQuestion = question
+    .replace(/\bco\s*founder\b/g, "cofounder")
+    .replace(/सह\s*संस्थापक/g, " ");
+
   const asksAboutCoFounder =
-    /\bco\s*founder\b/.test(question) ||
+    /\bco\s*[- ]?founder\b/.test(question) ||
     /\bcofounder\b/.test(question) ||
     question.includes("सह संस्थापक") ||
-    question.includes("सह-संस्थापक");
+    question.includes("सह-संस्थापक") ||
+    question.includes("को फाउंडर") ||
+    question.includes("को-फाउंडर") ||
+    question.includes("सह-संस्थापक कौन");
 
-  const asksAboutJrAi =
-    /\bjr\s*ai\b/.test(question) ||
-    /\bjrai\b/.test(question) ||
-    question.includes("जेआर एआई");
+  const asksAboutFounderOwnerCreator =
+    /\bfounder\b/.test(roleQuestion) ||
+    /\bfounded\b/.test(roleQuestion) ||
+    /\bcreator\b/.test(roleQuestion) ||
+    /\bcreated\b/.test(roleQuestion) ||
+    /\bowner\b/.test(roleQuestion) ||
+    /\b(made|built|developed|started|launched)\b/.test(roleQuestion) ||
+    /\bmalik\b/.test(question) ||
+    /\bbanaya\b/.test(question) ||
+    /\bkisne\s+(is\s+)?(app\s+)?banaya\b/.test(question) ||
+    /\bbanane wala\b/.test(question) ||
+    question.includes("फाउंडर") ||
+    question.includes("क्रिएटर") ||
+    question.includes("ओनर") ||
+    question.includes("संस्थापक") ||
+    question.includes("निर्माता") ||
+    question.includes("मालिक") ||
+    question.includes("किसने बनाया") ||
+    question.includes("किसने बनाया है") ||
+    question.includes("किसने बनाया था") ||
+    question.includes("बनाने वाला");
 
-  const asksWho =
-    /\bwho\b/.test(question) ||
-    /\bkon\b/.test(question) ||
-    /\bkaun\b/.test(question) ||
-    question.includes("कौन");
-
-  if (asksAboutCoFounder && (asksAboutJrAi || asksWho)) {
-    const isHindiOrHinglish =
-      /\b(kon|kaun|hai|hain|ka|ki|ke|kya|batao)\b/.test(question) ||
-      /[\u0900-\u097F]/.test(message);
-
-    if (!isHindiOrHinglish) {
-      return "Jiya Kumari is the co-founder of this JR AI app.";
-    }
-
-    return "🤖 JR AI app ki co-founder Jiya Kumari hain.";
+  if (!asksAboutCoFounder && !asksAboutFounderOwnerCreator) {
+    return null;
   }
 
-  return null;
+  const isHindiScript = /[\u0900-\u097F]/.test(message);
+  const isHinglish =
+    /\b(kon|kaun|hai|hain|ka|ki|ke|kya|batao|banaaya|banaya|malik|kisne|kaun hai|kaun hain|founder kaun)\b/.test(question);
+
+  // Consistent answers in English, Hindi, and Hinglish; no robot emoji before names.
+  if (asksAboutCoFounder && asksAboutFounderOwnerCreator) {
+    if (isHindiScript) {
+      return "JR AI के संस्थापक, निर्माता और मालिक Rohan Raj हैं, और सह-संस्थापक Jiya Kumari हैं।";
+    }
+    return isHinglish
+      ? "JR AI ke founder, creator aur owner Rohan Raj hain, aur co-founder Jiya Kumari hain."
+      : "Rohan Raj is the founder, creator, and owner of JR AI. Jiya Kumari is the co-founder.";
+  }
+
+  if (asksAboutCoFounder) {
+    if (isHindiScript) {
+      return "JR AI की सह-संस्थापक Jiya Kumari हैं।";
+    }
+    return isHinglish
+      ? "JR AI ki co-founder Jiya Kumari hain."
+      : "Jiya Kumari is the co-founder of JR AI.";
+  }
+
+  if (isHindiScript) {
+    return "JR AI के संस्थापक, निर्माता और मालिक Rohan Raj हैं।";
+  }
+  return isHinglish
+    ? "JR AI ke founder, creator aur owner Rohan Raj hain."
+    : "Rohan Raj is the founder, creator, and owner of JR AI.";
 }
 
 
