@@ -6,142 +6,100 @@
 <title>JR AI - New Chat</title>
 
 <style>
-* {
-  box-sizing: border-box;
+:root{color-scheme:dark;--bg:#08090f;--panel:#24252b;--line:#41424b;--text:#f5f5fa;--muted:#9a9ba8;--blue:#3947ff;--blue2:#6875ff}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:radial-gradient(ellipse at 0% 55%,#151633 0,transparent 43%),radial-gradient(ellipse at 100% 100%,#10111d 0,transparent 45%),var(--bg);color:var(--text)}
+button,input{font:inherit}
+.app{height:100dvh;display:flex;flex-direction:column;overflow:hidden;position:relative}
+.header{height:58px;min-height:58px;display:flex;align-items:center;gap:11px;padding:0 17px;background:rgba(8,9,15,.72);border-bottom:1px solid rgba(255,255,255,.055)}
+.back-btn{height:36px;width:36px;display:grid;place-items:center;border:1px solid #343541;border-radius:50%;background:#292a31;color:#f8f8ff;font-size:24px;cursor:pointer}
+.brand-mark{height:32px;width:32px;display:grid;place-items:center;border-radius:10px;background:linear-gradient(135deg,#7f87ff,#3c39d9);font-size:18px;box-shadow:0 0 22px #4540d533}
+.brand-copy{min-width:0}.header-title{font-size:15px;font-weight:750;letter-spacing:.15px}.header-subtitle{font-size:10px;letter-spacing:1.5px;color:#a5a5bd;margin-top:3px}
+.status-pill{margin-left:auto;color:#a8a9ba;font-size:11px;display:flex;align-items:center;gap:6px}.status-dot{width:6px;height:6px;border-radius:50%;background:#7c82ff}
+.chat{flex:1;overflow-y:auto;padding:24px 16px 28px;scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:#3a3b49 transparent}
+.welcome{width:min(100%,700px);margin:clamp(44px,13vh,145px) auto 24px;text-align:center;transition:margin .2s}
+.welcome h1{font-size:clamp(25px,4vw,36px);letter-spacing:-1px;line-height:1.2;margin:0 0 25px;font-weight:720}
+.welcome h1 span{background:linear-gradient(90deg,#d9dcff,#9c9fff,#d6c7ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.composer-wrap{width:min(100%,620px);margin:0 auto}
+.composer{padding:13px 14px 10px;border-radius:17px;background:linear-gradient(145deg,rgba(43,44,52,.98),rgba(31,32,39,.98));border:1px solid #454650;box-shadow:0 12px 38px #0004;transition:border-color .2s,box-shadow .2s}
+.composer:focus-within{border-color:#696bf0;box-shadow:0 0 0 3px #585bff1b,0 12px 38px #0004}
+.input{display:block;width:100%;min-height:68px;resize:none;border:0;outline:0;background:transparent;color:var(--text);font-size:15px;line-height:1.5;padding:2px 5px 12px}
+.input::placeholder{color:#9293a2}
+.composer-actions{display:flex;align-items:center;gap:8px}
+.tool-chip{border:1px solid #444550;border-radius:9px;padding:7px 10px;background:#30313a;color:#dedee9;font-size:12px;cursor:pointer}
+.tool-chip:hover{background:#3b3c49}
+.spacer{flex:1}
+.send-btn{width:34px;height:34px;border:0;border-radius:10px;background:linear-gradient(135deg,#4c55ff,#332ee4);color:#fff;font-size:19px;display:grid;place-items:center;cursor:pointer;box-shadow:0 4px 15px #4545ff45}
+.send-btn:disabled{opacity:.5;cursor:wait}
+.suggestions{width:min(100%,650px);display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:17px auto 0}
+.suggestion{border:1px solid #30313b;border-radius:999px;padding:8px 11px;background:rgba(38,39,47,.8);color:#c8c8d4;font-size:11px;white-space:nowrap;cursor:pointer;transition:border-color .2s,background .2s}
+.suggestion:hover{background:#333447;border-color:#5b5de3;color:#fff}
+.message{max-width:min(88%,680px);padding:13px 16px;margin:0 auto 14px;border:1px solid transparent;border-radius:17px;white-space:pre-wrap;line-height:1.65;font-size:15px;overflow-wrap:anywhere;animation:appear .2s ease-out}
+.message.ai{margin-left:max(0px,calc((100% - 700px)/2));margin-right:auto;background:rgba(29,30,39,.95);border-color:#373843;color:#ececf6;border-top-left-radius:6px}
+.message.user{margin-right:max(0px,calc((100% - 700px)/2));margin-left:auto;background:#3435a9;border-color:#5558e7;color:white;border-top-right-radius:6px}
+.typing{display:flex;gap:5px;width:fit-content;margin:0 auto 14px  max(0px,calc((100% - 700px)/2));padding:13px 15px;background:#24252e;border:1px solid #373843;border-radius:15px}
+.dot{width:7px;height:7px;border-radius:50%;background:#9296ff;animation:blink 1s infinite}.dot:nth-child(2){animation-delay:.2s}.dot:nth-child(3){animation-delay:.4s}
+@keyframes blink{0%,80%,100%{opacity:.3;transform:translateY(0)}40%{opacity:1;transform:translateY(-2px)}}
+@keyframes appear{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+.bottom{padding:0 14px 18px;display:none}.bottom .composer-wrap{width:min(100%,760px)}
+.app.has-chat .welcome{display:none}.app.has-chat .bottom{display:block}.app.has-chat .chat{padding-top:24px}
+@media(max-width:600px){.header{padding:0 12px;height:54px;min-height:54px}.status-pill{font-size:0}.status-dot{width:7px;height:7px}.chat{padding:12px 12px 22px}.welcome{margin:clamp(75px,17vh,155px) auto 22px}.welcome h1{font-size:27px;margin-bottom:22px}.composer{padding:12px 11px 9px;border-radius:16px}.input{font-size:16px;min-height:66px}.tool-chip{font-size:11px;padding:7px 9px}.suggestions{gap:7px;margin-top:15px}.suggestion{font-size:10px;padding:8px 10px}.message{max-width:94%;font-size:14px}.bottom{padding:0 10px calc(10px + env(safe-area-inset-bottom))}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+
+/* Floating 3D ambient lights */
+.ambient-lights {
+  position: fixed; inset: 0; overflow: hidden; pointer-events: none;
+  z-index: 0; isolation: isolate;
+}
+.ambient-lights::before, .ambient-lights::after {
+  content: ""; position: absolute; width: clamp(180px, 34vw, 420px);
+  aspect-ratio: 1; border-radius: 50%; filter: blur(2px);
+  opacity: .48; mix-blend-mode: screen; will-change: transform;
+}
+.ambient-lights::before {
+  top: 13%; left: -9%;
+  background: radial-gradient(circle at 34% 30%, rgba(180,190,255,.9) 0%, rgba(105,94,255,.56) 17%, rgba(73,60,227,.2) 43%, transparent 70%);
+  box-shadow: inset -24px -30px 55px rgba(13,12,52,.55), 0 0 70px rgba(86,83,255,.13);
+  animation: floatOrbOne 16s ease-in-out infinite alternate;
+}
+.ambient-lights::after {
+  right: -8%; bottom: 3%; width: clamp(210px, 38vw, 470px);
+  background: radial-gradient(circle at 35% 28%, rgba(215,190,255,.86) 0%, rgba(131,81,255,.5) 18%, rgba(67,49,201,.18) 46%, transparent 71%);
+  box-shadow: inset -30px -28px 65px rgba(16,10,49,.55), 0 0 85px rgba(131,78,255,.14);
+  animation: floatOrbTwo 19s ease-in-out infinite alternate;
+}
+.ambient-orb {
+  position: absolute; left: 62%; top: 35%; width: clamp(80px, 15vw, 180px);
+  aspect-ratio: 1; border-radius: 50%;
+  background: radial-gradient(circle at 32% 25%, rgba(210,225,255,.85), rgba(92,135,255,.42) 19%, rgba(60,75,199,.15) 48%, transparent 72%);
+  box-shadow: inset -14px -18px 30px rgba(6,10,34,.55), 0 0 48px rgba(100,130,255,.12);
+  opacity: .35; filter: blur(1px); will-change: transform;
+  animation: floatOrbThree 13s ease-in-out infinite alternate;
+}
+@keyframes floatOrbOne {
+  0% { transform: translate3d(0,0,0) scale(.94) rotate(0deg); }
+  50% { transform: translate3d(7vw,10vh,0) scale(1.07) rotate(8deg); }
+  100% { transform: translate3d(3vw,19vh,0) scale(.98) rotate(-5deg); }
+}
+@keyframes floatOrbTwo {
+  0% { transform: translate3d(0,0,0) scale(1) rotate(0deg); }
+  50% { transform: translate3d(-8vw,-9vh,0) scale(.91) rotate(-9deg); }
+  100% { transform: translate3d(-3vw,-17vh,0) scale(1.08) rotate(5deg); }
+}
+@keyframes floatOrbThree {
+  0% { transform: translate3d(0,0,0) scale(.9); }
+  100% { transform: translate3d(-7vw,13vh,0) scale(1.12); }
+}
+.app { z-index: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .ambient-lights::before, .ambient-lights::after, .ambient-orb { animation: none !important; }
 }
 
-html,
-body {
-  margin: 0;
-  height: 100%;
-  font-family: Arial, sans-serif;
-  background: #c6c6c6;
-}
-
-.app {
-  height: 100dvh;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-
-.header {
-  height: 58px;
-  min-height: 58px;
-  background: #999999;
-  display: flex;
-  align-items: center;
-  padding: 0 12px;
-  font-weight: bold;
-}
-
-.back-btn {
-  border: none;
-  background: transparent;
-  font-size: 28px;
-  cursor: pointer;
-  margin-right: 10px;
-}
-
-.header-title {
-  font-size: 18px;
-}
-
-.chat {
-  flex: 1;
-  overflow-y: auto;
-  padding: 12px;
-}
-
-.message {
-  max-width: 90%;
-  padding: 12px 14px;
-  margin-bottom: 10px;
-  border-radius: 12px;
-  white-space: pre-wrap;
-  line-height: 1.5;
-  word-wrap: break-word;
-}
-
-.message.ai {
-  background: #bdbdbd;
-  color: #111;
-  margin-right: auto;
-}
-
-.message.user {
-  background: #4a7fe8;
-  color: white;
-  margin-left: auto;
-}
-
-.bottom {
-  display: flex;
-  gap: 8px;
-  padding: 10px;
-  background: #999999;
-}
-
-.input {
-  flex: 1;
-  min-width: 0;
-  border: none;
-  outline: none;
-  border-radius: 10px;
-  padding: 13px;
-  background: #777777;
-  color: white;
-  font-size: 15px;
-}
-
-.input::placeholder {
-  color: #eeeeee;
-}
-
-.send-btn {
-  border: none;
-  border-radius: 10px;
-  padding: 0 16px;
-  background: #333333;
-  color: white;
-  font-weight: bold;
-}
-
-.typing {
-  display: flex;
-  gap: 5px;
-  padding: 12px;
-}
-
-.dot {
-  width: 7px;
-  height: 7px;
-  background: #555;
-  border-radius: 50%;
-  animation: blink 1s infinite;
-}
-
-.dot:nth-child(2) {
-  animation-delay: .2s;
-}
-
-.dot:nth-child(3) {
-  animation-delay: .4s;
-}
-
-@keyframes blink {
-  0%, 80%, 100% {
-    opacity: .3;
-  }
-
-  40% {
-    opacity: 1;
-  }
-}
 </style>
 </head>
 
 <body>
+<div class="ambient-lights" aria-hidden="true"><div class="ambient-orb"></div></div>
 
 <div class="app">
 
@@ -152,40 +110,54 @@ body {
       id="backBtn"
       type="button"
     >←</button>
-
-    <div class="header-title">
-      🤖 JR AI — NEW CHAT
+    <div class="brand-mark" aria-hidden="true">✦</div>
+    <div class="brand-copy">
+      <div class="header-title">JR AI Studio</div>
+      <div class="header-subtitle">YOUR AI SPACE</div>
     </div>
+    <div class="status-pill"><span class="status-dot"></span> Ready</div>
 
   </div>
 
-  <div
-    class="chat"
-    id="chat"
-  ></div>
-
+  <div class="chat" id="chat">
+    <section class="welcome" id="welcome">
+      <h1>What’s on your <span>mind today?</span></h1>
+      <div class="composer-wrap">
+        <div class="composer">
+          <input id="messageInput" class="input" type="text" placeholder="Message JR AI..." aria-label="Message JR AI" autocomplete="off">
+          <div class="composer-actions">
+            <button class="tool-chip" type="button" id="searchChip">⌕ Search</button>
+            <button class="tool-chip" type="button" id="imageChip">▧ Create image</button>
+            <span class="spacer"></span>
+            <button id="sendBtn" class="send-btn" type="button" aria-label="Send message" title="Send message">↑</button>
+          </div>
+        </div>
+      </div>
+      <div class="suggestions" id="suggestions">
+        <button class="suggestion" type="button" data-prompt="Help me write an AI script">▧ AI script writer</button>
+        <button class="suggestion" type="button" data-prompt="Help me with coding and explain step by step">▧ Coding Assistant</button>
+        <button class="suggestion" type="button" data-prompt="Help me write a clear essay">▧ Essay writer</button>
+        <button class="suggestion" type="button" data-prompt="Help me plan a small business">▧ Business</button>
+        <button class="suggestion" type="button" data-prompt="Translate this for me: ">▧ Translate</button>
+        <button class="suggestion" type="button" data-prompt="Summarize this YouTube video: ">▧ YouTube summaries</button>
+        <button class="suggestion" type="button" data-prompt="Help me write a professional email">▧ AI email writing</button>
+        <button class="suggestion" type="button" data-prompt="Help me create a PDF chat summary">▧ AI PDF chat</button>
+        <button class="suggestion" type="button" data-prompt="Research this topic and give me a concise summary: ">▧ Research assistant</button>
+      </div>
+    </section>
+  </div>
   <div class="bottom">
-
-    <input
-      id="messageInput"
-      class="input"
-      type="text"
-      placeholder="What's your new topic today 🤔♾️"
-      autocomplete="off"
-    >
-
-    <button
-      id="sendBtn"
-      class="send-btn"
-      type="button"
-    >
-      SEND
-    </button>
-
+    <div class="composer-wrap">
+      <div class="composer">
+        <input id="messageInputBottom" class="input" type="text" placeholder="Message JR AI..." aria-label="Message JR AI" autocomplete="off">
+        <div class="composer-actions">
+          <span class="spacer"></span>
+          <button id="sendBtnBottom" class="send-btn" type="button" aria-label="Send message">↑</button>
+        </div>
+      </div>
+    </div>
   </div>
-
 </div>
-
 <script>
 
 const API_URL =
@@ -559,11 +531,47 @@ messageInput.addEventListener(
   }
 );
 
-addMessage(
-  "👋 Hey! Welcome to JR AI 🤖✨\nWhat are we learning today? 📚",
-  "ai"
-);
+
   
+
+/* JR AI Studio welcome screen + suggested prompts */
+const appRoot = document.querySelector(".app");
+const bottomInput = document.getElementById("messageInputBottom");
+const bottomSend = document.getElementById("sendBtnBottom");
+const welcomeSend = document.getElementById("sendBtn");
+function syncComposer(source, target) {
+  source.addEventListener("input", () => { target.value = source.value; });
+}
+syncComposer(messageInput, bottomInput);
+syncComposer(bottomInput, messageInput);
+bottomSend.addEventListener("click", () => {
+  messageInput.value = bottomInput.value;
+  sendMessage();
+});
+bottomInput.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") { event.preventDefault(); messageInput.value = bottomInput.value; sendMessage(); }
+});
+document.getElementById("suggestions").addEventListener("click", (event) => {
+  const button = event.target.closest("[data-prompt]");
+  if (!button) return;
+  messageInput.value = button.dataset.prompt;
+  messageInput.focus();
+});
+document.getElementById("searchChip").addEventListener("click", () => {
+  messageInput.value = "Search for: " + messageInput.value;
+  messageInput.focus();
+});
+document.getElementById("imageChip").addEventListener("click", () => {
+  messageInput.value = "Help me create an image: " + messageInput.value;
+  messageInput.focus();
+});
+const originalAddMessage = addMessage;
+addMessage = function(text, type) {
+  if (appRoot) appRoot.classList.add("has-chat");
+  originalAddMessage(text, type);
+  bottomInput.value = "";
+};
+
 /* =========================================
    GLOBAL THEME
 ========================================= */
@@ -573,11 +581,7 @@ function applyGlobalTheme() {
   const savedTheme =
     localStorage.getItem("jr_ai_theme") || "light";
 
-  if (savedTheme === "dark") {
-    document.body.classList.add("dark");
-  } else {
-    document.body.classList.remove("dark");
-  }
+  document.body.classList.toggle("dark", savedTheme === "dark");
 
 }
 
