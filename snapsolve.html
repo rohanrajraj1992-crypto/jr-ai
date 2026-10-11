@@ -16,7 +16,7 @@
     .workspace{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);gap:18px;align-items:start}.panel{min-width:0;border:1px solid var(--line);border-radius:24px;padding:clamp(15px,3vw,22px);background:linear-gradient(145deg,rgba(22,31,58,.88),rgba(11,17,35,.82));box-shadow:var(--shadow);backdrop-filter:blur(18px)}.panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:16px}.panel-title{font-size:16px;font-weight:850;letter-spacing:-.02em}.panel-desc{font-size:12px;line-height:1.55;color:var(--muted);margin-top:5px}.step-badge{display:grid;place-items:center;min-width:31px;height:31px;border:1px solid rgba(120,151,255,.24);border-radius:10px;background:rgba(92,123,255,.12);color:#dbe5ff;font-size:12px;font-weight:800}
     .image-stage{position:relative;min-height:245px;display:flex;align-items:center;justify-content:center;overflow:hidden;border:1px dashed rgba(143,166,255,.42);border-radius:19px;background:radial-gradient(ellipse at center,rgba(70,104,200,.14),transparent 65%),rgba(5,10,24,.62);transition:border-color .2s,background .2s}.image-stage.dragover{border-color:var(--cyan);background:rgba(63,112,255,.12)}.image-placeholder{text-align:center;padding:24px 18px;color:var(--muted)}.upload-icon{display:grid;place-items:center;width:62px;height:62px;margin:0 auto 13px;border-radius:20px;border:1px solid rgba(127,159,255,.28);background:linear-gradient(145deg,rgba(91,139,255,.19),rgba(160,91,255,.12));box-shadow:inset 0 1px rgba(255,255,255,.1),0 12px 30px rgba(0,0,0,.16);font-size:28px}.image-placeholder strong{display:block;color:var(--text);font-size:15px;margin-bottom:6px}.image-placeholder span{font-size:12px;line-height:1.6}.preview-image{display:none;width:100%;max-height:440px;object-fit:contain}.remove-image{display:none;position:absolute;right:10px;top:10px;width:36px;height:36px;border:1px solid rgba(255,255,255,.2);border-radius:12px;background:rgba(5,8,18,.8);color:#fff;cursor:pointer;font-size:17px}.button-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:13px}.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:11px 14px;border:1px solid var(--line);border-radius:13px;background:rgba(255,255,255,.055);color:var(--text);font-weight:750;font-size:13px;cursor:pointer;transition:transform .18s,border-color .18s,filter .18s}.btn:hover{transform:translateY(-2px);border-color:rgba(112,151,255,.55)}.btn:active{transform:translateY(0) scale(.99)}.btn:disabled{opacity:.55;cursor:not-allowed;transform:none}.btn-primary{border:0;background:linear-gradient(105deg,#4d7dff,#8855f6 58%,#6b66ff);box-shadow:0 12px 28px rgba(92,104,255,.23);color:white}.btn-primary:hover{filter:brightness(1.08);box-shadow:0 14px 32px rgba(92,104,255,.3)}.btn-soft{background:rgba(91,126,255,.11);border-color:rgba(112,151,255,.25)}input[type=file]{display:none}
     .field-label{display:block;margin:18px 0 8px;font-size:12px;font-weight:800;letter-spacing:.02em;color:#dfe6ff}.question{display:block;width:100%;min-height:116px;resize:vertical;padding:14px 15px;border:1px solid rgba(143,164,227,.22);border-radius:15px;background:rgba(4,9,22,.68);color:var(--text);font-size:14px;line-height:1.6;outline:none}.question::placeholder{color:#7f8baa}.question:focus,.api-input:focus{border-color:rgba(101,150,255,.75);box-shadow:0 0 0 3px rgba(84,127,255,.1)}.quick-prompts{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}.prompt-chip{padding:7px 10px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.035);color:#d3ddf8;font-size:11px;cursor:pointer}.prompt-chip:hover{background:rgba(93,130,255,.12);border-color:rgba(93,130,255,.4)}.solve-button{width:100%;min-height:52px;margin-top:14px;font-size:14px;letter-spacing:.02em}.hint{display:flex;align-items:flex-start;gap:9px;margin-top:13px;padding:12px 13px;border:1px solid rgba(101,146,255,.15);border-radius:13px;background:rgba(73,105,194,.07);color:var(--muted);font-size:11px;line-height:1.6}.hint b{color:#dce6ff}
-    .answer-panel{margin-top:18px}.answer-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:13px}.answer-title{display:flex;align-items:center;gap:10px;font-size:16px;font-weight:850}.answer-icon{width:36px;height:36px;display:grid;place-items:center;border-radius:12px;background:linear-gradient(135deg,rgba(82,139,255,.25),rgba(160,93,255,.25));font-size:18px}.answer-state{color:var(--muted);font-size:11px}.loading-box{display:none;align-items:center;gap:12px;padding:16px;border:1px solid rgba(107,144,255,.22);border-radius:15px;background:rgba(69,100,199,.08);color:#dbe4ff;font-size:13px}.spinner{width:24px;height:24px;flex:0 0 auto;border:2px solid rgba(145,167,255,.25);border-top-color:#8aa9ff;border-right-color:#b18aff;border-radius:50%;animation:spin .8s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}.loading-small{margin-top:3px;color:var(--muted);font-size:11px}.answer-content{min-height:165px;padding:16px;border:1px solid rgba(143,164,227,.16);border-radius:16px;background:rgba(4,9,22,.48);color:#e7ecff;white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px;line-height:1.8}.answer-content.empty{display:flex;align-items:center;justify-content:center;text-align:center;color:#8390b0;font-size:12px;line-height:1.7}.answer-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:10px}.small-btn{min-height:35px;padding:8px 11px;font-size:11px}.error-note{display:none;margin-top:12px;padding:12px 13px;border:1px solid rgba(253,164,175,.24);border-radius:12px;background:rgba(190,40,66,.09);color:#ffc0c8;font-size:12px;line-height:1.6}.success-note{display:none;margin-top:12px;padding:11px 13px;border:1px solid rgba(110,231,183,.2);border-radius:12px;background:rgba(16,185,129,.07);color:#b9f8df;font-size:12px;line-height:1.6}
+    .answer-panel{margin-top:18px}.answer-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:13px}.answer-title{display:flex;align-items:center;gap:10px;font-size:16px;font-weight:850}.answer-icon{width:36px;height:36px;display:grid;place-items:center;border-radius:12px;background:linear-gradient(135deg,rgba(82,139,255,.25),rgba(160,93,255,.25));font-size:18px}.answer-state{color:var(--muted);font-size:11px}.loading-box{display:none;align-items:center;gap:12px;padding:16px;border:1px solid rgba(107,144,255,.22);border-radius:15px;background:rgba(69,100,199,.08);color:#dbe4ff;font-size:13px}.spinner{width:24px;height:24px;flex:0 0 auto;border:2px solid rgba(145,167,255,.25);border-top-color:#8aa9ff;border-right-color:#b18aff;border-radius:50%;animation:spin .8s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}.loading-small{margin-top:3px;color:var(--muted);font-size:11px}.answer-content{min-height:165px;padding:16px;border:1px solid rgba(143,164,227,.16);border-radius:16px;background:rgba(4,9,22,.48);color:#e7ecff;white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px;line-height:1.8}.answer-content .answer-main{display:block;margin:0 0 12px;padding:10px 12px;border-left:4px solid #8aa9ff;border-radius:8px;background:rgba(99,133,255,.16);color:#fff;font-weight:800}.answer-content .answer-line{margin:0 0 7px}.answer-content .answer-line:last-child{margin-bottom:0}.answer-content.empty{display:flex;align-items:center;justify-content:center;text-align:center;color:#8390b0;font-size:12px;line-height:1.7}.answer-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:10px}.small-btn{min-height:35px;padding:8px 11px;font-size:11px}.error-note{display:none;margin-top:12px;padding:12px 13px;border:1px solid rgba(253,164,175,.24);border-radius:12px;background:rgba(190,40,66,.09);color:#ffc0c8;font-size:12px;line-height:1.6}.success-note{display:none;margin-top:12px;padding:11px 13px;border:1px solid rgba(110,231,183,.2);border-radius:12px;background:rgba(16,185,129,.07);color:#b9f8df;font-size:12px;line-height:1.6}
     .settings{margin-top:18px}.settings summary{display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer;list-style:none;font-weight:800;font-size:13px}.settings summary::-webkit-details-marker{display:none}.settings summary:after{content:'＋';color:#a9baff;font-size:18px}.settings[open] summary:after{content:'−'}.settings-inner{padding-top:14px}.settings-copy{margin:0 0 12px;color:var(--muted);font-size:11px;line-height:1.7}.api-row{display:flex;gap:8px}.api-input{width:100%;min-width:0;min-height:43px;padding:11px 12px;border:1px solid rgba(143,164,227,.22);border-radius:12px;background:rgba(4,9,22,.68);color:var(--text);font-size:12px;outline:none}.api-tools{display:flex;flex-wrap:wrap;gap:8px;margin-top:9px}.key-status{display:block;min-height:16px;margin-top:9px;color:var(--good);font-size:11px}.security-note{margin-top:12px;color:#8996b6;font-size:10px;line-height:1.65}.security-note strong{color:#c4cfee}.footer{text-align:center;color:#7d89a9;font-size:11px;line-height:1.7;padding:25px 8px 0}.footer b{color:#bac7ef}.toast{position:fixed;left:50%;bottom:20px;z-index:30;transform:translate(-50%,20px);opacity:0;pointer-events:none;padding:11px 15px;border:1px solid rgba(143,164,227,.24);border-radius:13px;background:#141d38;color:#fff;box-shadow:var(--shadow);font-size:12px;transition:opacity .2s,transform .2s;max-width:calc(100vw - 28px);text-align:center}.toast.show{opacity:1;transform:translate(-50%,0)}
     @media(max-width:760px){main{padding-top:22px}.workspace{grid-template-columns:1fr;gap:14px}.hero{margin-bottom:22px}.image-stage{min-height:220px}.panel{border-radius:21px}.top-pill{font-size:10px;padding:7px 9px}.brand-sub{font-size:10px}}
     @media(max-width:380px){.topbar{padding:10px}.brand-name{font-size:14px}.brand-mark,.back-btn{width:38px;height:38px}.top-pill{display:none}.button-row{gap:7px}.btn{padding:10px;font-size:12px}}
@@ -189,6 +189,48 @@
         solveBtn.disabled = isLoading; cameraBtn.disabled = isLoading; galleryBtn.disabled = isLoading;
         solveBtn.innerHTML = isLoading ? '⏳ SOLVING YOUR QUESTION…' : '✨ SOLVE WITH JR AI <span aria-hidden="true">→</span>';
       }
+      // Resize/compress only the image sent to the backend; keep the original
+      // selectedFile and preview unchanged. Text-only requests are unaffected.
+      async function compressImageForUpload(file) {
+        const MAX_SIDE = 1800;
+        const JPEG_QUALITY = 0.82;
+        let bitmap;
+        try {
+          if ('createImageBitmap' in window) {
+            bitmap = await createImageBitmap(file, { imageOrientation: 'from-image' });
+          } else {
+            bitmap = await new Promise((resolve, reject) => {
+              const img = new Image();
+              const url = URL.createObjectURL(file);
+              img.onload = () => { URL.revokeObjectURL(url); resolve(img); };
+              img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('Image decode failed')); };
+              img.src = url;
+            });
+          }
+          const sourceWidth = bitmap.width;
+          const sourceHeight = bitmap.height;
+          if (!sourceWidth || !sourceHeight) throw new Error('Invalid image dimensions');
+          const scale = Math.min(1, MAX_SIDE / Math.max(sourceWidth, sourceHeight));
+          const canvas = document.createElement('canvas');
+          canvas.width = Math.max(1, Math.round(sourceWidth * scale));
+          canvas.height = Math.max(1, Math.round(sourceHeight * scale));
+          const ctx = canvas.getContext('2d');
+          if (!ctx) throw new Error('Canvas is unavailable');
+          // White background avoids transparent PNG areas turning black in JPEG.
+          ctx.fillStyle = '#ffffff';
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+          ctx.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+          if (typeof bitmap.close === 'function') bitmap.close();
+          const blob = await new Promise((resolve, reject) => {
+            canvas.toBlob(result => result ? resolve(result) : reject(new Error('Image compression failed')), 'image/jpeg', JPEG_QUALITY);
+          });
+          // If compression somehow increases a tiny image, the JPEG is still a valid upload.
+          return blob;
+        } catch (error) {
+          if (bitmap && typeof bitmap.close === 'function') bitmap.close();
+          throw new Error('Is image format ko phone browser read nahi kar paaya. Gallery se JPG/PNG image ka screenshot ya converted copy try karo.');
+        }
+      }
       function fileToBase64(file) {
         return new Promise((resolve, reject) => {
           const reader = new FileReader();
@@ -196,7 +238,7 @@
             const dataUrl = String(reader.result || '');
             const comma = dataUrl.indexOf(',');
             if (comma < 0) return reject(new Error('Image data could not be read. Please choose it again.'));
-            resolve({ base64: dataUrl.slice(comma + 1), mimeType: file.type || 'image/jpeg' });
+            resolve({ base64: dataUrl.slice(comma + 1), mimeType: 'image/jpeg' });
           };
           reader.onerror = () => reject(new Error('Image read nahi ho saki. Please select it again.'));
           reader.readAsDataURL(file);
@@ -218,10 +260,34 @@
       }
       const SNAP_SOLVE_BACKEND_URL = 'https://script.google.com/macros/s/AKfycbxa5aD7lN4eJMGOmCXJFMuXVfFjxLeUtVQV5h-7ZiIeTYTJCR4kU6FDrhqgwtlECllHBA/exec';
 
+      function renderFormattedAnswer(answer) {
+        resultText.replaceChildren();
+        const lines = String(answer || '').split(/\r?\n/);
+        lines.forEach((rawLine) => {
+          let line = rawLine.trim();
+          if (!line) { const gap = document.createElement('div'); gap.style.height = '6px'; resultText.appendChild(gap); return; }
+          // Remove decorative Markdown headings/bold markers; keep actual maths and code intact.
+          line = line.replace(/^\s{0,3}#{1,6}\s+/, '').replace(/\*\*(.*?)\*\*/g, '$1').replace(/__(.*?)__/g, '$1');
+          line = line.replace(/^\s*(?:[-*•])\s+/, '➣ ');
+          const mainMatch = line.match(/\[\[MAIN\]\](.*?)\[\[\/MAIN\]\]/i);
+          const node = document.createElement('div');
+          if (mainMatch) {
+            node.className = 'answer-main';
+            node.textContent = mainMatch[1].trim();
+          } else {
+            node.className = 'answer-line';
+            node.textContent = line.replace(/\[\[MAIN\]\]|\[\[\/MAIN\]\]/gi, '');
+          }
+          resultText.appendChild(node);
+        });
+      }
+
       async function solveWithBackend(question, file) {
-        const payload = { question: question || '' };
+        const formatting = 'Solve the question accurately. Format the response cleanly: do not use Markdown heading symbols like #, ##, ### unless a heading is genuinely necessary. Use the arrow bullet ➣ for list points. Wrap only the single main answer sentence in [[MAIN]] and [[/MAIN]] markers so the app can highlight it; do not show these markers as normal text. Keep explanations and steps readable. If an image is attached, solve the question in that image. If the user typed a question, answer that question.';
+        const payload = { question: (question ? question + '\n\n' : '') + formatting };
         if (file) {
-          const image = await fileToBase64(file);
+          const compressedImage = await compressImageForUpload(file);
+          const image = await fileToBase64(compressedImage);
           payload.imageBase64 = image.base64;
           payload.mimeType = image.mimeType;
         }
@@ -245,16 +311,9 @@
           throw new Error('Backend ka response samajh nahi aaya. Apps Script mein latest code deploy hua hai ya nahi, check karo.');
         }
 
-        
-if (!response.ok || data.success === false || !data.answer) {
-  throw new Error(
-    data.error ||
-    data.message ||
-    data.answer ||
-    'AI answer nahi mila. Dobara try karo.'
-  );
-}
-        
+        if (!response.ok || data.success === false || !data.answer) {
+          throw new Error(data.error || data.message || 'AI answer nahi mila. Gemini API key aur Apps Script execution logs check karo.');
+        }
         return String(data.answer);
       }
 
@@ -272,7 +331,7 @@ if (!response.ok || data.success === false || !data.answer) {
         setLoading(true, selectedFile ? 'Reading your image and preparing the solution.' : 'Understanding your question and preparing the solution.');
         try {
           const answer = await solveWithBackend(question, selectedFile);
-          resultText.textContent = answer;
+          renderFormattedAnswer(answer);
           resultText.classList.remove('empty');
           copyBtn.disabled = false;
           answerState.textContent = 'Answer generated just now';
