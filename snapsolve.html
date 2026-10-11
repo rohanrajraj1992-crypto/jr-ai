@@ -245,9 +245,16 @@
           throw new Error('Backend ka response samajh nahi aaya. Apps Script mein latest code deploy hua hai ya nahi, check karo.');
         }
 
-        if (!response.ok || data.success === false || !data.answer) {
-          throw new Error(data.error || data.message || 'AI answer nahi mila. Gemini API key aur Apps Script execution logs check karo.');
-        }
+        
+if (!response.ok || data.success === false || !data.answer) {
+  throw new Error(
+    data.error ||
+    data.message ||
+    data.answer ||
+    'AI answer nahi mila. Dobara try karo.'
+  );
+}
+        
         return String(data.answer);
       }
 
