@@ -1,773 +1,328 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-
   <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <title>SnapSolve - JR AI</title>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080d1d">
+  <title>SnapSolve | JR AI</title>
   <style>
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f2f2f2;
-      color: #222;
-      transition: 0.2s;
-    }
-
-    body.dark {
-      background: #111;
-      color: white;
-    }
-
-    .header {
-      height: 58px;
-      background: #333;
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 14px;
-      font-weight: bold;
-    }
-
-    .back-btn {
-      border: none;
-      background: transparent;
-      color: white;
-      font-size: 25px;
-      cursor: pointer;
-    }
-
-    .title {
-      font-size: 18px;
-    }
-
-    .page {
-      padding: 16px;
-      padding-bottom: 30px;
-    }
-
-    .welcome {
-      text-align: center;
-      margin: 18px 0;
-    }
-
-    .welcome h2 {
-      margin: 5px 0;
-    }
-
-    .welcome p {
-      margin: 8px 0;
-      color: #666;
-    }
-
-    body.dark .welcome p {
-      color: #bbb;
-    }
-
-    .image-box {
-      width: 100%;
-      min-height: 230px;
-      border: 2px dashed #777;
-      border-radius: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      background: #ddd;
-      margin-bottom: 14px;
-      position: relative;
-    }
-
-    body.dark .image-box {
-      background: #222;
-    }
-
-    .image-placeholder {
-      text-align: center;
-      color: #666;
-      padding: 25px;
-    }
-
-    body.dark .image-placeholder {
-      color: #bbb;
-    }
-
-    #previewImage {
-      display: none;
-      width: 100%;
-      max-height: 420px;
-      object-fit: contain;
-    }
-
-    .remove-btn {
-      display: none;
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      border: none;
-      border-radius: 50%;
-      width: 38px;
-      height: 38px;
-      background: #222;
-      color: white;
-      font-size: 18px;
-      cursor: pointer;
-    }
-
-    .actions {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 14px;
-    }
-
-    .action-btn {
-      flex: 1;
-      min-height: 48px;
-      border: none;
-      border-radius: 10px;
-      background: #444;
-      color: white;
-      font-weight: bold;
-      font-size: 14px;
-      cursor: pointer;
-    }
-
-    .action-btn:active {
-      transform: scale(0.98);
-    }
-
-    .question {
-      width: 100%;
-      min-height: 100px;
-      resize: vertical;
-      border: 1px solid #aaa;
-      border-radius: 10px;
-      padding: 12px;
-      font-size: 15px;
-      outline: none;
-      background: white;
-      color: #222;
-      margin-bottom: 12px;
-    }
-
-    body.dark .question {
-      background: #222;
-      color: white;
-      border-color: #555;
-    }
-
-    .solve-btn {
-      width: 100%;
-      height: 50px;
-      border: none;
-      border-radius: 10px;
-      background: #222;
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    body.dark .solve-btn {
-      background: #eee;
-      color: #111;
-    }
-
-    .info {
-      margin-top: 16px;
-      padding: 12px;
-      border-radius: 10px;
-      background: #ddd;
-      font-size: 13px;
-      color: #444;
-    }
-
-    body.dark .info {
-      background: #222;
-      color: #ccc;
-    }
-
-    input[type="file"] {
-      display: none;
-    }
-
-    .loading-box {
-      display: none;
-      align-items: center;
-      gap: 12px;
-      margin-top: 14px;
-      padding: 14px;
-      border-radius: 12px;
-      background: #ddd;
-    }
-
-    body.dark .loading-box {
-      background: #222;
-    }
-
-    .spinner {
-      width: 24px;
-      height: 24px;
-      border: 3px solid #aaa;
-      border-top-color: currentColor;
-      border-radius: 50%;
-      animation: spin .8s linear infinite;
-      flex: 0 0 auto;
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    #loadingText {
-      margin-top: 3px;
-      font-size: 12px;
-      opacity: .75;
-    }
-
-    .result-card {
-      display: none;
-      margin-top: 14px;
-      padding: 14px;
-      border-radius: 12px;
-      background: white;
-      border: 1px solid #ccc;
-    }
-
-    body.dark .result-card {
-      background: #191919;
-      border-color: #444;
-    }
-
-    .result-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      margin-bottom: 12px;
-    }
-
-    .result-text {
-      white-space: pre-wrap;
-      line-height: 1.55;
-      font-size: 15px;
-      overflow-wrap: anywhere;
-    }
-
-    .solve-btn:disabled,
-    .action-btn:disabled {
-      opacity: .6;
-      cursor: not-allowed;
-    }
-
+    :root{color-scheme:dark;--bg:#070b17;--panel:rgba(17,25,48,.78);--panel2:rgba(22,32,60,.78);--line:rgba(151,174,255,.18);--text:#f5f7ff;--muted:#aab5d2;--blue:#5e8cff;--violet:#9c6bff;--cyan:#58e4ff;--good:#6ee7b7;--bad:#fda4af;--shadow:0 24px 70px rgba(0,0,0,.32)}
+    *{box-sizing:border-box}html{min-height:100%;background:var(--bg)}body{margin:0;min-height:100vh;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--text);background:radial-gradient(ellipse at 12% 0%,rgba(61,93,210,.23),transparent 36%),radial-gradient(ellipse at 90% 15%,rgba(141,69,229,.2),transparent 32%),linear-gradient(150deg,#070b17,#0a1022 55%,#080c1a);overflow-x:hidden}
+    button,input,textarea{font:inherit}button{touch-action:manipulation}button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+    #particleCanvas{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.62}
+    .ambient{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}.orb{position:absolute;border-radius:50%;filter:blur(2px);opacity:.22;animation:float 18s ease-in-out infinite}.orb.one{width:240px;height:240px;left:-100px;top:20%;background:radial-gradient(circle,rgba(57,135,255,.75),transparent 70%)}.orb.two{width:300px;height:300px;right:-120px;top:48%;background:radial-gradient(circle,rgba(158,76,255,.7),transparent 70%);animation-delay:-8s}.orb.three{width:180px;height:180px;left:45%;bottom:-90px;background:radial-gradient(circle,rgba(59,219,255,.45),transparent 70%);animation-delay:-4s}@keyframes float{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(18px,-24px,0)}}
+    .app{position:relative;z-index:1;min-height:100vh}.topbar{position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px clamp(14px,4vw,32px);border-bottom:1px solid rgba(168,186,255,.13);background:rgba(7,11,23,.72);backdrop-filter:blur(18px)}.brand-wrap{display:flex;align-items:center;gap:11px;min-width:0}.back-btn,.icon-btn{width:42px;height:42px;flex:0 0 auto;display:grid;place-items:center;border:1px solid var(--line);border-radius:14px;color:var(--text);background:rgba(255,255,255,.05);cursor:pointer;transition:transform .2s,border-color .2s,background .2s}.back-btn:hover,.icon-btn:hover{transform:translateY(-2px);border-color:rgba(94,140,255,.65);background:rgba(94,140,255,.13)}.brand-mark{width:42px;height:42px;display:grid;place-items:center;border-radius:14px;background:linear-gradient(135deg,#4e83ff,#9a59ff);box-shadow:0 8px 28px rgba(93,116,255,.35);font-size:21px}.brand-name{font-weight:850;letter-spacing:-.035em;font-size:16px}.brand-sub{margin-top:2px;color:var(--muted);font-size:11px;letter-spacing:.12em;text-transform:uppercase}.top-pill{display:flex;align-items:center;gap:7px;border:1px solid rgba(110,231,183,.22);border-radius:999px;padding:8px 11px;color:#baf8df;background:rgba(16,185,129,.08);font-size:12px;font-weight:700;white-space:nowrap}.status-dot{width:7px;height:7px;border-radius:50%;background:var(--good);box-shadow:0 0 12px var(--good)}
+    main{width:min(1040px,100%);margin:0 auto;padding:30px clamp(14px,4vw,28px) 60px}.hero{text-align:center;margin:12px auto 28px;max-width:760px}.eyebrow{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(116,153,255,.25);border-radius:999px;padding:7px 12px;color:#c6d4ff;background:rgba(85,121,255,.09);font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}.hero h1{font-size:clamp(34px,7vw,58px);line-height:1.03;letter-spacing:-.06em;margin:17px 0 12px;font-weight:900;text-shadow:0 5px 30px rgba(80,111,255,.18)}.gradient-text{background:linear-gradient(100deg,#fff 8%,#9dc5ff 43%,#c4a4ff 76%,#76eeff);-webkit-background-clip:text;background-clip:text;color:transparent}.hero p{max-width:590px;margin:0 auto;color:var(--muted);font-size:clamp(14px,2.6vw,16px);line-height:1.7}.hero-tags{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin-top:18px}.tag{padding:7px 10px;border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.035);font-size:12px;color:#d3dcf6}
+    .workspace{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);gap:18px;align-items:start}.panel{min-width:0;border:1px solid var(--line);border-radius:24px;padding:clamp(15px,3vw,22px);background:linear-gradient(145deg,rgba(22,31,58,.88),rgba(11,17,35,.82));box-shadow:var(--shadow);backdrop-filter:blur(18px)}.panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:16px}.panel-title{font-size:16px;font-weight:850;letter-spacing:-.02em}.panel-desc{font-size:12px;line-height:1.55;color:var(--muted);margin-top:5px}.step-badge{display:grid;place-items:center;min-width:31px;height:31px;border:1px solid rgba(120,151,255,.24);border-radius:10px;background:rgba(92,123,255,.12);color:#dbe5ff;font-size:12px;font-weight:800}
+    .image-stage{position:relative;min-height:245px;display:flex;align-items:center;justify-content:center;overflow:hidden;border:1px dashed rgba(143,166,255,.42);border-radius:19px;background:radial-gradient(ellipse at center,rgba(70,104,200,.14),transparent 65%),rgba(5,10,24,.62);transition:border-color .2s,background .2s}.image-stage.dragover{border-color:var(--cyan);background:rgba(63,112,255,.12)}.image-placeholder{text-align:center;padding:24px 18px;color:var(--muted)}.upload-icon{display:grid;place-items:center;width:62px;height:62px;margin:0 auto 13px;border-radius:20px;border:1px solid rgba(127,159,255,.28);background:linear-gradient(145deg,rgba(91,139,255,.19),rgba(160,91,255,.12));box-shadow:inset 0 1px rgba(255,255,255,.1),0 12px 30px rgba(0,0,0,.16);font-size:28px}.image-placeholder strong{display:block;color:var(--text);font-size:15px;margin-bottom:6px}.image-placeholder span{font-size:12px;line-height:1.6}.preview-image{display:none;width:100%;max-height:440px;object-fit:contain}.remove-image{display:none;position:absolute;right:10px;top:10px;width:36px;height:36px;border:1px solid rgba(255,255,255,.2);border-radius:12px;background:rgba(5,8,18,.8);color:#fff;cursor:pointer;font-size:17px}.button-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:13px}.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:11px 14px;border:1px solid var(--line);border-radius:13px;background:rgba(255,255,255,.055);color:var(--text);font-weight:750;font-size:13px;cursor:pointer;transition:transform .18s,border-color .18s,filter .18s}.btn:hover{transform:translateY(-2px);border-color:rgba(112,151,255,.55)}.btn:active{transform:translateY(0) scale(.99)}.btn:disabled{opacity:.55;cursor:not-allowed;transform:none}.btn-primary{border:0;background:linear-gradient(105deg,#4d7dff,#8855f6 58%,#6b66ff);box-shadow:0 12px 28px rgba(92,104,255,.23);color:white}.btn-primary:hover{filter:brightness(1.08);box-shadow:0 14px 32px rgba(92,104,255,.3)}.btn-soft{background:rgba(91,126,255,.11);border-color:rgba(112,151,255,.25)}input[type=file]{display:none}
+    .field-label{display:block;margin:18px 0 8px;font-size:12px;font-weight:800;letter-spacing:.02em;color:#dfe6ff}.question{display:block;width:100%;min-height:116px;resize:vertical;padding:14px 15px;border:1px solid rgba(143,164,227,.22);border-radius:15px;background:rgba(4,9,22,.68);color:var(--text);font-size:14px;line-height:1.6;outline:none}.question::placeholder{color:#7f8baa}.question:focus,.api-input:focus{border-color:rgba(101,150,255,.75);box-shadow:0 0 0 3px rgba(84,127,255,.1)}.quick-prompts{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}.prompt-chip{padding:7px 10px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.035);color:#d3ddf8;font-size:11px;cursor:pointer}.prompt-chip:hover{background:rgba(93,130,255,.12);border-color:rgba(93,130,255,.4)}.solve-button{width:100%;min-height:52px;margin-top:14px;font-size:14px;letter-spacing:.02em}.hint{display:flex;align-items:flex-start;gap:9px;margin-top:13px;padding:12px 13px;border:1px solid rgba(101,146,255,.15);border-radius:13px;background:rgba(73,105,194,.07);color:var(--muted);font-size:11px;line-height:1.6}.hint b{color:#dce6ff}
+    .answer-panel{margin-top:18px}.answer-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:13px}.answer-title{display:flex;align-items:center;gap:10px;font-size:16px;font-weight:850}.answer-icon{width:36px;height:36px;display:grid;place-items:center;border-radius:12px;background:linear-gradient(135deg,rgba(82,139,255,.25),rgba(160,93,255,.25));font-size:18px}.answer-state{color:var(--muted);font-size:11px}.loading-box{display:none;align-items:center;gap:12px;padding:16px;border:1px solid rgba(107,144,255,.22);border-radius:15px;background:rgba(69,100,199,.08);color:#dbe4ff;font-size:13px}.spinner{width:24px;height:24px;flex:0 0 auto;border:2px solid rgba(145,167,255,.25);border-top-color:#8aa9ff;border-right-color:#b18aff;border-radius:50%;animation:spin .8s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}.loading-small{margin-top:3px;color:var(--muted);font-size:11px}.answer-content{min-height:165px;padding:16px;border:1px solid rgba(143,164,227,.16);border-radius:16px;background:rgba(4,9,22,.48);color:#e7ecff;white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px;line-height:1.8}.answer-content.empty{display:flex;align-items:center;justify-content:center;text-align:center;color:#8390b0;font-size:12px;line-height:1.7}.answer-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:10px}.small-btn{min-height:35px;padding:8px 11px;font-size:11px}.error-note{display:none;margin-top:12px;padding:12px 13px;border:1px solid rgba(253,164,175,.24);border-radius:12px;background:rgba(190,40,66,.09);color:#ffc0c8;font-size:12px;line-height:1.6}.success-note{display:none;margin-top:12px;padding:11px 13px;border:1px solid rgba(110,231,183,.2);border-radius:12px;background:rgba(16,185,129,.07);color:#b9f8df;font-size:12px;line-height:1.6}
+    .settings{margin-top:18px}.settings summary{display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer;list-style:none;font-weight:800;font-size:13px}.settings summary::-webkit-details-marker{display:none}.settings summary:after{content:'＋';color:#a9baff;font-size:18px}.settings[open] summary:after{content:'−'}.settings-inner{padding-top:14px}.settings-copy{margin:0 0 12px;color:var(--muted);font-size:11px;line-height:1.7}.api-row{display:flex;gap:8px}.api-input{width:100%;min-width:0;min-height:43px;padding:11px 12px;border:1px solid rgba(143,164,227,.22);border-radius:12px;background:rgba(4,9,22,.68);color:var(--text);font-size:12px;outline:none}.api-tools{display:flex;flex-wrap:wrap;gap:8px;margin-top:9px}.key-status{display:block;min-height:16px;margin-top:9px;color:var(--good);font-size:11px}.security-note{margin-top:12px;color:#8996b6;font-size:10px;line-height:1.65}.security-note strong{color:#c4cfee}.footer{text-align:center;color:#7d89a9;font-size:11px;line-height:1.7;padding:25px 8px 0}.footer b{color:#bac7ef}.toast{position:fixed;left:50%;bottom:20px;z-index:30;transform:translate(-50%,20px);opacity:0;pointer-events:none;padding:11px 15px;border:1px solid rgba(143,164,227,.24);border-radius:13px;background:#141d38;color:#fff;box-shadow:var(--shadow);font-size:12px;transition:opacity .2s,transform .2s;max-width:calc(100vw - 28px);text-align:center}.toast.show{opacity:1;transform:translate(-50%,0)}
+    @media(max-width:760px){main{padding-top:22px}.workspace{grid-template-columns:1fr;gap:14px}.hero{margin-bottom:22px}.image-stage{min-height:220px}.panel{border-radius:21px}.top-pill{font-size:10px;padding:7px 9px}.brand-sub{font-size:10px}}
+    @media(max-width:380px){.topbar{padding:10px}.brand-name{font-size:14px}.brand-mark,.back-btn{width:38px;height:38px}.top-pill{display:none}.button-row{gap:7px}.btn{padding:10px;font-size:12px}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}#particleCanvas{display:none}}
   </style>
-
 </head>
-
 <body>
+  <canvas id="particleCanvas" aria-hidden="true"></canvas>
+  <div class="ambient" aria-hidden="true"><div class="orb one"></div><div class="orb two"></div><div class="orb three"></div></div>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand-wrap">
+        <button class="back-btn" id="backBtn" type="button" aria-label="Go back">←</button>
+        <div class="brand-mark" aria-hidden="true">📸</div>
+        <div><div class="brand-name">JR AI <span style="color:#a9bcff">SnapSolve</span></div><div class="brand-sub">AI Study Assistant</div></div>
+      </div>
+      <div class="top-pill"><span class="status-dot"></span> AI WORKSPACE</div>
+    </header>
 
-  <div class="header">
+    <main>
+      <section class="hero">
+        <div class="eyebrow">✦ Smart learning, simplified</div>
+        <h1><span class="gradient-text">SnapSolve</span><br>Understand every answer.</h1>
+        <p>Capture a question, upload a picture, or type it in. Get a clear, step-by-step explanation with your JR AI study assistant.</p>
+        <div class="hero-tags"><span class="tag">📷 Photo solving</span><span class="tag">🧠 Step-by-step</span><span class="tag">✍️ Text questions</span></div>
+      </section>
 
-    <button
-      class="back-btn"
-      id="backBtn"
-      type="button"
-    >
-      ←
-    </button>
+      <section class="workspace">
+        <div class="panel">
+          <div class="panel-head"><div><div class="panel-title">📷 Add your question</div><div class="panel-desc">Take a picture or choose one from your gallery.</div></div><div class="step-badge">01</div></div>
+          <div class="image-stage" id="imageStage">
+            <div class="image-placeholder" id="imagePlaceholder"><div class="upload-icon">⬆️</div><strong>Drop an image here</strong><span>or use the camera / gallery below<br>PNG, JPG or WEBP · up to 10 MB</span></div>
+            <img id="previewImage" class="preview-image" alt="Question image preview">
+            <button class="remove-image" id="removeBtn" type="button" aria-label="Remove image">✕</button>
+          </div>
+          <div class="button-row">
+            <button class="btn btn-soft" id="cameraBtn" type="button">📷 Open camera</button>
+            <button class="btn" id="galleryBtn" type="button">🖼️ Choose image</button>
+          </div>
+          <input type="file" id="cameraInput" accept="image/*" capture="environment">
+          <input type="file" id="galleryInput" accept="image/*">
+          <div class="hint"><span>💡</span><div><b>Quick tip</b><br>Keep the full question in focus, with good lighting and readable text. You can also solve a typed question without uploading an image.</div></div>
+        </div>
 
-    <div class="title">
-      📸 SnapSolve
-    </div>
+        <div class="panel">
+          <div class="panel-head"><div><div class="panel-title">✍️ Tell us what to solve</div><div class="panel-desc">Add instructions, or leave this blank to let AI read the photo.</div></div><div class="step-badge">02</div></div>
+          <label class="field-label" for="questionInput">Your question <span style="color:#8d9abb;font-weight:500">(optional with photo)</span></label>
+          <textarea id="questionInput" class="question" placeholder="Type your question here...&#10;&#10;Example: Solve this equation step by step, in simple Hinglish."></textarea>
+          <div class="quick-prompts" aria-label="Example prompts"><button class="prompt-chip" type="button" data-prompt="Solve this step by step in simple language.">🧮 Step-by-step</button><button class="prompt-chip" type="button" data-prompt="Explain the answer in simple Hinglish.">🇮🇳 Explain in Hinglish</button><button class="prompt-chip" type="button" data-prompt="Give the final answer first, then explain briefly.">⚡ Quick answer</button></div>
+          <button class="btn btn-primary solve-button" id="solveBtn" type="button">✨ SOLVE WITH JR AI <span aria-hidden="true">→</span></button>
+          <div class="error-note" id="errorNote" role="alert"></div>
+          <div class="success-note" id="successNote" role="status"></div>
+          <div class="hint" style="margin-top:18px"><span>🔐</span><div><b>Secure AI connection</b><br>SnapSolve sends your question and optional image to the JR AI server. Your Gemini API key stays on the server and does not need to be entered or saved on this device.</div></div>
+        </div>
+      </section>
 
-    <div></div>
-
+      <section class="panel answer-panel" aria-label="AI answer section">
+        <div class="answer-head"><div class="answer-title"><span class="answer-icon">✦</span><div>AI Answer<div class="answer-state" id="answerState">Your solution will appear here</div></div></div><button class="btn small-btn" id="copyBtn" type="button" disabled>📋 Copy answer</button></div>
+        <div class="loading-box" id="loadingBox" aria-live="polite"><div class="spinner"></div><div><strong>JR AI is working on it…</strong><div class="loading-small" id="loadingText">Reading your question carefully.</div></div></div>
+        <div class="answer-content empty" id="resultText">✨ Your answer, calculations and explanation will show up here after you solve a question.</div>
+        <div class="answer-actions"><button class="btn small-btn" id="clearBtn" type="button">↻ Clear workspace</button></div>
+      </section>
+      <div class="footer">Made for curious minds · <b>JR AI SnapSolve</b><br>AI can make mistakes—check important answers with your class notes.</div>
+    </main>
   </div>
-
-
-  <div class="page">
-
-    <div class="welcome">
-
-      <h2>
-        📸 SnapSolve
-      </h2>
-
-      <p>
-        Photo lo, question pucho aur solve karo 🤖
-      </p>
-
-    </div>
-
-
-    <div class="image-box">
-
-      <div
-        class="image-placeholder"
-        id="imagePlaceholder"
-      >
-
-        📷<br><br>
-
-        Camera ya Gallery se<br>
-        question ki photo select karo
-
-      </div>
-
-
-      <img
-        id="previewImage"
-        alt="Selected image"
-      >
-
-
-      <button
-        class="remove-btn"
-        id="removeBtn"
-        type="button"
-      >
-        ✕
-      </button>
-
-    </div>
-
-
-    <div class="actions">
-
-      <button
-        class="action-btn"
-        id="cameraBtn"
-        type="button"
-      >
-        📷 Camera
-      </button>
-
-      <button
-        class="action-btn"
-        id="galleryBtn"
-        type="button"
-      >
-        🖼️ Gallery
-      </button>
-
-    </div>
-
-
-    <input
-      type="file"
-      id="cameraInput"
-      accept="image/*"
-      capture="environment"
-    >
-
-    <input
-      type="file"
-      id="galleryInput"
-      accept="image/*"
-    >
-
-
-    <textarea
-      id="questionInput"
-      class="question"
-      placeholder="Question likho... 🤔&#10;&#10;Example: Is maths question ko solve karo."
-    ></textarea>
-
-
-    <button
-      id="solveBtn"
-      class="solve-btn"
-      type="button"
-    >
-      🤖 SOLVE QUESTION
-    </button>
-
-
-    <div class="info">
-      💡 Tip: Clear photo use karo. AI image ko read karke step-by-step answer dega.
-    </div>
-
-    <div id="loadingBox" class="loading-box" aria-live="polite">
-      <div class="spinner"></div>
-      <div>
-        <strong>AI is solving...</strong>
-        <div id="loadingText">Image ko read kiya ja raha hai.</div>
-      </div>
-    </div>
-
-    <div id="resultCard" class="result-card">
-      <div class="result-head">
-        <strong>🤖 AI Answer</strong>
-        <button id="copyBtn" class="small-btn" type="button">📋 Copy</button>
-      </div>
-      <div id="resultText" class="result-text"></div>
-    </div>
-
-  </div>
-
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <script>
-
-    /* =========================================
-       GLOBAL THEME
-    ========================================= */
-
-    function applyGlobalTheme() {
-
-      const savedTheme =
-        localStorage.getItem(
-          "jr_ai_theme"
-        ) || "light";
-
-      if (
-        savedTheme === "dark"
-      ) {
-
-        document.body.classList.add(
-          "dark"
-        );
-
-      } else {
-
-        document.body.classList.remove(
-          "dark"
-        );
-
-      }
-
-    }
-
-    applyGlobalTheme();
-
-
-    /* =========================================
-       ELEMENTS
-    ========================================= */
-
-    const backBtn =
-      document.getElementById(
-        "backBtn"
-      );
-
-    const cameraBtn =
-      document.getElementById(
-        "cameraBtn"
-      );
-
-    const galleryBtn =
-      document.getElementById(
-        "galleryBtn"
-      );
-
-    const cameraInput =
-      document.getElementById(
-        "cameraInput"
-      );
-
-    const galleryInput =
-      document.getElementById(
-        "galleryInput"
-      );
-
-    const previewImage =
-      document.getElementById(
-        "previewImage"
-      );
-
-    const imagePlaceholder =
-      document.getElementById(
-        "imagePlaceholder"
-      );
-
-    const removeBtn =
-      document.getElementById(
-        "removeBtn"
-      );
-
-    const questionInput =
-      document.getElementById(
-        "questionInput"
-      );
-
-    const solveBtn =
-      document.getElementById(
-        "solveBtn"
-      );
-
-
-    /* =========================================
-       BACK
-    ========================================= */
-
-    backBtn.addEventListener(
-      "click",
-      function() {
-
-        window.location.href =
-          "index.html";
-
-      }
-    );
-
-
-    /* =========================================
-       CAMERA
-    ========================================= */
-
-    cameraBtn.addEventListener(
-      "click",
-      function() {
-
-        cameraInput.click();
-
-      }
-    );
-
-
-    /* =========================================
-       GALLERY
-    ========================================= */
-
-    galleryBtn.addEventListener(
-      "click",
-      function() {
-
-        galleryInput.click();
-
-      }
-    );
-
-
-    /* =========================================
-       IMAGE PREVIEW
-    ========================================= */
-
-    function showImage(
-      file
-    ) {
-
-      if (!file) {
-        return;
-      }
-
-      if (!file.type.startsWith("image/")) {
-        alert("Please sirf image file select karo.");
-        return;
-      }
-
-      if (file.size > 10 * 1024 * 1024) {
-        alert("Image 10 MB se chhoti honi chahiye.");
-        return;
-      }
-
-      resultCard.style.display = "none";
-      const reader =
-        new FileReader();
-
-      reader.onload =
-        function(event) {
-
-          previewImage.src =
-            event.target.result;
-
-          previewImage.style.display =
-            "block";
-
-          imagePlaceholder.style.display =
-            "none";
-
-          removeBtn.style.display =
-            "block";
-
-        };
-
-      reader.readAsDataURL(
-        file
-      );
-
-    }
-
-
-    cameraInput.addEventListener(
-      "change",
-      function() {
-
-        showImage(
-          this.files[0]
-        );
-
-      }
-    );
-
-
-    galleryInput.addEventListener(
-      "change",
-      function() {
-
-        showImage(
-          this.files[0]
-        );
-
-      }
-    );
-
-
-    /* =========================================
-       REMOVE IMAGE
-    ========================================= */
-
-    removeBtn.addEventListener(
-      "click",
-      function() {
-
-        previewImage.src = "";
-
-        previewImage.style.display =
-          "none";
-
-        imagePlaceholder.style.display =
-          "block";
-
-        removeBtn.style.display =
-          "none";
-
-        cameraInput.value = "";
-
-        galleryInput.value = "";
-
-      }
-    );
-
-
-    /* =========================================
-       AI SOLVER - GEMINI
-    ========================================= */
-
-    function setLoading(show, message) {
-      loadingBox.style.display = show ? "flex" : "none";
-      if (message) loadingText.textContent = message;
-      solveBtn.disabled = show;
-      cameraBtn.disabled = show;
-      galleryBtn.disabled = show;
-    }
-
-    function fileToBase64(file) {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-
-        reader.onload = () => {
-          const result = String(reader.result || "");
-          const comma = result.indexOf(",");
-          if (comma === -1) {
-            reject(new Error("Image read nahi ho saki."));
-            return;
-          }
-          resolve({
-            base64: result.slice(comma + 1),
-            mimeType: file.type || "image/jpeg"
-          });
-        };
-
-        reader.onerror = () => reject(new Error("Image read nahi ho saki."));
-        reader.readAsDataURL(file);
-      });
-    }
-
-    function getSelectedFile() {
-      return cameraInput.files[0] || galleryInput.files[0] || null;
-    }
-
-    function extractGeminiText(data) {
-      const parts = data?.candidates?.[0]?.content?.parts || [];
-      return parts
-        .map(part => part?.text || "")
-        .join("")
-        .trim();
-    }
-
-    async function solveWithBackend(file, question) {
-      const image = await fileToBase64(file);
-
-      const response = await fetch("/api/solve", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          question,
-          image: image.base64,
-          mimeType: image.mimeType
-        })
-      });
-
-      let data = {};
-      try { data = await response.json(); } catch (_) {}
-
-      if (!response.ok) {
-        throw new Error(data?.error || "Server request failed.");
-      }
-
-      if (!data.answer) throw new Error("AI ne answer return nahi kiya.");
-      return data.answer;
-    }
-
-
-    solveBtn.addEventListener("click", async function () {
-      const hasImage =
-        previewImage.src &&
-        previewImage.style.display !== "none";
-
-      const question = questionInput.value.trim();
-      const file = getSelectedFile();
-
-      resultCard.style.display = "none";
-      resultText.textContent = "";
-
-      if (!hasImage || !file) {
-        alert("📸 Pehle question ki photo select karo.");
-        return;
-      }
-
-      if (!question) {
-        alert("❓ Photo ke baare mein question likho.");
-        questionInput.focus();
-        return;
-      }
-
-      setLoading(true, "Image ko AI read kar raha hai...");
-
+    (() => {
+      'use strict';
+      const $ = (id) => document.getElementById(id);
+      const cameraBtn = $('cameraBtn');
+      const galleryBtn = $('galleryBtn');
+      const cameraInput = $('cameraInput');
+      const galleryInput = $('galleryInput');
+      const imageStage = $('imageStage');
+      const previewImage = $('previewImage');
+      const imagePlaceholder = $('imagePlaceholder');
+      const removeBtn = $('removeBtn');
+      const questionInput = $('questionInput');
+      const solveBtn = $('solveBtn');
+      const loadingBox = $('loadingBox');
+      const loadingText = $('loadingText');
+      const resultText = $('resultText');
+      const answerState = $('answerState');
+      const copyBtn = $('copyBtn');
+      const errorNote = $('errorNote');
+      const successNote = $('successNote');
+      const toast = $('toast');
+      let selectedFile = null;
+      let toastTimer = null;
+
+      // Respect the JR AI site's saved light/dark preference; this page is designed for dark mode.
       try {
-        const answer = await solveWithBackend(file, question);
+        const savedTheme = localStorage.getItem('jr_ai_theme');
+        if (savedTheme === 'light') document.body.classList.add('light-mode');
+      } catch (_) {}
 
-        resultText.textContent = answer;
-        resultCard.style.display = "block";
+      $('backBtn').addEventListener('click', () => {
+        if (window.history.length > 1) window.history.back();
+        else window.location.href = 'index.html';
+      });
+      cameraBtn.addEventListener('click', () => cameraInput.click());
+      galleryBtn.addEventListener('click', () => galleryInput.click());
+      cameraInput.addEventListener('change', () => acceptFile(cameraInput.files && cameraInput.files[0]));
+      galleryInput.addEventListener('change', () => acceptFile(galleryInput.files && galleryInput.files[0]));
 
-        setLoading(true, "Answer ready...");
-        setTimeout(() => setLoading(false), 250);
-      } catch (error) {
-        console.error(error);
-        setLoading(false);
-
-        alert(
-          "❌ AI solve nahi kar paaya.\n\n" +
-          (error?.message || "Unknown error") +
-          "\n\nAPI key, internet connection aur image check karo."
-        );
+      function acceptFile(file) {
+        if (!file) return;
+        if (!file.type || !file.type.startsWith('image/')) {
+          showError('Please choose a valid image file.');
+          return;
+        }
+        if (file.size > 10 * 1024 * 1024) {
+          showError('Image 10 MB se chhoti honi chahiye. Please compress it and try again.');
+          return;
+        }
+        selectedFile = file;
+        const reader = new FileReader();
+        reader.onload = () => {
+          previewImage.src = String(reader.result || '');
+          previewImage.style.display = 'block';
+          imagePlaceholder.style.display = 'none';
+          removeBtn.style.display = 'grid';
+          hideMessages();
+          showToast('Image added. Ab Solve with JR AI dabao.');
+        };
+        reader.onerror = () => showError('Image read nahi ho saki. Please try another image.');
+        reader.readAsDataURL(file);
       }
-    });
+      function clearImage() {
+        selectedFile = null;
+        previewImage.removeAttribute('src');
+        previewImage.style.display = 'none';
+        imagePlaceholder.style.display = 'block';
+        removeBtn.style.display = 'none';
+        cameraInput.value = '';
+        galleryInput.value = '';
+      }
+      removeBtn.addEventListener('click', clearImage);
+      imageStage.addEventListener('dragover', (event) => { event.preventDefault(); imageStage.classList.add('dragover'); });
+      imageStage.addEventListener('dragleave', () => imageStage.classList.remove('dragover'));
+      imageStage.addEventListener('drop', (event) => {
+        event.preventDefault(); imageStage.classList.remove('dragover');
+        const file = event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files[0];
+        if (file) acceptFile(file);
+      });
+      document.querySelectorAll('[data-prompt]').forEach((button) => {
+        button.addEventListener('click', () => {
+          const prompt = button.getAttribute('data-prompt') || '';
+          questionInput.value = questionInput.value.trim() ? questionInput.value.trim() + '\n' + prompt : prompt;
+          questionInput.focus();
+        });
+      });
 
+      function showToast(message) {
+        toast.textContent = message; toast.classList.add('show');
+        clearTimeout(toastTimer); toastTimer = setTimeout(() => toast.classList.remove('show'), 2600);
+      }
+      function showError(message) {
+        errorNote.textContent = '⚠️ ' + message; errorNote.style.display = 'block'; successNote.style.display = 'none';
+      }
+      function showSuccess(message) {
+        successNote.textContent = '✓ ' + message; successNote.style.display = 'block'; errorNote.style.display = 'none';
+      }
+      function hideMessages() { errorNote.style.display = 'none'; successNote.style.display = 'none'; }
+      function setLoading(isLoading, message) {
+        loadingBox.style.display = isLoading ? 'flex' : 'none';
+        if (message) loadingText.textContent = message;
+        solveBtn.disabled = isLoading; cameraBtn.disabled = isLoading; galleryBtn.disabled = isLoading;
+        solveBtn.innerHTML = isLoading ? '⏳ SOLVING YOUR QUESTION…' : '✨ SOLVE WITH JR AI <span aria-hidden="true">→</span>';
+      }
+      function fileToBase64(file) {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => {
+            const dataUrl = String(reader.result || '');
+            const comma = dataUrl.indexOf(',');
+            if (comma < 0) return reject(new Error('Image data could not be read. Please choose it again.'));
+            resolve({ base64: dataUrl.slice(comma + 1), mimeType: file.type || 'image/jpeg' });
+          };
+          reader.onerror = () => reject(new Error('Image read nahi ho saki. Please select it again.'));
+          reader.readAsDataURL(file);
+        });
+      }
+      function extractGeminiText(data) {
+        const parts = data && data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts;
+        if (!Array.isArray(parts)) return '';
+        return parts.map((part) => typeof part.text === 'string' ? part.text : '').join('\n').trim();
+      }
+      function friendlyApiError(status, apiMessage) {
+        const msg = String(apiMessage || '');
+        if (status === 400) return 'Gemini ne request accept nahi ki. Question/photo dobara try karo. Details: ' + msg;
+        if (status === 401 || status === 403) return 'API key invalid hai ya Gemini API access enabled nahi hai. API key check karo. Details: ' + msg;
+        if (status === 404) return 'Selected Gemini model/API endpoint available nahi mila. API key/model access check karo. Details: ' + msg;
+        if (status === 429) return 'Gemini API ki usage limit hit ho gayi hai. Thodi der baad try karo ya apna API quota check karo.';
+        if (status >= 500) return 'Gemini service abhi error de rahi hai. Kuch der baad dobara try karo.';
+        return msg || ('AI request failed (HTTP ' + status + ').');
+      }
+      const SNAP_SOLVE_BACKEND_URL = 'https://script.google.com/macros/s/AKfycbxa5aD7lN4eJMGOmCXJFMuXVfFjxLeUtVQV5h-7ZiIeTYTJCR4kU6FDrhqgwtlECllHBA/exec';
 
+      async function solveWithBackend(question, file) {
+        const payload = { question: question || '' };
+        if (file) {
+          const image = await fileToBase64(file);
+          payload.imageBase64 = image.base64;
+          payload.mimeType = image.mimeType;
+        }
+
+        let response;
+        try {
+          response = await fetch(SNAP_SOLVE_BACKEND_URL, {
+            method: 'POST',
+            redirect: 'follow',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify(payload)
+          });
+        } catch (error) {
+          throw new Error('Backend se connect nahi ho paaya (network/CORS). Internet check karo. Agar problem rahe, Apps Script deployment access “Anyone” hona chahiye.');
+        }
+
+        let data;
+        try {
+          data = await response.json();
+        } catch (_) {
+          throw new Error('Backend ka response samajh nahi aaya. Apps Script mein latest code deploy hua hai ya nahi, check karo.');
+        }
+
+        if (!response.ok || data.success === false || !data.answer) {
+          throw new Error(data.error || data.message || 'AI answer nahi mila. Gemini API key aur Apps Script execution logs check karo.');
+        }
+        return String(data.answer);
+      }
+
+      solveBtn.addEventListener('click', async () => {
+        hideMessages();
+        const question = questionInput.value.trim();
+        if (!selectedFile && !question) {
+          showError('Pehle photo/camera se question add karo ya text box mein question likho.');
+          questionInput.focus(); return;
+        }
+        resultText.classList.remove('empty');
+        resultText.textContent = '';
+        copyBtn.disabled = true;
+        answerState.textContent = 'Solving your question…';
+        setLoading(true, selectedFile ? 'Reading your image and preparing the solution.' : 'Understanding your question and preparing the solution.');
+        try {
+          const answer = await solveWithBackend(question, selectedFile);
+          resultText.textContent = answer;
+          resultText.classList.remove('empty');
+          copyBtn.disabled = false;
+          answerState.textContent = 'Answer generated just now';
+          showSuccess('Answer ready! You can copy it below.');
+        } catch (error) {
+          console.error('SnapSolve error:', error);
+          showError(error && error.message ? error.message : 'Something went wrong. Please try again.');
+          answerState.textContent = 'Could not generate an answer';
+        } finally { setLoading(false); }
+      });
+      copyBtn.addEventListener('click', async () => {
+        const answer = resultText.textContent.trim();
+        if (!answer) return;
+        try {
+          if (navigator.clipboard && window.isSecureContext) await navigator.clipboard.writeText(answer);
+          else {
+            const temp = document.createElement('textarea'); temp.value = answer; temp.style.position = 'fixed'; temp.style.opacity = '0'; document.body.appendChild(temp); temp.select();
+            const copied = document.execCommand('copy'); temp.remove(); if (!copied) throw new Error('copy failed');
+          }
+          showToast('Answer copied!'); copyBtn.textContent = '✓ Copied'; setTimeout(() => copyBtn.textContent = '📋 Copy answer', 1400);
+        } catch (_) { showError('Copy failed. Answer ko long-press karke manually copy karo.'); }
+      });
+      $('clearBtn').addEventListener('click', () => {
+        clearImage(); questionInput.value = ''; resultText.textContent = '✨ Your answer, calculations and explanation will show up here after you solve a question.';
+        resultText.classList.add('empty'); answerState.textContent = 'Your solution will appear here'; copyBtn.disabled = true; hideMessages(); setLoading(false); showToast('Workspace cleared.');
+      });
+
+      // Lightweight ambient particles: reduced motion and background tabs are respected.
+      const canvas = $('particleCanvas');
+      const ctx = canvas.getContext && canvas.getContext('2d');
+      const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (ctx && !reduceMotion) {
+        let w = 0, h = 0, particles = [], raf = 0, running = false;
+        function resizeCanvas() {
+          const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+          w = window.innerWidth; h = window.innerHeight;
+          canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
+          canvas.style.width = w + 'px'; canvas.style.height = h + 'px'; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+          const count = Math.max(20, Math.min(58, Math.round(w * h / 22000)));
+          particles = Array.from({length: count}, () => ({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.32,vy:(Math.random()-.5)*.32,r:Math.random()*1.8+.6,a:Math.random()*.4+.18,hue:Math.random()>.5?218:266}));
+        }
+        function draw() {
+          if (!running) return;
+          ctx.clearRect(0,0,w,h);
+          for (let i=0;i<particles.length;i++) {
+            const p=particles[i]; p.x+=p.vx; p.y+=p.vy;
+            if(p.x<-5)p.x=w+5;if(p.x>w+5)p.x=-5;if(p.y<-5)p.y=h+5;if(p.y>h+5)p.y=-5;
+            ctx.beginPath();ctx.fillStyle='hsla('+p.hue+',95%,75%,'+p.a+')';ctx.shadowBlur=9;ctx.shadowColor='hsla('+p.hue+',95%,70%,.5)';ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;
+            for(let j=i+1;j<particles.length;j++) { const q=particles[j],dx=p.x-q.x,dy=p.y-q.y,d=Math.sqrt(dx*dx+dy*dy);if(d<105){ctx.beginPath();ctx.strokeStyle='rgba(124,151,255,'+((1-d/105)*.13)+')';ctx.lineWidth=.6;ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);ctx.stroke();} }
+          }
+          raf=requestAnimationFrame(draw);
+        }
+        function start(){if(!running && !document.hidden){running=true;draw();}}
+        function stop(){running=false;if(raf)cancelAnimationFrame(raf);raf=0;}
+        resizeCanvas();start();window.addEventListener('resize',resizeCanvas,{passive:true});document.addEventListener('visibilitychange',()=>document.hidden?stop():start());
+      } else { canvas.style.display='none'; }
+    })();
   </script>
-
 </body>
 </html>
