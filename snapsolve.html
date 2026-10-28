@@ -249,6 +249,20 @@
         return String(answer);
       }
 
+      
+function formatScienceText(text) {
+  return String(text)
+    .replace(/\$([^$]+)\$/g, '$1')
+    .replace(/\\\((.*?)\\\)/g, '$1')
+    .replace(/\\text\{([^}]+)\}/g, '$1')
+    .replace(/([A-Za-z)])_(\d+)/g, function(match, base, num) {
+      var subscripts = '₀₁₂₃₄₅₆₇₈₉';
+      return base + num.replace(/\d/g, function(d) {
+        return subscripts[Number(d)];
+      });
+    });
+                                                     }
+    
       function renderFormattedAnswer(answer) {
         resultText.replaceChildren();
         const lines = String(answer || '').replace(/\r/g, '').split('\n');
@@ -257,7 +271,9 @@
           let line = raw.trim();
           if (!line) { list = null; const gap=document.createElement('div');gap.className='answer-gap';resultText.appendChild(gap);return; }
           const main = line.match(/\[\[MAIN\]\]([\s\S]*?)\[\[\/MAIN\]\]/i);
-          line = line.replace(/\[\[MAIN\]\]|\[\[\/MAIN\]\]/gi,'').replace(/^#{1,6}\s*/,'').replace(/\*\*(.*?)\*\*/g,'$1').replace(/__(.*?)__/g,'$1');
+          
+line = formatScienceText(line.replace(/^\s{0,3}#{1,6}\s+/, '').replace(/\*\*(.*?)\*\*/g, '$1').replace(/__(.*?)__/g, '$1'));
+          
           if (/^(QUESTION|THE QUESTION)\s*:?$/i.test(line)) { list=null; const e=document.createElement('div');e.className='answer-section-title question-title';e.textContent='📝 Question';resultText.appendChild(e);return; }
           if (/^(SOLUTION|STEP[- ]BY[- ]STEP SOLUTION|EXPLANATION)\s*:?$/i.test(line)) { list=null; const e=document.createElement('div');e.className='answer-section-title';e.textContent='🧠 Step-by-step solution';resultText.appendChild(e);return; }
           if (/^(FINAL ANSWER|ANSWER)\s*:?$/i.test(line)) { list=null; const e=document.createElement('div');e.className='answer-section-title final-title';e.textContent='🎯 Final answer';resultText.appendChild(e);return; }
