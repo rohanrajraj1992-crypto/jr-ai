@@ -249,20 +249,23 @@
         return String(answer);
       }
 
-      
-function formatScienceText(text) {
-  return String(text)
-    .replace(/\$([^$]+)\$/g, '$1')
-    .replace(/\\\((.*?)\\\)/g, '$1')
-    .replace(/\\text\{([^}]+)\}/g, '$1')
-    .replace(/([A-Za-z)])_(\d+)/g, function(match, base, num) {
-      var subscripts = '₀₁₂₃₄₅₆₇₈₉';
-      return base + num.replace(/\d/g, function(d) {
-        return subscripts[Number(d)];
-      });
-    });
-                                                     }
-    
+      // Make common chemistry formulae readable (O₂, CO₂, H₂SO₄) without
+      // disturbing larger LaTeX expressions that MathJax should render.
+      function formatScienceText(text) {
+        const subscriptDigits = {'0':'₀','1':'₁','2':'₂','3':'₃','4':'₄','5':'₅','6':'₆','7':'₇','8':'₈','9':'₉'};
+        let value = String(text || '');
+        // Convert simple chemical formulae wrapped in $...$, e.g. $CO_2$ or $H_2SO_4$.
+        value = value.replace(/\$([A-Z][A-Za-z0-9]*(?:_[0-9]+)?(?:[A-Z][A-Za-z0-9]*(?:_[0-9]+)?)*)\$/g, (whole, formula) => {
+          if (!/[A-Z]/.test(formula)) return whole;
+          return formula.replace(/_(\d+)/g, (_, digits) => digits.replace(/[0-9]/g, d => subscriptDigits[d]));
+        });
+        // Also convert unwrapped simple formulae, such as CO_2 and H_2SO_4.
+        value = value.replace(/\b(?:[A-Z][a-z]?)(?:[A-Z][a-z]?)*(?:_\d+)+(?:[A-Z][a-z]?(?:_\d+)?)*/g, formula =>
+          formula.replace(/_(\d+)/g, (_, digits) => digits.replace(/[0-9]/g, d => subscriptDigits[d]))
+        );
+        return value;
+      }
+
       function renderFormattedAnswer(answer) {
         resultText.replaceChildren();
         const lines = String(answer || '').replace(/\r/g, '').split('\n');
@@ -271,14 +274,12 @@ function formatScienceText(text) {
           let line = raw.trim();
           if (!line) { list = null; const gap=document.createElement('div');gap.className='answer-gap';resultText.appendChild(gap);return; }
           const main = line.match(/\[\[MAIN\]\]([\s\S]*?)\[\[\/MAIN\]\]/i);
-          
-line = formatScienceText(line.replace(/^\s{0,3}#{1,6}\s+/, '').replace(/\*\*(.*?)\*\*/g, '$1').replace(/__(.*?)__/g, '$1'));
-          
+          line = formatScienceText(line.replace(/\[\[MAIN\]\]|\[\[\/MAIN\]\]/gi,'').replace(/^#{1,6}\s*/,'').replace(/\*\*(.*?)\*\*/g,'$1').replace(/__(.*?)__/g,'$1'));
           if (/^(QUESTION|THE QUESTION)\s*:?$/i.test(line)) { list=null; const e=document.createElement('div');e.className='answer-section-title question-title';e.textContent='📝 Question';resultText.appendChild(e);return; }
           if (/^(SOLUTION|STEP[- ]BY[- ]STEP SOLUTION|EXPLANATION)\s*:?$/i.test(line)) { list=null; const e=document.createElement('div');e.className='answer-section-title';e.textContent='🧠 Step-by-step solution';resultText.appendChild(e);return; }
           if (/^(FINAL ANSWER|ANSWER)\s*:?$/i.test(line)) { list=null; const e=document.createElement('div');e.className='answer-section-title final-title';e.textContent='🎯 Final answer';resultText.appendChild(e);return; }
           if (/^(EASY TIP|QUICK RECAP|REMEMBER)\s*:?$/i.test(line)) { list=null; const e=document.createElement('div');e.className='answer-section-title tip-title';e.textContent='💡 '+line.replace(/:$/,'');resultText.appendChild(e);return; }
-          if (main) { list=null; const e=document.createElement('div');e.className='answer-main';e.textContent=main[1].trim();resultText.appendChild(e);return; }
+          if (main) { list=null; const e=document.createElement('div');e.className='answer-main';e.textContent=formatScienceText(main[1].trim());resultText.appendChild(e);return; }
           if (/^(?:[-*•➣→])\s+/.test(line)) { if(!list){list=document.createElement('div');list.className='answer-bullets';resultText.appendChild(list);} const e=document.createElement('div');e.className='answer-bullet';e.textContent='✦  '+line.replace(/^(?:[-*•➣→])\s+/,'');list.appendChild(e);return; }
           list=null; const e=document.createElement('div');e.className='answer-line';e.textContent=line;resultText.appendChild(e);
         });
